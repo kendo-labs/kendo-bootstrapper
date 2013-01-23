@@ -1,0 +1,14 @@
+{
+   "name": "kendo-bootstrapper",
+   "version": "0.0.1",
+   "dependencies": {
+       "uglify-js"  : "",
+       "cssmin"     : "",
+       "less"       : "",
+       "socket.io"  : "",
+       "ws"         : "",
+       "handlebars" : "",
+       "ncp"        : "",
+       "step"       : ""
+   }
+}

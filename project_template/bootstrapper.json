@@ -1,0 +1,28 @@
+{
+    "id": "{{PROJECT_ID}}",
+    "name": "{{PROJECT_NAME}}",
+
+    "min_files": {
+        "js": [
+            "kendo/js/jquery.min.js",
+            "kendo/js/kendo.web.min.js",
+            "js/less-1.3.3.min.js"
+        ],
+        "css": [
+            "kendo/css/kendo.common.min.css",
+            "kendo/css/kendo.default.min.css"
+        ]
+    },
+
+    "files": {
+        "js": [
+            "js/app.js"
+        ],
+        "less": [
+            "css/app.less"
+        ],
+        "html": [
+            "index.html"
+        ]
+    }
+}
