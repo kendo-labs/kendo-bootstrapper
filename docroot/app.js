@@ -8,7 +8,7 @@ $(document).ready(function(){
 
 var getTemplate = function(cache){
     var yajet = new YAJET({
-        with_scope: true
+        with_scope: false
     });
     return function(cls) {
         if (cache["$" + cls])
@@ -20,6 +20,7 @@ var getTemplate = function(cache){
 
 function setupListeners() {
     RPC.listen("register_project", function(proj){
+        proj.meta.path = proj.path;
         PROJECTS.insert(proj.meta);
     });
 }
@@ -90,13 +91,80 @@ function setActiveProject(proj) {
     $("#project-file-tree").html("<div></div>");
     $("#project-file-tree div").kendoTreeView({ dataSource: files_data });
 
+    RPC.call("project/file-info", proj.id, function(fileinfo){
+        refreshContent(proj, fileinfo);
+    });
+}
+
+function refreshContent(proj, data) {
     // fill the #content div with project details
+    var file_info = {};
+    data.forEach(function(f){
+        file_info[f.rel] = f;
+    });
     $("#content").html(getTemplate("project-view")({
+        id           : proj.id,
         project_name : proj.name,
         min_files    : proj.min_files,
         files        : proj.files,
-        _make_link   : function(path) {
+        file_info    : file_info,
+        make_link    : function(path) {
             return projectFileLink(proj, path);
         }
     }));
+}
+
+function rebuildProject(proj_id) {
+    var proj = PROJECTS.get(proj_id);
+    RPC.call("project/rebuild-all", proj_id, function(fileinfo, err){
+        refreshContent(proj, fileinfo);
+    });
+}
+
+function projectAddFile(proj_id) {
+    var proj = PROJECTS.get(proj_id);
+    var expect = "add-file-" + Date.now();
+    var dlg_el = $("<div></div>").html(getTemplate("add-file-dialog")({
+        expect : expect,
+        id     : proj.id,
+        path   : proj.path
+    })).kendoWindow({
+        title : "Add file to project " + proj.name,
+        modal : true
+    }).on("change", "input[name=file]", function(ev){
+        var filename = this.value.replace(/^.*[\/\\]([^\/\\]+)$/, "$1");
+        if (!/\S/.test(input.val())) {
+            input.val(filename);
+            updateName();
+        }
+    }).on("click", ".btn-cancel", function(ev){
+        dlg.close();
+        ev.preventDefault();
+    });
+    var timeout;
+    var input = dlg_el.find("input[name=filename]");
+    function updateName(){
+        clearTimeout(timeout);
+        setTimeout(function(){
+            var name = $(input).val().replace(/^\/+/, "");
+            dlg_el.find(".display-full-path").text(proj.path + "/" + name);
+        }, 100);
+    }
+    input.on({
+        keydown: updateName,
+        paste: updateName
+    });
+    dlg_el.find("input[type=file]").kendoUpload({
+        autoUpload : false,
+        multiple   : false
+    });
+    var dlg = dlg_el.data("kendoWindow");
+    dlg.open();
+    dlg.center();
+
+    dlg_el.find("form").on("submit", function(){
+        RPC.listen_once(expect, function(data){
+            dlg.close();
+        });
+    });
 }

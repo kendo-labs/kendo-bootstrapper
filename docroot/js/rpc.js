@@ -112,6 +112,7 @@
 
     window.RPC = {
         call        : call,
+        notify      : notify,
         listen      : listen,
         unlisten    : unlisten,
         listen_once : listen_once

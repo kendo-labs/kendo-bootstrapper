@@ -42,14 +42,20 @@
     <!-- TEMPLATES -->
 
     <script type="x/yajet-template" class="simple-list-item">
-      <div class="simple-list-item" value="${id}">${name}</div>
+      <div class="simple-list-item" value="${this.id}">${this.name}</div>
     </script>
 
     <script type="x/yajet-template" class="project-view">
       <!-- main project view -->
-      <h1>$project_name|html</h1>
+      $( var p = this )
+      <h1>$p.project_name|html</h1>
 
-      $( var make_link = _make_link )
+      $(BLOCK plink(file, text)$-
+        $(LET ((info => p.file_info[file])
+               (date => info && info.date))
+          <a target="PROJECTPREVIEW"
+             title="$date|html"
+             href="${ p.make_link(file) => html }">${ text || file => html }</a>$)$)
 
       $(BLOCK display_files(FILES)
         $(BLOCK showlist(type, title)
@@ -58,8 +64,23 @@
             <h3>$title</h3>
             <div class="files-${type}"><ul>
               $(FOREACH (f => files)
-                <li><a target="PROJECTPREVIEW" 
-                       href="${ make_link(f) => html }">$f|html</a></li>
+                <li>
+                  ${ plink(f) }
+                  $(LET ((finfo => p.file_info[f]))
+                    (${ finfo.size } bytes)
+                    $(WHEN (!finfo.library && finfo.canbuild)
+                      →
+                      $(AIF (finfo.build)
+                        <span class="build">
+                          ${ plink(it.rel) }, $it.size bytes$-
+                          $(WHEN (it.dirty), <span class="warn">outdated</span>$)
+                        </span>
+                      $(ELSE)
+                        <span class="warn">not built</span>
+                      $)
+                    $)
+                  $)
+                </li>
               $)
             </ul></div>
           $)
@@ -72,11 +93,48 @@
         </div>
       $)
 
-      <h2>Project files</h2>
-      ${ display_files(files) }
+      <h2>
+        Project files —
+        <button onclick="rebuildProject('$p.id|html')"
+                class="k-button">rebuild all</button>
+        <button onclick="projectAddFile('$p.id|html')"
+                class="k-button">add file</button>
+      </h2>
+      ${ display_files(p.files) }
 
       <h2>Library files</h2>
-      ${ display_files(min_files) }
+      ${ display_files(p.min_files) }
+    </script>
+
+    <script type="x/yajet-template" class="add-file-dialog">
+      $( var p = this )
+      <form action="/@add-file/$p.id|html/"
+            target="--add-file"
+            method="POST"
+            enctype="multipart/form-data">
+        <input type="hidden" name="project" value="$p.id|html" />
+        <input type="hidden" name="expect" value="$p.expect|html" />
+        <p>
+          <label>
+            File name (relative to project directory):<br />
+            <input class="k-input k-editable" name="filename" style="width: 25em" type="text" />
+          </label>
+        </p>
+        <p style="text-align: center">
+          <label class="display-full-path">$p.path|html</label>
+        </p>
+        <p>
+          <label>
+            Upload content (optional):<br />
+            <input type="file" name="file" />
+          </label>
+        </p>
+        <div class="dlg-buttons">
+          <button class="k-button btn-ok">OK</button>
+          <button class="k-button btn-cancel">Cancel</button>
+        </div>
+      </form>
+      <iframe id="--add-file" style="display: none" src="about:blank"></iframe>
     </script>
 
   </body>

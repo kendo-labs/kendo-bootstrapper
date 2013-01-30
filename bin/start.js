@@ -6,6 +6,7 @@ var FS      = require("fs");
 var WS      = require("ws");
 var QRS     = require("querystring");
 var URL     = require("url");
+var FORMS   = require("formidable");
 
 global.TOPLEVEL_DIR = PATH.join(PATH.dirname(__filename), "..");
 var DOCROOT = PATH.join(TOPLEVEL_DIR, "docroot");
@@ -37,24 +38,72 @@ PROJECT.bootstrap({
     if (err) console.log("ERROR", err);
 });
 
-function start_server() {
-    var server = HTTP.createServer(function(request, response){
+var HANDLERS = [
+    // this handler serves files from some project's space
+    // it's used to preview.
+    [/^\/@proj\/([^\/]+)\/*(.*)$/, function(request, response, proj_id, path){
         var url = URL.parse(request.url, true);
-        var m = /^\/@proj\/([^\/]+)\/*(.*)$/.exec(url.pathname);
-        if (!m) {
-            SS.handle_request(DOCROOT, request, response);
-            return;
-        }
-        var proj = PROJECT.get_project(m[1]);
-        if (!proj) {
-            // this should 404
-            SS.handle_request(DOCROOT, request, response);
-            return;
-        }
-        var path = "/" + m[2];
+        var proj = PROJECT.get_project(proj_id);
+        path = "/" + path;
         if (url.search) path += url.search;
         request.url = path;
         SS.handle_request(proj.path, request, response);
+    }],
+
+    // handler that adds a file to a project.  should be the only
+    // handler that we can't (easily) write on top of WebSocket,
+    // because it might send an upload.
+    [/^\/@add-file\/([^\/]+)\/*$/, function(request, response, proj_id){
+        var form = new FORMS.IncomingForm();
+        var proj = PROJECT.get_project(proj_id);
+        form.parse(request, function(err, fields, files){
+            var msg = fields.expect;
+            var project = fields.project;
+            var filename = fields.filename;
+            var datapath = files.file ? files.file.path : null;
+            PROJECT.add_file(project, filename, datapath, function(err, ret){
+                response.writeHead(200, "OK", {
+                    "Content-Type": "text/html; charset=UTF-8"
+                });
+                if (err) ret = {
+                    error: err
+                };
+                response.write(
+                    "<script>window.parent.RPC.notify(" +
+                        JSON.stringify(msg) + "," +
+                        JSON.stringify(ret) +
+                        ")</script>",
+                    "utf8"
+                );
+                response.end();
+            });
+        });
+    }],
+
+    // default handler serves static files from docroot/
+    function(request, response) {
+        SS.handle_request(DOCROOT, request, response);
+    }
+];
+
+HANDLERS.NEXT = {};
+
+function start_server() {
+    var server = HTTP.createServer(function(request, response){
+        var i = 0, ret = HANDLERS.NEXT;
+        while (ret === HANDLERS.NEXT && i < HANDLERS.length) {
+            var h = HANDLERS[i++], ret;
+            if (typeof h == "function") {
+                ret = h(request, response);
+            } else {
+                var url = URL.parse(request.url, true);
+                var m = h[0].exec(url.pathname);
+                if (m) {
+                    var a = [ request, response ].concat([].slice.call(m, 1));
+                    ret = h[1].apply(null, a);
+                }
+            }
+        }
     });
 
     server.listen(7569);

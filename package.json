@@ -9,6 +9,7 @@
        "ws"         : "",
        "handlebars" : "",
        "ncp"        : "",
-       "step"       : ""
+       "step"       : "",
+       "formidable" : ""
    }
 }
