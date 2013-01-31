@@ -23,6 +23,32 @@ function setupListeners() {
         proj.meta.path = proj.path;
         PROJECTS.insert(proj.meta);
     });
+    RPC.listen("project_add_file", function(data){
+        var proj = PROJECTS.get(data.proj_id);
+        var dest = data.library ? proj.min_files : proj.files;
+        var x = dest[data.ext];
+        if (!x) {
+            x = dest.insert([]);
+        }
+        x.push(data.file);
+        if (proj.id == ACTIVE_PROJECT) {
+            setActiveProject(proj); // refresh views
+        }
+    });
+    RPC.listen("project_delete_file", function(data){
+        var proj = PROJECTS.get(data.proj_id);
+        var filename = data.file;
+        [ proj.min_files, proj.files ].forEach(function(bag){
+            // bag is an ObservableObject
+            bag.forEach(function(files, type){
+                var pos = files.indexOf(filename);
+                if (pos >= 0) files.splice(pos, 1);
+            });
+        });
+        if (proj.id == ACTIVE_PROJECT) {
+            setActiveProject(proj); // refresh views
+        }
+    });
 }
 
 function setupLayout() {
@@ -59,22 +85,45 @@ function setupLayout() {
             window.open("/@proj/" + proj + "/", "PROJECTPREVIEW");
         }
     });
+    $("#btn-file-new").click(function(){
+        if (!ACTIVE_PROJECT) return alert("Select a project first");
+        projectAddFile(ACTIVE_PROJECT);
+    });
+    $("#btn-file-delete").click(function(){
+        if (!ACTIVE_PROJECT) return alert("Select a project first");
+        var proj = PROJECTS.get(ACTIVE_PROJECT);
+        var tree = $("#project-file-tree>div:first").data("kendoTreeView");
+        var sel = tree.select();
+        if (sel.length == 0) return alert("No file selected");
+        sel = tree.dataItem(sel);
+        if (sel.hasChildren) return alert("Please select a file");
+        areYouSure({
+            message: "Really delete file " + sel.filename + "?",
+            okLabel: "Yes",
+            cancelLabel: "NOOO!",
+        }, function(ok){
+            if (ok) RPC.call("project/delete-file", proj.id, sel.filename);
+        });
+    });
 }
 
 function projectFileLink(proj, path) {
     return "/@proj/" + proj.id + "/" + path.replace(/^\/+/, "");
 }
 
+var ACTIVE_PROJECT = null;
+
 function setActiveProject(proj) {
     if (typeof proj != "object")
         proj = PROJECTS.get(proj);
+    ACTIVE_PROJECT = proj.id;
     $("#files .title").html(proj.name);
 
     // display project tree
     var files_data = new kendo.data.HierarchicalDataSource({
         data: [
+            make_tree(proj.files, "Project files"),
             make_tree(proj.min_files, "Libraries"),
-            make_tree(proj.files, "Project files")
         ]
     });
     function make_tree(data, label) {
@@ -83,7 +132,7 @@ function setActiveProject(proj) {
             var type_item = { text: type, items: [] };
             top_item.items.push(type_item);
             files.forEach(function(file){
-                type_item.items.push({ text: file });
+                type_item.items.push({ text: file, filename: file });
             });
         });
         return top_item;
@@ -163,8 +212,28 @@ function projectAddFile(proj_id) {
     dlg.center();
 
     dlg_el.find("form").on("submit", function(){
-        RPC.listen_once(expect, function(data){
+        RPC.listen_once(expect, function(){
             dlg.close();
         });
     });
+}
+
+function areYouSure(options, callback) {
+    var dlg_el = $("<div></div>").html(getTemplate("confirm-dialog")({
+        message     : options.message,
+        okLabel     : options.okLabel,
+        cancelLabel : options.cancelLabel
+    })).kendoWindow({
+        title: options.title || "Confirm",
+        modal: true
+    }).on("click", ".btn-ok", function(){
+        dlg.close();
+        callback(true);
+    }).on("click", ".btn-cancel", function(){
+        dlg.close();
+        callback(false);
+    });
+    var dlg = dlg_el.data("kendoWindow");
+    dlg.open();
+    dlg.center();
 }

@@ -8,6 +8,7 @@
 
     <link rel="stylesheet/less" href="css/app.less" />
 
+    <script src="js/utils.js"></script>
     <script src="js/rpc.js"></script>
     <script src="js/less-1.3.3.min.js"></script>
     <script src="js/yajet.min.js"></script>
@@ -30,6 +31,10 @@
           </div>
           <div id="files" class="section">
             <div class="title">No project selected</div>
+            <div class="k-toolbar">
+              <button class="k-button" id="btn-file-new">New file</button>
+              <button class="k-button" id="btn-file-delete">Delete file</button>
+            </div>
             <div id="project-file-tree"><div></div></div>
           </div>
         </div>
@@ -59,11 +64,10 @@
 
       $(BLOCK display_files(FILES)
         $(BLOCK showlist(type, title)
-          $( var files = FILES[type] )
-          $(WHEN (files)
+          $(AWHEN (FILES[type])
             <h3>$title</h3>
             <div class="files-${type}"><ul>
-              $(FOREACH (f => files)
+              $(FOREACH (f => it)
                 <li>
                   ${ plink(f) }
                   $(LET ((finfo => p.file_info[f]))
@@ -72,7 +76,7 @@
                       →
                       $(AIF (finfo.build)
                         <span class="build">
-                          ${ plink(it.rel) }, $it.size bytes$-
+                          ${ plink(it.rel) } ($it.size bytes)$-
                           $(WHEN (it.dirty), <span class="warn">outdated</span>$)
                         </span>
                       $(ELSE)
@@ -129,12 +133,28 @@
             <input type="file" name="file" />
           </label>
         </p>
+        <p>
+          <label>
+            <input type="checkbox" name="library" />
+            This is a library file
+          </label>
+        </p>
         <div class="dlg-buttons">
           <button class="k-button btn-ok">OK</button>
           <button class="k-button btn-cancel">Cancel</button>
         </div>
       </form>
       <iframe id="--add-file" style="display: none" src="about:blank"></iframe>
+    </script>
+
+    <script type="x/yajet-template" class="confirm-dialog">
+      <p style="font-size: 120%; font-weight: bold">
+        $this.message|html
+      </p>
+      <div class="dlg-buttons">
+        <button class="k-button btn-ok">${ this.okLabel || "OK" => html }</button>
+        <button class="k-button btn-cancel">${ this.cancelLabel || "Cancel" => html }</button>
+      </div>
     </script>
 
   </body>

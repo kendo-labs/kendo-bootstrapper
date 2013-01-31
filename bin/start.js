@@ -57,11 +57,12 @@ var HANDLERS = [
         var form = new FORMS.IncomingForm();
         var proj = PROJECT.get_project(proj_id);
         form.parse(request, function(err, fields, files){
-            var msg = fields.expect;
-            var project = fields.project;
-            var filename = fields.filename;
-            var datapath = files.file ? files.file.path : null;
-            PROJECT.add_file(project, filename, datapath, function(err, ret){
+            PROJECT.add_file({
+                proj_id  : fields.project,
+                filename : fields.filename,
+                datapath : files.file ? files.file.path : null,
+                library  : !!fields.library
+            }, function(err, ret){
                 response.writeHead(200, "OK", {
                     "Content-Type": "text/html; charset=UTF-8"
                 });
@@ -70,7 +71,7 @@ var HANDLERS = [
                 };
                 response.write(
                     "<script>window.parent.RPC.notify(" +
-                        JSON.stringify(msg) + "," +
+                        JSON.stringify(fields.expect) + "," +
                         JSON.stringify(ret) +
                         ")</script>",
                     "utf8"
@@ -127,6 +128,18 @@ function start_server() {
     PROJECT.EVENTS.listen("register_project", function(proj){
         CLIENTS.forEach(function(ws){
             RPC.notify(ws, "register_project", proj);
+        });
+    });
+
+    PROJECT.EVENTS.listen("project_add_file", function(data){
+        CLIENTS.forEach(function(ws){
+            RPC.notify(ws, "project_add_file", data);
+        });
+    });
+
+    PROJECT.EVENTS.listen("project_delete_file", function(data){
+        CLIENTS.forEach(function(ws){
+            RPC.notify(ws, "project_delete_file", data);
         });
     });
 
