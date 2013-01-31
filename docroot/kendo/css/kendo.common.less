@@ -2553,11 +2553,13 @@ span.k-numerictextbox
     position: relative;
     width: 120px;
     line-height: 0;
+    border-width: 0;
+
     .k-palette {
         display: inline-block;
         vertical-align: top;
-        padding: 5px 0;
     }
+
     .k-item {
         display: block;
         float: left;
@@ -2595,6 +2597,12 @@ span.k-numerictextbox
     width: 250px;
     padding-bottom: 5px;
     position: relative;
+
+    div& {
+        background-color: transparent;
+        background-image: none;
+        border-width: 0;
+    }
 
     .k-selected-color {
         background-image: url("textures/transtexture.png");

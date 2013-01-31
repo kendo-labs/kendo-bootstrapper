@@ -2548,24 +2548,30 @@ span.k-numerictextbox
     filter: alpha(opacity=50);
 }
 
-.k-colorpicker-popup
+.k-colorpalette
 {
     position: relative;
     width: 120px;
     line-height: 0;
+    border-width: 0;
+
     .k-palette {
-    display: inline-block;
+        display: inline-block;
         vertical-align: top;
-        padding: 5px 0;
     }
+
     .k-item {
-    display: block;
-    float: left;
+        display: block;
+        float: left;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -ms-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
         width: 14px;
         height: 14px;
-    overflow: hidden;
-    font-size: 0;
-    padding: 0;
+        overflow: hidden;
+        font-size: 0;
+        padding: 0;
         z-index: 0;
         position: relative;     // what do you know, the drop-shadow
                                 // is not properly visible without
@@ -2573,26 +2579,30 @@ span.k-numerictextbox
                                 // this bug, I suppose it's "essential
                                 // complexity"
         div {
-    height: 100%;
-    width: 100%;
+            height: 100%;
+            width: 100%;
         }
         &.k-state-selected {
             z-index: 100;
             background: transparent;
             .box-shadow(0 1px 4px #000);
             border: 1px solid #fff;
-            width: 12px;
-            height: 12px;
         }
     }
 }
 
-.k-colorpicker-hsv
+.k-flatcolorpicker
 {
     display: inline-block;
     width: 250px;
     padding-bottom: 5px;
     position: relative;
+
+    div& {
+        background-color: transparent;
+        background-image: none;
+        border-width: 0;
+    }
 
     .k-selected-color {
         background-image: url("textures/transtexture.png");
@@ -2633,6 +2643,9 @@ span.k-numerictextbox
                 border-color: #fff;
                 .box-shadow(0 1px 5px #000);
             }
+        }
+        &.k-dragging, &.k-dragging * {
+            cursor: none;
         }
     }
 
@@ -2721,14 +2734,13 @@ span.k-numerictextbox
         linear-gradient(top,  rgba(0,0,0,0) 0%,rgba(0,0,0,1) 100%), /* W3C */
         linear-gradient(left,  rgba(255,255,255,1) 0%,rgba(255,255,255,0) 100%); /* W3C */
 
-        width: 250px;
         height: 180px;
         margin-bottom: 5px;
     }
 }
 
 .k-ie9 {
-    .k-colorpicker-hsv {
+    .k-flatcolorpicker {
         .k-hue-slider {
             .k-slider-track {
                 background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmMDAwMCIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjE2JSIgc3RvcC1jb2xvcj0iI2ZmZmYwMCIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjMzJSIgc3RvcC1jb2xvcj0iIzAwZmYwMCIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iIzAwZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjY3JSIgc3RvcC1jb2xvcj0iIzAwMDBmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9Ijg0JSIgc3RvcC1jb2xvcj0iI2ZmMDBmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNmZjAwMDQiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
@@ -2742,8 +2754,8 @@ span.k-numerictextbox
     }
 }
 
-.k-ie6, .k-ie7, .k-ie8 {
-    .k-colorpicker-hsv {
+.k-ie7, .k-ie8 {
+    .k-flatcolorpicker {
         .k-hue-slider {
             .k-slider-track {
                 background: url("textures/hue.png") repeat 0 50%;
@@ -2755,9 +2767,7 @@ span.k-numerictextbox
             }
         }
         .k-hsv-gradient {
-            filter:
-            progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffffff', endColorstr='#00ffffff',GradientType=1 ), /* IE6-8 */
-            progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#ff000000',GradientType=0 ); /* IE6-8 */
+            filter: ~"progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff',endColorstr='#00ffffff',GradientType=1) progid:DXImageTransform.Microsoft.gradient(startColorstr='#00000000',endColorstr='#ff000000',GradientType=0)";
         }
     }
 }
@@ -4083,7 +4093,7 @@ html .k-upload
 
 .k-ie7 .k-colorpicker,
 .k-ie7 .k-colorpicker .k-tool-icon,
-.k-ie7 .k-colorpicker-popup .k-reset,
+.k-ie7 .k-palette.k-reset,
 
 .k-ie7 .k-editor-dialog .k-button,
 

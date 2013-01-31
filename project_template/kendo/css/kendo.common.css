@@ -2571,19 +2571,23 @@ span.k-numerictextbox {
   opacity: 0.5;
   filter: alpha(opacity=50);
 }
-.k-colorpicker-popup {
+.k-colorpalette {
   position: relative;
   width: 120px;
   line-height: 0;
+  border-width: 0;
 }
-.k-colorpicker-popup .k-palette {
+.k-colorpalette .k-palette {
   display: inline-block;
   vertical-align: top;
-  padding: 5px 0;
 }
-.k-colorpicker-popup .k-item {
+.k-colorpalette .k-item {
   display: block;
   float: left;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
   width: 14px;
   height: 14px;
   overflow: hidden;
@@ -2592,33 +2596,36 @@ span.k-numerictextbox {
   z-index: 0;
   position: relative;
 }
-.k-colorpicker-popup .k-item div {
+.k-colorpalette .k-item div {
   height: 100%;
   width: 100%;
 }
-.k-colorpicker-popup .k-item.k-state-selected {
+.k-colorpalette .k-item.k-state-selected {
   z-index: 100;
   background: transparent;
   -webkit-box-shadow: 0 1px 4px #000000;
   box-shadow: 0 1px 4px #000000;
   border: 1px solid #fff;
-  width: 12px;
-  height: 12px;
 }
-.k-colorpicker-hsv {
+.k-flatcolorpicker {
   display: inline-block;
   width: 250px;
   padding-bottom: 5px;
   position: relative;
 }
-.k-colorpicker-hsv .k-selected-color {
+div.k-flatcolorpicker {
+  background-color: transparent;
+  background-image: none;
+  border-width: 0;
+}
+.k-flatcolorpicker .k-selected-color {
   background-image: url("textures/transtexture.png");
   background-position: 50% 50%;
 }
-.k-colorpicker-hsv .k-selected-color .k-selected-color-display {
+.k-flatcolorpicker .k-selected-color .k-selected-color-display {
   overflow: hidden;
 }
-.k-colorpicker-hsv .k-selected-color input.k-color-value {
+.k-flatcolorpicker .k-selected-color input.k-color-value {
   float: right;
   font-family: Consolas, "Ubuntu Mono", "Lucida Console", "Courier New", monospace;
   padding: .75em .3em .65em 1em;
@@ -2626,10 +2633,10 @@ span.k-numerictextbox {
   width: 70%;
   height: 100%;
 }
-.k-colorpicker-hsv .k-hsv-rectangle {
+.k-flatcolorpicker .k-hsv-rectangle {
   position: relative;
 }
-.k-colorpicker-hsv .k-hsv-rectangle .k-draghandle {
+.k-flatcolorpicker .k-hsv-rectangle .k-draghandle {
   cursor: pointer;
   position: absolute;
   z-index: 10;
@@ -2648,32 +2655,36 @@ span.k-numerictextbox {
   box-shadow: 0 1px 4px #444444;
   background: transparent;
 }
-.k-colorpicker-hsv .k-hsv-rectangle .k-draghandle:hover,
-.k-colorpicker-hsv .k-hsv-rectangle .k-draghandle:focus {
+.k-flatcolorpicker .k-hsv-rectangle .k-draghandle:hover,
+.k-flatcolorpicker .k-hsv-rectangle .k-draghandle:focus {
   background: transparent;
   border-color: #fff;
   -webkit-box-shadow: 0 1px 5px #000000;
   box-shadow: 0 1px 5px #000000;
 }
-.k-colorpicker-hsv .k-slider-horizontal {
+.k-flatcolorpicker .k-hsv-rectangle.k-dragging,
+.k-flatcolorpicker .k-hsv-rectangle.k-dragging * {
+  cursor: none;
+}
+.k-flatcolorpicker .k-slider-horizontal {
   height: 20px;
   width: 90%;
   margin: 0 5%;
 }
-.k-colorpicker-hsv .k-slider-horizontal .k-slider-track {
+.k-flatcolorpicker .k-slider-horizontal .k-slider-track {
   border: 1px solid;
   border-color: #999 #fff #fff #999;
 }
-.k-colorpicker-hsv .k-hue-slider,
-.k-colorpicker-hsv .k-transparency-slider {
+.k-flatcolorpicker .k-hue-slider,
+.k-flatcolorpicker .k-transparency-slider {
   display: block;
 }
-.k-colorpicker-hsv .k-hue-slider .k-slider-selection,
-.k-colorpicker-hsv .k-transparency-slider .k-slider-selection {
+.k-flatcolorpicker .k-hue-slider .k-slider-selection,
+.k-flatcolorpicker .k-transparency-slider .k-slider-selection {
   background: transparent;
 }
-.k-colorpicker-hsv .k-hue-slider .k-draghandle,
-.k-colorpicker-hsv .k-transparency-slider .k-draghandle {
+.k-flatcolorpicker .k-hue-slider .k-draghandle,
+.k-flatcolorpicker .k-transparency-slider .k-draghandle {
   background: transparent;
   border: 3px solid #eee;
   margin-top: 1px;
@@ -2682,16 +2693,16 @@ span.k-numerictextbox {
   -webkit-box-shadow: 0 1px 4px #444444;
   box-shadow: 0 1px 4px #444444;
 }
-.k-colorpicker-hsv .k-hue-slider .k-draghandle:hover,
-.k-colorpicker-hsv .k-transparency-slider .k-draghandle:hover,
-.k-colorpicker-hsv .k-hue-slider .k-draghandle:focus,
-.k-colorpicker-hsv .k-transparency-slider .k-draghandle:focus {
+.k-flatcolorpicker .k-hue-slider .k-draghandle:hover,
+.k-flatcolorpicker .k-transparency-slider .k-draghandle:hover,
+.k-flatcolorpicker .k-hue-slider .k-draghandle:focus,
+.k-flatcolorpicker .k-transparency-slider .k-draghandle:focus {
   background: transparent;
   border-color: #fff;
   -webkit-box-shadow: 0 1px 5px #000000;
   box-shadow: 0 1px 5px #000000;
 }
-.k-colorpicker-hsv .k-hue-slider .k-slider-track {
+.k-flatcolorpicker .k-hue-slider .k-slider-track {
   background: -moz-linear-gradient(left, #ff0000 0%, #ffff00 16%, #00ff00 33%, #00ffff 50%, #0000ff 67%, #ff00ff 84%, #ff0004 100%);
   /* FF3.6+ */
 
@@ -2711,22 +2722,22 @@ span.k-numerictextbox {
   /* W3C */
 
 }
-.k-colorpicker-hsv .k-transparency-slider .k-slider-track {
+.k-flatcolorpicker .k-transparency-slider .k-slider-track {
   background-image: url("textures/transparency.png");
   background-size: 100% auto;
   background-position: 100% 50%;
   background-repeat: no-repeat;
 }
-.k-colorpicker-hsv .k-controls {
+.k-flatcolorpicker .k-controls {
   margin-top: 10px;
   margin-bottom: 5px;
   text-align: center;
   font-size: 90%;
 }
-.k-colorpicker-hsv .k-controls .k-button {
+.k-flatcolorpicker .k-controls .k-button {
   width: 6em;
 }
-.k-colorpicker-hsv .k-hsv-gradient {
+.k-flatcolorpicker .k-hsv-gradient {
   background: -moz-linear-gradient(top, rgba(0, 0, 0, 0) 0%, #000000 100%), /* FF3.6+ */
  -moz-linear-gradient(left, #ffffff 0%, rgba(255, 255, 255, 0) 100%);
   /* FF3.6+ */
@@ -2751,33 +2762,26 @@ span.k-numerictextbox {
  -left-linear-gradient(left,#ffffff 0%,rgba(255,255,255,0) 100%);
   /* W3C */
 
-  width: 250px;
   height: 180px;
   margin-bottom: 5px;
 }
-.k-ie9 .k-colorpicker-hsv .k-hue-slider .k-slider-track {
+.k-ie9 .k-flatcolorpicker .k-hue-slider .k-slider-track {
   background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmMDAwMCIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjE2JSIgc3RvcC1jb2xvcj0iI2ZmZmYwMCIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjMzJSIgc3RvcC1jb2xvcj0iIzAwZmYwMCIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iIzAwZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjY3JSIgc3RvcC1jb2xvcj0iIzAwMDBmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9Ijg0JSIgc3RvcC1jb2xvcj0iI2ZmMDBmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNmZjAwMDQiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
 }
-.k-ie9 .k-colorpicker-hsv .k-hsv-gradient {
+.k-ie9 .k-flatcolorpicker .k-hsv-gradient {
   background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzAwMDAwMCIgc3RvcC1vcGFjaXR5PSIwIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMwMDAwMDAiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+), url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNmZmZmZmYiIHN0b3Atb3BhY2l0eT0iMCIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
 }
-.k-ie6 .k-colorpicker-hsv .k-hue-slider .k-slider-track,
-.k-ie7 .k-colorpicker-hsv .k-hue-slider .k-slider-track,
-.k-ie8 .k-colorpicker-hsv .k-hue-slider .k-slider-track {
+.k-ie7 .k-flatcolorpicker .k-hue-slider .k-slider-track,
+.k-ie8 .k-flatcolorpicker .k-hue-slider .k-slider-track {
   background: url("textures/hue.png") repeat 0 50%;
 }
-.k-ie6 .k-colorpicker-hsv .k-transparency-slider .k-slider-track,
-.k-ie7 .k-colorpicker-hsv .k-transparency-slider .k-slider-track,
-.k-ie8 .k-colorpicker-hsv .k-transparency-slider .k-slider-track {
+.k-ie7 .k-flatcolorpicker .k-transparency-slider .k-slider-track,
+.k-ie8 .k-flatcolorpicker .k-transparency-slider .k-slider-track {
   background: url("textures/transparency.png") repeat 0 50%;
 }
-.k-ie6 .k-colorpicker-hsv .k-hsv-gradient,
-.k-ie7 .k-colorpicker-hsv .k-hsv-gradient,
-.k-ie8 .k-colorpicker-hsv .k-hsv-gradient {
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#00ffffff', GradientType=1), /* IE6-8 */
- progid:DXImageTransform.Microsoft.gradient(startColorstr='#00000000', endColorstr='#ff000000', GradientType=0);
-  /* IE6-8 */
-
+.k-ie7 .k-flatcolorpicker .k-hsv-gradient,
+.k-ie8 .k-flatcolorpicker .k-hsv-gradient {
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff',endColorstr='#00ffffff',GradientType=1) progid:DXImageTransform.Microsoft.gradient(startColorstr='#00000000',endColorstr='#ff000000',GradientType=0);
 }
 /* Editor */
 .k-editor {
@@ -3954,7 +3958,7 @@ html .k-upload {
 .k-ie7 .k-treeview .k-in,
 .k-ie7 .k-colorpicker,
 .k-ie7 .k-colorpicker .k-tool-icon,
-.k-ie7 .k-colorpicker-popup .k-reset,
+.k-ie7 .k-palette.k-reset,
 .k-ie7 .k-editor-dialog .k-button,
 .k-form-text-row label,
 .k-ie7 .k-tabstrip-items .k-item,

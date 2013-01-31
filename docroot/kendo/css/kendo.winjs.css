@@ -2575,11 +2575,11 @@ span.k-numerictextbox {
   position: relative;
   width: 120px;
   line-height: 0;
+  border-width: 0;
 }
 .k-colorpalette .k-palette {
   display: inline-block;
   vertical-align: top;
-  padding: 5px 0;
 }
 .k-colorpalette .k-item {
   display: block;
@@ -2612,6 +2612,11 @@ span.k-numerictextbox {
   width: 250px;
   padding-bottom: 5px;
   position: relative;
+}
+div.k-flatcolorpicker {
+  background-color: transparent;
+  background-image: none;
+  border-width: 0;
 }
 .k-flatcolorpicker .k-selected-color {
   background-image: url("textures/transtexture.png");
