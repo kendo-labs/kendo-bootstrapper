@@ -33,6 +33,7 @@
             <div class="title">No project selected</div>
             <div class="k-toolbar">
               <button class="k-button" id="btn-file-new">New file</button>
+              <button class="k-button" id="btn-file-edit">Edit file</button>
               <button class="k-button" id="btn-file-delete">Delete file</button>
             </div>
             <div id="project-file-tree"><div></div></div>
@@ -62,7 +63,7 @@
              title="$date|html"
              href="${ p.make_link(file) => html }">${ text || file => html }</a>$)$)
 
-      $(BLOCK display_files(FILES)
+      $(BLOCK display_files(FILES, canedit)
         $(BLOCK showlist(type, title)
           $(AWHEN (FILES[type])
             <h3>$title</h3>
@@ -71,7 +72,9 @@
                 <li>
                   ${ plink(f) }
                   $(LET ((finfo => p.file_info[f]))
-                    (${ finfo.size } bytes)
+                    (${ finfo.size } bytes$-
+                    $(WHEN (canedit)$-
+                      ; <a href="#" command="edit-file" project-id="$p.id|html" filename="$f|html">edit</a>$))
                     $(WHEN (!finfo.library && finfo.canbuild)
                       →
                       $(AIF (finfo.build)
@@ -104,10 +107,10 @@
         <button onclick="projectAddFile('$p.id|html')"
                 class="k-button">add file</button>
       </h2>
-      ${ display_files(p.files) }
+      ${ display_files(p.files, true) }
 
       <h2>Library files</h2>
-      ${ display_files(p.min_files) }
+      ${ display_files(p.min_files, false) }
     </script>
 
     <script type="x/yajet-template" class="add-file-dialog">

@@ -51,6 +51,32 @@ function setupListeners() {
     });
 }
 
+function getSelectedProject() {
+    if (!ACTIVE_PROJECT) throw ("Select a project first");
+    return PROJECTS.get(ACTIVE_PROJECT);
+}
+
+function getSelectedFile() {
+    if (!ACTIVE_PROJECT) throw ("Select a project first");
+    var proj = PROJECTS.get(ACTIVE_PROJECT);
+    var tree = $("#project-file-tree>div:first").data("kendoTreeView");
+    var sel = tree.select();
+    if (sel.length == 0) throw ("No file selected");
+    sel = tree.dataItem(sel);
+    if (sel.hasChildren) throw ("Please select a file");
+    return sel;
+}
+
+function withSelectedProject(f) {
+    try { f(getSelectedProject()) }
+    catch(ex) { alert(ex) }
+}
+
+function withSelectedFile(f) {
+    try { f(getSelectedProject(), getSelectedFile().filename) }
+    catch(ex) { alert(ex) }
+}
+
 function setupLayout() {
     $("#main-layout").kendoSplitter({
         panes: [
@@ -79,30 +105,29 @@ function setupLayout() {
 
     // button handlers
     $("#btn-project-preview").click(function(){
-        var sel = $("#project-list").data("kendoListView").select();
-        var proj = sel.attr("value");
-        if (proj) {
-            window.open("/@proj/" + proj + "/", "PROJECTPREVIEW");
-        }
+        withSelectedProject(function(proj){
+            window.open("/@proj/" + proj.id + "/", "PROJECTPREVIEW");
+        });
     });
     $("#btn-file-new").click(function(){
-        if (!ACTIVE_PROJECT) return alert("Select a project first");
-        projectAddFile(ACTIVE_PROJECT);
+        withSelectedProject(function(proj){
+            projectAddFile(proj.id);
+        });
+    });
+    $("#btn-file-edit").click(function(){
+        withSelectedFile(function(proj, file){
+            RPC.call("project/edit-file", proj.id, file);
+        });
     });
     $("#btn-file-delete").click(function(){
-        if (!ACTIVE_PROJECT) return alert("Select a project first");
-        var proj = PROJECTS.get(ACTIVE_PROJECT);
-        var tree = $("#project-file-tree>div:first").data("kendoTreeView");
-        var sel = tree.select();
-        if (sel.length == 0) return alert("No file selected");
-        sel = tree.dataItem(sel);
-        if (sel.hasChildren) return alert("Please select a file");
-        areYouSure({
-            message: "Really delete file " + sel.filename + "?",
-            okLabel: "Yes",
-            cancelLabel: "NOOO!",
-        }, function(ok){
-            if (ok) RPC.call("project/delete-file", proj.id, sel.filename);
+        withSelectedFile(function(proj, file){
+            areYouSure({
+                message: "Really delete file " + file + "?",
+                okLabel: "Yes",
+                cancelLabel: "NOOO!",
+            }, function(ok){
+                if (ok) RPC.call("project/delete-file", proj.id, file);
+            });
         });
     });
 }
@@ -160,7 +185,12 @@ function refreshContent(proj, data) {
         make_link    : function(path) {
             return projectFileLink(proj, path);
         }
-    }));
+    })).on("click", "[command=edit-file]", function(ev){
+        var proj = $(this).attr("project-id");
+        var file = $(this).attr("filename");
+        RPC.call("project/edit-file", proj, file);
+        ev.preventDefault();
+    });
 }
 
 function rebuildProject(proj_id) {
