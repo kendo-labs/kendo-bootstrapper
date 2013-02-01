@@ -14,6 +14,7 @@ var DOCROOT = PATH.join(TOPLEVEL_DIR, "docroot");
 var SS      = require("../lib/server");
 var RPC     = require("../lib/rpc");
 var PROJECT = require("../lib/project");
+var CONFIG  = require("../lib/config");
 
 require("../lib/utils");
 require("../lib/handlers");
@@ -114,6 +115,9 @@ function start_server() {
     var wss = new WS.Server({ server: server });
     wss.on("connection", function(ws){
         CLIENTS.push(ws);
+        RPC.notify(ws, "setup", {
+            projects_dir: CONFIG.get_projects_directory()
+        });
         PROJECT.forEach(function(proj){
             RPC.notify(ws, "register_project", proj);
         });

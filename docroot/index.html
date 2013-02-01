@@ -54,7 +54,17 @@
     <script type="x/yajet-template" class="project-view">
       <!-- main project view -->
       $( var p = this )
-      <h1>$p.project_name|html</h1>
+      <div>
+        <div style="float: right">
+          <button onclick="projectRefreshContent('$p.id|html')"
+                  class="k-button">refresh</button>
+          <button onclick="rebuildProject('$p.id|html')"
+                  class="k-button">rebuild all</button>
+          <button onclick="projectAddFile('$p.id|html')"
+                  class="k-button">add file</button>
+        </div>
+        <h1>$p.project_name|html</h1>
+      </div>
 
       $(BLOCK plink(file, text)$-
         $(LET ((info => p.file_info[file])
@@ -101,11 +111,7 @@
       $)
 
       <h2>
-        Project files —
-        <button onclick="rebuildProject('$p.id|html')"
-                class="k-button">rebuild all</button>
-        <button onclick="projectAddFile('$p.id|html')"
-                class="k-button">add file</button>
+        Project files
       </h2>
       ${ display_files(p.files, true) }
 
@@ -142,22 +148,48 @@
             This is a library file
           </label>
         </p>
-        <div class="dlg-buttons">
-          <button class="k-button btn-ok">OK</button>
-          <button class="k-button btn-cancel">Cancel</button>
-        </div>
+        $(PROCESS ok_cancel_buttons())
       </form>
       <iframe id="--add-file" style="display: none" src="about:blank"></iframe>
+    </script>
+
+    <script type="x/yajet-template" class="new-project-dialog">
+      <p>
+        <label>
+          Project name:<br />
+          <input name="name" style="width: 25em" class="k-input k-editable" type="text" />
+        </label>
+      </p>
+      <p>
+        <label>
+          Project directory:<br />
+          <input name="path" style="width: 25em"
+                 class="k-input k-editable" type="text"
+                 value="${ this.destination => html }/" />
+        </label>
+      </p>
+      <p>
+        <label>
+          Project ID:<br />
+          <input name="id" style="width: 10em" class="k-input k-editable" type="text" />
+        </label>
+      </p>
+      $(PROCESS ok_cancel_buttons())
     </script>
 
     <script type="x/yajet-template" class="confirm-dialog">
       <p style="font-size: 120%; font-weight: bold">
         $this.message|html
       </p>
-      <div class="dlg-buttons">
-        <button class="k-button btn-ok">${ this.okLabel || "OK" => html }</button>
-        <button class="k-button btn-cancel">${ this.cancelLabel || "Cancel" => html }</button>
-      </div>
+      $(PROCESS ok_cancel_buttons())
+    </script>
+
+    <script type="x/yajet-template" class="template-library">
+      $(EXPORT ok_cancel_buttons()
+        <div class="dlg-buttons">
+          <button class="k-button btn-ok">${ this.okLabel || "OK" => html }</button>
+          <button class="k-button btn-cancel">${ this.cancelLabel || "Cancel" => html }</button>
+        </div>$)
     </script>
 
   </body>

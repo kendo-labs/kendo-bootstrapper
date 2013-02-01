@@ -1,6 +1,8 @@
 var PROJECTS;
+var SERVER_CONFIG = {};
 
 $(document).ready(function(){
+    getTemplate("template-library");
     PROJECTS = new kendo.data.DataSource();
     setupListeners();
     setupLayout();
@@ -11,14 +13,17 @@ var getTemplate = function(cache){
         with_scope: false
     });
     return function(cls) {
-        if (cache["$" + cls])
-            return cache["$" + cls];
+        var tmpl = cache["$" + cls];
+        if (tmpl) return tmpl;
         var html = $("script[type='x/yajet-template']." + cls).text();
-        return yajet.compile(html);
+        return cache["$" + cls] = yajet.compile(html);
     };
 }({});
 
 function setupListeners() {
+    RPC.listen("setup", function(config){
+        SERVER_CONFIG = config;
+    });
     RPC.listen("register_project", function(proj){
         proj.meta.path = proj.path;
         PROJECTS.insert(proj.meta);
@@ -104,6 +109,9 @@ function setupLayout() {
     });
 
     // button handlers
+    $("#btn-project-new").click(function(){
+        projectNew();
+    });
     $("#btn-project-preview").click(function(){
         withSelectedProject(function(proj){
             window.open("/@proj/" + proj.id + "/", "PROJECTPREVIEW");
@@ -130,6 +138,11 @@ function setupLayout() {
             });
         });
     });
+    $(window).focus(function(){
+        if (ACTIVE_PROJECT) {
+            projectRefreshContent(ACTIVE_PROJECT);
+        }
+    });
 }
 
 function projectFileLink(proj, path) {
@@ -137,7 +150,6 @@ function projectFileLink(proj, path) {
 }
 
 var ACTIVE_PROJECT = null;
-
 function setActiveProject(proj) {
     if (typeof proj != "object")
         proj = PROJECTS.get(proj);
@@ -165,12 +177,18 @@ function setActiveProject(proj) {
     $("#project-file-tree").html("<div></div>");
     $("#project-file-tree div").kendoTreeView({ dataSource: files_data });
 
-    RPC.call("project/file-info", proj.id, function(fileinfo){
-        refreshContent(proj, fileinfo);
+    projectRefreshContent(proj.id);
+}
+
+function projectRefreshContent(proj_id) {
+    RPC.call("project/file-info", proj_id, function(fileinfo, err){
+        if (!err) {
+            drawContent(PROJECTS.get(proj_id), fileinfo);
+        }
     });
 }
 
-function refreshContent(proj, data) {
+function drawContent(proj, data) {
     // fill the #content div with project details
     var file_info = {};
     data.forEach(function(f){
@@ -196,7 +214,7 @@ function refreshContent(proj, data) {
 function rebuildProject(proj_id) {
     var proj = PROJECTS.get(proj_id);
     RPC.call("project/rebuild-all", proj_id, function(fileinfo, err){
-        refreshContent(proj, fileinfo);
+        drawContent(proj, fileinfo);
     });
 }
 
@@ -246,6 +264,44 @@ function projectAddFile(proj_id) {
             dlg.close();
         });
     });
+}
+
+function projectNew() {
+    var timeout = null;
+    var dest = SERVER_CONFIG.projects_dir.replace(/\/+$/, "");
+    var dlg_el = $("<div></div>").html(getTemplate("new-project-dialog")({
+        destination: dest
+    })).kendoWindow({
+        title: "Create new project",
+        modal: true
+    }).on("click", ".btn-ok", function(){
+        var args = {
+            id   : $("input[name=id]"   , dlg_el).val(),
+            name : $("input[name=name]" , dlg_el).val(),
+            path : $("input[name=path]" , dlg_el).val(),
+        }
+        RPC.call("project/bootstrap", args, function(data, err){
+            if (err) {
+                alert(err.msg);
+                return;
+            }
+            dlg.close();
+        });
+    }).on("click", ".btn-cancel", function(){
+        dlg.close();
+    }).on("keydown", "input[name=name]", function(){
+        clearTimeout(timeout);
+        var self = this;
+        setTimeout(function(){
+            var val = $(self).val();
+            var name = val.replace(/[^a-z0-9_.-]/ig, "_");
+            $("input[name=path]", dlg_el).val(dest + "/" + name);
+            $("input[name=id]", dlg_el).val(val.replace(/[^a-z0-9_]/ig, "_"));
+        }, 100);
+    });
+    var dlg = dlg_el.data("kendoWindow");
+    dlg.open();
+    dlg.center();
 }
 
 function areYouSure(options, callback) {
