@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <title>Kendo UI bootstrapper</title>
+
     <link rel="stylesheet" type="text/css" href="kendo/css/kendo.common.css" />
     <link rel="stylesheet" type="text/css" href="kendo/css/kendo.default.css" />
     <script src="kendo/js/jquery.min.js"></script>
@@ -130,7 +132,7 @@
         <p>
           <label>
             File name (relative to project directory):<br />
-            <input class="k-input k-editable" name="filename" style="width: 25em" type="text" />
+            <input autocomplete="off" class="k-input k-editable" name="filename" style="width: 25em" type="text" />
           </label>
         </p>
         <p style="text-align: center">
@@ -157,13 +159,13 @@
       <p>
         <label>
           Project name:<br />
-          <input name="name" style="width: 25em" class="k-input k-editable" type="text" />
+          <input autocomplete="off" name="name" style="width: 25em" class="k-input k-editable" type="text" />
         </label>
       </p>
       <p>
         <label>
           Project directory:<br />
-          <input name="path" style="width: 25em"
+          <input autocomplete="off" name="path" style="width: 25em"
                  class="k-input k-editable" type="text"
                  value="${ this.destination => html }/" />
         </label>
@@ -171,7 +173,7 @@
       <p>
         <label>
           Project ID:<br />
-          <input name="id" style="width: 10em" class="k-input k-editable" type="text" />
+          <input autocomplete="off" name="id" style="width: 10em" class="k-input k-editable" type="text" />
         </label>
       </p>
       $(PROCESS ok_cancel_buttons())

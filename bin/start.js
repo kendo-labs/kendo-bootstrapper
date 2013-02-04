@@ -15,29 +15,11 @@ var SS      = require("../lib/server");
 var RPC     = require("../lib/rpc");
 var PROJECT = require("../lib/project");
 var CONFIG  = require("../lib/config");
+var UTILS   = require("../lib/utils");
 
-require("../lib/utils");
 require("../lib/handlers");
 
 start_server();
-
-PROJECT.bootstrap({
-    id    : "foo",
-    name  : "Foo Bar",
-    path  : "/tmp/kendo-bootstrap/foo",
-    force : true
-}, function(err){
-    if (err) console.log("ERROR", err);
-});
-
-PROJECT.bootstrap({
-    id    : "hw",
-    name  : "Hello world",
-    path  : "/tmp/kendo-bootstrap/hw",
-    force : true
-}, function(err){
-    if (err) console.log("ERROR", err);
-});
 
 var HANDLERS = [
     // this handler serves files from some project's space
@@ -153,3 +135,29 @@ function start_server() {
     //     });
     // }, 500);
 }
+
+(function(cp){
+    var tmp = PATH.join(TOPLEVEL_DIR, "TEMP", UTILS.uuid());
+    UTILS.fs_ensure_directory(tmp, function(err){
+        if (err) {
+            console.error("Cannot create temporary directory:", tmp);
+            console.log(err);
+            process.exit(1);
+        }
+        process.on("exit", function(){
+            UTILS.fs_rmpathSync(tmp);
+        });
+        process.on("SIGINT", function(){
+            process.exit(0);
+        });
+        var chrome = cp.spawn("google-chrome", [
+            "--user-data-dir=" + tmp,
+            "--app=http://localhost:7569/"
+        ], {
+            cwd: TOPLEVEL_DIR
+        });
+        chrome.on("exit", function(){
+            process.exit(0);
+        });
+    });
+})(require("child_process"));
