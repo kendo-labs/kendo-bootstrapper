@@ -10,6 +10,7 @@
        "handlebars" : "",
        "ncp"        : "",
        "step"       : "",
-       "formidable" : ""
+       "formidable" : "",
+       "optimist"   : ""
    }
 }
