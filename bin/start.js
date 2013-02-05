@@ -21,9 +21,8 @@ var UTILS   = require("../lib/utils");
 require("../lib/handlers");
 
 var ARGS = OPTIMIST
-    .describe("no-browser", "Don't launch Chrome on startup")
-    .alias("n", "no-browser")
-    .boolean("no-browser")
+    .describe("n", "Don't launch Chrome on startup")
+    .boolean("n")
     .wrap(80)
     .argv
 ;
@@ -145,7 +144,7 @@ function start_server() {
     // }, 500);
 }
 
-if (!ARGS["no-browser"]) (function(cp){
+if (!ARGS.n) (function(cp){
     var tmp = PATH.join(TOPLEVEL_DIR, "TEMP", UTILS.uuid());
     UTILS.fs_ensure_directory(tmp, function(err){
         if (err) {
