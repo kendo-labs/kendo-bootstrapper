@@ -186,6 +186,34 @@
       $(PROCESS ok_cancel_buttons())
     </script>
 
+    <script type="x/yajet-template" class="build-errors-dialog">
+      <table class="build-errors">
+        <thead>
+          <tr>
+            <td>File</td>
+            <td>Error</td>
+            <td>Location</td>
+          </tr>
+        </thead>
+        <tbody>
+          $(FOREACH (err => this.errors)
+            <tr>
+              <td><b>${ err.filename => html }</b></td>
+              <td>${ err.message => html }</td>
+              <td><a href="#" command="edit-file"
+                     project-id="$this.proj_id"
+                     filename="$err.filename|html"
+                     line="$err.line"
+                     col="$err.col">line $err.line, col $err.col</a></td>
+            </tr>
+          $)
+        </tbody>
+      </table>
+      <div class="dlg-buttons">
+        <button class="k-button btn-close">Close</button>
+      </div>
+    </script>
+
     <script type="x/yajet-template" class="template-library">
       $(EXPORT ok_cancel_buttons()
         <div class="dlg-buttons">

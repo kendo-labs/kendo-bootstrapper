@@ -76,12 +76,6 @@ minified files vs. original files, and will only rebuild the "dirty" ones.
 
 ## TODO
 
-- At this point I'm not handling various errors that can occur during
-  "rebuild all".  For example a parse error in some JS file will bring down
-  the server, which isn't exactly elegant.  Will have a nice dialog
-  displaying the errors and allowing the user to quickly jump to the error
-  location via the external editor.
-
 - It would be nice if the "add file" function will modify the `index.html`
   to load the new `<script>`, or `<link>` for CSS files.
 

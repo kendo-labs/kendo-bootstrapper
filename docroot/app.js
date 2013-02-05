@@ -211,10 +211,35 @@ function drawContent(proj, data) {
     });
 }
 
+function showBuildErrors(proj_id, errors) {
+    var dlg_el = $("<div></div>").html(getTemplate("build-errors-dialog")({
+        proj_id : proj_id,
+        errors  : errors
+    })).kendoWindow({
+        title : "Build errors",
+        modal : true
+    }).on("click", ".btn-close", function(){
+        dlg.close();
+    }).on("click", "[command=edit-file]", function(ev){
+        var proj = $(this).attr("project-id");
+        var file = $(this).attr("filename");
+        var line = $(this).attr("line");
+        var col = $(this).attr("col");
+        RPC.call("project/edit-file", proj_id, file, line, col);
+        ev.preventDefault();
+    });
+    var dlg = dlg_el.data("kendoWindow");
+    dlg.open();
+    dlg.center();
+}
+
 function rebuildProject(proj_id) {
     var proj = PROJECTS.get(proj_id);
     RPC.call("project/rebuild-all", proj_id, function(fileinfo, err){
-        drawContent(proj, fileinfo);
+        if (err && err instanceof Array) {
+            showBuildErrors(proj_id, err);
+        }
+        else drawContent(proj, fileinfo);
     });
 }
 
