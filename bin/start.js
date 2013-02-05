@@ -1,12 +1,13 @@
 #! /usr/bin/env node
 
-var PATH    = require("path");
-var HTTP    = require("http");
-var FS      = require("fs");
-var WS      = require("ws");
-var QRS     = require("querystring");
-var URL     = require("url");
-var FORMS   = require("formidable");
+var PATH     = require("path");
+var HTTP     = require("http");
+var FS       = require("fs");
+var WS       = require("ws");
+var QRS      = require("querystring");
+var URL      = require("url");
+var FORMS    = require("formidable");
+var OPTIMIST = require("optimist");
 
 global.TOPLEVEL_DIR = PATH.join(PATH.dirname(__filename), "..");
 var DOCROOT = PATH.join(TOPLEVEL_DIR, "docroot");
@@ -18,6 +19,14 @@ var CONFIG  = require("../lib/config");
 var UTILS   = require("../lib/utils");
 
 require("../lib/handlers");
+
+var ARGS = OPTIMIST
+    .describe("no-browser", "Don't launch Chrome on startup")
+    .alias("n", "no-browser")
+    .boolean("no-browser")
+    .wrap(80)
+    .argv
+;
 
 start_server();
 
@@ -136,7 +145,7 @@ function start_server() {
     // }, 500);
 }
 
-(function(cp){
+if (!ARGS["no-browser"]) (function(cp){
     var tmp = PATH.join(TOPLEVEL_DIR, "TEMP", UTILS.uuid());
     UTILS.fs_ensure_directory(tmp, function(err){
         if (err) {
