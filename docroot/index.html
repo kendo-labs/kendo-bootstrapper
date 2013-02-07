@@ -75,50 +75,39 @@
              title="$date|html"
              href="${ p.make_link(file) => html }">${ text || file => html }</a>$)$)
 
-      $(BLOCK display_files(FILES, canedit)
-        $(BLOCK showlist(type, title)
-          $(AWHEN (FILES[type])
-            <h3>$title</h3>
-            <div class="files-${type}"><ul>
-              $(FOREACH (f => it)
-                <li>
-                  ${ plink(f) }
-                  $(LET ((finfo => p.file_info[f]))
-                    (${ finfo.size } bytes$-
-                    $(WHEN (canedit)$-
-                      ; <a href="#" command="edit-file" project-id="$p.id|html" filename="$f|html">edit</a>$))
-                    $(WHEN (!finfo.library && finfo.canbuild)
-                      →
-                      $(AIF (finfo.build)
-                        <span class="build">
-                          ${ plink(it.rel) } ($it.size bytes)$-
-                          $(WHEN (it.dirty), <span class="warn">outdated</span>$)
-                        </span>
-                      $(ELSE)
-                        <span class="warn">not built</span>
-                      $)
+      $(BLOCK display_files(files_by_type)
+        $(MAPHASH (type, files => files_by_type)
+          <h3>$type</h3>
+          <div class="files-${type}"><ul>
+            $(FOREACH (f => files)
+              <li>
+                ${ plink(f.name) }
+                $(LET ((finfo => p.file_info[f.name]))
+                  (${ finfo.size } bytes$-
+                  $(WHEN (!f.lib)$-
+                    ; <a href="#" command="edit-file" project-id="$p.id|html" filename="$f.name|html">edit</a>$))
+                  $(WHEN (!finfo.library && finfo.canbuild)
+                    →
+                    $(AIF (finfo.build)
+                      <span class="build">
+                        ${ plink(it.rel) } ($it.size bytes)$-
+                        $(WHEN (it.dirty), <span class="warn">outdated</span>$)
+                      </span>
+                    $(ELSE)
+                      <span class="warn">not built</span>
                     $)
                   $)
-                </li>
-              $)
-            </ul></div>
-          $)
+                $)
+              </li>
+            $)
+          </ul></div>
         $)
-        <div class="files">
-          ${ showlist("html", "HTML files") }
-          ${ showlist("js", "JavaScript files") }
-          ${ showlist("css", "CSS files") }
-          ${ showlist("less", "LESS files") }
-        </div>
       $)
 
       <h2>
         Project files
       </h2>
-      ${ display_files(p.files, true) }
-
-      <h2>Library files</h2>
-      ${ display_files(p.min_files, false) }
+      ${ display_files(p.files) }
     </script>
 
     <script type="x/yajet-template" class="add-file-dialog">

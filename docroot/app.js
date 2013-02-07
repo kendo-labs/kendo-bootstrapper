@@ -30,12 +30,11 @@ function setupListeners() {
     });
     RPC.listen("project_add_file", function(data){
         var proj = PROJECTS.get(data.proj_id);
-        var dest = data.library ? proj.min_files : proj.files;
-        var x = dest[data.ext];
-        if (!x) {
-            x = dest.insert([]);
-        }
-        x.push(data.file);
+        proj.files.push({
+            name : data.name,
+            type : data.type,
+            lib  : data.lib
+        });
         if (proj.id == ACTIVE_PROJECT) {
             setActiveProject(proj); // refresh views
         }
@@ -43,13 +42,10 @@ function setupListeners() {
     RPC.listen("project_delete_file", function(data){
         var proj = PROJECTS.get(data.proj_id);
         var filename = data.file;
-        [ proj.min_files, proj.files ].forEach(function(bag){
-            // bag is an ObservableObject
-            bag.forEach(function(files, type){
-                var pos = files.indexOf(filename);
-                if (pos >= 0) files.splice(pos, 1);
-            });
-        });
+        for (var i = proj.files.length; --i >= 0;) {
+            if (proj.files[i].name == filename)
+                proj.files.splice(i, 1);
+        }
         if (proj.id == ACTIVE_PROJECT) {
             setActiveProject(proj); // refresh views
         }
@@ -160,17 +156,12 @@ function setActiveProject(proj) {
     var files_data = new kendo.data.HierarchicalDataSource({
         data: [
             make_tree(proj.files, "Project files"),
-            make_tree(proj.min_files, "Libraries"),
         ]
     });
-    function make_tree(data, label) {
+    function make_tree(files, label) {
         var top_item = { text: label, items: [] };
-        data.forEach(function(files, type){
-            var type_item = { text: type, items: [] };
-            top_item.items.push(type_item);
-            files.forEach(function(file){
-                type_item.items.push({ text: file, filename: file });
-            });
+        files.forEach(function(f){
+            top_item.items.push({ text: f.name, filename: f.name });
         });
         return top_item;
     };
@@ -188,6 +179,15 @@ function projectRefreshContent(proj_id) {
     });
 }
 
+function filesByType(files) {
+    var hash = {};
+    files.forEach(function(f){
+        var a = hash[f.type] || (hash[f.type] = []);
+        a.push(f);
+    });
+    return hash;
+}
+
 function drawContent(proj, data) {
     // fill the #content div with project details
     var file_info = {};
@@ -197,8 +197,7 @@ function drawContent(proj, data) {
     $("#content").html(getTemplate("project-view")({
         id           : proj.id,
         project_name : proj.name,
-        min_files    : proj.min_files,
-        files        : proj.files,
+        files        : filesByType(proj.files),
         file_info    : file_info,
         make_link    : function(path) {
             return projectFileLink(proj, path);

@@ -2,27 +2,45 @@
     "id": "{{PROJECT_ID}}",
     "name": "{{PROJECT_NAME}}",
 
-    "min_files": {
-        "js": [
-            "kendo/js/jquery.min.js",
-            "kendo/js/kendo.web.min.js",
-            "js/less-1.3.3.min.js"
-        ],
-        "css": [
-            "kendo/css/kendo.common.min.css",
-            "kendo/css/kendo.default.min.css"
-        ]
-    },
-
-    "files": {
-        "js": [
-            "js/app.js"
-        ],
-        "less": [
-            "css/app.less"
-        ],
-        "html": [
-            "index.html"
-        ]
-    }
+    "files": [
+        {
+            "name" : "kendo/js/jquery.min.js",
+            "type" : "js",
+            "lib"  : true
+        },{
+            "name" : "kendo/js/kendo.web.min.js",
+            "type" : "js",
+            "lib"  : true
+        },{
+            "name" : "js/less-1.3.3.min.js",
+            "type" : "js",
+            "lib"  : true
+        },{
+            "name" : "kendo/css/kendo.common.min.css",
+            "type" : "css",
+            "lib"  : true
+        },{
+            "name" : "kendo/css/kendo.default.min.css",
+            "type" : "css",
+            "lib"  : true
+        },{
+            "name" : "js/app.js",
+            "type" : "js"
+        },{
+            "name" : "css/app.less",
+            "type" : "less"
+        },{
+            "name" : "index.html",
+            "type" : "html",
+            "load" : [
+                "kendo/css/kendo.common.min.css",
+                "kendo/css/kendo.default.min.css",
+                "kendo/js/jquery.min.js",
+                "kendo/js/kendo.web.min.js",
+                "css/app.less",
+                "js/less-1.3.3.min.js",
+                "js/app.js"
+            ]
+        }
+    ]
 }
