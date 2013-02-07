@@ -77,30 +77,46 @@
 
       $(BLOCK display_files(files_by_type)
         $(MAPHASH (type, files => files_by_type)
-          <h3>$type</h3>
-          <div class="files-${type}"><ul>
-            $(FOREACH (f => files)
-              <li>
-                ${ plink(f.name) }
-                $(LET ((finfo => p.file_info[f.name]))
-                  (${ finfo.size } bytes$-
-                  $(WHEN (!f.lib)$-
-                    ; <a href="#" command="edit-file" project-id="$p.id|html" filename="$f.name|html">edit</a>$))
-                  $(WHEN (!finfo.library && finfo.canbuild)
-                    →
-                    $(AIF (finfo.build)
-                      <span class="build">
-                        ${ plink(it.rel) } ($it.size bytes)$-
-                        $(WHEN (it.dirty), <span class="warn">outdated</span>$)
-                      </span>
-                    $(ELSE)
-                      <span class="warn">not built</span>
-                    $)
+          <div class="project-files files-${type}">
+            <h3>$type</h3>
+            $(BLOCK showfiles(lib)
+              $(AWHEN (files.filter(function(f){ return !!f.lib == !!lib }))
+                <ul>
+                  $(FOREACH (f => it)
+                    <li>
+                      ${ plink(f.name) }
+                      $(LET ((finfo => p.file_info[f.name]))
+                        (${ finfo.size } bytes$-
+                        $(WHEN (!f.lib)$-
+                          ; <a href="#" command="edit-file" project-id="$p.id|html" filename="$f.name|html">edit</a>$))
+                        $(WHEN (!finfo.library && finfo.canbuild)
+                          →
+                          $(AIF (finfo.build)
+                            <span class="build">
+                              ${ plink(it.rel) } ($it.size bytes)$-
+                              $(WHEN (it.dirty), <span class="warn">outdated</span>$)
+                            </span>
+                          $(ELSE)
+                            <span class="warn">not built</span>
+                          $)
+                        $)
+                      $)
+                    </li>
                   $)
-                $)
-              </li>
+                </ul>
+              $)
             $)
-          </ul></div>
+            <table class="project-files">
+              <tr>
+                <td>
+                  ${ showfiles(false) }
+                </td>
+                <td>
+                  ${ showfiles(true) }
+                </td>
+              </tr>
+            </table>
+          </div>
         $)
       $)
 
