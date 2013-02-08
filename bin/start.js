@@ -58,7 +58,7 @@ var HANDLERS = [
                     "Content-Type": "text/html; charset=UTF-8"
                 });
                 if (err) ret = {
-                    error: err
+                    error: err.toString()
                 };
                 response.write(
                     "<script>window.parent.RPC.notify(" +

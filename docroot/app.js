@@ -284,8 +284,12 @@ function projectAddFile(proj_id) {
     dlg.center();
 
     dlg_el.find("form").on("submit", function(){
-        RPC.listen_once(expect, function(){
-            dlg.close();
+        RPC.listen_once(expect, function(ret){
+            if (ret && ret.error) {
+                alert(ret.error);
+            } else {
+                dlg.close();
+            }
         });
     });
 }
