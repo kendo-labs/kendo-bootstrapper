@@ -12,11 +12,12 @@ var OPTIMIST = require("optimist");
 global.TOPLEVEL_DIR = PATH.join(PATH.dirname(__filename), "..");
 var DOCROOT = PATH.join(TOPLEVEL_DIR, "docroot");
 
-var SS      = require("../lib/server");
-var RPC     = require("../lib/rpc");
-var PROJECT = require("../lib/project");
-var CONFIG  = require("../lib/config");
-var UTILS   = require("../lib/utils");
+var SS       = require("../lib/server");
+var RPC      = require("../lib/rpc");
+var PROJECT  = require("../lib/project");
+var CONFIG   = require("../lib/config");
+var UTILS    = require("../lib/utils");
+var PLATFORM = require("../lib/platform");
 
 require("../lib/handlers");
 
@@ -158,9 +159,20 @@ if (!ARGS.n) (function(cp){
         process.on("SIGINT", function(){
             process.exit(0);
         });
-        var chrome = cp.spawn("google-chrome", [
+        var chrome = cp.spawn(PLATFORM.find_browser(), [
+            "--no-first-run",
+	    "--no-default-browser-check",
+	    "--no-proxy-server",
+	    "--no-referrers",
+	    "--disable-translate",
+            "--window-size=800,600",
+	    "--window-position=10,10",
+	    "--start-maximized",
             "--user-data-dir=" + tmp,
-            "--app=http://localhost:7569/"
+	    //"--profile-directory=" + tmp,
+            "--new-window",
+            //"--app=http://localhost:7569/",
+	    "http://localhost:7569/",
         ], {
             cwd: TOPLEVEL_DIR
         });
