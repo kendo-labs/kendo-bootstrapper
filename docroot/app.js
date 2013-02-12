@@ -134,6 +134,12 @@ function setupLayout() {
             });
         });
     });
+    $("#content").on("click", "[command=edit-file]", function(ev){
+        var proj = $(this).attr("project-id");
+        var file = $(this).attr("filename");
+        RPC.call("project/edit-file", proj, file);
+        ev.preventDefault();
+    });
     $(window).focus(function(){
         if (ACTIVE_PROJECT) {
             projectRefreshContent(ACTIVE_PROJECT);
@@ -202,12 +208,7 @@ function drawContent(proj, data) {
         make_link    : function(path) {
             return projectFileLink(proj, path);
         }
-    })).on("click", "[command=edit-file]", function(ev){
-        var proj = $(this).attr("project-id");
-        var file = $(this).attr("filename");
-        RPC.call("project/edit-file", proj, file);
-        ev.preventDefault();
-    });
+    }));
 }
 
 function showBuildErrors(proj_id, errors) {
