@@ -145,7 +145,8 @@ function start_server() {
     // }, 500);
 }
 
-if (!ARGS.n) (function(cp){
+if (!ARGS.n) CONFIG.get_chrome_exe(function(err, chrome_exe){
+    var cp = require("child_process");
     var tmp = PATH.join(TOPLEVEL_DIR, "TEMP", UTILS.uuid());
     UTILS.fs_ensure_directory(tmp, function(err){
         if (err) {
@@ -159,7 +160,7 @@ if (!ARGS.n) (function(cp){
         process.on("SIGINT", function(){
             process.exit(0);
         });
-        var chrome = cp.spawn(PLATFORM.find_browser(), [
+        var chrome = cp.spawn(chrome_exe, [
             "--no-first-run",
 	    "--no-default-browser-check",
 	    "--no-proxy-server",
@@ -180,4 +181,4 @@ if (!ARGS.n) (function(cp){
             process.exit(0);
         });
     });
-})(require("child_process"));
+});
