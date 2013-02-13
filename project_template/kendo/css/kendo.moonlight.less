@@ -1,5 +1,6 @@
 @image-folder: "Moonlight";
 @texture: url("textures/brushed-metal.png");
+@tooltip-texture: url('textures/highlight.png');
 @fallback-texture: @texture;
 
 /* Widget Base Styles */
@@ -47,6 +48,9 @@
 @hover-border-color: #212a33;
 @hover-shadow: inset 0 1px 0 rgba(255,255,255,.1);
 
+/*Focused State*/
+@focused-shadow: 0 0 3px 0 @shadow-color;
+
 /* Selected State */
 @selected-text-color: #171e28;
 @selected-gradient: "#ee9f05 0%, #f4af03 100%";
@@ -70,9 +74,9 @@
 @disabled-text-color: #535a63;
 
 /* ToolTip */
-@tooltip-text-color: #171e28;
-@tooltip-background-color: #f5bb04;
-@tooltip-border-color: #f5bb04;
+@tooltip-text-color: #212a33;
+@tooltip-background-color: #f4af03;
+@tooltip-border-color: #f4af03;
 
 /* Validation Message */
 @validation-text-color: #ffa800;

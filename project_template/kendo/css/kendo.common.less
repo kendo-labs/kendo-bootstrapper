@@ -1441,8 +1441,8 @@ div.k-grid-header .k-header
     padding: .5em;
 }
 
-.k-filter-menu .k-widget,
-.k-filter-menu .k-textbox
+form.k-filter-menu .k-widget,
+form.k-filter-menu .k-textbox
 {
     display: block;
 }
@@ -1485,7 +1485,8 @@ div.k-grid-header .k-header
     padding: 0 .6em;
 }
 
-.k-grid .k-group-cell+td,
+.k-grid > table > tbody .k-group-cell+td,
+.k-grid > .k-grid-content .k-group-cell+td,
 .k-grid .k-hierarchy-cell+td
 {
     border-left-width: 0;
@@ -1760,6 +1761,7 @@ html .k-grid-edit-row .k-tooltip
     position: absolute;
     height: 25px;
     cursor: col-resize;
+    z-index: 2;
 }
 
 .k-marquee
@@ -1900,8 +1902,7 @@ span.k-dropdown
 .k-picker-wrap.k-state-border-up,
 .k-numeric-wrap.k-state-border-up
 {
-    border-top: 0;
-    padding-top: 3px;
+    /*padding-top: 1px;*/
 }
 
 .k-dropdown-wrap.k-state-border-up .k-select,
@@ -1916,8 +1917,13 @@ span.k-dropdown
 .k-picker-wrap.k-state-border-down,
 .k-numeric-wrap.k-state-border-down
 {
-    border-bottom: 0;
-    padding-bottom: 3px;
+    border-bottom-width: 0;
+    padding-bottom: 1px;
+}
+
+.k-colorpicker .k-picker-wrap.k-state-border-down
+{
+	border-bottom-width: 1px;
 }
 
 .k-textbox,
@@ -1928,7 +1934,7 @@ span.k-dropdown
 {
     border-width: 1px;
     border-style: solid;
-    padding: 2px 22px 2px 2px;
+    padding: 0 22px 0 0;
 }
 
 .k-numeric-wrap.k-expand-padding
@@ -1939,7 +1945,7 @@ span.k-dropdown
 .k-textbox,
 .k-autocomplete
 {
-    padding: 2px;
+    padding: 0;
 }
 
 .k-textbox.k-space-left
@@ -2025,7 +2031,7 @@ span.k-dropdown
 .k-numeric-wrap .k-select
 {
     border-style: solid;
-    border-width: 0;
+    border-width: 0 0 0 1px;
     border-color: inherit; /* skin-related, inherit does not work in ie7- */
 }
 
@@ -2055,7 +2061,7 @@ span.k-datetimepicker .k-select+.k-select
 
 .k-combobox .k-icon
 {
-    margin-top: 1px;
+    /*margin-top: 1px;*/
 }
 
 .k-dropdown .k-select,
@@ -2083,9 +2089,9 @@ span.k-datetimepicker .k-select+.k-select
 .k-dropdown-wrap .k-input,
 .k-selectbox .k-input
 {
-    height: 1.31em;
-    line-height: 1.31em;
-    padding: 0.18em 0;
+    height: 1.65em;
+    line-height: 1.65em;
+    padding: 0.178em 0;
     text-indent: 4px;
     border: 0;
     margin: 0;
@@ -2104,8 +2110,8 @@ span.k-datetimepicker .k-select+.k-select
 .k-numeric-wrap .k-select,
 .k-dropdown-wrap .k-select
 {
-    min-height: 1.3em;
-    line-height: 1.3em;
+    min-height: 1.56em;
+    line-height: 1.56em;
     vertical-align: middle;
     padding: 3px;
 }
@@ -2156,6 +2162,40 @@ body .k-datetimepicker .k-select
     padding: 0 4px;
     border-width: 1px;
     border-style: solid;
+}
+
+/* MultiSelect */
+
+.k-multiselect-wrap
+{
+    border-width: 0px;
+    border-style: solid;
+    border-radius: 4px;
+    border-color: #C5C5C5;
+    background-color: #FFF;
+}
+
+.k-multiselect-wrap .k-input
+{
+    background-color: transparent;
+    height: 1.31em;
+    line-height: 1.31em;
+    padding: 0.18em 0;
+    text-indent: 4px;
+    border: 0;
+    margin: 0;
+    float: left;
+}
+
+.k-multiselect-wrap li
+{
+    display: inline-block;
+    border-style: solid;
+    border-width: 1px;
+    margin: 5px 3px;
+    padding: .15em .15em .15em .4em;
+    line-height: 1.5em;
+    float: left;
 }
 
 /* Calendar */
@@ -2293,7 +2333,7 @@ span.k-datepicker
 
 .k-datetimepicker .k-picker-wrap .k-icon
 {
-    margin-left: 3px;
+    margin-left: 2px;
 }
 
 .k-picker-wrap .k-icon
@@ -2496,6 +2536,9 @@ span.k-numerictextbox
 
 .k-colorpicker
 {
+	.k-picker-wrap {
+		padding-bottom: 4px;
+	}
     .k-selected-color {
         font-size: 0;
         vertical-align: top;
@@ -2507,7 +2550,7 @@ span.k-numerictextbox
     }
     .k-tool-icon {
         position: relative;
-        top: -4px;
+        top: -2px;
         display: inline-block;
         padding: 2px 3px;
         font-size: 0;
@@ -2521,14 +2564,12 @@ span.k-numerictextbox
             height: 3px;
             width: @grid-size;
             position: absolute;
+			left: 2px;
             bottom: -4px;
         }
     }
     .k-icon {
     cursor: pointer;
-    }
-    &:focus {
-        outline: 1px dotted #000;
     }
 }
 
@@ -3337,7 +3378,7 @@ div.k-slider
     position: absolute;
     z-index: 20000;
     border-style: solid;
-    border-width: 2px;
+    border-width: 1px;
     padding: 4px 5px 4px 6px;
     background-repeat: repeat-x;
 
@@ -3346,6 +3387,17 @@ div.k-slider
 
     filter: alpha(opacity=90);
     opacity: .9;
+}
+
+.k-tooltip-button
+{
+	text-align: right;
+	height: 0;
+}
+
+.k-tooltip-closable .k-tooltip-content
+{
+	padding-right: 20px;
 }
 
 span.k-tooltip
@@ -3382,7 +3434,7 @@ span.k-tooltip
 
 .k-callout-n
 {
-    top: -7px;
+    top: -6px;
     left: 49%;
     margin-left: -5px;
     background-position: -162px -181px;
@@ -3396,7 +3448,7 @@ span.k-tooltip
 .k-callout-w
 {
     top: 49%;
-    left: -7px;
+    left: -6px;
     margin-top: -5px;
     background-position: -165px -226px;
 }
@@ -3410,7 +3462,7 @@ span.k-tooltip
 {
     top: 100%;
     left: 49%;
-    margin-top: 2px;
+    margin-top: 1px;
     margin-left: -5px;
     background-position: -162px -213px;
 }
@@ -3425,7 +3477,7 @@ span.k-tooltip
     top: 49%;
     left: 100%;
     margin-top: -5px;
-    margin-left: 2px;
+    margin-left: 1px;
     background-position: -165px -194px;
 }
 
