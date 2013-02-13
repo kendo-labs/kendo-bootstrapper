@@ -120,21 +120,15 @@ function start_server() {
         });
     });
 
-    PROJECT.EVENTS.listen("register_project", function(proj){
+    // forward events as notifications to the client
+    PROJECT.EVENTS.listen([
+        "register_project",
+        "project_add_file",
+        "project_delete_file"
+    ], function(data){
+        var event = this.event;
         CLIENTS.forEach(function(ws){
-            RPC.notify(ws, "register_project", proj);
-        });
-    });
-
-    PROJECT.EVENTS.listen("project_add_file", function(data){
-        CLIENTS.forEach(function(ws){
-            RPC.notify(ws, "project_add_file", data);
-        });
-    });
-
-    PROJECT.EVENTS.listen("project_delete_file", function(data){
-        CLIENTS.forEach(function(ws){
-            RPC.notify(ws, "project_delete_file", data);
+            RPC.notify(ws, event, data);
         });
     });
 

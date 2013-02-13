@@ -25,8 +25,7 @@ function setupListeners() {
         SERVER_CONFIG = config;
     });
     RPC.listen("register_project", function(proj){
-        proj.meta.path = proj.path;
-        PROJECTS.insert(proj.meta);
+        PROJECTS.insert(proj);
     });
     RPC.listen("project_add_file", function(data){
         var proj = PROJECTS.get(data.proj_id);
