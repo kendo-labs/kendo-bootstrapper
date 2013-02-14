@@ -57,11 +57,13 @@ STEP(
         var dest = PATH.join(TOPLEVEL_DIR, "kendosrc", "js");
         UTILS.fs_rmpath(dest, function(){
             UTILS.fs_ensure_directory(dest, function(){
-                FS.readFile(PATH.join(KENDO_DIR, "download-builder", "config", "kendo-config.json"), "utf8", function(err, data){
+                var kendo_config = PATH.join(KENDO_DIR, "download-builder", "config", "kendo-config.json");
+                FS.readFile(kendo_config, "utf8", function(err, data){
                     data = JSON.parse(data);
                     var files = data.components.map(function(c){
                         return PATH.join(KENDO_DIR, "src", c.source);
                     });
+                    files.push(kendo_config);
                     UTILS.fs_copy(files, dest, next);
                 });
             });
