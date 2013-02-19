@@ -2669,6 +2669,7 @@ div.k-flatcolorpicker {
 }
 .k-flatcolorpicker .k-hsv-rectangle {
   position: relative;
+  -ms-touch-action: pinch-zoom double-tap-zoom;
 }
 .k-flatcolorpicker .k-hsv-rectangle .k-draghandle {
   cursor: pointer;
