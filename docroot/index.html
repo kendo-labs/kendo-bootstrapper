@@ -64,6 +64,8 @@
                   class="k-button">rebuild all</button>
           <button onclick="projectAddFile('$p.id|html')"
                   class="k-button">add file</button>
+          <button onclick="projectBuildKendo('$p.id|html')"
+                  class="k-button">build kendo</button>
         </div>
         <h1>$p.project_name|html</h1>
       </div>
@@ -217,6 +219,33 @@
       <div class="dlg-buttons">
         <button class="k-button btn-close">Close</button>
       </div>
+    </script>
+
+    <script type="x/yajet-template" class="kendo-widget-usage">
+      <p>Based on your code we detected that the following Kendo UI widgets
+      are in use:</p>
+
+      <ul class="two-columns">$(FOREACH (w => this.widgets) <li>$w|html</li> $)</ul>
+
+      <p>We auto-selected these components.  If you require additional
+      components please mark them below.  Dependencies will be added
+      in automatically.</p>
+
+      <div style="max-height: 200px; overflow: auto" class="two-columns">
+        $(FOREACH (comp => this.kcomp)
+          <div>
+            $( var checked = this.selection.indexOf(comp.id) >= 0
+                             ? 'checked="checked"' : ''; )
+            <label class="hovering"
+                   title="${ comp.description || 'No description provided' => html }">
+              <input id="kcomp-$comp.id|html" type="checkbox" value="$comp.id|html" $checked />
+              $comp.name|html ($comp.category|html)
+            </label>
+          </div>
+        $)
+      </div>
+
+      $(PROCESS ok_cancel_buttons())
     </script>
 
     <script type="x/yajet-template" class="template-library">

@@ -332,6 +332,60 @@ function projectNew() {
     dlg.center();
 }
 
+function projectBuildKendo(proj_id) {
+    RPC.call("project/widget-usage", proj_id, function(data, err){
+        var selection = [];
+        var kcomp = data.kendo_config.components;
+        function require(comp) {
+            if (typeof comp == "string") {
+                for (var i = 0; i < kcomp.length; ++i) {
+                    if (kcomp[i].id == comp) {
+                        comp = kcomp[i];
+                        break;
+                    }
+                }
+            }
+            // if (comp.depends) {
+            //     comp.depends.forEach(require);
+            // }
+            if (selection.indexOf(comp.id) < 0)
+                selection.push(comp.id);
+        }
+        data.components.forEach(require);
+        if (err) {
+            alert(err.msg);
+            return;
+        }
+        var dlg_el = $("<div></div>").html(getTemplate("kendo-widget-usage")({
+            widgets   : data.widgets,
+            kcomp     : kcomp,
+            selection : selection,
+            okLabel   : "Build!"
+        })).kendoTooltip({
+            filter: "label",
+            position: "right",
+            width: "15em"
+        }).kendoWindow({
+            title: "Build custom Kendo UI",
+            modal: true,
+            width: "500px"
+        }).on("click", ".btn-ok", function(){
+            var sel = []
+            $("input[id^=\"kcomp-\"]:checked", dlg_el).each(function(){
+                sel.push(this.value);
+            });
+            RPC.call("project/build-kendo", proj_id, sel, function(ret){
+                projectRefreshContent(proj_id);
+            });
+        }).on("click", ".btn-cancel", function(){
+            dlg.close();
+        });
+        var dlg = dlg_el.data("kendoWindow");
+        dlg.open();
+        dlg.center();
+    });
+}
+
 function areYouSure(options, callback) {
     var dlg_el = $("<div></div>").html(getTemplate("confirm-dialog")({
         message     : options.message,

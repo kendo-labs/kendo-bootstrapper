@@ -24,7 +24,7 @@
         cmd = PENDING[id];
         if (cmd && cmd.callback) {
             var error = null;
-            if (result.error) error = result.error;
+            if (result != null && result.error) error = result.error;
             cmd.callback.call(null, result, error);
             delete PENDING[id];
         }
