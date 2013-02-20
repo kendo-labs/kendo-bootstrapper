@@ -82,6 +82,7 @@ var HANDLERS = [
 HANDLERS.NEXT = {};
 
 function start_server() {
+    CONFIG.read_config();
     var server = HTTP.createServer(function(request, response){
         var i = 0, ret = HANDLERS.NEXT;
         while (ret === HANDLERS.NEXT && i < HANDLERS.length) {
@@ -176,3 +177,5 @@ if (!ARGS.n) CONFIG.get_chrome_exe(function(err, chrome_exe){
         });
     });
 });
+
+console.log("Server started");
