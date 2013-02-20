@@ -370,11 +370,12 @@ function projectBuildKendo(proj_id) {
             modal: true,
             width: "500px"
         }).on("click", ".btn-ok", function(){
-            var sel = []
+            var sel = [];
             $("input[id^=\"kcomp-\"]:checked", dlg_el).each(function(){
                 sel.push(this.value);
             });
-            RPC.call("project/build-kendo", proj_id, sel, function(ret){
+            RPC.call("project/build-kendo", proj_id, sel, function(ret, err){
+                dlg.close();
                 projectRefreshContent(proj_id);
             });
         }).on("click", ".btn-cancel", function(){

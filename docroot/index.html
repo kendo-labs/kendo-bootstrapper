@@ -233,16 +233,16 @@
 
       <div style="max-height: 200px; overflow: auto" class="two-columns">
         $(FOREACH (comp => this.kcomp)
-          <div>
-            $( var checked = this.selection.indexOf(comp.id) >= 0
-                             ? 'checked="checked"' : ''; )
-            <label class="hovering"
-                   title="${ comp.description || 'No description provided' => html }">
-              <input id="kcomp-$comp.id|html" type="checkbox" value="$comp.id|html" $checked />
-              $comp.name|html ($comp.category|html)
-            </label>
-          </div>
-        $)
+          $(WHEN (comp.category == "web" || comp.category == "framework")
+            <div>
+              $( var checked = this.selection.indexOf(comp.id) >= 0
+                               ? 'checked="checked"' : ''; )
+              <label class="hovering"
+                     title="${ comp.description || 'No description provided' => html }">
+                <input id="kcomp-$comp.id|html" type="checkbox" value="$comp.id|html" $checked />
+                $comp.name|html ($comp.category|html)
+              </label>
+            </div>$)$)
       </div>
 
       $(PROCESS ok_cancel_buttons())
