@@ -334,7 +334,7 @@ function projectNew() {
 
 function projectBuildKendo(proj_id) {
     RPC.call("project/widget-usage", proj_id, function(data, err){
-        var selection = [];
+        var detected = [];
         var kcomp = data.kendo_config.components;
         function require(comp) {
             if (typeof comp == "string") {
@@ -348,18 +348,23 @@ function projectBuildKendo(proj_id) {
             // if (comp.depends) {
             //     comp.depends.forEach(require);
             // }
-            if (selection.indexOf(comp.id) < 0)
-                selection.push(comp.id);
+            if (detected.indexOf(comp.id) < 0)
+                detected.push(comp.id);
         }
         data.components.forEach(require);
         if (err) {
             alert(err.msg);
             return;
         }
+        var sel = detected;
+        if (data.manual_kendo_components) {
+            sel = sel.concat(data.manual_kendo_components);
+        }
         var dlg_el = $("<div></div>").html(getTemplate("kendo-widget-usage")({
             widgets   : data.widgets,
             kcomp     : kcomp,
-            selection : selection,
+            selection : sel,
+            manual    : data.manual_kendo_components,
             okLabel   : "Build!"
         })).kendoTooltip({
             filter: "label",
@@ -370,11 +375,14 @@ function projectBuildKendo(proj_id) {
             modal: true,
             width: "500px"
         }).on("click", ".btn-ok", function(){
-            var sel = [];
+            var user_selection = [];
             $("input[id^=\"kcomp-\"]:checked", dlg_el).each(function(){
-                sel.push(this.value);
+                user_selection.push(this.value);
             });
-            RPC.call("project/build-kendo", proj_id, sel, function(ret, err){
+            RPC.call("project/build-kendo", proj_id, {
+                detected: detected,
+                selected: user_selection
+            }, function(ret, err){
                 dlg.close();
                 projectRefreshContent(proj_id);
             });
