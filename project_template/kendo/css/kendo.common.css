@@ -2066,18 +2066,6 @@ span.k-dropdown {
   border-width: 1px;
   border-style: solid;
 }
-.k-list-container.k-state-border-up,
-.k-autocomplete.k-state-border-up,
-.k-dropdown-wrap.k-state-border-up,
-.k-picker-wrap.k-state-border-up,
-.k-numeric-wrap.k-state-border-up {
-  /*padding-top: 1px;*/
-
-}
-.k-dropdown-wrap.k-state-border-up .k-select,
-.k-picker-wrap.k-state-border-up .k-select {
-  top: 1px;
-}
 .k-list-container.k-state-border-down,
 .k-autocomplete.k-state-border-down,
 .k-dropdown-wrap.k-state-border-down,
@@ -2525,7 +2513,6 @@ input.k-textbox {
   line-height: 1.6em;
 }
 .k-ie7 input.k-textbox {
-  display: block;
   line-height: 1.72em;
   height: 1.72em;
   text-indent: .3em;
@@ -2561,7 +2548,7 @@ span.k-numerictextbox {
 }
 /* ColorPicker */
 .k-colorpicker .k-picker-wrap {
-  padding-bottom: 4px;
+  padding-bottom: 3px;
 }
 .k-colorpicker .k-selected-color {
   font-size: 0;
@@ -2571,12 +2558,13 @@ span.k-numerictextbox {
   height: 16px;
   width: 16px;
   border: 1px solid #ccc;
+  margin: 3px 2px 0 1px;
 }
 .k-colorpicker .k-tool-icon {
   position: relative;
   top: -2px;
   display: inline-block;
-  padding: 2px 3px;
+  padding: 3px 3px 2px;
   font-size: 0;
   line-height: 0;
   background-repeat: no-repeat;
@@ -2589,8 +2577,8 @@ span.k-numerictextbox {
   height: 3px;
   width: 16px;
   position: absolute;
-  left: 2px;
-  bottom: -4px;
+  left: 1px;
+  bottom: -3px;
 }
 .k-colorpicker .k-icon {
   cursor: pointer;

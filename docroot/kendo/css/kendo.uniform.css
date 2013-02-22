@@ -626,6 +626,16 @@ div.k-imagebrowser-dropzone em {
   -webkit-border-radius: 0 6px 6px 0;
   border-radius: 0 6px 6px 0;
 }
+.k-rtl .k-dropdown-wrap .k-select,
+.k-rtl .k-picker-wrap .k-select,
+.k-rtl .k-numeric-wrap .k-select,
+.k-rtl .k-datetimepicker .k-select + .k-select,
+.k-rtl .k-animation-container .k-calendar-container,
+.k-rtl .k-list-container.k-state-border-right {
+  -moz-border-radius: 6px 0 0 6px;
+  -webkit-border-radius: 6px 0 0 6px;
+  border-radius: 6px 0 0 6px;
+}
 .k-textbox > input,
 .k-autocomplete .k-input,
 .k-colorpicker .k-selected-color,
