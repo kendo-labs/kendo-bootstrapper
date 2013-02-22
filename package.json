@@ -2,7 +2,7 @@
    "name": "kendo-bootstrapper",
    "version": "0.0.1",
    "dependencies": {
-       "uglify-js"  : "",
+       "uglify-js"  : "~2.2.5",
        "cssmin"     : "",
        "less"       : "",
        "socket.io"  : "",
@@ -11,6 +11,7 @@
        "ncp"        : "",
        "step"       : "",
        "formidable" : "",
-       "optimist"   : ""
+       "optimist"   : "",
+       "coffee-script" : "~1.4.0"
    }
 }
