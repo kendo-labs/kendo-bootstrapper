@@ -23,10 +23,16 @@ require("../lib/handlers");
 
 var ARGS = OPTIMIST
     .describe("n", "Don't launch Chrome on startup")
+    .describe("clean", "Drop config file, start fresh")
     .boolean("n")
+    .boolean("clean")
     .wrap(80)
     .argv
 ;
+
+if (ARGS.clean) {
+    CONFIG.cleanup();
+}
 
 start_server();
 

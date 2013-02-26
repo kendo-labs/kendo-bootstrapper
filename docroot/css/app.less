@@ -37,9 +37,6 @@ html, body {
     border-bottom: 1px solid #444;
   }
   h2 {
-    &:before {
-      content: "★ ";
-    }
   }
   h3 {
     color: #444;
@@ -96,18 +93,20 @@ table.build-errors {
   }
 }
 
-div.project-files {
-  h3 {
-    text-align: right;
-    border-bottom: 1px solid #888;
+table.project-files {
+  width: 100%;
+  border-collapse: collapse;
+  td {
+    padding: 2px 5px;
+    vertical-align: top;
+    width: 50%;
   }
-  table.project-files {
-    width: 100%;
-    border-collapse: collapse;
+  tr.file-type {
     td {
-      padding: 2px 5px;
-      vertical-align: top;
-      width: 50%;
+      background-color: #778;
+      color: #fff;
+      font-size: 120%;
+      font-weight: bold;
     }
   }
 }

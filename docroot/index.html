@@ -79,53 +79,51 @@
 
       $(BLOCK display_files(files_by_type)
         $(MAPHASH (type, files => files_by_type)
-          <div class="project-files files-${type}">
-            <h3>$type</h3>
-            $(BLOCK showfiles(lib)
-              $(AWHEN (files.filter(function(f){ return !!f.lib == !!lib }))
-                <ul>
-                  $(FOREACH (f => it)
-                    <li>
-                      ${ plink(f.name) }
-                      $(LET ((finfo => p.file_info[f.name]))
-                        (${ finfo.size } bytes$-
-                        $(WHEN (!f.lib)$-
-                          ; <a href="#" command="edit-file" project-id="$p.id|html" filename="$f.name|html">edit</a>$))
-                        $(WHEN (!finfo.library && finfo.canbuild)
-                          →
-                          $(AIF (finfo.build)
-                            <span class="build">
-                              ${ plink(it.rel) } ($it.size bytes)$-
-                              $(WHEN (it.dirty), <span class="warn">outdated</span>$)
-                            </span>
-                          $(ELSE)
-                            <span class="warn">not built</span>
-                          $)
+          <tr class="file-type">
+            <td>$type (project files)</td>
+            <td>$type (library files)</td>
+          </tr>
+          $(BLOCK showfiles(lib)
+            $(AWHEN (files.filter(function(f){ return !!f.lib == !!lib }))
+              <ul>
+                $(FOREACH (f => it)
+                  <li>
+                    ${ plink(f.name) }
+                    $(LET ((finfo => p.file_info[f.name]))
+                      (${ finfo.size } bytes$-
+                      $(WHEN (!f.lib)$-
+                        ; <a href="#" command="edit-file" project-id="$p.id|html" filename="$f.name|html">edit</a>$))
+                      $(WHEN (!finfo.library && finfo.canbuild)
+                        →
+                        $(AIF (finfo.build)
+                          <span class="build">
+                            ${ plink(it.rel) } ($it.size bytes)$-
+                            $(WHEN (it.dirty), <span class="warn">outdated</span>$)
+                          </span>
+                        $(ELSE)
+                          <span class="warn">not built</span>
                         $)
                       $)
-                    </li>
-                  $)
-                </ul>
-              $)
+                    $)
+                  </li>
+                $)
+              </ul>
             $)
-            <table class="project-files">
-              <tr>
-                <td>
-                  ${ showfiles(false) }
-                </td>
-                <td>
-                  ${ showfiles(true) }
-                </td>
-              </tr>
-            </table>
-          </div>
+          $)
+          <tr>
+            <td>
+              ${ showfiles(false) }
+            </td>
+            <td>
+              ${ showfiles(true) }
+            </td>
+          </tr>
         $)
       $)
-
-      <h2>
-        Project files
-      </h2>
-      ${ display_files(p.files) }
+      
+      <table class="project-files">
+        ${ display_files(p.files) }
+      </table>
     </script>
 
     <script type="x/yajet-template" class="add-file-dialog">
