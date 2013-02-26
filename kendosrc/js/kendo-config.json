@@ -460,13 +460,13 @@
                 {
                     "name": "Editor",
                     "file": "kendo.editor.js",
-                    "line": 416,
+                    "line": 444,
                     "col": 17
                 },
                 {
                     "name": "SelectBox",
                     "file": "kendo.editor.js",
-                    "line": 5385,
+                    "line": 5435,
                     "col": 16
                 }
             ]
@@ -621,18 +621,6 @@
             ]
         },
         {
-            "id": "history",
-            "name": "History",
-            "category": "mobile",
-            "description": "History",
-            "depends": [
-                "core"
-            ],
-            "hidden": true,
-            "source": "kendo.history.min.js",
-            "widgets": []
-        },
-        {
             "id": "imagebrowser",
             "name": "ImageBrowser",
             "category": "web",
@@ -753,7 +741,8 @@
             "category": "mobile",
             "description": "The Mobile application provides a framework to build native looking web applications on mobile devices.",
             "depends": [
-                "mobile.pane"
+                "mobile.pane",
+                "router"
             ],
             "source": "kendo.mobile.application.min.js",
             "widgets": []
@@ -1042,7 +1031,6 @@
             "depends": [
                 "core",
                 "fx",
-                "history",
                 "mobile.scroller"
             ],
             "hidden": true,
@@ -1189,6 +1177,18 @@
                     "col": 20
                 }
             ]
+        },
+        {
+            "id": "router",
+            "name": "history",
+            "category": "framework",
+            "description": "Kendo Router",
+            "depends": [
+                "core"
+            ],
+            "hidden": false,
+            "source": "kendo.router.min.js",
+            "widgets": []
         },
         {
             "id": "selectable",
@@ -1408,6 +1408,17 @@
                     "col": 20
                 }
             ]
+        },
+        {
+            "id": "view",
+            "name": "View",
+            "category": "framework",
+            "depends": [
+                "core"
+            ],
+            "hidden": false,
+            "source": "kendo.view.min.js",
+            "widgets": []
         },
         {
             "id": "window",
