@@ -36,16 +36,24 @@ if (ARGS.clean) {
 
 start_server();
 
-var HANDLERS = [
+var HANDLERS;
+
+HANDLERS = [
     // this handler serves files from some project's space
     // it's used to preview.
     [/^\/@proj\/([^\/]+)\/*(.*)$/, function(request, response, proj_id, path){
         var url = URL.parse(request.url, true);
         var proj = PROJECT.get_project(proj_id);
-        path = "/" + path;
-        if (url.search) path += url.search;
-        request.url = path;
-        SS.handle_request(proj.path, request, response);
+        if (!path) path = "index.html";
+        var f = PROJECT.get_file_by_name(proj, path);
+        if (f && f.page) {
+            SS.serve_content(PROJECT.build_page(proj, f, "devel"), path, response);
+        } else {
+            path = "/" + path;
+            if (url.search) path += url.search;
+            request.url = path;
+            SS.handle_request(proj.path, request, response);
+        }
     }],
 
     // handler that adds a file to a project.  should be the only
@@ -83,9 +91,7 @@ var HANDLERS = [
     function(request, response) {
         SS.handle_request(DOCROOT, request, response);
     }
-];
-
-HANDLERS.NEXT = {};
+], HANDLERS.NEXT = {};
 
 function start_server() {
     CONFIG.read_config();

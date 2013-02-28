@@ -50,6 +50,7 @@
         },{
             "name" : "index.html",
             "type" : "html",
+            "page" : true,
             "deps" : [ "app.js" ]
         }
     ]
