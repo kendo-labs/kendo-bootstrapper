@@ -23,6 +23,11 @@
             "type" : "js",
             "lib"  : true
         },{
+            "id"   : "coffeescript",
+            "name" : "js/coffee-script.js",
+            "type" : "js",
+            "lib"  : true
+        },{
             "id"   : "kendo.common.css",
             "name" : "kendo/css/kendo.common.min.css",
             "type" : "css",
@@ -48,6 +53,7 @@
             "name" : "css/app.less",
             "type" : "less"
         },{
+            "id"   : "main",
             "name" : "index.html",
             "type" : "html",
             "page" : true,
