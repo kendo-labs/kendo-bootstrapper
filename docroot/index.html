@@ -60,6 +60,8 @@
         <div style="float: right">
           <button onclick="projectRefreshContent('$p.id|html')"
                   class="k-button">refresh</button>
+          <button onclick="projectEditDependencies('$p.id|html')"
+                  class="k-button">dependencies</button>
           <button onclick="rebuildProject('$p.id|html')"
                   class="k-button">rebuild all</button>
           <button onclick="projectAddFile('$p.id|html')"
@@ -216,6 +218,19 @@
       </table>
       <div class="dlg-buttons">
         <button class="k-button btn-close">Close</button>
+      </div>
+    </script>
+
+    <script type="x/yajet-template" class="project-deps-dialog">
+      <div class="project-deps-dialog">
+        <div class="project-deps">
+          <div class="left-files"></div>
+          <div class="deps" style="display: none">
+            <p><b>Select below direct dependencies of <span class="filename"></span></b>:</p>
+            <div class="deps-select"></div>
+          </div>
+        </div>
+        $(PROCESS ok_cancel_buttons())
       </div>
     </script>
 

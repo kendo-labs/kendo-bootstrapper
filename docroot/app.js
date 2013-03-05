@@ -29,11 +29,8 @@ function setupListeners() {
     });
     RPC.listen("project_add_file", function(data){
         var proj = PROJECTS.get(data.proj_id);
-        proj.files.push({
-            name : data.name,
-            type : data.type,
-            lib  : data.lib
-        });
+        delete data["proj_id"];
+        proj.files.push(data);
         if (proj.id == ACTIVE_PROJECT) {
             setActiveProject(proj); // refresh views
         }
@@ -393,6 +390,98 @@ function projectBuildKendo(proj_id) {
         dlg.open();
         dlg.center();
     });
+}
+
+function getProjectFileById(proj, id) {
+    var a = proj.files;
+    for (var i = a.length; --i >= 0;)
+        if (a[i].id == id)
+            return a[i];
+}
+
+function getProjectFileByName(proj, name) {
+    var a = proj.files;
+    for (var i = a.length; --i >= 0;)
+        if (a[i].name == name)
+            return a[i];
+}
+
+function projectEditDependencies(proj_id) {
+    var proj = PROJECTS.get(proj_id);
+    var the_deps = {};
+    proj.files.forEach(function(f){
+        the_deps[f.id] = f.deps ? [].slice.call(f.deps) : [];
+    });
+    var dlg_el = $("<div></div>").html(getTemplate("project-deps-dialog")({
+        files: proj.files,
+    })).kendoWindow({
+        title: "File dependencies",
+        modal: true,
+        width: 600,
+        height: 400,
+    }).on("click", ".btn-ok", function(){
+        RPC.call("project/set-dependencies", proj.id, the_deps, function(ret, err){
+            if (err) {
+                console.log(err);
+                return;
+            }
+            dlg.close();
+            proj.files.forEach(function(f){
+                f.deps = the_deps[f.id] || [];
+            });
+            projectRefreshContent(proj.id);
+        });
+    }).on("click", ".btn-cancel", function(){
+        dlg.close();
+    });
+    var left_files = $(".left-files", dlg_el).kendoListView({
+        dataSource : proj.files,
+        selectable : true,
+        template   : getTemplate("simple-list-item"),
+        change     : function(ev) {
+            var id = this.select().attr("value");
+            if (!id) {
+                $(".deps", dlg_el).css("display", "none");
+                return;
+            }
+            var file = getProjectFileById(proj, id);
+            $(".deps", dlg_el)
+                .css("display", "")
+                .find(".filename").html(kendo.htmlEncode(file.name));
+            var deps = [].slice.call(the_deps[file.id] || []);
+            // $(".deps-select", dlg_el).kendoMultiSelect({
+            //     dataSource     : proj.files,
+            //     dataTextField  : "name",
+            //     dataValueField : "id",
+            //     placeholder    : "No deps selected",
+            //     highlightFirst : false,
+            //     value          : deps
+            // });
+            var deps_select_el = $("<div></div>").kendoListView({
+                template: getTemplate("simple-list-item"),
+                selectable: "multiple",
+                dataSource: proj.files.filter(function(f){
+                    return f !== file;
+                }),
+                change: function() {
+                    var val = this.select().map(function(){
+                        return $(this).attr("value");
+                    });
+                    val = [].slice.call(val);
+                    the_deps[file.id] = val;
+                }
+            });
+            $(".deps-select", dlg_el).html("<br />").append(deps_select_el);
+            var deps_select = deps_select_el.data("kendoListView");
+            var elements = deps.map(function(f){
+                return $("[value=\"" + f + "\"]", deps_select_el);
+            });
+            deps_select.select(elements);
+        }
+    });
+    var dlg = dlg_el.data("kendoWindow");
+    dlg.open();
+    dlg.center();
 }
 
 function areYouSure(options, callback) {
