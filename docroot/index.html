@@ -68,6 +68,9 @@
                   class="k-button">add file</button>
           <button onclick="projectBuildKendo('$p.id|html')"
                   class="k-button">build kendo</button>
+          |
+          <button onclick="projectBuildDistro('$p.id|html')"
+                  class="k-button">build distro</button>
         </div>
         <h1>$p.project_name|html</h1>
       </div>
@@ -122,7 +125,7 @@
           </tr>
         $)
       $)
-      
+
       <table class="project-files">
         ${ display_files(p.files) }
       </table>

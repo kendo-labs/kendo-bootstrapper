@@ -392,6 +392,10 @@ function projectBuildKendo(proj_id) {
     });
 }
 
+function projectBuildDistro(proj_id) {
+    window.open("/@build/prod/" + proj_id);
+}
+
 function getProjectFileById(proj, id) {
     var a = proj.files;
     for (var i = a.length; --i >= 0;)

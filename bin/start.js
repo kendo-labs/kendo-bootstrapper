@@ -87,6 +87,28 @@ HANDLERS = [
         });
     }],
 
+    [/^\/@build\/([^\/]+)\/([^\/]+)\/*$/, function(request, response, build_type, proj_id){
+        PROJECT.build_distro(proj_id, build_type, function(err, data){
+            if (err) {
+                response.writeHead(500, { "Content-Type" : "text/plain; charset=UTF-8" });
+                response.write(err + "\n");
+                response.end();
+            } else {
+                response.writeHead(200, "OK", {
+                    "Content-Type"         : "application/zip",
+                    "Content-Length"       : data.length,
+                    "Content-Disposition"  : "attachment; filename=\"" + proj_id + ".zip\"",
+                    "Pragma"               : "no-cache",
+                    "Expires"              : "Tue, 08 Mar 1979 06:00:00 GMT",
+                    "Last-Modified"        : new Date().toGMTString(),
+                    "Cache-Control"        : "no-store, no-cache, must-revalidate, max-age=0, post-check=0, pre-check=0",
+                });
+                response.write(data, "binary");
+                response.end();
+            }
+        });
+    }],
+
     // default handler serves static files from docroot/
     function(request, response) {
         SS.handle_request(DOCROOT, request, response);
