@@ -229,13 +229,17 @@ function showBuildErrors(proj_id, errors) {
     dlg.center();
 }
 
-function rebuildProject(proj_id) {
+function rebuildProject(proj_id, callback) {
     var proj = PROJECTS.get(proj_id);
     RPC.call("project/rebuild-all", proj_id, function(fileinfo, err){
         if (err && err instanceof Array) {
             showBuildErrors(proj_id, err);
+            if (callback) callback(null, true);
         }
-        else drawContent(proj, fileinfo);
+        else {
+            drawContent(proj, fileinfo);
+            if (callback) callback(fileinfo, false);
+        }
     });
 }
 
@@ -393,7 +397,10 @@ function projectBuildKendo(proj_id) {
 }
 
 function projectBuildDistro(proj_id) {
-    window.open("/@build/prod/" + proj_id);
+    rebuildProject(proj_id, function(_, err){
+        if (!err)
+            window.location.replace("/@build/prod/" + proj_id);
+    });
 }
 
 function getProjectFileById(proj, id) {
