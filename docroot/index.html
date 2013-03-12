@@ -214,7 +214,7 @@
                      project-id="$this.proj_id"
                      filename="$err.filename|html"
                      line="$err.line"
-                     col="$err.col">line $err.line, col $err.col</a></td>
+                     $(AIF (err.col) col="$it"$)>line $err.line$(AIF (err.col), col $it$)</a></td>
             </tr>
           $)
         </tbody>

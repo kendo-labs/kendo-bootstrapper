@@ -91,7 +91,7 @@ HANDLERS = [
         PROJECT.build_distro(proj_id, build_type, function(err, data){
             if (err) {
                 response.writeHead(500, { "Content-Type" : "text/plain; charset=UTF-8" });
-                response.write(err + "\n");
+                response.write(JSON.stringify(err, null, 4) + "\n");
                 response.end();
             } else {
                 response.writeHead(200, "OK", {
