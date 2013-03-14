@@ -270,6 +270,9 @@ function projectAddFile(proj_id) {
         setTimeout(function(){
             var name = $(input).val().replace(/^\/+/, "");
             dlg_el.find(".display-full-path").text(proj.path + "/" + name);
+            dlg_el.find("[name=\"page\"]").each(function(){
+                this.checked = /\.(html?|php|asp)$/i.test(name);
+            });
         }, 100);
     }
     input.on({

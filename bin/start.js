@@ -67,7 +67,8 @@ HANDLERS = [
                 proj_id  : fields.project,
                 filename : fields.filename,
                 datapath : files.file ? files.file.path : null,
-                library  : !!fields.library
+                library  : !!fields.library,
+                page     : !!fields.page,
             }, function(err, ret){
                 response.writeHead(200, "OK", {
                     "Content-Type": "text/html; charset=UTF-8"
