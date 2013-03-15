@@ -401,8 +401,24 @@ function projectBuildKendo(proj_id) {
 
 function projectBuildDistro(proj_id) {
     rebuildProject(proj_id, function(_, err){
-        if (!err)
-            window.location.replace("/@build/prod/" + proj_id);
+        if (!err) {
+            var dlg_el = $("<div></div>").html(getTemplate("build-distro")({
+
+            })).kendoWindow({
+                title: "Build distro",
+                modal: true,
+            }).on("click", ".btn-ok", function(){
+                var type = dlg_el.find("input[name=\"build-type\"]:checked").val();
+                dlg.close();
+                var url = "/@build/" + type + "/" + proj_id;
+                window.location.replace(url);
+            }).on("click", ".btn-cancel", function(){
+                dlg.close();
+            });
+            var dlg = dlg_el.data("kendoWindow");
+            dlg.open();
+            dlg.center();
+        }
     });
 }
 

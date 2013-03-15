@@ -275,6 +275,31 @@
       $(PROCESS ok_cancel_buttons())
     </script>
 
+    <script type="x/yajet-template" class="build-distro">
+      <div>
+        <h2>Select build type:</h2>
+        <p>
+          <label>
+            <input type="radio" name="build-type" value="prod" checked="checked" />
+            Production build (compiled/minified files)
+          </label>
+        </p>
+        <p>
+          <label>
+            <input type="radio" name="build-type" value="prod,concat" />
+            Production build (compiled/minified files, concatenated JS)
+          </label>
+        </p>
+        <p>
+          <label>
+            <input type="radio" name="build-type" value="devel" />
+            Development build (readable project files)
+          </label>
+        </p>
+        $(PROCESS ok_cancel_buttons())
+      </div>
+    </script>
+
     <script type="x/yajet-template" class="template-library">
       $(EXPORT ok_cancel_buttons()
         <div class="dlg-buttons">

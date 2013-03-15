@@ -91,7 +91,7 @@ HANDLERS = [
     [/^\/@build\/([^\/]+)\/([^\/]+)\/*$/, function(request, response, how, proj_id){
         var build_type = {};
         how.split(",").forEach(function(el){ build_type[el] = true });
-        PROJECT.build_distro(proj_id, how, function(err, data){
+        PROJECT.build_distro(proj_id, build_type, function(err, data){
             if (err) {
                 response.writeHead(500, { "Content-Type" : "text/plain; charset=UTF-8" });
                 response.write(JSON.stringify(err, null, 4) + "\n");
