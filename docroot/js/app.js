@@ -135,6 +135,11 @@ function setupLayout() {
         var file = $(this).attr("filename");
         RPC.call("project/edit-file", proj, file);
         ev.preventDefault();
+    }).on("click", "[command=deps-file]", function(ev){
+        var proj = $(this).attr("project-id");
+        var file = $(this).attr("fileid");
+        projectEditFileDependencies(proj, file);
+        ev.preventDefault();
     });
     $(window).focus(function(){
         if (ACTIVE_PROJECT) {
@@ -436,12 +441,63 @@ function getProjectFileByName(proj, name) {
             return a[i];
 }
 
-function projectEditDependencies(proj_id) {
-    var proj = PROJECTS.get(proj_id);
+function projectGetDepsHash(proj) {
     var the_deps = {};
     proj.files.forEach(function(f){
         the_deps[f.id] = f.deps ? [].slice.call(f.deps) : [];
     });
+    return the_deps;
+}
+
+function _projectSaveDependencies(proj, deps, callback) {
+    RPC.call("project/set-dependencies", proj.id, deps, function(ret, err){
+        if (err) {
+            console.log(err);
+            return;
+        }
+        proj.files.forEach(function(f){
+            f.deps = deps[f.id] || [];
+        });
+        projectRefreshContent(proj.id);
+        callback();
+    });
+}
+
+function projectEditFileDependencies(proj_id, file_id) {
+    var proj = PROJECTS.get(proj_id);
+    var file = getProjectFileById(proj, file_id);
+    var dlg_el = $("<div></div>").html(getTemplate("project-file-deps-dialog")({
+        name: file.name
+    })).kendoWindow({
+        title  : "File dependencies",
+        modal  : true,
+        width  : 400,
+    }).on("click", ".btn-ok", function(){
+        _projectSaveDependencies(proj, the_deps, function(){
+            dlg.close();
+        });
+    }).on("click", ".btn-cancel", function(){
+        dlg.close();
+    });
+    var the_deps = projectGetDepsHash(proj);
+    var deps_select = $(".deps-select", dlg_el).kendoMultiPicker({
+        textField  : "name",
+        valueField : "id",
+        sort       : "type",
+        choices    : proj.files.filter(function(f){ return f !== file }),
+        value      : the_deps[file_id],
+        change     : function(ev) {
+            the_deps[file_id] = ev.value;
+        }
+    });
+    var dlg = dlg_el.data("kendoWindow");
+    dlg.open();
+    dlg.center();
+}
+
+function projectEditDependencies(proj_id) {
+    var proj = PROJECTS.get(proj_id);
+    var the_deps = projectGetDepsHash(proj);
     var dlg_el = $("<div></div>").html(getTemplate("project-deps-dialog")({
         files: proj.files,
     })).kendoWindow({
@@ -450,20 +506,13 @@ function projectEditDependencies(proj_id) {
         width: 600,
         height: 400,
     }).on("click", ".btn-ok", function(){
-        RPC.call("project/set-dependencies", proj.id, the_deps, function(ret, err){
-            if (err) {
-                console.log(err);
-                return;
-            }
+        _projectSaveDependencies(proj, the_deps, function(){
             dlg.close();
-            proj.files.forEach(function(f){
-                f.deps = the_deps[f.id] || [];
-            });
-            projectRefreshContent(proj.id);
         });
     }).on("click", ".btn-cancel", function(){
         dlg.close();
     });
+    var selected_file;
     var left_files = $(".left-files", dlg_el).kendoListView({
         dataSource : proj.files,
         selectable : true,
@@ -474,41 +523,25 @@ function projectEditDependencies(proj_id) {
                 $(".deps", dlg_el).css("display", "none");
                 return;
             }
-            var file = getProjectFileById(proj, id);
+            selected_file = getProjectFileById(proj, id);
             $(".deps", dlg_el)
                 .css("display", "")
-                .find(".filename").html(kendo.htmlEncode(file.name));
-            var deps = [].slice.call(the_deps[file.id] || []);
-            // $(".deps-select", dlg_el).kendoMultiSelect({
-            //     dataSource     : proj.files,
-            //     dataTextField  : "name",
-            //     dataValueField : "id",
-            //     placeholder    : "No deps selected",
-            //     highlightFirst : false,
-            //     value          : deps
-            // });
-            var deps_select_el = $("<div></div>").kendoListView({
-                template: getTemplate("simple-list-item"),
-                selectable: "multiple",
-                dataSource: proj.files.filter(function(f){
-                    return f !== file;
-                }),
-                change: function() {
-                    var val = this.select().map(function(){
-                        return $(this).attr("value");
-                    });
-                    val = [].slice.call(val);
-                    the_deps[file.id] = val;
-                }
-            });
-            $(".deps-select", dlg_el).html("<br />").append(deps_select_el);
-            var deps_select = deps_select_el.data("kendoListView");
-            var elements = deps.map(function(f){
-                return $("[value=\"" + f + "\"]", deps_select_el);
-            });
-            deps_select.select(elements);
+                .find(".filename").html(kendo.htmlEncode(selected_file.name));
+            var deps = [].slice.call(the_deps[selected_file.id] || []);
+            deps_select.reset(proj.files.filter(function(f){
+                return f !== selected_file;
+            }));
+            deps_select.value(deps);
         }
     });
+    var deps_select = $(".deps-select", dlg_el).kendoMultiPicker({
+        textField  : "name",
+        valueField : "id",
+        sort       : "type",
+        change     : function(ev) {
+            the_deps[selected_file.id] = ev.value;
+        }
+    }).data("kendoMultiPicker");
     var dlg = dlg_el.data("kendoWindow");
     dlg.open();
     dlg.center();
