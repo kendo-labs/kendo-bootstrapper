@@ -42,7 +42,7 @@
                     value : item[o.valueField]
                 });
             }).join(""));
-            this.setValue(value);
+            this.setValue(value || []);
         },
         value: function(newValue) {
             if (arguments.length > 0) {
