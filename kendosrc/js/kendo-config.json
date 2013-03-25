@@ -46,7 +46,7 @@
                 {
                     "name": "AutoComplete",
                     "file": "kendo.autocomplete.js",
-                    "line": 56,
+                    "line": 59,
                     "col": 23
                 }
             ]
@@ -89,20 +89,21 @@
             "depends": [
                 "core",
                 "popup",
-                "slider"
+                "slider",
+                "userevents"
             ],
             "source": "kendo.colorpicker.min.js",
             "widgets": [
                 {
                     "name": "ColorPalette",
                     "file": "kendo.colorpicker.js",
-                    "line": 146,
+                    "line": 142,
                     "col": 23
                 },
                 {
                     "name": "FlatColorPicker",
                     "file": "kendo.colorpicker.js",
-                    "line": 303,
+                    "line": 281,
                     "col": 26
                 },
                 {
@@ -146,7 +147,7 @@
                 {
                     "name": "ComboBox",
                     "file": "kendo.combobox.js",
-                    "line": 36,
+                    "line": 37,
                     "col": 19
                 }
             ]
@@ -226,7 +227,7 @@
                 {
                     "name": "Chart",
                     "file": "kendo.dataviz.chart.js",
-                    "line": 188,
+                    "line": 190,
                     "col": 16
                 }
             ]
@@ -273,14 +274,14 @@
             "category": "dataviz",
             "description": "Sparkline widgets.",
             "depends": [
-                "chart"
+                "dataviz-chart"
             ],
             "source": "kendo.dataviz.sparkline.min.js",
             "widgets": [
                 {
                     "name": "Sparkline",
                     "file": "kendo.dataviz.sparkline.js",
-                    "line": 28,
+                    "line": 33,
                     "col": 20
                 }
             ]
@@ -291,14 +292,14 @@
             "category": "dataviz",
             "description": "StockChart widget and associated financial series.",
             "depends": [
-                "chart"
+                "dataviz-chart"
             ],
             "source": "kendo.dataviz.stock.min.js",
             "widgets": [
                 {
                     "name": "StockChart",
                     "file": "kendo.dataviz.stock.js",
-                    "line": 47,
+                    "line": 43,
                     "col": 21
                 }
             ]
@@ -350,7 +351,7 @@
                 {
                     "name": "DatePicker",
                     "file": "kendo.datepicker.js",
-                    "line": 268,
+                    "line": 274,
                     "col": 21
                 }
             ]
@@ -369,7 +370,7 @@
                 {
                     "name": "DateTimePicker",
                     "file": "kendo.datetimepicker.js",
-                    "line": 47,
+                    "line": 51,
                     "col": 25
                 }
             ]
@@ -418,7 +419,7 @@
                 {
                     "name": "DropDownList",
                     "file": "kendo.dropdownlist.js",
-                    "line": 25,
+                    "line": 29,
                     "col": 23
                 }
             ]
@@ -455,18 +456,28 @@
                 "window",
                 "colorpicker"
             ],
+            "features": [
+                {
+                    "id": "editor-imagebrowser",
+                    "name": "Image Browser",
+                    "description": "Support for uploading and inserting images",
+                    "depends": [
+                        "imagebrowser"
+                    ]
+                }
+            ],
             "source": "kendo.editor.min.js",
             "widgets": [
                 {
                     "name": "Editor",
                     "file": "kendo.editor.js",
-                    "line": 444,
+                    "line": 450,
                     "col": 17
                 },
                 {
                     "name": "SelectBox",
                     "file": "kendo.editor.js",
-                    "line": 5435,
+                    "line": 5492,
                     "col": 16
                 }
             ]
@@ -590,13 +601,13 @@
                 {
                     "name": "VirtualScrollable",
                     "file": "kendo.grid.js",
-                    "line": 115,
+                    "line": 116,
                     "col": 29
                 },
                 {
                     "name": "Grid",
                     "file": "kendo.grid.js",
-                    "line": 548,
+                    "line": 556,
                     "col": 15
                 }
             ]
@@ -625,6 +636,7 @@
             "name": "ImageBrowser",
             "category": "web",
             "description": "",
+            "hidden": true,
             "depends": [
                 "listview",
                 "upload"
@@ -634,19 +646,19 @@
                 {
                     "name": "ImageBrowser",
                     "file": "kendo.imagebrowser.js",
-                    "line": 185,
+                    "line": 186,
                     "col": 23
                 },
                 {
                     "name": "SearchBox",
                     "file": "kendo.imagebrowser.js",
-                    "line": 868,
+                    "line": 871,
                     "col": 20
                 },
                 {
                     "name": "Breadcrumbs",
                     "file": "kendo.imagebrowser.js",
-                    "line": 983,
+                    "line": 986,
                     "col": 22
                 }
             ]
@@ -694,7 +706,7 @@
                 {
                     "name": "ListView",
                     "file": "kendo.listview.js",
-                    "line": 44,
+                    "line": 45,
                     "col": 19
                 }
             ]
@@ -712,7 +724,7 @@
                 {
                     "name": "Menu",
                     "file": "kendo.menu.js",
-                    "line": 246,
+                    "line": 249,
                     "col": 15
                 }
             ]
@@ -730,7 +742,7 @@
                 {
                     "name": "ActionSheet",
                     "file": "kendo.mobile.actionsheet.js",
-                    "line": 21,
+                    "line": 22,
                     "col": 22
                 }
             ]
@@ -766,13 +778,13 @@
                 {
                     "name": "BackButton",
                     "file": "kendo.mobile.button.js",
-                    "line": 117,
+                    "line": 123,
                     "col": 21
                 },
                 {
                     "name": "DetailButton",
                     "file": "kendo.mobile.button.js",
-                    "line": 133,
+                    "line": 139,
                     "col": 23
                 }
             ]
@@ -801,6 +813,7 @@
             "category": "mobile",
             "description": "The Kendo Mobile ListView widget is used to display flat or grouped list of items.",
             "depends": [
+                "data",
                 "mobile.application"
             ],
             "source": "kendo.mobile.listview.min.js",
@@ -838,6 +851,7 @@
             "category": "mobile",
             "description": "The Kendo ModalView is used to present self-contained functionality in the context of the current task.",
             "depends": [
+                "mobile.shim",
                 "mobile.application"
             ],
             "source": "kendo.mobile.modalview.min.js",
@@ -845,7 +859,7 @@
                 {
                     "name": "ModalView",
                     "file": "kendo.mobile.modalview.js",
-                    "line": 17,
+                    "line": 19,
                     "col": 20
                 }
             ]
@@ -883,7 +897,7 @@
                 {
                     "name": "Pane",
                     "file": "kendo.mobile.pane.js",
-                    "line": 46,
+                    "line": 40,
                     "col": 15
                 }
             ]
@@ -894,6 +908,7 @@
             "category": "mobile",
             "description": "The mobile PopOver widget represents a transient view which is displayed when the user taps on a navigational widget or area on the screen. ",
             "depends": [
+                "popup",
                 "mobile.application"
             ],
             "source": "kendo.mobile.popover.min.js",
@@ -970,7 +985,7 @@
             ]
         },
         {
-            "id": "mobile.spitview",
+            "id": "mobile.splitview",
             "name": "SplitView",
             "category": "mobile",
             "description": "The mobile SplitView is a tablet-specific view that consists of two or more mobile Pane widgets.",
@@ -1011,6 +1026,7 @@
             "category": "mobile",
             "description": "The mobile TabStrip widget is used inside a mobile view or layout footer element to display an application-wide group of navigation buttons.",
             "depends": [
+                "core",
                 "mobile.application"
             ],
             "source": "kendo.mobile.tabstrip.min.js",
@@ -1039,13 +1055,13 @@
                 {
                     "name": "View",
                     "file": "kendo.mobile.view.js",
-                    "line": 35,
+                    "line": 36,
                     "col": 15
                 },
                 {
                     "name": "Layout",
                     "file": "kendo.mobile.view.js",
-                    "line": 323,
+                    "line": 336,
                     "col": 17
                 }
             ]
@@ -1063,7 +1079,7 @@
                 {
                     "name": "MultiSelect",
                     "file": "kendo.multiselect.js",
-                    "line": 47,
+                    "line": 53,
                     "col": 22
                 }
             ]
@@ -1074,14 +1090,15 @@
             "category": "web",
             "description": "The NumericTextBox widget can format and display numeric, percentage or currency textbox.",
             "depends": [
-                "core"
+                "core",
+                "userevents"
             ],
             "source": "kendo.numerictextbox.min.js",
             "widgets": [
                 {
                     "name": "NumericTextBox",
                     "file": "kendo.numerictextbox.js",
-                    "line": 41,
+                    "line": 44,
                     "col": 25
                 }
             ]
@@ -1135,7 +1152,7 @@
                 {
                     "name": "Popup",
                     "file": "kendo.popup.js",
-                    "line": 56,
+                    "line": 54,
                     "col": 16
                 }
             ]
@@ -1180,9 +1197,9 @@
         },
         {
             "id": "router",
-            "name": "history",
+            "name": "History",
             "category": "framework",
-            "description": "Kendo Router",
+            "description": "The Router class is responsible for tracking the application state and navigating between the application states.",
             "depends": [
                 "core"
             ],
@@ -1204,7 +1221,7 @@
                 {
                     "name": "Selectable",
                     "file": "kendo.selectable.js",
-                    "line": 34,
+                    "line": 36,
                     "col": 21
                 }
             ]
@@ -1222,13 +1239,13 @@
                 {
                     "name": "Slider",
                     "file": "kendo.slider.js",
-                    "line": 580,
+                    "line": 581,
                     "col": 17
                 },
                 {
                     "name": "RangeSlider",
                     "file": "kendo.slider.js",
-                    "line": 1157,
+                    "line": 1221,
                     "col": 22
                 }
             ]
@@ -1300,7 +1317,7 @@
                 {
                     "name": "TimePicker",
                     "file": "kendo.timepicker.js",
-                    "line": 468,
+                    "line": 473,
                     "col": 21
                 }
             ]
@@ -1309,7 +1326,7 @@
             "id": "tooltip",
             "name": "Tooltip",
             "category": "web",
-            "description": "",
+            "description": "The Tooltip widget displays a popup hint for a given html element.",
             "depends": [
                 "core",
                 "popup"
@@ -1413,6 +1430,7 @@
             "id": "view",
             "name": "View",
             "category": "framework",
+            "description": "The View class instantiates and handles the events of a certain screen from the application.",
             "depends": [
                 "core"
             ],
@@ -1433,7 +1451,7 @@
                 {
                     "name": "Window",
                     "file": "kendo.window.js",
-                    "line": 103,
+                    "line": 104,
                     "col": 17
                 }
             ]
