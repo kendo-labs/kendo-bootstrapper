@@ -1,4 +1,4 @@
-(function(window, kendo){
+(function($, kendo){
 
     function slice(x, y, z) { return Array.prototype.slice.call(x, y, z) }
 
@@ -84,4 +84,4 @@
 
     kendo.ui.plugin(MultiPicker);
 
-})(window, window.kendo);
+})(jQuery, window.kendo);

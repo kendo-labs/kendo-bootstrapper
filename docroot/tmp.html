@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Test</title>
+
+    <link rel="stylesheet" type="text/css" href="kendo/css/kendo.common.css" />
+    <link rel="stylesheet" type="text/css" href="kendo/css/kendo.default.css" />
+    <script src="kendo/js/jquery.min.js"></script>
+    <script src="kendo/js/kendo.web.min.js"></script>
+
+    <link rel="stylesheet/less" href="css/app.less" />
+
+    <script src="js/yajet.min.js"></script>
+    <script src="js/kendo.multipicker.js"></script>
+    <script src="js/kendo.layoutmanager.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/rpc.js"></script>
+    <script src="js/less-1.3.3.min.js"></script>
+  </head>
+
+  <body>
+    <script>
+      var dlg_el = $("<div class='kendo-no-scroll'><div class='layout'></div></div>").kendoWindow({
+          width: 600,
+          height: 400,
+          title: "Resize me",
+          resize: function() {
+              layout.setOuterSize(this.getInnerSize());
+          }
+      });
+      var dlg = dlg_el.data("kendoWindow");
+
+      var w1 = $("<div style='background:#fea'></div>").kendoMultiPicker({
+          choices: [
+              { label: "This is foo 1", value: "foo" },
+              { label: "This is bar 1", value: "bar" }
+          ]
+      }).data("kendoMultiPicker");
+
+      var w2 = $("<div style='background:#aef'></div>").kendoMultiPicker({
+          choices: [
+              { label: "This is foo 2", value: "foo" },
+              { label: "This is bar 2", value: "bar" }
+          ]
+      }).data("kendoMultiPicker");
+
+      var w3 = $("<div style='background:#afb'></div>").kendoMultiPicker({
+          choices: [
+              { label: "Check this out", value: "foo" },
+              { label: "A boo foo bar", value: "bar" }
+          ]
+      }).data("kendoMultiPicker");
+
+      var l2 = $("<div></div>").kendoLayoutManager({
+          orientation: "vertical",
+          widgets: [
+              [ w2, "50%" ],
+              [ w3, "50%" ]
+          ]
+      }).data("kendoLayoutManager");
+
+      var layout_el = $(".layout", dlg_el).kendoLayoutManager({
+          orientation: "horizontal",
+          widgets: [
+              [ w1, "30%" ],
+              [ l2, "1" ],
+          ]
+      });
+      var layout = layout_el.data("kendoLayoutManager");
+
+      dlg.open();
+      dlg.center();
+
+      console.log(dlg.getInnerSize());
+    </script>
+  </body>
+</html>

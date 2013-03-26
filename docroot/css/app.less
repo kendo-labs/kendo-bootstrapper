@@ -181,7 +181,23 @@ label.hovering {
   }
 }
 
-/// MultiPicker
+
+
+
+/// custom widgets
+
+.kendo-no-scroll {
+  overflow: hidden !important;
+}
+
+.kendo-layoutmanager {
+  position: relative;
+  overflow: hidden;
+  & > * {
+    position: absolute;
+    overflow: hidden;
+  }
+}
 
 .kendo-multipicker {
   label {
