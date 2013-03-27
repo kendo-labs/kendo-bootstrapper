@@ -3,7 +3,7 @@
     var ui = kendo.ui;
     var Widget = ui.Widget;
 
-    function widget(element) {
+    function getWidget(element) {
         return element instanceof Widget ? element
             : element instanceof $ ? (kendo.widgetInstance(element, ui) ||
                                       kendo.widgetInstance(element, kendo.mobile.ui) ||
@@ -71,18 +71,18 @@
         init: function(element, options) {
             var self = this;
             Widget.fn.init.call(self, element, options);
+            element = self.element;
             options = self.options;
             if (!options.widgets) {
-                options.widgets = element.children().map(function(){
+                options.widgets = element.children().get().map(function(el){
                     return [
-                        widget($(this)),
-                        getFill($(this).attr("kendo-layout"))
+                        $(el),
+                        getFill($(el).attr("kendo-layout"))
                     ];
-                }).get();
+                });
             }
-            options.widgets.forEach(function(w){
-                if (w[0] instanceof $) w[0] = widget(w[0]);
-                if (!(w[0] instanceof Widget)) {
+            else options.widgets.forEach(function(w){
+                if (!(w[0] instanceof Widget || w[0] instanceof $)) {
                     // assume ad-hoc layout widget.
                     w[0] = $("<div></div>").kendoLayoutManager(w[0]).data("kendoLayoutManager");
                 }
@@ -96,6 +96,8 @@
                                              this.element.outerHeight());
             layout.forEach(function(a){
                 var w = a[0], g = a[2];
+                if (!(w instanceof Widget))
+                    w = a[0] = getWidget(w);
                 reposWidget(w, g.x, g.y);
                 resizeWidget(w, g.w, g.h);
             });

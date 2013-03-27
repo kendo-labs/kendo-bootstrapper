@@ -233,17 +233,18 @@
     </script>
 
     <script type="x/yajet-template" class="project-deps-dialog">
-      <div class="project-deps-dialog">
-        <div class="project-deps">
-          <div class="left-files" style="overflow:auto; background: #eee;
-                                         border: none"></div>
-          <div class="deps">
-            <div class="title" style="padding: 5px; text-align: center;
-                                      background: #eee">
+      <div class="project-deps-dialog"
+           data-role="layoutmanager" data-orientation="vertical">
+        <div class="project-deps" kendo-layout="1"
+             data-role="layoutmanager" data-orientation="horizontal">
+          <div class="left-files" kendo-layout="50%"></div>
+          <div class="deps" kendo-layout="50%"
+               data-role="layoutmanager" data-orientation="vertical">
+            <div class="title">
               Chose a file on the left, then select its direct dependencies
               below.
             </div>
-            <div class="deps-select" style="overflow: auto"></div>
+            <div kendo-layout="1" class="deps-select" style="overflow: auto"></div>
           </div>
         </div>
         $(PROCESS ok_cancel_buttons())
@@ -251,9 +252,9 @@
     </script>
 
     <script type="x/yajet-template" class="project-file-deps-dialog">
-      <div class="project-deps-dialog">
-        <p><b>Select below direct dependencies of $this.name|html:</b></p>
-        <div class="deps-select" style="max-height: 300px; overflow: auto"></div>
+      <div class="project-deps-dialog" data-role="layoutmanager" data-orientation="vertical">
+        <div class="title">Select below direct dependencies of $this.name|html:</div>
+        <div kendo-layout="1" class="deps-select" style="overflow: auto"></div>
         $(PROCESS ok_cancel_buttons())
       </div>
     </script>

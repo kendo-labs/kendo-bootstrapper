@@ -472,6 +472,11 @@ function projectEditFileDependencies(proj_id, file_id) {
         title  : "File dependencies",
         modal  : true,
         width  : 400,
+        height : 300,
+        resize : function() {
+            var sz = this.getInnerSize();
+            lm.setOuterSize(sz.x, sz.y);
+        }
     }).on("click", ".btn-ok", function(){
         _projectSaveDependencies(proj, the_deps, function(){
             dlg.close();
@@ -490,9 +495,13 @@ function projectEditFileDependencies(proj_id, file_id) {
             the_deps[file_id] = ev.value;
         }
     });
+    var lm = $(".project-deps-dialog", dlg_el);
+    kendo.bind(lm);
+    var lm = lm.data("kendoLayoutManager");
     var dlg = dlg_el.data("kendoWindow");
     dlg.open();
     dlg.center();
+    dlg.trigger("resize");
 }
 
 function projectEditDependencies(proj_id) {
@@ -524,13 +533,12 @@ function projectEditDependencies(proj_id) {
         change     : function(ev) {
             var id = this.select().attr("value");
             if (!id) {
-                $(".deps", dlg_el).css("display", "none");
                 return;
             }
             selected_file = getProjectFileById(proj, id);
-            $(".deps", dlg_el)
-                .css("display", "")
-                .find(".title").html("Select below direct dependencies of <b>" + kendo.htmlEncode(selected_file.name) + "</b>");
+            $(".deps .title", dlg_el).html(
+                "Select below direct dependencies of <b>" + kendo.htmlEncode(selected_file.name) + "</b>"
+            );
             var deps = [].slice.call(the_deps[selected_file.id] || []);
             deps_select.reset(proj.files.filter(function(f){
                 return f !== selected_file;
@@ -547,25 +555,9 @@ function projectEditDependencies(proj_id) {
             the_deps[selected_file.id] = ev.value;
         }
     });
-    var top_layout = new kendo.ui.LayoutManager($(".project-deps-dialog", dlg_el), {
-        orientation: "vertical",
-        widgets: [
-            [ new kendo.ui.LayoutManager($(".project-deps", dlg_el), {
-                orientation: "horizontal",
-                widgets: [
-                    [ left_files, "1" ],
-                    [ new kendo.ui.LayoutManager($(".deps", dlg_el), {
-                        orientation: "vertical",
-                        widgets: [
-                            [ new kendo.ui.LayoutManager.Bogus($(".deps .title", dlg_el)) ],
-                            [ deps_select, "1" ]
-                        ]
-                    }), "50%" ]
-                ]
-            }), "1" ],
-            [ new kendo.ui.LayoutManager.Bogus($(".dlg-buttons")) ]
-        ]
-    });
+    var top_layout = $(".project-deps-dialog", dlg_el);
+    kendo.bind(top_layout);
+    top_layout = top_layout.data("kendoLayoutManager");
     var dlg = dlg_el.data("kendoWindow");
     dlg.open();
     dlg.center();
