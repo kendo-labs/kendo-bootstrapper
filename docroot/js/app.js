@@ -369,7 +369,7 @@ function projectBuildKendo(proj_id) {
         if (data.manual_kendo_components) {
             sel = sel.concat(data.manual_kendo_components);
         }
-        var dlg_el = $("<div></div>").html(getTemplate("kendo-widget-usage")({
+        var dlg_el = $("<div></div>").html(getTemplate("kendo-widget-usage-dialog")({
             widgets   : data.widgets,
             kcomp     : kcomp,
             selection : sel,
@@ -382,7 +382,12 @@ function projectBuildKendo(proj_id) {
         }).kendoWindow({
             title: "Build custom Kendo UI",
             modal: true,
-            width: "500px"
+            width: "500px",
+            height: "400px",
+            resize: function() {
+                var sz = this.getInnerSize();
+                lm.setOuterSize(sz.x, sz.y);
+            }
         }).on("click", ".btn-ok", function(){
             var user_selection = [];
             $("input[id^=\"kcomp-\"]:checked", dlg_el).each(function(){
@@ -398,9 +403,13 @@ function projectBuildKendo(proj_id) {
         }).on("click", ".btn-cancel", function(){
             dlg.close();
         });
+        var lm = $(".layout", dlg_el);
+        kendo.bind(lm);
+        lm = lm.data("kendoLayoutManager");
         var dlg = dlg_el.data("kendoWindow");
         dlg.open();
         dlg.center();
+        dlg.trigger("resize");
     });
 }
 

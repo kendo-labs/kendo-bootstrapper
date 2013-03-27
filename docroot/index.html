@@ -259,37 +259,39 @@
       </div>
     </script>
 
-    <script type="x/yajet-template" class="kendo-widget-usage">
-      <div style="max-height: 400px; overflow: auto">
-        <p>Based on your code we detected that the following Kendo UI widgets
-        are in use:</p>
+    <script type="x/yajet-template" class="kendo-widget-usage-dialog">
+      <div data-role="layoutmanager" data-orientation="vertical" class="layout">
+        <div>
+          <p>Based on your code we detected that the following Kendo UI widgets
+          are in use:</p>
 
-        <ul class="two-columns">$(FOREACH (w => this.widgets) <li>$w|html</li> $)</ul>
+          <ul class="two-columns">$(FOREACH (w => this.widgets) <li>$w|html</li> $)</ul>
 
-        $(AIF (this.manual)
+          $(AIF (this.manual)
           <p>Manually selected:</p>
           <ul class="two-columns">$(FOREACH (w => it) <li>$w|html</li> $)</ul>$)
 
-        <p>We auto-selected these components.  If you require additional
-        components please mark them below.  Dependencies will be added
-        in automatically.</p>
-
-        <div class="two-columns">
-          $(FOREACH (comp => this.kcomp)
-            $(WHEN (comp.category == "web" || comp.category == "framework")
-              <div>
-                $( var checked = this.selection.indexOf(comp.id) >= 0
-                                 ? 'checked="checked"' : ''; )
-                <label class="hovering"
-                       title="${ comp.description || 'No description provided' => html }">
-                  <input id="kcomp-$comp.id|html" type="checkbox" value="$comp.id|html" $checked />
-                  $comp.name|html ($comp.category|html)
-                </label>
-              </div>$)$)
+          <p>We auto-selected these components.  If you require additional
+          components please mark them below.  Dependencies will be added
+          in automatically.</p>
         </div>
+        <div kendo-layout="1" style="overflow: auto">
+          <div class="two-columns">
+            $(FOREACH (comp => this.kcomp)
+            $(WHEN (comp.category == "web" || comp.category == "framework")
+            <div>
+              $( var checked = this.selection.indexOf(comp.id) >= 0
+              ? 'checked="checked"' : ''; )
+              <label class="hovering"
+                     title="${ comp.description || 'No description provided' => html }">
+                <input id="kcomp-$comp.id|html" type="checkbox" value="$comp.id|html" $checked />
+                $comp.name|html ($comp.category|html)
+              </label>
+              </div>$)$)
+          </div>
+        </div>
+        $(PROCESS ok_cancel_buttons())
       </div>
-
-      $(PROCESS ok_cancel_buttons())
     </script>
 
     <script type="x/yajet-template" class="build-distro">
