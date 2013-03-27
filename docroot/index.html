@@ -22,31 +22,33 @@
 
   <body>
 
-    <div id="top-layout">
-      <div id="main-layout">
-        <div id="projects-and-files" class="sections vertical">
-          <div id="projects" class="section">
-            <div class="title">Projects</div>
-            <div class="k-toolbar">
-              <button class="k-button" id="btn-project-new">New</button>
-              <button class="k-button" id="btn-project-preview">Preview</button>
-            </div>
-            <div id="project-list"></div>
-          </div>
-          <div id="files" class="section">
-            <div class="title">No project selected</div>
-            <div class="k-toolbar">
-              <button class="k-button" id="btn-file-new">New file</button>
-              <button class="k-button" id="btn-file-edit">Edit file</button>
-              <button class="k-button" id="btn-file-delete">Delete file</button>
-            </div>
-            <div id="project-file-tree"><div></div></div>
-          </div>
-        </div>
-        <div id="content">
+    <div id="top-layout" data-role="layoutmanager" data-orientation="horizontal">
+      <div id="projects-and-files" class="sections" kendo-layout="20%"
+           style="border-right: 1px solid black"
+           data-role="layoutmanager" data-orientation="vertical">
 
+        <div class="title">Projects</div>
+
+        <div class="k-toolbar">
+          <button class="k-button" id="btn-project-new">New</button>
+          <button class="k-button" id="btn-project-preview">Preview</button>
         </div>
+
+        <div id="project-list" kendo-layout="0.5" style="overflow:auto"></div>
+
+        <div class="title">No project selected</div>
+
+        <div class="k-toolbar">
+          <button class="k-button" id="btn-file-new">New file</button>
+          <button class="k-button" id="btn-file-edit">Edit file</button>
+          <button class="k-button" id="btn-file-delete">Delete file</button>
+        </div>
+
+        <div style="background: #fff; overflow: auto" id="project-file-tree"
+             kendo-layout="0.5"><div></div></div>
+
       </div>
+      <div id="content" kendo-layout="1" style="overflow: auto"></div>
     </div>
 
     <!-- TEMPLATES -->

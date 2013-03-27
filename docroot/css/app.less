@@ -17,9 +17,9 @@
 }
 
 .border-box {
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 html, body {
@@ -27,30 +27,15 @@ html, body {
   width: 100%;
   padding: 0;
   margin: 0;
+  overflow: hidden;
   font: 14px arial,sans-serif;
-}
-
-#top-layout {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background-color: #dde;
-}
-
-#main-layout {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
+  background-color: #bbf;
 }
 
 #content {
   background-color: #eee;
   padding: 0 1em;
-  box-sizing: border-box;
+  .border-box;
   a, a:link, a:visited {
     color: #00f;
   }
@@ -68,14 +53,18 @@ html, body {
   .warn {
     color: #c62;
   }
+  box-shadow: -2px 0 5px #888;
 }
 
-.section {
+.sections {
   &>.title {
-    padding: 3px 5px;
+    padding: 4px 5px;
     background: #ddd;
     color: #444;
-    font: 16px Georgia;
+    font: bold 16px Georgia;
+  }
+  .k-toolbar {
+    text-align: right;
   }
 }
 

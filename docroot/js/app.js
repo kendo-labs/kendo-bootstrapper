@@ -75,19 +75,13 @@ function withSelectedFile(f) {
 }
 
 function setupLayout() {
-    $("#main-layout").kendoSplitter({
-        panes: [
-            { collapsible: false, size: "20%" },
-            { collapsible: false }
-        ]
+    kendo.bind($("#top-layout"));
+    var top_layout = $("#top-layout").data("kendoLayoutManager");
+    $(window).resize(function(){
+        top_layout.setOuterSize($(window).innerWidth(),
+                                $(window).innerHeight());
     });
-    $("#projects-and-files").kendoSplitter({
-        orientation: "vertical",
-        panes: [
-            { collapsible: false, size: "50%" },
-            { collapsible: false }
-        ]
-    });
+    $(window).resize();
     $("#project-list").kendoListView({
         dataSource : PROJECTS,
         selectable : true,
@@ -173,6 +167,9 @@ function setActiveProject(proj) {
         return top_item;
     };
     $("#project-file-tree").html("<div></div>");
+
+    // XXX: avoid re-creating the widget; should be able to
+    // re-populate an existing tree instead.
     $("#project-file-tree div").kendoTreeView({ dataSource: files_data });
 
     projectRefreshContent(proj.id);
