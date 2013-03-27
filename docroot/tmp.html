@@ -25,7 +25,8 @@
           height: 400,
           title: "Resize me",
           resize: function() {
-              layout.setOuterSize(this.getInnerSize());
+              var sz = this.getInnerSize();
+              layout.setOuterSize(sz.x, sz.y);
           }
       });
       var dlg = dlg_el.data("kendoWindow");
@@ -51,27 +52,33 @@
           ]
       }).data("kendoMultiPicker");
 
-      var l2 = $("<div></div>").kendoLayoutManager({
-          orientation: "vertical",
-          widgets: [
-              [ w2, "50%" ],
-              [ w3, "50%" ]
-          ]
-      }).data("kendoLayoutManager");
+//      var l2 = $("<div></div>").kendoLayoutManager({
+//          orientation: "vertical",
+//          widgets: [
+//              [ w2, "50%" ],
+//              [ w3, "50%" ]
+//          ]
+//      }).data("kendoLayoutManager");
 
       var layout_el = $(".layout", dlg_el).kendoLayoutManager({
           orientation: "horizontal",
           widgets: [
-              [ w1, "30%" ],
-              [ l2, "1" ],
+              [ w1, { type: "fraction", fill: 0.3, min: 100, max: 200 } ],
+              [ {
+                  orientation: "vertical",
+                  widgets: [
+                      [ w2, { type: "percent", fill: 50, min: 100 } ],
+                      [ w3, "50%" ]
+                  ]
+              }, "1" ],
           ]
       });
       var layout = layout_el.data("kendoLayoutManager");
 
       dlg.open();
       dlg.center();
+      dlg.trigger("resize");
 
-      console.log(dlg.getInnerSize());
     </script>
   </body>
 </html>

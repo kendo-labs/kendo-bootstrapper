@@ -505,6 +505,10 @@ function projectEditDependencies(proj_id) {
         modal: true,
         width: 600,
         height: 400,
+        resize: function() {
+            var sz = this.getInnerSize();
+            top_layout.setOuterSize(sz.x, sz.y);
+        }
     }).on("click", ".btn-ok", function(){
         _projectSaveDependencies(proj, the_deps, function(){
             dlg.close();
@@ -513,7 +517,7 @@ function projectEditDependencies(proj_id) {
         dlg.close();
     });
     var selected_file;
-    var left_files = $(".left-files", dlg_el).kendoListView({
+    var left_files = new kendo.ui.ListView($(".left-files", dlg_el), {
         dataSource : proj.files,
         selectable : true,
         template   : getTemplate("simple-list-item"),
@@ -526,25 +530,46 @@ function projectEditDependencies(proj_id) {
             selected_file = getProjectFileById(proj, id);
             $(".deps", dlg_el)
                 .css("display", "")
-                .find(".filename").html(kendo.htmlEncode(selected_file.name));
+                .find(".title").html("Select below direct dependencies of <b>" + kendo.htmlEncode(selected_file.name) + "</b>");
             var deps = [].slice.call(the_deps[selected_file.id] || []);
             deps_select.reset(proj.files.filter(function(f){
                 return f !== selected_file;
             }));
             deps_select.value(deps);
+            dlg.trigger("resize");
         }
     });
-    var deps_select = $(".deps-select", dlg_el).kendoMultiPicker({
+    var deps_select = new kendo.ui.MultiPicker($(".deps-select", dlg_el), {
         textField  : "name",
         valueField : "id",
         sort       : "type",
         change     : function(ev) {
             the_deps[selected_file.id] = ev.value;
         }
-    }).data("kendoMultiPicker");
+    });
+    var top_layout = new kendo.ui.LayoutManager($(".project-deps-dialog", dlg_el), {
+        orientation: "vertical",
+        widgets: [
+            [ new kendo.ui.LayoutManager($(".project-deps", dlg_el), {
+                orientation: "horizontal",
+                widgets: [
+                    [ left_files, "1" ],
+                    [ new kendo.ui.LayoutManager($(".deps", dlg_el), {
+                        orientation: "vertical",
+                        widgets: [
+                            [ new kendo.ui.LayoutManager.Bogus($(".deps .title", dlg_el)) ],
+                            [ deps_select, "1" ]
+                        ]
+                    }), "50%" ]
+                ]
+            }), "1" ],
+            [ new kendo.ui.LayoutManager.Bogus($(".dlg-buttons")) ]
+        ]
+    });
     var dlg = dlg_el.data("kendoWindow");
     dlg.open();
     dlg.center();
+    dlg.trigger("resize");
 }
 
 function areYouSure(options, callback) {

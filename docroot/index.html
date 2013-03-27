@@ -16,6 +16,7 @@
     <script src="js/yajet.min.js"></script>
 
     <script src="js/kendo.multipicker.js"></script>
+    <script src="js/kendo.layoutmanager.js"></script>
     <script src="js/app.js"></script>
   </head>
 
@@ -234,10 +235,15 @@
     <script type="x/yajet-template" class="project-deps-dialog">
       <div class="project-deps-dialog">
         <div class="project-deps">
-          <div class="left-files"></div>
-          <div class="deps" style="display: none">
-            <p><b>Select below direct dependencies of <span class="filename"></span></b>:</p>
-            <div class="deps-select"></div>
+          <div class="left-files" style="overflow:auto; background: #eee;
+                                         border: none"></div>
+          <div class="deps">
+            <div class="title" style="padding: 5px; text-align: center;
+                                      background: #eee">
+              Chose a file on the left, then select its direct dependencies
+              below.
+            </div>
+            <div class="deps-select" style="overflow: auto"></div>
           </div>
         </div>
         $(PROCESS ok_cancel_buttons())
