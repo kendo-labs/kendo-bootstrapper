@@ -115,6 +115,7 @@
             var options = self.options;
             var rem_width = width, rem_height = height;
             var widgets = options.widgets;
+            var spacing = options.spacing || 0;
             function limit(f, sz) {
                 if (f.min != null && sz < f.min) sz = f.min;
                 if (f.max != null && sz > f.max) sz = f.max;
@@ -132,14 +133,14 @@
                     if (sz == null) sz = getWidgetSize(widget, "x");
                     else if (f.type == "percent") sz = width * f.fill / 100;
                     sz = limit(f, sz);
-                    rem_width -= sz;
+                    rem_width -= sz + spacing;
                     a[2] = { x: 0, y: 0, w: sz, h: height };
                     break;
                   case "vertical":
                     if (sz == null) sz = getWidgetSize(widget, "y");
                     else if (f.type == "percent") sz = height * f.fill / 100;
                     sz = limit(f, sz);
-                    rem_height -= sz;
+                    rem_height -= sz + spacing;
                     a[2] = { x: 0, y: 0, w: width, h: sz };
                     break;
                 }
@@ -152,13 +153,13 @@
                     if (f.type == "fraction")
                         a[2].w = limit(f, rem_width * f.fill);
                     a[2].x = prev_x;
-                    prev_x += a[2].w;
+                    prev_x += a[2].w + spacing;
                     break;
                   case "vertical":
                     if (f.type == "fraction")
                         a[2].h = limit(f, rem_height * f.fill);
                     a[2].y = prev_y;
-                    prev_y += a[2].h;
+                    prev_y += a[2].h + spacing;
                     break;
                 }
             });
