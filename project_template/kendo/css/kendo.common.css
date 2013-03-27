@@ -1585,6 +1585,7 @@ ul.k-menu-vertical .k-separator,
 .k-grid table {
   width: 100%;
   border-collapse: separate;
+  border-spacing: 0;
   empty-cells: show;
   border-width: 0;
   outline: none;
@@ -2377,6 +2378,10 @@ body .k-datetimepicker .k-select {
   -webkit-border-radius: 0;
   -o-border-radius: 0;
   border-radius: 0;
+}
+.k-picker-wrap .k-icon {
+  vertical-align: top;
+  margin-top: 1px;
 }
 .k-combobox .k-icon,
 .k-dropdown,

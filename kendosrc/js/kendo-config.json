@@ -212,28 +212,28 @@
             "widgets": []
         },
         {
-            "id": "chart",
+            "id": "dataviz.chart",
             "name": "Chart",
             "category": "dataviz",
             "description": "The Chart widget uses modern browser technologies to render high-quality data visualizations in the browser.",
             "depends": [
                 "data",
                 "userevents",
-                "dataviz-core",
-                "dataviz-svg"
+                "dataviz.core",
+                "dataviz.svg"
             ],
             "source": "kendo.dataviz.chart.min.js",
             "widgets": [
                 {
                     "name": "Chart",
                     "file": "kendo.dataviz.chart.js",
-                    "line": 190,
+                    "line": 191,
                     "col": 16
                 }
             ]
         },
         {
-            "id": "dataviz-core",
+            "id": "dataviz.core",
             "name": "Core",
             "description": "The DataViz core functions",
             "category": "dataviz",
@@ -244,13 +244,13 @@
             "widgets": []
         },
         {
-            "id": "gauge",
+            "id": "dataviz.gauge",
             "name": "Gauge",
             "category": "dataviz",
             "description": "Radial gauge.",
             "depends": [
-                "dataviz-core",
-                "dataviz-svg"
+                "dataviz.core",
+                "dataviz.svg"
             ],
             "source": "kendo.dataviz.gauge.min.js",
             "widgets": [
@@ -269,12 +269,12 @@
             ]
         },
         {
-            "id": "sparkline",
+            "id": "dataviz.sparkline",
             "name": "Sparkline",
             "category": "dataviz",
             "description": "Sparkline widgets.",
             "depends": [
-                "dataviz-chart"
+                "dataviz.chart"
             ],
             "source": "kendo.dataviz.sparkline.min.js",
             "widgets": [
@@ -287,52 +287,52 @@
             ]
         },
         {
-            "id": "stock-chart",
+            "id": "dataviz.stockchart",
             "name": "StockChart",
             "category": "dataviz",
             "description": "StockChart widget and associated financial series.",
             "depends": [
-                "dataviz-chart"
+                "dataviz.chart"
             ],
             "source": "kendo.dataviz.stock.min.js",
             "widgets": [
                 {
                     "name": "StockChart",
                     "file": "kendo.dataviz.stock.js",
-                    "line": 43,
+                    "line": 44,
                     "col": 21
                 }
             ]
         },
         {
-            "id": "dataviz-svg",
+            "id": "dataviz.svg",
             "name": "Output: SVG",
             "description": "Support for SVG rendering",
             "category": "dataviz",
             "depends": [
-                "dataviz-core"
+                "dataviz.core"
             ],
             "source": "kendo.dataviz.svg.min.js",
             "widgets": []
         },
         {
-            "id": "themes",
+            "id": "dataviz.themes",
             "name": "Themes",
             "description": "Built-in themes for the DataViz widgets",
             "category": "dataviz",
             "depends": [
-                "dataviz-core"
+                "dataviz.core"
             ],
             "source": "kendo.dataviz.themes.min.js",
             "widgets": []
         },
         {
-            "id": "dataviz-vml",
+            "id": "dataviz.vml",
             "name": "Output: VML",
             "description": "Support for VML rendering",
             "category": "dataviz",
             "depends": [
-                "dataviz-core"
+                "dataviz.core"
             ],
             "source": "kendo.dataviz.vml.min.js",
             "widgets": []
@@ -601,13 +601,13 @@
                 {
                     "name": "VirtualScrollable",
                     "file": "kendo.grid.js",
-                    "line": 116,
+                    "line": 118,
                     "col": 29
                 },
                 {
                     "name": "Grid",
                     "file": "kendo.grid.js",
-                    "line": 556,
+                    "line": 557,
                     "col": 15
                 }
             ]
@@ -652,13 +652,13 @@
                 {
                     "name": "SearchBox",
                     "file": "kendo.imagebrowser.js",
-                    "line": 871,
+                    "line": 874,
                     "col": 20
                 },
                 {
                     "name": "Breadcrumbs",
                     "file": "kendo.imagebrowser.js",
-                    "line": 986,
+                    "line": 989,
                     "col": 22
                 }
             ]
@@ -922,7 +922,7 @@
                 {
                     "name": "PopOver",
                     "file": "kendo.mobile.popover.js",
-                    "line": 162,
+                    "line": 163,
                     "col": 18
                 }
             ]
@@ -1061,7 +1061,7 @@
                 {
                     "name": "Layout",
                     "file": "kendo.mobile.view.js",
-                    "line": 336,
+                    "line": 332,
                     "col": 17
                 }
             ]
@@ -1374,7 +1374,7 @@
                 {
                     "name": "TreeView",
                     "file": "kendo.treeview.js",
-                    "line": 126,
+                    "line": 143,
                     "col": 15
                 }
             ]

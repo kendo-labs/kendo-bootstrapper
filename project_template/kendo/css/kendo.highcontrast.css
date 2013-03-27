@@ -254,6 +254,7 @@ textarea.k-textbox:hover,
 }
 .k-state-selected,
 .k-state-selected:link,
+.k-state-selected:visited,
 .k-list > .k-state-selected,
 .k-list > .k-state-highlight,
 .k-panel > .k-state-selected,
@@ -546,6 +547,7 @@ div.k-imagebrowser-dropzone em {
 .k-grouping-header .k-group-indicator,
 .k-autocomplete,
 .k-multiselect,
+.k-dropdown,
 .k-dropdown-wrap,
 .k-datepicker,
 .k-timepicker,
@@ -714,7 +716,7 @@ div.k-imagebrowser-dropzone em {
   .k-tool-icon.k-state-hover,
   .k-tool-icon.k-state-active,
   .k-tool-icon.k-state-active.k-state-hover {
-    background-image: url('HighContrast/sprite@2x.png');
+    background-image: url('HighContrast/sprite_2x.png');
     background-size: 192px 336px;
   }
 }
