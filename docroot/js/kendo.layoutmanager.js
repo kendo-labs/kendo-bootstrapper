@@ -51,15 +51,25 @@
         }
     }
 
+    var RX_FILL = /^([0-9.]+)([%f])?((,.*?[=:]+.*?)*)$/i;
+
     function getFill(f) {
         if (typeof f == "object") return f;
         if (f == null)
             return { type: "fixed" };
         if (typeof f == "number")
             return { type: "fixed", fill: f };
-        if (/\%$/.test(f))
-            return { type: "percent", fill: parseInt(f, 10) };
-        return { type: "fraction", fill: parseFloat(f) };
+        var m = RX_FILL.exec(f);
+        if (!m) throw new Error("Can't parse layout fill argument: " + f);
+        f = {
+            type: m[2] == "%" ? "percent" : "fraction",
+            fill: parseFloat(m[1])
+        };
+        m[3].split(/\s*,+\s*/).slice(1).forEach(function(p){
+            p = p.split(/\s*[=:]+\s*/);
+            f[p[0]] = p[1];
+        });
+        return f;
     }
 
     var LayoutManager = Widget.extend({
