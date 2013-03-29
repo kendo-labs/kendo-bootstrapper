@@ -12,7 +12,7 @@
             : null;
     }
 
-    function element(widget) {
+    function getElement(widget) {
         return widget instanceof $ ? widget
             : widget instanceof Widget ? widget.element
             : typeof widget == "string" ? $(widget)
@@ -23,7 +23,7 @@
         if (typeof widget.setOuterSize == "function") {
             return widget.setOuterSize(width, height);
         }
-        element(widget).css({
+        getElement(widget).css({
             width: width + "px",
             height: height + "px"
         });
@@ -33,14 +33,14 @@
         if (typeof widget.setPosition == "function") {
             return widget.setPosition(top, left);
         }
-        element(widget).css({
+        getElement(widget).css({
             left: parseFloat(left) + "px",
             top: parseFloat(top) + "px"
         });
     }
 
-    function getWidgetSize(widget, axis) {
-        var el = element(widget);
+    function getContentSize(widget, axis) {
+        var el = getElement(widget);
         if (axis == "x") {
             el.css("width", "");
             return el.outerWidth();
@@ -51,7 +51,7 @@
         }
     }
 
-    var RX_FILL = /^([0-9.]+)([%f])?((,.*?[=:]+.*?)*)$/i;
+    var RX_FILL = /^([0-9.]+)([%f])?((,.*?)*)$/i;
 
     function getFill(f) {
         if (typeof f == "object") return f;
@@ -67,7 +67,7 @@
         };
         m[3].split(/\s*,+\s*/).slice(1).forEach(function(p){
             p = p.split(/\s*[=:]+\s*/);
-            f[p[0]] = p[1];
+            f[p[0]] = p.length > 1 ? parseFloat(p[1]) : true;
         });
         return f;
     }
@@ -99,15 +99,47 @@
                 w[1] = getFill(w[1]);
                 self.element.append(w[0].element);
             });
-            self.element.addClass("kendo-layoutmanager");
+            for (var i = options.widgets.length; --i >= 0;) (function(a, i){
+                var f = a[1];
+                if (f.resizable) {
+                    var bar = $("<div class='kendo-resizebar'></div>");
+                    options.widgets.splice(i + 1, 0, [
+                        bar,
+                        { type: "fixed" }
+                    ]);
+                    getElement(a[0]).after(bar);
+                    new kendo.UserEvents(bar, {
+                        global: true,
+                        start: function(e) {
+                            this.offset = kendo.getOffset(bar);
+                            this.size = options.orientation == "horizontal" ? a[2].w : a[2].h;
+                        },
+                        move: function(e) {
+                            var delta;
+                            if (options.orientation == "horizontal") {
+                                delta = e.x.location - this.offset.left;
+                            } else {
+                                delta = e.y.location - this.offset.top;
+                            }
+                            a[1] = {
+                                type : "fixed",
+                                fill : this.size + delta,
+                                min  : f.min,
+                                max  : f.max
+                            };
+                            self.update();
+                        }
+                    });
+                }
+            })(options.widgets[i], i);
+            self.element.addClass("kendo-layoutmanager " + options.orientation);
         },
         update: function() {
             var layout = this._computeLayout(this.element.outerWidth(),
                                              this.element.outerHeight());
             layout.forEach(function(a){
                 var w = a[0], g = a[2];
-                if (!(w instanceof Widget))
-                    w = a[0] = getWidget(w);
+                w = a[0] = getWidget(w);
                 reposWidget(w, g.x, g.y);
                 resizeWidget(w, g.w, g.h);
             });
@@ -116,7 +148,7 @@
             this.element.css({
                 width: width + "px",
                 height: height + "px"
-            })
+            });
             this.update();
         },
 
@@ -140,17 +172,21 @@
                 if (f.type == "fraction") sz = 0;
                 switch (options.orientation) {
                   case "horizontal":
-                    if (sz == null) sz = getWidgetSize(widget, "x");
-                    else if (f.type == "percent") sz = width * f.fill / 100;
-                    sz = limit(f, sz);
-                    rem_width -= sz + spacing;
+                    if (f.type != "fraction") {
+                        if (sz == null) sz = getContentSize(widget, "x");
+                        else if (f.type == "percent") sz = width * f.fill / 100;
+                        sz = limit(f, sz);
+                        rem_width -= sz + spacing;
+                    }
                     a[2] = { x: 0, y: 0, w: sz, h: height };
                     break;
                   case "vertical":
-                    if (sz == null) sz = getWidgetSize(widget, "y");
-                    else if (f.type == "percent") sz = height * f.fill / 100;
-                    sz = limit(f, sz);
-                    rem_height -= sz + spacing;
+                    if (f.type != "fraction") {
+                        if (sz == null) sz = getContentSize(widget, "y");
+                        else if (f.type == "percent") sz = height * f.fill / 100;
+                        sz = limit(f, sz);
+                        rem_height -= sz + spacing;
+                    }
                     a[2] = { x: 0, y: 0, w: width, h: sz };
                     break;
                 }
@@ -160,14 +196,18 @@
                 var f = a[1];
                 switch (options.orientation) {
                   case "horizontal":
-                    if (f.type == "fraction")
+                    if (f.type == "fraction") {
                         a[2].w = limit(f, rem_width * f.fill);
+                        rem_width -= a[2].w;
+                    }
                     a[2].x = prev_x;
                     prev_x += a[2].w + spacing;
                     break;
                   case "vertical":
-                    if (f.type == "fraction")
+                    if (f.type == "fraction") {
                         a[2].h = limit(f, rem_height * f.fill);
+                        rem_height -= a[2].h;
+                    }
                     a[2].y = prev_y;
                     prev_y += a[2].h + spacing;
                     break;
@@ -183,14 +223,14 @@
         options: { name: "Bogus" }
     });
 
-})(jQuery, window.kendo);
+    //// XXX: to be moved in kendo.window.js?
 
-//// XXX: to be moved in kendo.window.js?
-
-kendo.ui.Window.fn.getInnerSize = function() {
-    var content = this.wrapper.find(".k-window-content");
-    return {
-        x: content.width(),
-        y: content.height()
+    ui.Window.fn.getInnerSize = function() {
+        var content = this.wrapper.find(".k-window-content");
+        return {
+            x: content.width(),
+            y: content.height()
+        };
     };
-};
+
+})(jQuery, window.kendo);

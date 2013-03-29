@@ -62,17 +62,17 @@
 
       var layout_el = $(".layout", dlg_el).kendoLayoutManager({
           orientation: "horizontal",
-          spacing: 5,
+          //spacing: 5,
           widgets: [
-              [ w1, { type: "fraction", fill: 0.3, min: 100, max: 200 } ],
+              [ w1, { type: "fraction", fill: 0.3, min: 100, max: 200, resizable: true } ],
               [ {
                   orientation: "vertical",
-                  spacing: 5,
+                  //spacing: 5,
                   widgets: [
-                      [ w2, { type: "percent", fill: 50, min: 100 } ],
-                      [ w3, "50%" ]
+                      [ w2, { type: "fraction", fill: 0.5, min: 100, resizable: true } ],
+                      [ w3, "1" ]
                   ]
-              }, "0.7" ],
+              }, "1" ],
           ]
       });
       var layout = layout_el.data("kendoLayoutManager");

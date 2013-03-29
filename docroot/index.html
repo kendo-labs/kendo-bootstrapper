@@ -23,8 +23,7 @@
   <body>
 
     <div id="top-layout" data-role="layoutmanager" data-orientation="horizontal">
-      <div id="projects-and-files" class="sections" kendo-layout="20%,min:200"
-           style="border-right: 1px solid black"
+      <div id="projects-and-files" class="sections" kendo-layout="20%,min:200,resizable"
            data-role="layoutmanager" data-orientation="vertical">
 
         <div class="title">Projects</div>
@@ -34,7 +33,7 @@
           <button class="k-button" id="btn-project-preview">Preview</button>
         </div>
 
-        <div id="project-list" kendo-layout="0.5" style="overflow:auto"></div>
+        <div id="project-list" kendo-layout="0.5,resizable" style="overflow:auto"></div>
 
         <div class="title">No project selected</div>
 
@@ -45,7 +44,7 @@
         </div>
 
         <div style="background: #fff; overflow: auto" id="project-file-tree"
-             kendo-layout="0.5"><div></div></div>
+             kendo-layout="1"><div></div></div>
 
       </div>
       <div id="content" kendo-layout="1" style="overflow: auto"></div>
@@ -240,7 +239,7 @@
         <div class="project-deps" kendo-layout="1"
              data-role="layoutmanager" data-orientation="horizontal">
           <div class="left-files" kendo-layout="50%"></div>
-          <div class="deps" kendo-layout="50%"
+          <div class="deps" kendo-layout="1"
                data-role="layoutmanager" data-orientation="vertical">
             <div class="title">
               Chose a file on the left, then select its direct dependencies
