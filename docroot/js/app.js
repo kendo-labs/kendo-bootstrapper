@@ -367,11 +367,11 @@ function projectBuildKendo(proj_id) {
             sel = sel.concat(data.manual_kendo_components);
         }
         var dlg_el = $("<div></div>").html(getTemplate("kendo-widget-usage-dialog")({
-            widgets   : data.widgets,
-            kcomp     : kcomp,
-            selection : sel,
-            manual    : data.manual_kendo_components,
-            okLabel   : "Build!"
+            components : data.components,
+            kcomp      : kcomp,
+            selection  : sel,
+            manual     : data.manual_kendo_components,
+            okLabel    : "Build!"
         })).kendoTooltip({
             filter: "label",
             position: "right",

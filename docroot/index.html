@@ -262,11 +262,13 @@
 
     <script type="x/yajet-template" class="kendo-widget-usage-dialog">
       <div data-role="layoutmanager" data-orientation="vertical" class="layout">
-        <div>
-          <p>Based on your code we detected that the following Kendo UI widgets
-          are in use:</p>
+        <div kendo-layout="1" style="overflow: auto">
+          <p>Based on your code we detected that the following Kendo UI
+          components are in use:</p>
 
-          <ul class="two-columns">$(FOREACH (w => this.widgets) <li>$w|html</li> $)</ul>
+          <ul class="two-columns">$(FOREACH (w => this.components)
+            <li>$w.id|html</li>
+          $)</ul>
 
           $(AIF (this.manual)
           <p>Manually selected:</p>
@@ -275,8 +277,7 @@
           <p>We auto-selected these components.  If you require additional
           components please mark them below.  Dependencies will be added
           in automatically.</p>
-        </div>
-        <div kendo-layout="1" style="overflow: auto">
+
           <div class="two-columns">
             $(FOREACH (comp => this.kcomp)
             $(WHEN (comp.category == "web" || comp.category == "framework")
