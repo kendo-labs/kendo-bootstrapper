@@ -32,15 +32,19 @@
             "name" : "kendo/css/kendo.common.min.css",
             "type" : "css",
             "lib"  : true
-        },{
-            "id"   : "kendo.default.css",
-            "name" : "kendo/css/kendo.default.min.css",
+        },
+
+        {{#each KENDO_THEMES}}
+        {
+            "id"   : "kendo.{{{this}}}.css",
+            "name" : "kendo/css/kendo.{{{this}}}.min.css",
             "type" : "css",
             "lib"  : true,
-            "deps" : [
-                "kendo.common.css"
-            ]
-        },{
+            "deps" : [ "kendo.common.css" ]
+        },
+        {{/each}}
+
+        {
             "id"   : "app.js",
             "name" : "js/app.js",
             "type" : "js",
