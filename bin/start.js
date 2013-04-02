@@ -145,7 +145,7 @@ function start_server() {
     wss.on("connection", function(ws){
         CLIENTS.push(ws);
         RPC.notify(ws, "setup", {
-            projects_dir: CONFIG.get_projects_directory()
+            projects_dir: CONFIG.get_projects_directory().replace(/\\/g, "/")
         });
         PROJECT.forEach(function(proj){
             RPC.notify(ws, "register_project", proj);

@@ -151,7 +151,7 @@ function setActiveProject(proj) {
     if (typeof proj != "object")
         proj = PROJECTS.get(proj);
     ACTIVE_PROJECT = proj.id;
-    $("#files .title").html(proj.name);
+    $(".project-title").html("Files in " + proj.name);
 
     // display project tree
     var files_data = new kendo.data.HierarchicalDataSource({
