@@ -56,7 +56,7 @@ function getSelectedProject() {
 function getSelectedFile() {
     if (!ACTIVE_PROJECT) throw ("Select a project first");
     var proj = PROJECTS.get(ACTIVE_PROJECT);
-    var tree = $("#project-file-tree>div:first").data("kendoTreeView");
+    var tree = $("#project-file-tree").data("kendoTreeView");
     var sel = tree.select();
     if (sel.length == 0) throw ("No file selected");
     sel = tree.dataItem(sel);
@@ -166,12 +166,7 @@ function setActiveProject(proj) {
         });
         return top_item;
     };
-    $("#project-file-tree").html("<div></div>");
-
-    // XXX: avoid re-creating the widget; should be able to
-    // re-populate an existing tree instead.
-    $("#project-file-tree div").kendoTreeView({ dataSource: files_data });
-
+    $("#project-file-tree").data("kendoTreeView").setDataSource(files_data);
     projectRefreshContent(proj.id);
 }
 
@@ -198,7 +193,7 @@ function drawContent(proj, data) {
     data.forEach(function(f){
         file_info[f.rel] = f;
     });
-    $("#content").html(getTemplate("project-view")({
+    var el = $("#content").html(getTemplate("project-view")({
         id           : proj.id,
         project_name : proj.name,
         files        : filesByType(proj.files),
@@ -206,7 +201,9 @@ function drawContent(proj, data) {
         make_link    : function(path) {
             return projectFileLink(proj, path);
         }
-    }));
+    })).children();
+    kendo.bind(el);
+    $(window).resize();
 }
 
 function showBuildErrors(proj_id, errors) {

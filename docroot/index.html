@@ -44,10 +44,10 @@
         </div>
 
         <div style="background: #fff; overflow: auto" id="project-file-tree"
-             kendo-layout="1"><div></div></div>
+             data-role="treeview" kendo-layout="1"></div>
 
       </div>
-      <div id="content" kendo-layout="1" style="overflow: auto"></div>
+      <div id="content" kendo-layout="1"></div>
     </div>
 
     <!-- TEMPLATES -->
@@ -57,26 +57,7 @@
     </script>
 
     <script type="x/yajet-template" class="project-view">
-      <!-- main project view -->
       $( var p = this )
-      <div>
-        <div style="float: right">
-          <button onclick="projectRefreshContent('$p.id|html')"
-                  class="k-button">refresh</button>
-          <button onclick="projectEditDependencies('$p.id|html')"
-                  class="k-button">dependencies</button>
-          <button onclick="rebuildProject('$p.id|html')"
-                  class="k-button">rebuild all</button>
-          <button onclick="projectAddFile('$p.id|html')"
-                  class="k-button">add file</button>
-          <button onclick="projectBuildKendo('$p.id|html')"
-                  class="k-button">build kendo</button>
-          |
-          <button onclick="projectBuildDistro('$p.id|html')"
-                  class="k-button">build distro</button>
-        </div>
-        <h1>$p.project_name|html</h1>
-      </div>
 
       $(BLOCK plink(file, text)$-
         $(LET ((info => p.file_info[file])
@@ -130,9 +111,38 @@
         $)
       $)
 
-      <table class="project-files">
-        ${ display_files(p.files) }
-      </table>
+      <div data-role="layoutmanager" data-orientation="vertical">
+
+        <table class="header k-toolbar" cellspacing="10">
+          <tr>
+            <td><h1>$p.project_name|html</h1></td>
+            <td>
+              <div style="float: right">
+                <button onclick="projectRefreshContent('$p.id|html')"
+                        class="k-button">refresh</button>
+                <button onclick="projectEditDependencies('$p.id|html')"
+                        class="k-button">dependencies</button>
+                <button onclick="rebuildProject('$p.id|html')"
+                        class="k-button">rebuild all</button>
+                <button onclick="projectAddFile('$p.id|html')"
+                        class="k-button">add file</button>
+                <button onclick="projectBuildKendo('$p.id|html')"
+                        class="k-button">build kendo</button>
+                |
+                <button onclick="projectBuildDistro('$p.id|html')"
+                        class="k-button">build distro</button>
+              </div>
+            </td>
+          </tr>
+        </table>
+
+        <div kendo-layout="1" style="overflow: auto">
+          <table class="project-files">
+            ${ display_files(p.files) }
+          </table>
+        </div>
+
+      </div>
     </script>
 
     <script type="x/yajet-template" class="add-file-dialog">

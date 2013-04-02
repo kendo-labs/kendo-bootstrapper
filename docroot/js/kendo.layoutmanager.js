@@ -3,13 +3,13 @@
     var ui = kendo.ui;
     var Widget = ui.Widget;
 
-    function getWidget(element) {
+    function getWidget(element, nocreate) {
         return element instanceof Widget ? element
-            : element instanceof $ ? (kendo.widgetInstance(element, ui) ||
-                                      kendo.widgetInstance(element, kendo.mobile.ui) ||
-                                      kendo.widgetInstance(element, kendo.dataviz.ui) ||
-                                      new Bogus(element))
-            : null;
+            : (element instanceof $ ? (kendo.widgetInstance(element, ui) ||
+                                       kendo.widgetInstance(element, kendo.mobile.ui) ||
+                                       kendo.widgetInstance(element, kendo.dataviz.ui) ||
+                                       (nocreate ? null : new Bogus(element)))
+               : null);
     }
 
     function getElement(widget) {
@@ -19,14 +19,18 @@
             : widget;
     }
 
+    function resizeElement(el, width, height) {
+        getElement(el).css({
+            width: width + "px",
+            height: height + "px"
+        });
+    }
+
     function resizeWidget(widget, width, height) {
         if (typeof widget.setOuterSize == "function") {
             return widget.setOuterSize(width, height);
         }
-        getElement(widget).css({
-            width: width + "px",
-            height: height + "px"
-        });
+        resizeElement(widget, width, height);
     }
 
     function reposWidget(widget, left, top) {
@@ -145,10 +149,7 @@
             });
         },
         setOuterSize: function(width, height) {
-            this.element.css({
-                width: width + "px",
-                height: height + "px"
-            });
+            resizeElement(this.element, width, height);
             this.update();
         },
 
@@ -220,7 +221,17 @@
     ui.plugin(LayoutManager);
 
     var Bogus = LayoutManager.Bogus = Widget.extend({
-        options: { name: "Bogus" }
+        options: { name: "Bogus" },
+        setOuterSize: function(width, height) {
+            var a = this.element.children().get();
+            if (a.length == 1) {
+                var w = getWidget($(a[0]), true);
+                if (w && w.setOuterSize) {
+                    w.setOuterSize(width, height);
+                }
+            }
+            resizeElement(this.element, width, height);
+        }
     });
 
     //// XXX: to be moved in kendo.window.js?
