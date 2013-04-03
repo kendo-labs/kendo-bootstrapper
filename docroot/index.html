@@ -118,19 +118,19 @@
             <td><h1>$p.project_name|html</h1></td>
             <td>
               <div style="float: right">
-                <button onclick="projectRefreshContent('$p.id|html')"
-                        class="k-button">refresh</button>
+                <button onclick="projectLintJavaScript('$p.id|html')"
+                        class="k-button">JSHint</button>
                 <button onclick="projectEditDependencies('$p.id|html')"
-                        class="k-button">dependencies</button>
+                        class="k-button">Dependencies</button>
                 <button onclick="rebuildProject('$p.id|html')"
-                        class="k-button">rebuild all</button>
+                        class="k-button">Compile</button>
                 <button onclick="projectAddFile('$p.id|html')"
-                        class="k-button">add file</button>
+                        class="k-button">Add file</button>
                 <button onclick="projectBuildKendo('$p.id|html')"
-                        class="k-button">build kendo</button>
+                        class="k-button">Build Kendo</button>
                 |
                 <button onclick="projectBuildDistro('$p.id|html')"
-                        class="k-button">build distro</button>
+                        class="k-button">Bundle</button>
               </div>
             </td>
           </tr>
@@ -216,30 +216,36 @@
     </script>
 
     <script type="x/yajet-template" class="build-errors-dialog">
-      <table class="build-errors">
-        <thead>
-          <tr>
-            <td>File</td>
-            <td>Error</td>
-            <td>Location</td>
-          </tr>
-        </thead>
-        <tbody>
-          $(FOREACH (err => this.errors)
-            <tr>
-              <td><b>${ err.filename => html }</b></td>
-              <td>${ err.message => html }</td>
-              <td><a href="#" command="edit-file"
+      <div data-role="layoutmanager" data-orientation="vertical" class="layout">
+        <div kendo-layout="1" style="overflow: auto">
+          <table class="build-errors" style="width: 100%">
+            <thead>
+              <tr>
+                <td>File</td>
+                <td>Error</td>
+                <td>Location</td>
+              </tr>
+            </thead>
+            <tbody>
+              $(FOREACH (err => this.errors)
+              <tr>
+                <td><b>${ err.filename => html }</b></td>
+                <td>${ err.message => html }</td>
+                <td style="white-space: nowrap">
+                  <a href="#" command="edit-file"
                      project-id="$this.proj_id"
                      filename="$err.filename|html"
                      line="$err.line"
-                     $(AIF (err.col) col="$it"$)>line $err.line$(AIF (err.col), col $it$)</a></td>
-            </tr>
-          $)
-        </tbody>
-      </table>
-      <div class="dlg-buttons">
-        <button class="k-button btn-close">Close</button>
+                     $(AIF (err.col) col="$it"$)>line $err.line$(AIF (err.col), col $it$)</a>
+                </td>
+              </tr>
+              $)
+            </tbody>
+          </table>
+        </div>
+        <div class="dlg-buttons">
+          <button class="k-button btn-close">Close</button>
+        </div>
       </div>
     </script>
 

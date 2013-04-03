@@ -206,13 +206,19 @@ function drawContent(proj, data) {
     $(window).resize();
 }
 
-function showBuildErrors(proj_id, errors) {
+function showBuildErrors(proj_id, title, errors) {
     var dlg_el = $("<div></div>").html(getTemplate("build-errors-dialog")({
         proj_id : proj_id,
         errors  : errors
     })).kendoWindow({
-        title : "Build errors",
-        modal : true
+        title : title,
+        modal : true,
+        width : 500,
+        height: 400,
+        resize: function() {
+            var sz = this.getInnerSize();
+            lm.setOuterSize(sz.x, sz.y);
+        }
     }).on("click", ".btn-close", function(){
         dlg.close();
     }).on("click", "[command=edit-file]", function(ev){
@@ -223,21 +229,34 @@ function showBuildErrors(proj_id, errors) {
         RPC.call("project/edit-file", proj_id, file, line, col);
         ev.preventDefault();
     });
+    kendo.bind(dlg_el);
+    var lm = $(".layout", dlg_el).data("kendoLayoutManager");
     var dlg = dlg_el.data("kendoWindow");
     dlg.open();
     dlg.center();
+    dlg.trigger("resize");
 }
 
 function rebuildProject(proj_id, callback) {
     var proj = PROJECTS.get(proj_id);
     RPC.call("project/rebuild-all", proj_id, function(fileinfo, err){
         if (err && err instanceof Array) {
-            showBuildErrors(proj_id, err);
+            showBuildErrors(proj_id, "Build errors", err);
             if (callback) callback(null, true);
         }
         else {
             drawContent(proj, fileinfo);
             if (callback) callback(fileinfo, false);
+        }
+    });
+}
+
+function projectLintJavaScript(proj_id) {
+    RPC.call("project/lint-javascript", proj_id, function(results, err){
+        if (results.length > 0) {
+            showBuildErrors(proj_id, "JSHint warnings", results);
+        } else {
+            alert("No warnings. :-)");
         }
     });
 }
