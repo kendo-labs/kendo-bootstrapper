@@ -358,6 +358,7 @@ function projectBuildKendo(proj_id) {
     RPC.call("project/widget-usage", proj_id, function(data, err){
         var detected = [];
         var kcomp = data.kendo_config.components;
+        var loading = [];
         function require(comp) {
             if (typeof comp == "string") {
                 for (var i = 0; i < kcomp.length; ++i) {
@@ -367,11 +368,13 @@ function projectBuildKendo(proj_id) {
                     }
                 }
             }
-            // if (comp.depends) {
-            //     comp.depends.forEach(require);
-            // }
-            if (detected.indexOf(comp.id) < 0)
-                detected.push(comp.id);
+            if (!loading.contains(comp.id)) {
+                loading.push(comp.id);
+                if (comp.depends) {
+                    comp.depends.forEach(require);
+                }
+                detected.pushNew(comp.id);
+            }
         }
         data.components.forEach(require);
         if (err) {
@@ -386,6 +389,7 @@ function projectBuildKendo(proj_id) {
             components : data.components,
             kcomp      : kcomp,
             selection  : sel,
+            detected   : detected,
             manual     : data.manual_kendo_components,
             okLabel    : "Build!"
         })).kendoTooltip({

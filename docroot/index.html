@@ -279,30 +279,27 @@
     <script type="x/yajet-template" class="kendo-widget-usage-dialog">
       <div data-role="layoutmanager" data-orientation="vertical" class="layout">
         <div kendo-layout="1" style="overflow: auto">
-          <p>Based on your code we detected that the following Kendo UI
-          components are in use:</p>
+          <p>Detected components in use:</p>
 
           <ul class="two-columns">$(FOREACH (w => this.components)
             <li>$w.id|html</li>
           $)</ul>
 
           $(AIF (this.manual)
-          <p>Manually selected:</p>
-          <ul class="two-columns">$(FOREACH (w => it) <li>$w|html</li> $)</ul>$)
+            <p>Other manually selected components:</p>
+            <ul class="two-columns">$(FOREACH (w => it) <li>$w|html</li> $)</ul>$)
 
-          <p>We auto-selected these components.  If you require additional
-          components please mark them below.  Dependencies will be added
-          in automatically.</p>
+          <p>If you require additional components please mark them below.</p>
 
           <div class="two-columns">
             $(FOREACH (comp => this.kcomp)
             $(WHEN (comp.category == "web" || comp.category == "framework")
             <div>
-              $( var checked = this.selection.indexOf(comp.id) >= 0
-              ? 'checked="checked"' : ''; )
+              $( var checked = this.selection.contains(comp.id) ? 'checked="checked"' : '';
+                 var disabled = this.detected.contains(comp.id) ? 'disabled="disabled"' : ''; )
               <label class="hovering"
                      title="${ comp.description || 'No description provided' => html }">
-                <input id="kcomp-$comp.id|html" type="checkbox" value="$comp.id|html" $checked />
+                <input id="kcomp-$comp.id|html" type="checkbox" value="$comp.id|html" $checked $disabled />
                 $comp.name|html ($comp.category|html)
               </label>
               </div>$)$)

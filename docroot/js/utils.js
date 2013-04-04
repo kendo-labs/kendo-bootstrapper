@@ -5,3 +5,11 @@ function maphash(obj, f) {
     }
     return ret;
 };
+
+Array.prototype.contains = function(el) {
+    return this.indexOf(el) >= 0;
+};
+
+Array.prototype.pushNew = function(el) {
+    if (!this.contains(el)) this.push(el);
+};
