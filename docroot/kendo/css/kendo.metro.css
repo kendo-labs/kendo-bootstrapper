@@ -145,6 +145,7 @@ textarea.k-textbox:hover,
 .k-toolbar,
 .k-dropdown-wrap,
 .k-picker-wrap,
+.k-numeric-wrap,
 .k-grouping-header,
 .k-pager-wrap,
 .k-textbox,
@@ -155,6 +156,7 @@ textarea.k-textbox:hover,
 .k-tabstrip-items .k-item {
   background-image: none;
   background-position: 50% 50%;
+  background-color: #ffffff;
 }
 .k-tabstrip-items .k-state-active {
   background: #ffffff;
@@ -517,13 +519,6 @@ div.k-imagebrowser-dropzone em {
   border-color: rgba(0, 0, 0, 0.3);
   -webkit-box-shadow: 1px 1px 7px 1px rgba(0, 0, 0, 0.3);
   box-shadow: 1px 1px 7px 1px rgba(0, 0, 0, 0.3);
-}
-.k-textbox > input,
-.k-autocomplete .k-input,
-.k-combobox .k-input,
-.k-picker-wrap .k-input {
-  /*.box-shadow(inset 0 0 1px 1px @shadow-inset-color);*/
-
 }
 .k-shadow {
   -webkit-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.3);

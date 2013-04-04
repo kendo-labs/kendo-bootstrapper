@@ -45,6 +45,31 @@
             "widgets": [
                 {
                     "name": "AutoComplete",
+                    "options": [
+                        "name",
+                        "enabled",
+                        "suggest",
+                        "template",
+                        "dataTextField",
+                        "minLength",
+                        "delay",
+                        "height",
+                        "filter",
+                        "ignoreCase",
+                        "highlightFirst",
+                        "separator",
+                        "placeholder",
+                        "animation"
+                    ],
+                    "events": [
+                        "open",
+                        "close",
+                        "change",
+                        "select",
+                        "dataBinding",
+                        "dataBound"
+                    ],
+                    "inherits": "List",
                     "file": "kendo.autocomplete.js",
                     "line": 59,
                     "col": 23
@@ -75,6 +100,26 @@
             "widgets": [
                 {
                     "name": "Calendar",
+                    "options": [
+                        "name",
+                        "value",
+                        "min",
+                        "max",
+                        "dates",
+                        "url",
+                        "culture",
+                        "footer",
+                        "format",
+                        "month",
+                        "start",
+                        "depth",
+                        "animation"
+                    ],
+                    "events": [
+                        "change",
+                        "navigate"
+                    ],
+                    "inherits": "Widget",
                     "file": "kendo.calendar.js",
                     "line": 67,
                     "col": 19
@@ -95,21 +140,73 @@
             "source": "kendo.colorpicker.min.js",
             "widgets": [
                 {
-                    "name": "ColorPalette",
+                    "name": "ColorSelector",
+                    "options": [
+                        "name",
+                        "value",
+                        "_standalone"
+                    ],
+                    "events": [
+                        "change",
+                        "select",
+                        "cancel"
+                    ],
+                    "inherits": "Widget",
                     "file": "kendo.colorpicker.js",
-                    "line": 142,
+                    "line": 34,
+                    "col": 24
+                },
+                {
+                    "name": "ColorPalette",
+                    "options": [
+                        "name",
+                        "columns",
+                        "tileSize",
+                        "palette"
+                    ],
+                    "inherits": "ColorSelector",
+                    "file": "kendo.colorpicker.js",
+                    "line": 143,
                     "col": 23
                 },
                 {
                     "name": "FlatColorPicker",
+                    "options": [
+                        "name",
+                        "opacity",
+                        "buttons",
+                        "input",
+                        "preview",
+                        "messages"
+                    ],
+                    "inherits": "ColorSelector",
                     "file": "kendo.colorpicker.js",
-                    "line": 281,
+                    "line": 282,
                     "col": 26
                 },
                 {
                     "name": "ColorPicker",
+                    "options": [
+                        "name",
+                        "palette",
+                        "columns",
+                        "toolIcon",
+                        "value",
+                        "messages",
+                        "opacity",
+                        "buttons",
+                        "preview"
+                    ],
+                    "events": [
+                        "activate",
+                        "change",
+                        "select",
+                        "open",
+                        "close"
+                    ],
+                    "inherits": "Widget",
                     "file": "kendo.colorpicker.js",
-                    "line": 776,
+                    "line": 777,
                     "col": 22
                 }
             ]
@@ -128,6 +225,17 @@
             "widgets": [
                 {
                     "name": "ColumnMenu",
+                    "options": [
+                        "name",
+                        "messages",
+                        "columns",
+                        "sortable",
+                        "filterable"
+                    ],
+                    "events": [
+                        "init"
+                    ],
+                    "inherits": "Widget",
                     "file": "kendo.columnmenu.js",
                     "line": 33,
                     "col": 21
@@ -146,6 +254,36 @@
             "widgets": [
                 {
                     "name": "ComboBox",
+                    "options": [
+                        "name",
+                        "enabled",
+                        "index",
+                        "text",
+                        "value",
+                        "autoBind",
+                        "delay",
+                        "dataTextField",
+                        "dataValueField",
+                        "minLength",
+                        "height",
+                        "highlightFirst",
+                        "template",
+                        "filter",
+                        "placeholder",
+                        "suggest",
+                        "ignoreCase",
+                        "animation"
+                    ],
+                    "events": [
+                        "open",
+                        "close",
+                        "change",
+                        "select",
+                        "dataBinding",
+                        "dataBound",
+                        "cascade"
+                    ],
+                    "inherits": "Select",
                     "file": "kendo.combobox.js",
                     "line": 37,
                     "col": 19
@@ -226,8 +364,43 @@
             "widgets": [
                 {
                     "name": "Chart",
+                    "options": [
+                        "name",
+                        "theme",
+                        "chartArea",
+                        "legend",
+                        "categoryAxis",
+                        "autoBind",
+                        "seriesDefaults",
+                        "series",
+                        "tooltip",
+                        "transitions",
+                        "valueAxis",
+                        "plotArea",
+                        "title",
+                        "xAxis",
+                        "yAxis"
+                    ],
+                    "events": [
+                        "dataBound",
+                        "seriesClick",
+                        "seriesHover",
+                        "window.kendo.dataviz.AXIS_LABEL_CLICK",
+                        "legendItemClick",
+                        "plotAreaClick",
+                        "dragStart",
+                        "drag",
+                        "dragEnd",
+                        "zoomStart",
+                        "zoom",
+                        "zoomEnd",
+                        "selectStart",
+                        "select",
+                        "selectEnd"
+                    ],
+                    "inherits": "Widget",
                     "file": "kendo.dataviz.chart.js",
-                    "line": 191,
+                    "line": 194,
                     "col": 16
                 }
             ]
@@ -256,12 +429,25 @@
             "widgets": [
                 {
                     "name": "RadialGauge",
+                    "options": [
+                        "name",
+                        "transitions",
+                        "gaugeArea"
+                    ],
+                    "inherits": "Gauge",
                     "file": "kendo.dataviz.gauge.js",
                     "line": 1292,
                     "col": 22
                 },
                 {
                     "name": "LinearGauge",
+                    "options": [
+                        "name",
+                        "transitions",
+                        "gaugeArea",
+                        "scale"
+                    ],
+                    "inherits": "Gauge",
                     "file": "kendo.dataviz.gauge.js",
                     "line": 1324,
                     "col": 22
@@ -280,6 +466,18 @@
             "widgets": [
                 {
                     "name": "Sparkline",
+                    "options": [
+                        "name",
+                        "chartArea",
+                        "axisDefaults",
+                        "seriesDefaults",
+                        "tooltip",
+                        "categoryAxis",
+                        "legend",
+                        "transitions",
+                        "pointWidth"
+                    ],
+                    "inherits": "Chart",
                     "file": "kendo.dataviz.sparkline.js",
                     "line": 33,
                     "col": 20
@@ -298,6 +496,15 @@
             "widgets": [
                 {
                     "name": "StockChart",
+                    "options": [
+                        "name",
+                        "dateField",
+                        "axisDefaults",
+                        "navigator",
+                        "tooltip",
+                        "legend"
+                    ],
+                    "inherits": "Chart",
                     "file": "kendo.dataviz.stock.js",
                     "line": 44,
                     "col": 21
@@ -350,6 +557,28 @@
             "widgets": [
                 {
                     "name": "DatePicker",
+                    "options": [
+                        "name",
+                        "value",
+                        "footer",
+                        "format",
+                        "culture",
+                        "parseFormats",
+                        "min",
+                        "max",
+                        "start",
+                        "depth",
+                        "animation",
+                        "month",
+                        "dates",
+                        "ARIATemplate"
+                    ],
+                    "events": [
+                        "open",
+                        "close",
+                        "change"
+                    ],
+                    "inherits": "Widget",
                     "file": "kendo.datepicker.js",
                     "line": 274,
                     "col": 21
@@ -369,6 +598,31 @@
             "widgets": [
                 {
                     "name": "DateTimePicker",
+                    "options": [
+                        "name",
+                        "value",
+                        "format",
+                        "timeFormat",
+                        "culture",
+                        "parseFormats",
+                        "dates",
+                        "min",
+                        "max",
+                        "interval",
+                        "height",
+                        "footer",
+                        "start",
+                        "depth",
+                        "animation",
+                        "month",
+                        "ARIATemplate"
+                    ],
+                    "events": [
+                        "open",
+                        "close",
+                        "change"
+                    ],
+                    "inherits": "Widget",
                     "file": "kendo.datetimepicker.js",
                     "line": 51,
                     "col": 25
@@ -388,18 +642,50 @@
             "widgets": [
                 {
                     "name": "DropTarget",
+                    "options": [
+                        "name",
+                        "group"
+                    ],
+                    "events": [
+                        "dragenter",
+                        "dragleave",
+                        "drop"
+                    ],
+                    "inherits": "Widget",
                     "file": "kendo.draganddrop.js",
                     "line": 425,
                     "col": 21
                 },
                 {
                     "name": "DropTargetArea",
+                    "options": [
+                        "name",
+                        "group",
+                        "filter"
+                    ],
+                    "inherits": "DropTarget",
                     "file": "kendo.draganddrop.js",
                     "line": 517,
                     "col": 25
                 },
                 {
                     "name": "Draggable",
+                    "options": [
+                        "name",
+                        "distance",
+                        "group",
+                        "cursorOffset",
+                        "axis",
+                        "container",
+                        "dropped"
+                    ],
+                    "events": [
+                        "dragstart",
+                        "drag",
+                        "dragend",
+                        "dragcancel"
+                    ],
+                    "inherits": "Widget",
                     "file": "kendo.draganddrop.js",
                     "line": 539,
                     "col": 20
@@ -418,6 +704,33 @@
             "widgets": [
                 {
                     "name": "DropDownList",
+                    "options": [
+                        "name",
+                        "enabled",
+                        "autoBind",
+                        "index",
+                        "text",
+                        "value",
+                        "template",
+                        "delay",
+                        "height",
+                        "dataTextField",
+                        "dataValueField",
+                        "optionLabel",
+                        "cascadeFrom",
+                        "ignoreCase",
+                        "animation"
+                    ],
+                    "events": [
+                        "open",
+                        "close",
+                        "change",
+                        "select",
+                        "dataBinding",
+                        "dataBound",
+                        "cascade"
+                    ],
+                    "inherits": "Select",
                     "file": "kendo.dropdownlist.js",
                     "line": 29,
                     "col": 23
@@ -439,6 +752,16 @@
             "widgets": [
                 {
                     "name": "Editable",
+                    "options": [
+                        "name",
+                        "editors",
+                        "clearContainer",
+                        "errorTemplate"
+                    ],
+                    "events": [
+                        "change"
+                    ],
+                    "inherits": "Widget",
                     "file": "kendo.editable.js",
                     "line": 146,
                     "col": 19
@@ -470,14 +793,40 @@
             "widgets": [
                 {
                     "name": "Editor",
+                    "options": [
+                        "name",
+                        "messages",
+                        "formats",
+                        "encoded",
+                        "stylesheets",
+                        "dialogOptions",
+                        "fontName",
+                        "fontSize",
+                        "formatBlock",
+                        "tools"
+                    ],
+                    "events": [
+                        "select",
+                        "change",
+                        "execute",
+                        "error",
+                        "paste",
+                        "keydown",
+                        "keyup"
+                    ],
+                    "inherits": "Widget",
                     "file": "kendo.editor.js",
                     "line": 450,
                     "col": 17
                 },
                 {
                     "name": "SelectBox",
+                    "options": [
+                        "name"
+                    ],
+                    "inherits": "DropDownList",
                     "file": "kendo.editor.js",
-                    "line": 5492,
+                    "line": 5504,
                     "col": 16
                 }
             ]
@@ -496,6 +845,18 @@
             "widgets": [
                 {
                     "name": "FilterMenu",
+                    "options": [
+                        "name",
+                        "extra",
+                        "appendToElement",
+                        "type",
+                        "operators",
+                        "messages"
+                    ],
+                    "events": [
+                        "init"
+                    ],
+                    "inherits": "Widget",
                     "file": "kendo.filtermenu.js",
                     "line": 113,
                     "col": 21
@@ -600,12 +961,59 @@
             "widgets": [
                 {
                     "name": "VirtualScrollable",
+                    "options": [
+                        "name",
+                        "itemHeight"
+                    ],
+                    "inherits": "Widget",
                     "file": "kendo.grid.js",
                     "line": 118,
                     "col": 29
                 },
                 {
                     "name": "Grid",
+                    "options": [
+                        "name",
+                        "columns",
+                        "toolbar",
+                        "autoBind",
+                        "filterable",
+                        "scrollable",
+                        "sortable",
+                        "selectable",
+                        "navigatable",
+                        "pageable",
+                        "editable",
+                        "groupable",
+                        "rowTemplate",
+                        "altRowTemplate",
+                        "dataSource",
+                        "height",
+                        "resizable",
+                        "reorderable",
+                        "columnMenu",
+                        "detailTemplate"
+                    ],
+                    "events": [
+                        "change",
+                        "dataBinding",
+                        "cancel",
+                        "dataBound",
+                        "detailExpand",
+                        "detailCollapse",
+                        "detailInit",
+                        "filterMenuInit",
+                        "columnMenuInit",
+                        "edit",
+                        "save",
+                        "remove",
+                        "saveChanges",
+                        "columnResize",
+                        "columnReorder",
+                        "columnShow",
+                        "columnHide"
+                    ],
+                    "inherits": "Widget",
                     "file": "kendo.grid.js",
                     "line": 557,
                     "col": 15
@@ -625,6 +1033,13 @@
             "widgets": [
                 {
                     "name": "Groupable",
+                    "options": [
+                        "name",
+                        "filter",
+                        "draggableElements",
+                        "messages"
+                    ],
+                    "inherits": "Widget",
                     "file": "kendo.groupable.js",
                     "line": 43,
                     "col": 20
@@ -645,18 +1060,48 @@
             "widgets": [
                 {
                     "name": "ImageBrowser",
+                    "options": [
+                        "name",
+                        "messages",
+                        "transport",
+                        "path",
+                        "fileTypes"
+                    ],
+                    "events": [
+                        "error",
+                        "change",
+                        "apply"
+                    ],
+                    "inherits": "Widget",
                     "file": "kendo.imagebrowser.js",
                     "line": 186,
                     "col": 23
                 },
                 {
                     "name": "SearchBox",
+                    "options": [
+                        "name",
+                        "label",
+                        "value"
+                    ],
+                    "events": [
+                        "change"
+                    ],
+                    "inherits": "Widget",
                     "file": "kendo.imagebrowser.js",
                     "line": 874,
                     "col": 20
                 },
                 {
                     "name": "Breadcrumbs",
+                    "options": [
+                        "name",
+                        "gap"
+                    ],
+                    "events": [
+                        "change"
+                    ],
+                    "inherits": "Widget",
                     "file": "kendo.imagebrowser.js",
                     "line": 989,
                     "col": 22
@@ -705,6 +1150,25 @@
             "widgets": [
                 {
                     "name": "ListView",
+                    "options": [
+                        "name",
+                        "autoBind",
+                        "selectable",
+                        "navigatable",
+                        "template",
+                        "altTemplate",
+                        "editTemplate"
+                    ],
+                    "events": [
+                        "change",
+                        "cancel",
+                        "dataBinding",
+                        "dataBound",
+                        "edit",
+                        "remove",
+                        "save"
+                    ],
+                    "inherits": "Widget",
                     "file": "kendo.listview.js",
                     "line": 45,
                     "col": 19
@@ -723,6 +1187,23 @@
             "widgets": [
                 {
                     "name": "Menu",
+                    "options": [
+                        "name",
+                        "animation",
+                        "orientation",
+                        "direction",
+                        "openOnClick",
+                        "closeOnClick",
+                        "hoverDelay"
+                    ],
+                    "events": [
+                        "open",
+                        "close",
+                        "activate",
+                        "deactivate",
+                        "select"
+                    ],
+                    "inherits": "Widget",
                     "file": "kendo.menu.js",
                     "line": 249,
                     "col": 15
@@ -735,12 +1216,22 @@
             "category": "mobile",
             "description": "The mobile ActionSheet widget displays a set of choices related to a task the user initiates.",
             "depends": [
-                "mobile.popover"
+                "mobile.popover",
+                "mobile.shim"
             ],
             "source": "kendo.mobile.actionsheet.min.js",
             "widgets": [
                 {
                     "name": "ActionSheet",
+                    "options": [
+                        "name",
+                        "cancel",
+                        "popup"
+                    ],
+                    "events": [
+                        "open"
+                    ],
+                    "inherits": "Widget",
                     "file": "kendo.mobile.actionsheet.js",
                     "line": 22,
                     "col": 22
@@ -771,20 +1262,40 @@
             "widgets": [
                 {
                     "name": "Button",
+                    "options": [
+                        "name",
+                        "icon",
+                        "style",
+                        "badge"
+                    ],
+                    "events": [
+                        "click"
+                    ],
+                    "inherits": "Widget",
                     "file": "kendo.mobile.button.js",
-                    "line": 28,
+                    "line": 32,
                     "col": 17
                 },
                 {
                     "name": "BackButton",
+                    "options": [
+                        "name",
+                        "style"
+                    ],
+                    "inherits": "Button",
                     "file": "kendo.mobile.button.js",
-                    "line": 123,
+                    "line": 149,
                     "col": 21
                 },
                 {
                     "name": "DetailButton",
+                    "options": [
+                        "name",
+                        "style"
+                    ],
+                    "inherits": "Button",
                     "file": "kendo.mobile.button.js",
-                    "line": 139,
+                    "line": 165,
                     "col": 23
                 }
             ]
@@ -801,8 +1312,17 @@
             "widgets": [
                 {
                     "name": "ButtonGroup",
+                    "options": [
+                        "name",
+                        "selectOn",
+                        "index"
+                    ],
+                    "events": [
+                        "select"
+                    ],
+                    "inherits": "Widget",
                     "file": "kendo.mobile.buttongroup.js",
-                    "line": 17,
+                    "line": 21,
                     "col": 22
                 }
             ]
@@ -814,12 +1334,39 @@
             "description": "The Kendo Mobile ListView widget is used to display flat or grouped list of items.",
             "depends": [
                 "data",
-                "mobile.application"
+                "mobile.application",
+                "userevents"
             ],
             "source": "kendo.mobile.listview.min.js",
             "widgets": [
                 {
                     "name": "ListView",
+                    "options": [
+                        "name",
+                        "style",
+                        "type",
+                        "autoBind",
+                        "fixedHeaders",
+                        "template",
+                        "headerTemplate",
+                        "appendOnRefresh",
+                        "loadMore",
+                        "loadMoreText",
+                        "endlessScroll",
+                        "scrollThreshold",
+                        "pullToRefresh",
+                        "pullTemplate",
+                        "releaseTemplate",
+                        "refreshTemplate",
+                        "pullOffset",
+                        "filterable"
+                    ],
+                    "events": [
+                        "click",
+                        "dataBound",
+                        "lastPageReached"
+                    ],
+                    "inherits": "Widget",
                     "file": "kendo.mobile.listview.js",
                     "line": 79,
                     "col": 19
@@ -839,6 +1386,12 @@
             "widgets": [
                 {
                     "name": "Loader",
+                    "options": [
+                        "name",
+                        "loading",
+                        "timeout"
+                    ],
+                    "inherits": "Widget",
                     "file": "kendo.mobile.loader.js",
                     "line": 16,
                     "col": 17
@@ -858,6 +1411,18 @@
             "widgets": [
                 {
                     "name": "ModalView",
+                    "options": [
+                        "name",
+                        "modal",
+                        "width",
+                        "height"
+                    ],
+                    "events": [
+                        "init",
+                        "open",
+                        "close"
+                    ],
+                    "inherits": "ui.View",
                     "file": "kendo.mobile.modalview.js",
                     "line": 19,
                     "col": 20
@@ -876,8 +1441,12 @@
             "widgets": [
                 {
                     "name": "NavBar",
+                    "options": [
+                        "name"
+                    ],
+                    "inherits": "Widget",
                     "file": "kendo.mobile.navbar.js",
-                    "line": 32,
+                    "line": 34,
                     "col": 17
                 }
             ]
@@ -896,6 +1465,18 @@
             "widgets": [
                 {
                     "name": "Pane",
+                    "options": [
+                        "name",
+                        "transition",
+                        "layout",
+                        "initial",
+                        "loading"
+                    ],
+                    "events": [
+                        "navigate",
+                        "viewShow"
+                    ],
+                    "inherits": "Widget",
                     "file": "kendo.mobile.pane.js",
                     "line": 40,
                     "col": 15
@@ -915,12 +1496,33 @@
             "widgets": [
                 {
                     "name": "Popup",
+                    "options": [
+                        "name",
+                        "width",
+                        "height",
+                        "direction"
+                    ],
+                    "events": [
+                        "show",
+                        "hide"
+                    ],
+                    "inherits": "Widget",
                     "file": "kendo.mobile.popover.js",
                     "line": 67,
                     "col": 16
                 },
                 {
                     "name": "PopOver",
+                    "options": [
+                        "name",
+                        "popup",
+                        "pane"
+                    ],
+                    "events": [
+                        "open",
+                        "close"
+                    ],
+                    "inherits": "Widget",
                     "file": "kendo.mobile.popover.js",
                     "line": 163,
                     "col": 18
@@ -941,6 +1543,22 @@
             "widgets": [
                 {
                     "name": "Scroller",
+                    "options": [
+                        "name",
+                        "zoom",
+                        "pullOffset",
+                        "elastic",
+                        "useNative",
+                        "pullTemplate",
+                        "releaseTemplate",
+                        "refreshTemplate"
+                    ],
+                    "events": [
+                        "pull",
+                        "scroll",
+                        "resize"
+                    ],
+                    "inherits": "Widget",
                     "file": "kendo.mobile.scroller.js",
                     "line": 209,
                     "col": 19
@@ -959,6 +1577,19 @@
             "widgets": [
                 {
                     "name": "ScrollView",
+                    "options": [
+                        "name",
+                        "page",
+                        "duration",
+                        "velocityThreshold",
+                        "contentHeight",
+                        "pageSize",
+                        "bounceVelocityThreshold"
+                    ],
+                    "events": [
+                        "change"
+                    ],
+                    "inherits": "Widget",
                     "file": "kendo.mobile.scrollview.js",
                     "line": 30,
                     "col": 21
@@ -978,6 +1609,15 @@
             "widgets": [
                 {
                     "name": "Shim",
+                    "options": [
+                        "name",
+                        "modal",
+                        "align",
+                        "position",
+                        "effect",
+                        "duration"
+                    ],
+                    "inherits": "Widget",
                     "file": "kendo.mobile.shim.js",
                     "line": 17,
                     "col": 15
@@ -996,6 +1636,11 @@
             "widgets": [
                 {
                     "name": "SplitView",
+                    "options": [
+                        "name",
+                        "style"
+                    ],
+                    "inherits": "View",
                     "file": "kendo.mobile.splitview.js",
                     "line": 15,
                     "col": 20
@@ -1014,6 +1659,16 @@
             "widgets": [
                 {
                     "name": "Switch",
+                    "options": [
+                        "name",
+                        "onLabel",
+                        "offLabel",
+                        "checked"
+                    ],
+                    "events": [
+                        "change"
+                    ],
+                    "inherits": "Widget",
                     "file": "kendo.mobile.switch.js",
                     "line": 26,
                     "col": 17
@@ -1033,8 +1688,17 @@
             "widgets": [
                 {
                     "name": "TabStrip",
+                    "options": [
+                        "name",
+                        "selectedIndex",
+                        "enable"
+                    ],
+                    "events": [
+                        "select"
+                    ],
+                    "inherits": "Widget",
                     "file": "kendo.mobile.tabstrip.js",
-                    "line": 16,
+                    "line": 20,
                     "col": 19
                 }
             ]
@@ -1054,12 +1718,39 @@
             "widgets": [
                 {
                     "name": "View",
+                    "options": [
+                        "name",
+                        "title",
+                        "reload",
+                        "defaultTransition",
+                        "useNativeScrolling",
+                        "stretch",
+                        "zoom",
+                        "model"
+                    ],
+                    "events": [
+                        "init",
+                        "beforeShow",
+                        "show",
+                        "afterShow",
+                        "hide"
+                    ],
+                    "inherits": "Widget",
                     "file": "kendo.mobile.view.js",
                     "line": 36,
                     "col": 15
                 },
                 {
                     "name": "Layout",
+                    "options": [
+                        "name"
+                    ],
+                    "events": [
+                        "init",
+                        "show",
+                        "hide"
+                    ],
+                    "inherits": "Widget",
                     "file": "kendo.mobile.view.js",
                     "line": 332,
                     "col": 17
@@ -1078,6 +1769,34 @@
             "widgets": [
                 {
                     "name": "MultiSelect",
+                    "options": [
+                        "name",
+                        "enabled",
+                        "autoBind",
+                        "highlightFirst",
+                        "dataTextField",
+                        "dataValueField",
+                        "filter",
+                        "ignoreCase",
+                        "minLength",
+                        "delay",
+                        "value",
+                        "maxSelectedItems",
+                        "itemTemplate",
+                        "tagTemplate",
+                        "placeholder",
+                        "height",
+                        "animation"
+                    ],
+                    "events": [
+                        "open",
+                        "close",
+                        "change",
+                        "select",
+                        "dataBinding",
+                        "dataBound"
+                    ],
+                    "inherits": "List",
                     "file": "kendo.multiselect.js",
                     "line": 53,
                     "col": 22
@@ -1097,6 +1816,25 @@
             "widgets": [
                 {
                     "name": "NumericTextBox",
+                    "options": [
+                        "name",
+                        "decimals",
+                        "min",
+                        "max",
+                        "value",
+                        "step",
+                        "culture",
+                        "format",
+                        "spinners",
+                        "placeholder",
+                        "upArrowText",
+                        "downArrowText"
+                    ],
+                    "events": [
+                        "change",
+                        "spin"
+                    ],
+                    "inherits": "Widget",
                     "file": "kendo.numerictextbox.js",
                     "line": 44,
                     "col": 25
@@ -1115,6 +1853,24 @@
             "widgets": [
                 {
                     "name": "Pager",
+                    "options": [
+                        "name",
+                        "selectTemplate",
+                        "linkTemplate",
+                        "buttonCount",
+                        "autoBind",
+                        "numeric",
+                        "info",
+                        "input",
+                        "previousNext",
+                        "pageSizes",
+                        "refresh",
+                        "messages"
+                    ],
+                    "events": [
+                        "change"
+                    ],
+                    "inherits": "Widget",
                     "file": "kendo.pager.js",
                     "line": 65,
                     "col": 16
@@ -1133,6 +1889,20 @@
             "widgets": [
                 {
                     "name": "PanelBar",
+                    "options": [
+                        "name",
+                        "animation",
+                        "expandMode"
+                    ],
+                    "events": [
+                        "expand",
+                        "collapse",
+                        "select",
+                        "activate",
+                        "error",
+                        "contentLoad"
+                    ],
+                    "inherits": "Widget",
                     "file": "kendo.panelbar.js",
                     "line": 199,
                     "col": 19
@@ -1151,6 +1921,24 @@
             "widgets": [
                 {
                     "name": "Popup",
+                    "options": [
+                        "name",
+                        "toggleEvent",
+                        "origin",
+                        "position",
+                        "anchor",
+                        "collision",
+                        "viewport",
+                        "copyAnchorStyles",
+                        "animation"
+                    ],
+                    "events": [
+                        "open",
+                        "activate",
+                        "close",
+                        "deactivate"
+                    ],
+                    "inherits": "Widget",
                     "file": "kendo.popup.js",
                     "line": 54,
                     "col": 16
@@ -1170,6 +1958,14 @@
             "widgets": [
                 {
                     "name": "Reorderable",
+                    "options": [
+                        "name",
+                        "filter"
+                    ],
+                    "events": [
+                        "change"
+                    ],
+                    "inherits": "Widget",
                     "file": "kendo.reorderable.js",
                     "line": 25,
                     "col": 22
@@ -1189,6 +1985,16 @@
             "widgets": [
                 {
                     "name": "Resizable",
+                    "options": [
+                        "name",
+                        "orientation"
+                    ],
+                    "events": [
+                        "resize",
+                        "resizeend",
+                        "start"
+                    ],
+                    "inherits": "Widget",
                     "file": "kendo.resizable.js",
                     "line": 22,
                     "col": 20
@@ -1220,6 +2026,15 @@
             "widgets": [
                 {
                     "name": "Selectable",
+                    "options": [
+                        "name",
+                        "filter",
+                        "multiple"
+                    ],
+                    "events": [
+                        "change"
+                    ],
+                    "inherits": "Widget",
                     "file": "kendo.selectable.js",
                     "line": 36,
                     "col": 21
@@ -1238,12 +2053,31 @@
             "widgets": [
                 {
                     "name": "Slider",
+                    "options": [
+                        "name",
+                        "showButtons",
+                        "increaseButtonTitle",
+                        "decreaseButtonTitle",
+                        "dragHandleTitle",
+                        "tooltip",
+                        "value"
+                    ],
+                    "inherits": "SliderBase",
                     "file": "kendo.slider.js",
                     "line": 581,
                     "col": 17
                 },
                 {
                     "name": "RangeSlider",
+                    "options": [
+                        "name",
+                        "leftDragHandleTitle",
+                        "rightDragHandleTitle",
+                        "tooltip",
+                        "selectionStart",
+                        "selectionEnd"
+                    ],
+                    "inherits": "SliderBase",
                     "file": "kendo.slider.js",
                     "line": 1221,
                     "col": 22
@@ -1262,6 +2096,12 @@
             "widgets": [
                 {
                     "name": "Sortable",
+                    "options": [
+                        "name",
+                        "mode",
+                        "allowUnsort"
+                    ],
+                    "inherits": "Widget",
                     "file": "kendo.sortable.js",
                     "line": 22,
                     "col": 19
@@ -1280,6 +2120,19 @@
             "widgets": [
                 {
                     "name": "Splitter",
+                    "options": [
+                        "name",
+                        "orientation",
+                        "panes"
+                    ],
+                    "events": [
+                        "expand",
+                        "collapse",
+                        "contentLoad",
+                        "resize",
+                        "layoutChange"
+                    ],
+                    "inherits": "Widget",
                     "file": "kendo.splitter.js",
                     "line": 63,
                     "col": 19
@@ -1298,6 +2151,27 @@
             "widgets": [
                 {
                     "name": "TabStrip",
+                    "options": [
+                        "name",
+                        "dataTextField",
+                        "dataContentField",
+                        "dataImageUrlField",
+                        "dataUrlField",
+                        "dataSpriteCssClass",
+                        "dataContentUrlField",
+                        "animation",
+                        "collapsible"
+                    ],
+                    "events": [
+                        "select",
+                        "activate",
+                        "error",
+                        "contentLoad",
+                        "change",
+                        "dataBinding",
+                        "dataBound"
+                    ],
+                    "inherits": "Widget",
                     "file": "kendo.tabstrip.js",
                     "line": 156,
                     "col": 19
@@ -1316,6 +2190,24 @@
             "widgets": [
                 {
                     "name": "TimePicker",
+                    "options": [
+                        "name",
+                        "min",
+                        "max",
+                        "format",
+                        "dates",
+                        "parseFormats",
+                        "value",
+                        "interval",
+                        "height",
+                        "animation"
+                    ],
+                    "events": [
+                        "open",
+                        "close",
+                        "change"
+                    ],
+                    "inherits": "Widget",
                     "file": "kendo.timepicker.js",
                     "line": 473,
                     "col": 21
@@ -1335,6 +2227,25 @@
             "widgets": [
                 {
                     "name": "Tooltip",
+                    "options": [
+                        "name",
+                        "filter",
+                        "content",
+                        "showAfter",
+                        "callout",
+                        "position",
+                        "showOn",
+                        "autoHide",
+                        "animation"
+                    ],
+                    "events": [
+                        "show",
+                        "hide",
+                        "contentLoad",
+                        "error",
+                        "requestStart"
+                    ],
+                    "inherits": "Widget",
                     "file": "kendo.tooltip.js",
                     "line": 113,
                     "col": 18
@@ -1354,6 +2265,32 @@
             "widgets": [
                 {
                     "name": "Touch",
+                    "options": [
+                        "name",
+                        "surface",
+                        "global",
+                        "multiTouch",
+                        "enableSwipe",
+                        "minXDelta",
+                        "maxYDelta",
+                        "maxDuration",
+                        "minHold",
+                        "doubleTapTimeout"
+                    ],
+                    "events": [
+                        "touchstart",
+                        "dragstart",
+                        "drag",
+                        "dragend",
+                        "tap",
+                        "doubletap",
+                        "hold",
+                        "swipe",
+                        "gesturestart",
+                        "gesturechange",
+                        "gestureend"
+                    ],
+                    "inherits": "Widget",
                     "file": "kendo.touch.js",
                     "line": 57,
                     "col": 16
@@ -1373,6 +2310,30 @@
             "widgets": [
                 {
                     "name": "TreeView",
+                    "options": [
+                        "name",
+                        "dataSource",
+                        "animation",
+                        "dragAndDrop",
+                        "checkboxes",
+                        "autoBind",
+                        "loadOnDemand",
+                        "template",
+                        "dataTextField"
+                    ],
+                    "events": [
+                        "dragstart",
+                        "drag",
+                        "drop",
+                        "dragend",
+                        "dataBound",
+                        "expand",
+                        "collapse",
+                        "select",
+                        "change",
+                        "navigate"
+                    ],
+                    "inherits": "Widget",
                     "file": "kendo.treeview.js",
                     "line": 143,
                     "col": 15
@@ -1391,6 +2352,25 @@
             "widgets": [
                 {
                     "name": "Upload",
+                    "options": [
+                        "name",
+                        "enabled",
+                        "multiple",
+                        "showFileList",
+                        "async",
+                        "localization"
+                    ],
+                    "events": [
+                        "select",
+                        "upload",
+                        "success",
+                        "error",
+                        "complete",
+                        "cancel",
+                        "progress",
+                        "remove"
+                    ],
+                    "inherits": "Widget",
                     "file": "kendo.upload.js",
                     "line": 24,
                     "col": 17
@@ -1420,6 +2400,14 @@
             "widgets": [
                 {
                     "name": "Validator",
+                    "options": [
+                        "name",
+                        "errorTemplate",
+                        "messages",
+                        "rules",
+                        "validateOnBlur"
+                    ],
+                    "inherits": "Widget",
                     "file": "kendo.validator.js",
                     "line": 78,
                     "col": 20
@@ -1450,6 +2438,34 @@
             "widgets": [
                 {
                     "name": "Window",
+                    "options": [
+                        "name",
+                        "animation",
+                        "title",
+                        "actions",
+                        "modal",
+                        "resizable",
+                        "draggable",
+                        "minWidth",
+                        "minHeight",
+                        "maxWidth",
+                        "maxHeight",
+                        "visible",
+                        "height",
+                        "width"
+                    ],
+                    "events": [
+                        "open",
+                        "activate",
+                        "deactivate",
+                        "close",
+                        "refresh",
+                        "resize",
+                        "dragstart",
+                        "dragend",
+                        "error"
+                    ],
+                    "inherits": "Widget",
                     "file": "kendo.window.js",
                     "line": 104,
                     "col": 17

@@ -144,6 +144,7 @@ a.k-button
 
 .k-ie7 .k-button { overflow: visible; margin-right: 4px; }
 .k-ie7 a.k-button { line-height: 1.6; padding-left: 7px; padding-right: 7px;/*+1*/ }
+.k-ie7 .k-slider a.k-button { height: 22px; line-height: 22px; padding: 0; } 
 .k-ie7 .k-button-expand { margin-left: 0; margin-right: 0; }
 
 button.k-button::-moz-focus-inner,
@@ -1759,6 +1760,7 @@ html body .k-grid tbody .k-button-icon
     .border-box;
 }
 
+.k-ie7 .k-edit-cell>.text-box,
 .k-ie7 .k-edit-cell>.k-textbox,
 .k-ie7 .k-edit-cell>.k-widget,
 .k-ie7 .k-grid-edit-row>td>.k-textbox,
@@ -2146,8 +2148,8 @@ span.k-datetimepicker .k-select+.k-select
 .k-numeric-wrap .k-select,
 .k-dropdown-wrap .k-select
 {
-    min-height: 1.56em;
-    line-height: 1.56em;
+    min-height: 1.52em;
+    line-height: 1.52em;
     vertical-align: middle;
     padding: 3px;
 }
@@ -2527,7 +2529,6 @@ div.k-treeview
 {
     outline: 0;
     .border-box;
-    text-indent: 2px\9;
 }
 
 input.k-textbox
@@ -2535,6 +2536,7 @@ input.k-textbox
     padding: 2px .3em;
     height: 2.12em;
     line-height: 1.6em;
+    text-indent: 2px\9;
 }
 
 .k-ie7 input.k-textbox { line-height: 1.72em; height: 1.72em; text-indent: .3em; }
@@ -2554,7 +2556,7 @@ textarea.k-textbox
 
 span.k-numerictextbox
 {
-    background: transparent;
+    background-color: transparent;
 }
 
 .k-numerictextbox .k-input /* alignment of arrows in WebKit */
@@ -3494,6 +3496,7 @@ span.k-tooltip
 {
     position: absolute;
 	width: 0;
+	height: 0;
 	border-style: solid;
 	border-width: 6px;
 	border-color: transparent;

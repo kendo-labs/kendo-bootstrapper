@@ -169,6 +169,7 @@ textarea.k-textbox:hover,
 .k-toolbar,
 .k-dropdown-wrap,
 .k-picker-wrap,
+.k-numeric-wrap,
 .k-grouping-header,
 .k-pager-wrap,
 .k-textbox,
@@ -183,6 +184,7 @@ textarea.k-textbox:hover,
   background-image: none, -o-linear-gradient(top, rgba(255,255,255,.45) 0%, rgba(255,255,255,0) 100%);
   background-image: none, linear-gradient(to bottom, rgba(255,255,255,.45) 0%, rgba(255,255,255,0) 100%);
   background-position: 50% 50%;
+  background-color: #f3f3f4;
 }
 .k-tabstrip-items .k-state-active {
   background: #ffffff;
@@ -558,13 +560,6 @@ div.k-imagebrowser-dropzone em {
   -webkit-box-shadow: 1px 1px 7px 1px rgba(166, 175, 190, 0.8);
   box-shadow: 1px 1px 7px 1px rgba(166, 175, 190, 0.8);
 }
-.k-textbox > input,
-.k-autocomplete .k-input,
-.k-combobox .k-input,
-.k-picker-wrap .k-input {
-  /*.box-shadow(inset 0 0 1px 1px @shadow-inset-color);*/
-
-}
 .k-shadow {
   -webkit-box-shadow: 0 1px 2px 0 rgba(166, 175, 190, 0.8);
   box-shadow: 0 1px 2px 0 rgba(166, 175, 190, 0.8);
@@ -629,14 +624,14 @@ div.k-imagebrowser-dropzone em {
 .k-picker-wrap.k-state-border-up .k-input,
 .k-picker-wrap.k-state-border-up .k-selected-color,
 .k-numeric-wrap.k-state-border-up .k-input {
-  -moz-border-radius: 0 0 0 2px;
-  -webkit-border-radius: 0 0 0 2px;
-  border-radius: 0 0 0 2px;
+  -moz-border-radius: 0 0 0 4px;
+  -webkit-border-radius: 0 0 0 4px;
+  border-radius: 0 0 0 4px;
 }
 .k-multiselect.k-state-border-up .k-multiselect-wrap {
-  -moz-border-radius: 0 0 2px 2px;
-  -webkit-border-radius: 0 0 2px 2px;
-  border-radius: 0 0 2px 2px;
+  -moz-border-radius: 0 0 4px 4px;
+  -webkit-border-radius: 0 0 4px 4px;
+  border-radius: 0 0 4px 4px;
 }
 .k-window-titlebar,
 .k-block > .k-header,
@@ -657,9 +652,9 @@ div.k-imagebrowser-dropzone em {
 .k-dropdown-wrap .k-input,
 .k-picker-wrap .k-input,
 .k-numeric-wrap .k-input {
-  -moz-border-radius: 2px 0 0 2px;
-  -webkit-border-radius: 2px 0 0 2px;
-  border-radius: 2px 0 0 2px;
+  -moz-border-radius: 4px 0 0 4px;
+  -webkit-border-radius: 4px 0 0 4px;
+  border-radius: 4px 0 0 4px;
 }
 .k-numeric-wrap .k-link {
   -moz-border-radius: 0 2px 0 0;
@@ -686,14 +681,14 @@ div.k-imagebrowser-dropzone em {
 .k-picker-wrap.k-state-border-down .k-input,
 .k-picker-wrap.k-state-border-down .k-selected-color,
 .k-numeric-wrap.k-state-border-down .k-input {
-  -moz-border-radius: 2px 0 0 0;
-  -webkit-border-radius: 2px 0 0 0;
-  border-radius: 2px 0 0 0;
+  -moz-border-radius: 4px 0 0 0;
+  -webkit-border-radius: 4px 0 0 0;
+  border-radius: 4px 0 0 0;
 }
 .k-multiselect.k-state-border-down .k-multiselect-wrap {
-  -moz-border-radius: 2px 2px 0 0;
-  -webkit-border-radius: 2px 2px 0 0;
-  border-radius: 2px 2px 0 0;
+  -moz-border-radius: 4px 4px 0 0;
+  -webkit-border-radius: 4px 4px 0 0;
+  border-radius: 4px 4px 0 0;
 }
 .k-dropdown-wrap .k-select,
 .k-picker-wrap .k-select,
@@ -721,9 +716,9 @@ div.k-imagebrowser-dropzone em {
 .k-progress-status,
 .k-numeric-wrap.k-expand-padding .k-input,
 .k-multiselect-wrap {
-  -moz-border-radius: 2px;
-  -webkit-border-radius: 2px;
-  border-radius: 2px;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  border-radius: 4px;
 }
 .k-list .k-state-hover,
 .k-list .k-state-focused,
