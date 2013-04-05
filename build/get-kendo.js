@@ -68,6 +68,15 @@ STEP(
                 });
             });
         });
+    },
+
+    function kendo_docs() {
+        var group = this.group();
+        [ "framework", "mobile", "web", "dataviz" ].forEach(function(dir){
+            UTILS.fs_copytree(PATH.join(KENDO_DIR, "docs", "api", dir),
+                              PATH.join(TOPLEVEL_DIR, "kendosrc", "docs", "api", dir),
+                              group());
+        });
     }
 
 );
