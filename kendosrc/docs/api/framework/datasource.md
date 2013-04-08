@@ -1,6 +1,6 @@
 ---
 title: kendo.data.DataSource
-meta_title: Configuration of DataSource component in Kendo UI framework
+meta_title: Configuration, methods and events of the Kendo DataSource component.
 meta_description: Easy to follow steps for DataSource component configuration, examples of supported methods and executed events.
 slug: api-framework-datasource
 tags: api,framework
@@ -11,127 +11,533 @@ publish: true
 
 ## Configuration
 
-### aggregate `Array | Object`*(default: undefined)*
+### aggregate `Array` *(default: undefined)*
 
- Sets fields on which initial aggregates should be calculated
+The aggregate(s) which are calculated when the data source populates with data. The supported aggregates are "average", "count", "max", "min" and "sum".
 
-### aggregate.field `String`
+> The data source calculates aggregates client-side unless the [serverAggregates](#configuration-serverAggregates) option is set to `true`.
 
- Specifies the field on which the aggregate will be calculated.
+#### Example - specify aggregates
+
+    <script>
+    var dataSource = new kendo.data.DataSource({
+      data: [
+        { name: "Jane Doe", age: 30 },
+        { name: "John Doe", age: 33 }
+      ],
+      aggregate: [
+        { field: "age", aggregate: "sum" },
+        { field: "age", aggregate: "min" },
+        { field: "age", aggregate: "max" }
+      ]
+    });
+    dataSource.fetch(function(){
+      var results = dataSource.aggregates().age;
+      console.log(results.sum, results.min, results.max); // displays "63 30 33"
+    });
+    </script>
 
 ### aggregate.aggregate `String`
 
- Specifies the aggregate function. Possible values are: "min", "max", "count", "sum", "average"
+The name of the aggregate function. Specifies the aggregate function. The supported aggregates are "average", "count", "max", "min" and "sum".
 
-#### Example
+#### Example - specify aggregate function
 
-    // calculates total sum of unitPrice field's values.
-    [{ field: "unitPrice", aggregate: "sum" }]
+    <script>
+    var dataSource = new kendo.data.DataSource({
+      data: [
+        { name: "Jane Doe", age: 30 },
+        { name: "John Doe", age: 33 }
+      ],
+      aggregate: [
+        { field: "age", aggregate: "sum" }
+      ]
+    });
+    dataSource.fetch(function(){
+      var results = dataSource.aggregates().age;
+      console.log(results.sum); // displays "63"
+    });
+
+### aggregate.field `String`
+
+The field which will be aggregated.
+
+#### Example - specify aggregate field
+
+    <script>
+    var dataSource = new kendo.data.DataSource({
+      data: [
+        { name: "Jane Doe", age: 30 },
+        { name: "John Doe", age: 33 }
+      ],
+      aggregate: [
+        { field: "age", aggregate: "sum" }
+      ]
+    });
+    dataSource.fetch(function(){
+      var results = dataSource.aggregates().age;
+      console.log(results.sum); // displays "63"
+    });
+    </script>
 
 ### autoSync `Boolean` *(default: false)*
 
-Enables (*true*) or disables (*false*) the automatic invocation of the sync() method for each change made.
+If set to `true` the data source would automatically [sync](#methods-sync) any changes to its data items. By default changes are not automatically sync-ed.
+
+#### Example - enable auto sync
+    <script>
+    var dataSource = new kendo.data.DataSource({
+      autoSync: true,
+      transport: {
+        read:  {
+          url: "http://demos.kendoui.com/service/products",
+          dataType: "jsonp" // JSONP is required for cross-domain requests
+        },
+        update: {
+          url: "http://demos.kendoui.com/service/products/update",
+          dataType: "jsonp" // JSONP is required for cross-domain requests
+        }
+      },
+      schema: {
+        model: { id: "ProductID" }
+      }
+    });
+    dataSource.fetch(function() {
+      var product = dataSource.at(0);
+      product.set("UnitPrice", 20); // auto-syncs and makes request to http://demos.kendoui.com/service/products/update
+    });
+    </script>
 
 ### batch `Boolean` *(default: false)*
 
-Enables (*true*) or disables (*false*) batch mode.
+If set to `true` the data source will batch CRUD operation requests. For example updating two data items would cause one HTTP request instead of two during [sync](#methods-sync). By default the data source
+makes a HTTP request for every CRUD operation.
+
+> The changed data items are sent by default as `models`. This can be changed via the [parameterMap](#configuration-transport.parameterMap) option.
+
+#### Example - enable batch mode
+    <script>
+    var dataSource = new kendo.data.DataSource({
+      batch: true,
+      transport: {
+        read:  {
+          url: "http://demos.kendoui.com/service/products",
+          dataType: "jsonp" //JSONP is required for cross-domain requests
+        },
+        update: {
+          url: "http://demos.kendoui.com/service/products/update",
+          dataType: "jsonp" //JSONP is required for cross-domain requests
+        }
+      },
+      schema: {
+        model: { id: "ProductID" }
+      }
+    });
+    dataSource.fetch(function() {
+      var product = dataSource.at(0);
+      product.set("UnitPrice", 20);
+      var anotherProduct = dataSource.at(1);
+      anotherProduct.set("UnitPrice", 20);
+      dataSource.sync(); // causes only one request to "http://demos.kendoui.com/service/products/update"
+    });
+    </script>
 
 ### data `Array`
 
-Specifies the local JavaScript object to use for the data source.
+The array of data items. The data source will internally wrap them as [kendo.data.ObservableObject](/api/framework/obvservableobject).
 
-#### Example: Bind the DataSource to a JavaScript Array
+#### Example - set the data items of a data source
 
-    var orders = [ { orderId: 10248, customerName: "Paul Smith" }, { orderId: 10249, customerName: "Jane Jones" }];
     var dataSource = new kendo.data.DataSource({
-         data: orders
+      data: [
+        { name: "Jane Doe", age: 30 },
+        { name: "John Doe", age: 33 }
+      ]
+    });
+    dataSource.fetch(function(){
+      var janeDoe = dataSource.at(0);
+      console.log(janeDoe.name); // displays "Jane Doe"
     });
 
-### filter `Array | Object`*(default: undefined)*
+### filter `Array|Object`
 
- Sets the initial filter.
+The filter(s) which is (are) applied over the items when the data source populates with data. By default no filter is applied.
 
-### filter.operator `String`
+> The data source filters the data items client-side unless the [serverFiltering](#configuration-serverFiltering) option is set to `true`.
 
- Specifies the filter operator. One of the following values "eq", "neq", "lt", "lte", "gt", "gte", "startswith", "endswith", "contains".
+#### Example - set a single filter
+    <script>
+    var dataSource = new kendo.data.DataSource({
+      data: [
+        { name: "Jane Doe" },
+        { name: "John Doe" }
+      ],
+      filter: { field: "name", operator: "startswith", value: "Jane" }
+    });
+    dataSource.fetch(function(){
+      var view = dataSource.view();
+      console.log(view.length); // displays "1"
+      console.log(view[0].name); // displays "Jane Doe"
+    });
+    </script>
+
+#### Example - set filter as conjunction (and)
+    <script>
+    var dataSource = new kendo.data.DataSource({
+      data: [
+        { name: "Tea", category: "Beverages" },
+        { name: "Coffee", category: "Beverages" },
+        { name: "Ham", category: "Food" }
+      ],
+      filter: [
+        // leave data items which are "Beverage" and not "Coffee"
+        { field: "category", operator: "eq", value: "Beverages" },
+        { field: "name", operator: "neq", value: "Coffee" }
+      ]
+    });
+    dataSource.fetch(function(){
+      var view = dataSource.view();
+      console.log(view.length); // displays "1"
+      console.log(view[0].name); // displays "Tea"
+    });
+    </script>
+
+#### Example - set filter as disjunction (or)
+    <script>
+    var dataSource = new kendo.data.DataSource({
+      data: [
+        { name: "Tea", category: "Beverages" },
+        { name: "Coffee", category: "Beverages" },
+        { name: "Ham", category: "Food" }
+      ],
+      filter: {
+        // leave data items which are "Food" or "Tea"
+        logic: "or",
+        filters: [
+          { field: "category", operator: "eq", value: "Food" },
+          { field: "name", operator: "eq", value: "Tea" }
+        ]
+      }
+    });
+    dataSource.fetch(function(){
+      var view = dataSource.view();
+      console.log(view.length); // displays "2"
+      console.log(view[0].name); // displays "Tea"
+      console.log(view[1].name); // displays "Ham"
+    });
+    </script>
 
 ### filter.field `String`
 
- Specifies the field to filter by.
+The field to which the filter is applied.
+
+#### Example - set the filter field
+
+    <script>
+    var dataSource = new kendo.data.DataSource({
+      data: [
+        { name: "Jane Doe" },
+        { name: "John Doe" }
+      ],
+      filter: { field: "name", operator: "startswith", value: "Jane" }
+    });
+    dataSource.fetch(function(){
+      var view = dataSource.view();
+      console.log(view.length); // displays "1"
+      console.log(view[0].name); // displays "Jane Doe"
+    });
+    </script>
+
+### filter.operator `String`
+
+The filter operator (comparison). The supported operators are: "eq" (equal to), "neq" (not equal to), "lt" (less than), "lte" (less than or equal to), "gt" (greater than), "gte" (greater than or equal to),
+"startswith", "endswith", "contains". The last three are supported only for string fields.
+
+#### Example - set the filter operator
+
+    <script>
+    var dataSource = new kendo.data.DataSource({
+      data: [
+        { name: "Jane Doe" },
+        { name: "John Doe" }
+      ],
+      filter: { field: "name", operator: "startswith", value: "Jane" }
+    });
+    dataSource.fetch(function(){
+      var view = dataSource.view();
+      console.log(view.length); // displays "1"
+      console.log(view[0].name); // displays "Jane Doe"
+    });
+    </script>
 
 ### filter.value `Object`
 
- Specifies the value to filter for.
+The value to which the [field](#configuration-filter.field) is compared. The value must be from the same type as the field.
 
-#### Example
+#### Example - specify the filter value
+    <script>
+    var dataSource = new kendo.data.DataSource({
+      data: [
+        { name: "Jane Doe", birthday: new Date(1983, 1, 1) },
+        { name: "John Doe", birthday: new Date(1980, 1, 1)}
+      ],
+      filter: { field: "birthday", operator: "gt", value: new Date(1980, 1, 1) }
+    });
+    dataSource.fetch(function(){
+      var view = dataSource.view();
+      console.log(view.length); // displays "1"
+      console.log(view[0].name); // displays "Jane Doe"
+    });
+    </script>
 
-    // returns only data where orderId is equal to 10248
-    filter: { field: "orderId", operator: "eq", value: 10248 }
+### group `Array|Object`
 
-    // returns only data where orderId is equal to 10248 and customerName starts with Paul
-    filter: [ { field: "orderId", operator: "eq", value: 10248 },
-              { field: "customerName", operator: "startswith", value: "Paul" } ]
+The grouping configuration of the data source. If set the data items will be grouped when the data source populates with data. By default grouping is not applied.
 
-    // returns data where orderId is equal to 10248 or customerName starts with Paul
-    filter: {
-        logic: "or",
-        filters: [
-          { field: "orderId", operator: "eq", value: 10248 },
-          { field: "customerName", operator: "startswith", value: "Paul" }
-        ]
-    }
+> The data source groups the data items client-side unless the [serverGrouping](#configuration-serverGrouping) option is set to `true`.
 
-### group `Array | Object`*(default: undefined)*
+#### Example - set group as an object
+    <script>
+    var dataSource = new kendo.data.DataSource({
+      data: [
+        { name: "Tea", category: "Beverages" },
+        { name: "Coffee", category: "Beverages" },
+        { name: "Ham", category: "Food" }
+      ],
+      // group by the "category" field
+      group: { field: "category" }
+    });
+    dataSource.fetch(function(){
+      var view = dataSource.view();
+      console.log(view.length); // displays "2"
+      var beverages = view[0];
+      console.log(beverages.value); // displays "Beverages"
+      console.log(beverages.items[0].name); // displays "Tea"
+      console.log(beverages.items[1].name); // displays "Coffee"
+      var food = view[1];
+      console.log(food.value); // displays "Food"
+      console.log(food.items[0].name); // displays "Ham"
+    });
+    </script>
 
- Sets initial grouping
+#### Example - set group as an array (subgroups)
+    <script>
+    var dataSource = new kendo.data.DataSource({
+      data: [
+        { name: "Pork", category: "Food", subcategory: "Meat" },
+        { name: "Pepper", category: "Food", subcategory: "Vegetables" },
+        { name: "Beef", category: "Food", subcategory: "Meat" }
+      ],
+      group: [
+        // group by "category" and then by "subcategory"
+        { field: "category" },
+        { field: "subcategory" },
+      ]
+    });
+    dataSource.fetch(function(){
+      var view = dataSource.view();
+      console.log(view.length); // displays "1"
+      var food = view[0];
+      console.log(food.value); // displays "Food"
+      var meat = food.items[0];
+      console.log(meat.value); // displays "Meat"
+      console.log(meat.items.length); // displays "2"
+      console.log(meat.items[0].name); // displays "Pork"
+      console.log(meat.items[1].name); // displays "Beef"
+      var vegetables = food.items[1];
+      console.log(vegetables.value); // displays "Vegetables"
+      console.log(vegetables.items.length); // displays "1"
+      console.log(vegetables.items[0].name); // displays "Pepper"
+    });
+    </script>
+
+### group.dir `String` *(default: "asc")*
+
+The sort order of the group. The supported values are "asc" (ascending order) and "desc" (descending order). The default sort order is ascending.
+
+#### Example - sort the groups in descending order
+    <script>
+    var dataSource = new kendo.data.DataSource({
+      data: [
+        { name: "Tea", category: "Beverages"},
+        { name: "Ham", category: "Food"},
+      ],
+      // group by "category" in descending order
+      group: { field: "category", dir: "desc" }
+    });
+    dataSource.fetch(function(){
+      var view = dataSource.view();
+      var food = view[0];
+      console.log(food.value); // displays "Food"
+      var beverages = view[1];
+      console.log(beverages.value); // displays "Beverages"
+    });
+    </script>
 
 ### group.field `String`
 
- Specifies the field to group by.
+The field to group by.
 
-### group.dir `String`
+#### Example - set the field
 
- Specifies the order of the groupped items.
+    <script>
+    var dataSource = new kendo.data.DataSource({
+      data: [
+        { name: "Tea", category: "Beverages" },
+        { name: "Coffee", category: "Beverages" },
+        { name: "Ham", category: "Food" }
+      ],
+      // group by the "category" field
+      group: { field: "category" }
+    });
+    dataSource.fetch(function(){
+      var view = dataSource.view();
+      var beverages = view[0];
+      console.log(beverages.items[0].name); // displays "Tea"
+      console.log(beverages.items[1].name); // displays "Coffee"
+      var food = view[1];
+      console.log(food.items[0].name); // displays "Ham"
+    });
+    </script>
 
 ### group.aggregates `Array`
 
- Specifies the aggregate function for this group.
+The aggregate(s) which are calculated during grouping. The supported aggregates are "average", "count", "max", "min" and "sum".
 
-### group.aggregates.field `String`
-
- Specifies the field on which the aggregate will be calculated.
+#### Example - set group aggregates
+    <script>
+    var dataSource = new kendo.data.DataSource({
+      data: [
+        { name: "Tea", category: "Beverages", price: 1 },
+        { name: "Coffee", category: "Beverages", price: 2 },
+        { name: "Ham", category: "Food", price: 3 },
+      ],
+      group: {
+        field: "category",
+        aggregates: [
+          { field: "price", aggregate: "max" },
+          { field: "price", aggregate: "min" }
+        ]
+      }
+    });
+    dataSource.fetch(function(){
+      var view = dataSource.view();
+      var beverages = view[0];
+      console.log(beverages.aggregates.price.max); // displays "2"
+      console.log(beverages.aggregates.price.min); // displays "1"
+      var food = view[1];
+      console.log(food.aggregates.price.max); // displays "3"
+      console.log(food.aggregates.price.min); // displays "3"
+    });
+    </script>
 
 ### group.aggregates.aggregate `String`
 
- Specifies the aggregate function. Possible values are: "min", "max", "count", "sum", "average"
+The name of the aggregate function. Specifies the aggregate function. The supported aggregates are "average", "count", "max", "min" and "sum".
 
-#### Example
-
-    // groups data by orderId field
-    group: { field: "orderId" }
-
-    // groups data by orderId and customerName fields
-    group: [ { field: "orderId", dir: "desc" }, { field: "customerName", dir: "asc" } ]
-
-### page `Number`*(default: undefined)*
-
- Sets the index of the displayed page of data.
-
-#### Example
-
+#### Example - specify aggregate function
+    <script>
     var dataSource = new kendo.data.DataSource({
-        page: 2 // displays the second page of data in the bound widget
+      data: [
+        { name: "Tea", category: "Beverages", price: 1 },
+        { name: "Coffee", category: "Beverages", price: 2 },
+        { name: "Ham", category: "Food", price: 3 }
+      ],
+      group: {
+        field: "category",
+        aggregates: [
+          // calculate max price
+          { field: "price", aggregate: "max" }
+        ]
+      }
     });
+    dataSource.fetch(function(){
+      var view = dataSource.view();
+      var beverages = view[0];
+      console.log(beverages.aggregates.price.max); // displays "2"
+    });
+    </script>
 
-### pageSize `Number`*(default: undefined)*
+### group.aggregates.field `String`
 
- Sets the number of records which contains a given page of data.
+The field which will be aggregated.
 
-#### Example
+#### Example - specify aggregate field
 
+    <script>
     var dataSource = new kendo.data.DataSource({
-        pageSize: 5 // 5 records per page of data
+      data: [
+        { name: "Tea", category: "Beverages", price: 1 },
+        { name: "Coffee", category: "Beverages", price: 2 },
+        { name: "Ham", category: "Food", price: 3 }
+      ],
+      group: {
+        field: "category",
+        aggregates: [
+          // calculate max price
+          { field: "price", aggregate: "max" }
+        ]
+      }
     });
+    dataSource.fetch(function(){
+      var view = dataSource.view();
+      var beverages = view[0];
+      console.log(beverages.aggregates.price.max); // displays "2"
+    });
+    </script>
+
+### page `Number`
+
+The page of data which the data source will return when the [view](#methods-view) method is invoked.
+
+> The data source will page the data items client-side unless the [serverPaging](#configuration-serverPaging) option is set to `true`.
+
+#### Example - set the current page
+
+    <script>
+    var dataSource = new kendo.data.DataSource({
+      data: [
+        { name: "Tea", category: "Beverages" },
+        { name: "Coffee", category: "Beverages" },
+        { name: "Ham", category: "Food" }
+      ],
+      // set the second page as the current page
+      page: 2,
+      pageSize: 2
+    });
+    dataSource.fetch(function(){
+      var view = dataSource.view();
+      console.log(view.length); // displays "1"
+      console.log(view[0].name); // displays "Ham"
+    });
+    </script>
+
+### pageSize `Number`
+
+The number of data items which a single page of data contains.
+
+> The data source will page the data items client-side unless the [serverPaging](#configuration-serverPaging) option is set to `true`.
+
+#### Example - set the page size
+
+    <script>
+    var dataSource = new kendo.data.DataSource({
+      data: [
+        { name: "Tea", category: "Beverages" },
+        { name: "Coffee", category: "Beverages" },
+        { name: "Ham", category: "Food" }
+      ],
+      page: 1,
+      // a page of data contains two data items
+      pageSize: 2
+    });
+    dataSource.fetch(function(){
+      var view = dataSource.view();
+      console.log(view.length); // displays "2"
+      console.log(view[0].name); // displays "Tea"
+      console.log(view[1].name); // displays "Coffee"
+    });
+    </script>
 
 ### schema `Object`
 
@@ -433,7 +839,7 @@ Specify the type of the response - XML or JSON. The only supported values are `"
         type: "xml"
     }
 
-### serverAggregates `Boolean`*(default: false)*
+### serverAggregates `Boolean` *(default: false)*
 
 Determines if aggregates are calculated on the server or not. By default aggregates are calculated client-side.
 
@@ -449,7 +855,7 @@ Determines if aggregates are calculated on the server or not. By default aggrega
 
 > **Important:** When `serverAggregates` is set to `true` the developer is responsible for calculating the aggregate results.
 
-### serverFiltering `Boolean`*(default: false)*
+### serverFiltering `Boolean` *(default: false)*
 
 Determines if filtering of the data is handled on the server. By default filtering is performed client-side.
 
@@ -512,7 +918,7 @@ It is possible to modify these parameters by using the `parameterMap` function f
         filter: { field: "orderId", operator: "eq", value: 10248 } // return only data where orderId equals 10248
     });
 
-### serverGrouping `Boolean`*(default: false)*
+### serverGrouping `Boolean` *(default: false)*
 
 Determines if grouping of the data is handled on the server. By default grouping is performed client-side.
 
@@ -536,7 +942,7 @@ It is possible to modify these parameters by using the `parameterMap` function f
         sort: { field: "orderId", dir: "asc" } // group by orderId descending
     });
 
-### serverPaging `Boolean`*(default: false)*
+### serverPaging `Boolean` *(default: false)*
 
 Determines if paging of the data is on the server. By default paging is performed client-side. If `serverPaging` is enabled the
 total number of data items should also be returned in the response. Use the `schema.total` setting to customize that.
@@ -573,7 +979,7 @@ It is possible to modify these parameters by using the `parameterMap` function f
         pageSize: 5 // 5 records per page
     });
 
-### serverSorting `Boolean`*(default: false)*
+### serverSorting `Boolean` *(default: false)*
 
 Determines if sorting of the data should is handled on the server. By default sorting is performed client-side.
 
@@ -596,7 +1002,7 @@ It is possible to modify these parameters by using the `parameterMap` function f
         sort: { field: "orderId", dir: "asc" }
     });
 
-### sort `Array | Object`*(default: undefined)*
+### sort `Array|Object` *(default: undefined)*
 
  Sets initial sort order
 
@@ -1329,7 +1735,7 @@ The zero-based index of the data item.
 
 #### Returns
 
-`kendo.data.ObservableObject | kendo.data.Model` The type depends on the schema.
+`kendo.data.ObservableObject|kendo.data.Model` The type depends on the schema.
 
 ### cancelChanges
 
@@ -1679,7 +2085,7 @@ Get current sort descriptors or sorts the data.
 
 #### Parameters
 
-##### sort `Object | Array`
+##### sort `Object|Array`
 
 Sort options to be applied to the data
 

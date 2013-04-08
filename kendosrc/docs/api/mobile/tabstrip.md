@@ -20,6 +20,37 @@ Represents the Kendo UI Mobile TabStrip widget. Inherits from [kendo.mobile.ui.W
 
 ## Methods
 
+### badge
+
+**Introduced in Q1 2013 SP** Sets a badge on one of the **tabs** with the specified value. If invoked without second parameter, returns the tab's current badge value. Set the value to false to remove the badge.
+
+#### Parameters
+
+##### tab `Selector|Number`
+
+The target tab specified either as a jQuery selector/object or as an item index.
+
+##### value `String|Boolean`
+
+The target value to be set or false to be removed.
+
+#### Returns
+
+`String|kendo.mobile.ui.TabStrip` Returns the badge value if invoked without parameters, otherwise returns the TabStrip object.
+
+#### Example
+
+    var tabstrip = $("#tabStrip").data("kendoMobileTabStrip");
+
+    // Set the first tab badge value to 5
+    tabstrip.badge(0, 5);
+
+    // Get the current badge value on the first tab.
+    tabstrip.badge(0);
+
+    // Remove the first tab badge
+    tabstrip.badge("li:first", false);
+
 ### currentItem
 
 Get the currently selected tab DOM element.

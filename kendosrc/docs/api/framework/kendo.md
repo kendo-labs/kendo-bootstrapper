@@ -250,6 +250,26 @@ The Kendo template which should be rendered.
 
 Array of JavaScript objects which contains the data that the template will render.
 
+### stringify
+
+Converts a value to JSON. Uses [JSON.stringify](https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/JSON/stringify) in browsers that support it.
+
+#### Parameters
+
+##### value `Object`
+
+The value to convert to a JSON string.
+
+#### Returns
+
+`String` The JSON representation of the value.
+
+#### Example
+
+    var json = kendo.stringify({ foo: "bar" });
+    console.log(json); // displays {"foo":"bar"}
+
+
 ### template
 Compiles a template to a function that builds HTML. Useful when a template will be used several times.
 Templates offer way of creating HTML chunks. Options such as HTML encoding and compilation for optimal
@@ -354,7 +374,7 @@ The `Date` or `Number` which should be formatted.
 ##### format `String`
 The format string which should be used to format the value.
 
-## Properties
+## Field
 
 ### support
 A range of useful supported by the current browser capabilities and features.

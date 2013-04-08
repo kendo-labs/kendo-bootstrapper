@@ -27,6 +27,37 @@ However, if the widget is placed in a scrollable view, the user may accidentally
 
 ## Methods
 
+### badge
+
+**Introduced in Q1 2013 SP** Sets a badge on one of the ButtonGroup buttons with the specified value. If invoked without parameters, returns the button's current badge value. Set the value to false to remove the badge.
+
+#### Parameters
+
+##### button `Selector|Number`
+
+The target button specified either as a jQuery selector/object or as an button index.
+
+##### value `String|Boolean`
+
+The target value to be set or false to be removed.
+
+#### Returns
+
+`String|kendo.mobile.ui.Button` Returns the badge value if invoked without parameters, otherwise returns the ButtonGroup object.
+
+#### Example
+
+    var buttongroup = $("#buttonGroup").data("kendoMobileButtonGroup");
+
+    // Set the first button badge value to 5
+    buttongroup.badge(0, 5);
+
+    // Get the current badge value on the first button.
+    buttongroup.badge(0);
+
+    // Remove the first button badge
+    buttongroup.badge("li:first", false);
+
 ### current
 
 Get the currently selected Button.

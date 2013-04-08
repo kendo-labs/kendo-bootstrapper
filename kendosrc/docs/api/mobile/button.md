@@ -24,6 +24,33 @@ Represents the Kendo UI Mobile Button widget. Inherits from [kendo.mobile.ui.Wid
 
 ## Methods
 
+### badge
+
+**Introduced in Q1 2013 SP** Sets a badge on the **Button** with the specified value. If invoked without parameters, returns the current badge value. Set the value to false to remove the badge.
+
+#### Parameters
+
+##### value `String|Boolean`
+
+The target value to be set or false to be removed.
+
+#### Returns
+
+`String|kendo.mobile.ui.Button` Returns the badge value if invoked without parameters, otherwise returns the Button object.
+
+#### Example
+
+    var button = $("#button").data("kendoMobileButton");
+
+    // Set the badge value to 5
+    button.badge(5);
+
+    // Get the current badge value
+    button.badge();
+
+    // Remove the badge
+    button.badge(false);
+
 ### destroy
 Prepares the **Button** for safe removal from DOM. Detaches all event handlers and removes jQuery.data attributes to avoid memory leaks. Calls destroy method of any child Kendo widgets.
 

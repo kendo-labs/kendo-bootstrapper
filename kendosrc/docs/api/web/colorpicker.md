@@ -62,7 +62,7 @@ The height of the color cell.
 
 Allows customization of "Apply" / "Cancel" labels.
 
-### palette `String` or `Array`*(default: null)*
+### palette `String|Array`*(default: null)*
 
 When a non-null `palette` argument is supplied, the drop-down will be
 a simple color picker.  The following are supported:

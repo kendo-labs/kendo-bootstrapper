@@ -16,11 +16,10 @@ Represents the Kendo UI Grid widget. Inherits from [Widget](/api/framework/widge
 
 ### altRowTemplate `String|Function`
 
-The [template](/api/framework/kendo#methods-template) which is used to render alternating rows. Be default renders a table row (`<tr>`) for every data source item.
+The [template](/api/framework/kendo#methods-template) which renders the alternating table rows. Be default the grid renders a table row (`<tr>`) for every data source item.
 
-> **Important:** The outermost HTML element in the template must be a table row (`<tr>`). That table row must have the `uid` data attribute set to `#= uid #`. The grid uses the `uid` data attribute to determine the data to which a table row is bound to.
-
-> **Info:** Set the `class` of the table row to `k-alt` to get the default "alternating" look and feel.
+> The outermost HTML element in the template must be a table row (`<tr>`). That table row must have the `uid` data attribute set to `#= uid #`. The grid uses the `uid` data attribute to determine the data to which a table row is bound to.
+> Set the `class` of the table row to `k-alt` to get the default "alternating" look and feel.
 
 #### Example - specify alternating row template as a function
 
@@ -56,11 +55,9 @@ The [template](/api/framework/kendo#methods-template) which is used to render al
 ### autoBind `Boolean` *(default: true)*
 
 If set to `false` the widget will not bind to the data source during initialization. In this case data binding will occur when the [change](/api/framework/datasource#events-change) event of the
-data source is fired.
+data source is fired. By default the widget will bind to the data source specified in the configuration.
 
-By default this option is set to `true` which means that the widget will bind to the data source specified in the configuration.
-
-> **Info:** Setting the `autoBind` option to `false` is useful in scenarios where multiple widgets are bound to the same data source. Disabling automatic binding would ensure that the shared data source doesn't make more than one request to the remote service.
+> Setting `autoBind` to `false` is useful when multiple widgets are bound to the same data source. Disabling automatic binding ensures that the shared data source doesn't make more than one request to the remote service.
 
 #### Example - disable automatic binding
 
@@ -78,8 +75,8 @@ By default this option is set to `true` which means that the widget will bind to
 
 ### columns `Array`
 
-The configuration of the grid columns. Set to array of JavaScript objects or strings. A JavaScript object is interpreted as column configuration. A string is interpreted as the
-[field](#configuration-columns.field) to which the column is bound to. The grid will create a column for every item of the array.
+The configuration of the grid columns. An array of JavaScript objects or strings. A JavaScript objects are interpreted as column configurations. Strings are interpreted as the
+[field](#configuration-columns.field) to which the column is bound. The grid will create a column for every item of the array.
 
 > If this setting is **not** specified the grid will create a column for every field of the data item.
 
@@ -111,7 +108,7 @@ The configuration of the grid columns. Set to array of JavaScript objects or str
 
 ### columns.aggregates `Array`
 
-The aggregate(s) to be calculated for this column when the grid is grouped by its [field](#configuration-columns.field).
+The aggregate(s) which are calculated when the grid is grouped by the columns [field](#configuration-columns.field).
 The supported aggregates are "average", "count", "max", "min" and "sum".
 
 #### Example - set column aggregates
@@ -143,7 +140,7 @@ The supported aggregates are "average", "count", "max", "min" and "sum".
 
 HTML attributes of the table cell (`<td>`) rendered for the column.
 
-> HTML attributes which are JavaScript keywords (such as *class*) should be quoted.
+> HTML attributes which are JavaScript keywords (e.g. *class*) must be quoted.
 
 #### Example - specify column HTML attributes
 
@@ -168,13 +165,13 @@ The table cells would look like this: `<td class="table-cell" style="text-align:
 
 The configuration of the column command(s). If set the column would display a button for every command. Commands can be custom or built-in ("edit" or "destroy").
 
-The "edit" built-in command will put the current row in edit mode.
+The "edit" built-in command switches the current table row in edit mode.
 
-The "destroy" built-in command will delete the current row.
+The "destroy" built-in command removes the data item to which the current table row is bound.
 
-Custom commands are supported via the [click](#configuration-columns.command.click) option.
+Custom commands are supported by specifying the [click](#configuration-columns.command.click) option.
 
-> **Note:** The built-in "edit" and "destroy" commands work *only* if editing is enabled via the [editable](#configuration-editable) option. The "edit" command supports "inline" and "popup" editing modes.
+> The built-in "edit" and "destroy" commands work *only* if editing is enabled via the [editable](#configuration-editable) option. The "edit" command supports "inline" and "popup" editing modes.
 
 #### Example - set command as a string
     <div id="grid"></div>
@@ -226,7 +223,7 @@ Custom commands are supported via the [click](#configuration-columns.command.cli
 
 ### columns.command.name `String`
 
-The name of the command. The supported built-in commands are "edit" and "destroy". Can be set to a custom value.
+The name of the command. The built-in commands are "edit" and "destroy". Can be set to a custom value.
 
 #### Example - set the command name
     <div id="grid"></div>
@@ -243,7 +240,7 @@ The name of the command. The supported built-in commands are "edit" and "destroy
 
 ### columns.command.text `String`
 
-The text displayed by the command button. If not set the [name](#configuration-columns.command.name) option would be used as the button text.
+The text displayed by the command button. If not set the [name](#configuration-columns.command.name) option is used as the button text.
 
 #### Example - customize the text of the command
     <div id="grid"></div>
@@ -282,7 +279,8 @@ The CSS class applied to the command button.
 
 ### columns.command.click `Function`
 
-The JavaScript function executed when the user clicks the command button. The single parameter of the function is a [jQuery Event](http://api.jquery.com/category/events/event-object/).
+The JavaScript function executed when the user clicks the command button. The function receives a [jQuery Event](http://api.jquery.com/category/events/event-object/) as an argument.
+
 The function context (available via the `this` keyword) will be set to the grid instance.
 
 #### Example - handle the click event of the custom command button
@@ -311,7 +309,7 @@ The function context (available via the `this` keyword) will be set to the grid 
 
 Provides a way to specify a custom editing UI for the column. Use the `container` parameter to create the editing UI.
 
-> **Important**: The editing UI should contain an element whose `name` HTML attribute is set as column [field](#configuration-columns.field).
+> The editing UI should contain an element whose `name` HTML attribute is set as the column [field](#configuration-columns.field).
 
 #### Parameters
 
@@ -323,7 +321,7 @@ The jQuery object representing the container element.
 
 ##### options.field `String`
 
-The name of the field which the column is bound to.
+The name of the field to which the column is bound.
 
 ##### options.format `String`
 
@@ -331,7 +329,7 @@ The format string of the column specified via the [format](#configuration-column
 
 ##### options.model `kendo.data.Model`
 
-The model instance which the current row is bound to.
+The model instance to which the current table row is bound.
 
 ##### options.values `Array`
 
@@ -406,7 +404,7 @@ The field to which the column is bound. The value of this field is displayed by 
 
 ### columns.filterable `Boolean|Object` *(default: true)*
 
-If set to `true` a filter menu will be displayed for this column when filtering is enabled for the grid. If set to `false` the filter menu will not be displayed. By default a filter menu is displayed
+If set to `true` a filter menu will be displayed for this column when filtering is enabled. If set to `false` the filter menu will not be displayed. By default a filter menu is displayed
 for all columns when filtering is enabled via the [filterable](#configuration-filterable) option.
 
 Can be set to a JavaScript object which represents the filter menu configuration.
@@ -465,7 +463,7 @@ The role data attribute of the widget used in the filter menu or a JavaScript fu
 > Check [Filter menu customization](http://demos.kendoui.com/web/grid/filter-menu-customization.html) for a live demo.
 
 ### columns.footerTemplate `String|Function`
-The [template](/api/framework/kendo#methods-template) which is used to render the footer table cell for the column.
+The [template](/api/framework/kendo#methods-template) which renders the footer table cell for the column.
 
 The fields which can be used in the template are:
 
@@ -501,7 +499,7 @@ The fields which can be used in the template are:
 
 ### columns.format `String`
 
-The format that is applied to the value before it is displayed. Must be in the form "{0:format}" where "format" is a [standard number format](/api/framework/kendo#standard-number-formats),
+The format that is applied to the value before it is displayed. Takes the form "{0:format}" where "format" is a [standard number format](/api/framework/kendo#standard-number-formats),
 [custom number format](/api/framework/kendo#custom-number-formats), [standard date format](/api/framework/kendo#standard-date-formats) or a [custom date format](/api/framework/kendo#custom-date-formats).
 
 > The [kendo.format](/api/framework/kendo#methods-format) function is used to format the value.
@@ -524,7 +522,7 @@ The format that is applied to the value before it is displayed. Must be in the f
 
 ### columns.groupHeaderTemplate `String|Function`
 
-The [template](/api/framework/kendo#methods-template) which is used to render the group header when the grid is grouped by the column [field](#configuration-columns.field). By default the name of the field
+The [template](/api/framework/kendo#methods-template) which renders the group header when the grid is grouped by the column [field](#configuration-columns.field). By default the name of the field
 and the current group value is displayed.
 
 The fields which can be used in the template are:
@@ -558,7 +556,7 @@ The fields which can be used in the template are:
 
 ### columns.groupFooterTemplate `String|Function`
 
-The [template](/api/framework/kendo#methods-template) which is used to render the group footer when the grid is grouped by the column field. By default the group footer is not displayed.
+The [template](/api/framework/kendo#methods-template) which renders the group footer when the grid is grouped by the column field. By default the group footer is not displayed.
 
 The fields which can be used in the template are:
 
@@ -592,7 +590,7 @@ The fields which can be used in the template are:
 
 HTML attributes of the column header. The grid renders a table header cell (`<th>`) for every column. The `headerAttributes` option can be used to set the HTML attributes of that `th`.
 
-> HTML attributes which are JavaScript keywords (such as *class*) should be quoted.
+> HTML attributes which are JavaScript keywords (e.g. *class*) must be quoted.
 
 #### Example - set the column header HTML attributes
 
@@ -610,14 +608,14 @@ HTML attributes of the column header. The grid renders a table header cell (`<th
     });
     </script>
 
-The table header cell would look like this: `<th class="table-header-cell" style="text-align: right; font-size: 14px">name</th>`.
+The table header cell will look like this: `<th class="table-header-cell" style="text-align: right; font-size: 14px">name</th>`.
 
 ### columns.headerTemplate `String|Function`
 
-The [template](/api/framework/kendo#methods-template) which is used to render the column header content. By default the value of the [title](#configuration-columns.title) column option
+The [template](/api/framework/kendo#methods-template) which renders the column header content. By default the value of the [title](#configuration-columns.title) column option
 is displayed in the column header cell.
 
-> **Important:** If sorting is enabled, the column header content will be wrapped in a `<a>` element. As a result the template **must** contain only inline elements.
+> If sorting is enabled, the column header content will be wrapped in a `<a>` element. As a result the template **must** contain only inline elements.
 
 #### Example - column header template as a string
     <div id="grid"></div>
@@ -633,7 +631,7 @@ is displayed in the column header cell.
 
 ### columns.hidden `Boolean` *(default: false)*
 
-If set to `true` the column will not be displayed in the grid. By default all columns are displayed in the grid.
+If set to `true` the column will not be displayed in the grid. By default all columns are displayed.
 
 #### Example - hide columns
     <div id="grid"></div>
@@ -649,10 +647,11 @@ If set to `true` the column will not be displayed in the grid. By default all co
 
 ### columns.sortable `Boolean` *(default: true)*
 
-If set to `true` the user can click the column header and sort the grid by the column [field](#configuration-columns.field) (when sorting is enabled for the grid). If set to `false` sorting will
-be disabled for this column. By default all columns are sortable.
+If set to `true` the user can click the column header and sort the grid by the column [field](#configuration-columns.field) when sorting is enabled. If set to `false` sorting will
+be disabled for this column. By default all columns are sortable if sorting is enabled via the [sortable](#configuration-sortable) option.
 
 #### Example - disable sorting
+
     <div id="grid"></div>
     <script>
     $("#grid").kendoGrid({
@@ -667,10 +666,10 @@ be disabled for this column. By default all columns are sortable.
 
 ### columns.template `String|Function`
 
-The [template](/api/framework/kendo#methods-template) which is used to render the column content. The Kendo UI Grid widget renders table rows (`<tr>`) which represent the data source items.
+The [template](/api/framework/kendo#methods-template) which renders the column content. The grid renders table rows (`<tr>`) which represent the data source items.
 Each table row consists of table cells (`<td>`) which represent the grid columns. By default the HTML-encoded value of the [field](#configuration-columns.field) is displayed in the column.
 
-Use the `template` to customize the way the column displays its value.
+> Use the `template` to customize the way the column displays its value.
 
 #### Example - set the template as a string (wrap the column value in HTML)
 
@@ -717,7 +716,7 @@ Use the `template` to customize the way the column displays its value.
 
 ### columns.title `String`
 
-The text that is displayed in the column header cell. If not set the [field](#configuration-columns.field) will be used.
+The text that is displayed in the column header cell. If not set the [field](#configuration-columns.field) is used.
 
 #### Example - set the title of the column
 
@@ -733,7 +732,7 @@ The text that is displayed in the column header cell. If not set the [field](#co
 
 The width of the column. Numeric values are treated as pixels.
 
-> **Important:** If the total sum of the column widths exceeds the width of the grid a horizontal scrollbar will appear (if scrolling is enabled). If that sum is less than the width of the grid
+> If the total sum of the column widths exceeds the width of the grid a horizontal scrollbar will appear (if scrolling is enabled). If that sum is less than the width of the grid
 one of the columns would stretch out to occupy the remaining space. Thus it is a good idea to have a column without specified width.
 
 #### Example - set the column width as a string
@@ -770,7 +769,7 @@ one of the columns would stretch out to occupy the remaining space. Thus it is a
 
 An array of values that will be displayed instead of the bound value. Each item in the array must have a `text` and `value` fields.
 
-Useful to display user-friendly text instead of database values.
+> Use the `values` option to display user-friendly text instead of database values.
 
 #### Example - specify column values
 
@@ -868,7 +867,7 @@ If set to `true` the column menu would allow the user to select (show and hide) 
 
 ### columnMenu.filterable `Boolean` *(default: true)*
 
-If set to `true` the column menu would allow the user to filter the grid. By default the column menu allows the user to filter if grid filtering is enabled.
+If set to `true` the column menu would allow the user to filter the grid. By default the column menu allows the user to filter if filtering is enabled via the [filterable](#configuration-filterable).
 
 #### Example - disable column menu filtering
 
@@ -892,9 +891,9 @@ If set to `true` the column menu would allow the user to filter the grid. By def
 
 ### columnMenu.sortable `Boolean` *(default: true)*
 
-If set to `true` the column menu would allow the user to sort the grid by the column field. By default the column menu allows the user to sort if grid sorting is enabled.
+If set to `true` the column menu would allow the user to sort the grid by the column field. By default the column menu allows the user to sort if sorting is enabled via the [sortable](#configuration-sortable) option.
 
-> **Note:** If this option is set to `false` the user could still sort by clicking the column header cell.
+> If this option is set to `false` the user could still sort by clicking the column header cell.
 
 #### Example - disable column menu sorting
 
@@ -1051,7 +1050,7 @@ The text message displayed for the menu item which performs descending sort.
 
 ### dataSource `Object|Array|kendo.data.DataSource`
 
-The data source of the widget which is used display table rows. Can be a JavaScript object which represents a valid data source configuration, a JavaScript array or an existing [kendo.data.DataSource](/api/framework/datasource)
+The data source of the widget which is used render table rows. Can be a JavaScript object which represents a valid data source configuration, a JavaScript array or an existing [kendo.data.DataSource](/api/framework/datasource)
 instance.
 
 If the `dataSource` option is set to a JavaScript object or array the widget will initialize a new [kendo.data.DataSource](/api/framework/datasource) instance using that value as data source configuration.
@@ -1115,7 +1114,7 @@ If the `dataSource` option is an existing [kendo.data.DataSource](/api/framework
 
 ### detailTemplate `String|Function`
 
-The [template](/api/framework/kendo#methods-template) which is used to render the detail rows.
+The [template](/api/framework/kendo#methods-template) which renders the detail rows.
 
 
 #### Example - specify detail template as a function
@@ -1168,7 +1167,7 @@ Can be set to a string ("inline", "incell" or "popup") to specify the editing mo
 
 Can be set to a JavaScript object which represents the editing configuration.
 
-> **Important:** The "inline" and "popup" editing modes are triggered by the "edit" column command. Thus it is required to have a column with an "edit" command.
+> The "inline" and "popup" editing modes are triggered by the "edit" column command. Thus it is required to have a column with an "edit" command.
 
 #### Example - enable editing
     <div id="grid"></div>
@@ -1301,7 +1300,7 @@ If set to `true` the user can delete data items from the grid by clicking the "d
 
 The editing mode to use. The supported editing modes are "incell", "inline" and "popup".
 
-> **Important:** The "inline" and "popup" editing modes are triggered by the "edit" column command. Thus it is required to have a column with an "edit" command.
+> The "inline" and "popup" editing modes are triggered by the "edit" column command. Thus it is required to have a column with an "edit" command.
 
 #### Example - specify inline editing mode
 
@@ -1330,12 +1329,12 @@ The editing mode to use. The supported editing modes are "incell", "inline" and 
 
 ### editable.template `String|Function`
 
-The [template](/api/framework/kendo#methods-template) which is used to render popup editor.
+The [template](/api/framework/kendo#methods-template) which renders popup editor.
 
 The template should contain elements whose `name` HTML attributes are set as the editable fields. This is how the grid will know
 which field to update. The other option is to use [MVVM](/getting-started/framework/mvvm/overview) bindings in order to bind HTML elements to data item fields.
 
-> **Note:** Use the `role` data attribute to initialize Kendo UI widgets in the template. Check [data attribute initialization](/getting-started/data-attribute-initialization) for more info.
+> Use the `role` data attribute to initialize Kendo UI widgets in the template. Check [data attribute initialization](/getting-started/data-attribute-initialization) for more info.
 
 #### Example - customize the popup editor
 
@@ -1731,7 +1730,7 @@ The text of the filter operators displayed in the filter menu.
 
 The texts of the filter operators displayed for columns bound to string fields.
 
-> **Important:** Omitting an operator will exclude it from the dropdown list with the available operators.
+> Omitting an operator will exclude it from the dropdown list with the available operators.
 
 #### Example - set string operators
     <div id="grid"></div>
@@ -1916,7 +1915,7 @@ The text of the "ends with" filter operator.
 
 The texts of the filter operators displayed for columns bound to number fields.
 
-> **Important:** Omitting an operator will exclude it from the dropdown list with the available operators.
+> Omitting an operator will exclude it from the dropdown list with the available operators.
 
 #### Example - set number operators
 
@@ -2174,7 +2173,7 @@ The text of the "less than" filter operator.
 
 The texts of the filter operators displayed for columns bound to date fields.
 
-> **Important:** Omitting an operator will exclude it from the dropdown list with the available operators.
+> Omitting an operator will exclude it from the dropdown list with the available operators.
 
 #### Example - set date operators
     <div id="grid"></div>
@@ -2424,7 +2423,7 @@ The text of the "less than" filter operator.
 
 The texts of the filter operators displayed for columns which have their [values](#configuration-columns.values) option set.
 
-> **Important:** Omitting an operator will exclude it from the dropdown list with the available operators.
+> Omitting an operator will exclude it from the dropdown list with the available operators.
 
 #### Example - set enum operators
 
@@ -3233,9 +3232,9 @@ If set to `true` the user could resize the columns by dragging the edges of thei
 
 ### rowTemplate `String|Function`
 
-The [template](/api/framework/kendo#methods-template) which is used to render rows. Be default renders a table row (`<tr>`) for every data source item.
+The [template](/api/framework/kendo#methods-template) which renders rows. Be default renders a table row (`<tr>`) for every data source item.
 
-> **Important:** The outermost HTML element in the template must be a table row (`<tr>`). That table row must have the `uid` data attribute set to `#= uid #`. The grid uses the `uid` data attribute to determine the data to which a table row is bound to.
+> The outermost HTML element in the template must be a table row (`<tr>`). That table row must have the `uid` data attribute set to `#= uid #`. The grid uses the `uid` data attribute to determine the data to which a table row is bound to.
 
 #### Example - specify row template as a function
 
@@ -3482,7 +3481,7 @@ The name of the toolbar command. Either a built-in ("cancel", "create" and "save
 
 ### toolbar.template `String|Function`
 
-The [template](/api/framework/kendo#methods-template) which is used to render the command. Be default renders a button.
+The [template](/api/framework/kendo#methods-template) which renders the command. Be default renders a button.
 
 #### Example - set the template as a function
 
@@ -3568,7 +3567,7 @@ The [data source](/api/framework/datasource) of the widget. Configured via the [
 
 > Changes of the data source will be reflected in the widget.
 
-> **Important:** Assigning a new data source would have no effect. Use the [setDataSource](#methods-setDataSource) method instead.
+> Assigning a new data source would have no effect. Use the [setDataSource](#methods-setDataSource) method instead.
 
 #### Example - add a data item to the data source
 
@@ -3942,7 +3941,7 @@ A string, DOM element or jQuery object which represents the table row. A string 
 
 Prepares the widget for safe removal from DOM. Detaches all event handlers and removes jQuery.data attributes to avoid memory leaks. Calls destroy method of any child Kendo widgets.
 
-> **Important:** This method does not remove the widget element from DOM.
+> This method does not remove the widget element from DOM.
 
 #### Example
 
@@ -4177,7 +4176,7 @@ Fires the [remove](#events-remove) event.
 
 A string, DOM element or jQuery object which represents the table row. A string is treated as a jQuery selector.
 
-##### Example - remove the first table row
+#### Example - remove the first table row
     <div id="grid"></div>
     <script>
     $("#grid").kendoGrid({

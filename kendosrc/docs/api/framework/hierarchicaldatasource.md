@@ -13,7 +13,7 @@ publish: true
 
 See the [DataSource configuration](/api/framework/datasource#configuration) for all inherited configuration.
 
-### schema `Object
+### schema `Object`
 
 The schema configuration of the HierarchicalDataSource.
 
