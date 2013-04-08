@@ -13,39 +13,70 @@ function Component(name) {
     this.fields = [];
 };
 
-Component.prototype = {
-    get_config_option: function(name) {
-        return this.config.filter(function(o){
-            return o.name == name;
-        })[0] || this.get_event(name);
-    },
-    get_event: function(name) {
-        return this.events.filter(function(e){
-            return e.name == name;
-        })[0];
-    },
-    check_option: function(op, value) {
-        if (!op) return "NOTFOUND";
-        badtype: if (value instanceof U2.AST_Constant ||
-                     value instanceof U2.AST_Object ||
-                     value instanceof U2.AST_Array ||
-                     value instanceof U2.AST_Lambda)
-        {
-            for (var i = op.type.length; --i >= 0;) {
-                var type = op.type[i];
-                if (type == "Array" && value instanceof U2.AST_Array)
-                    break badtype;
-                if ((type == "String" || type == "Selector") && value instanceof U2.AST_String)
-                    break badtype;
-                if (type == "Number" && value instanceof U2.AST_Number)
-                    break badtype;
-                if (type == "Boolean" && value instanceof U2.AST_Boolean)
-                    break badtype;
-                if (type == "Function" && value instanceof U2.AST_Lambda)
-                    break badtype;
+Component.prototype.get_config_option = function(name) {
+    return this.config.filter(function(o){
+        return o.name == name;
+    })[0] || this.get_event(name);
+};
+
+Component.prototype.get_event = function(name) {
+    return this.events.filter(function(e){
+        return e.name == name;
+    })[0];
+};
+
+Component.prototype.check_option = function(list, prop, results) {
+    var name = prop.key;
+    var value = prop.value;
+    var self = this;
+    var op;
+    if (!list) {
+        op = self.config.filter(function(o){ return o.name == name })[0];
+        if (!op)
+            op = self.events.filter(function(o){ return o.name == name })[0];
+    } else {
+        op = list.filter(function(o){ return o.name == name })[0];
+    }
+    if (!op) {
+        results.push({
+            message : "Option " + name + " not found",
+            line    : prop.start.line,
+            col     : prop.start.col
+        });
+        return;
+    }
+    name = op.orig || op.name;
+    badtype: if (op.type &&
+                 (value instanceof U2.AST_Constant ||
+                  value instanceof U2.AST_Object ||
+                  value instanceof U2.AST_Array ||
+                  value instanceof U2.AST_Lambda))
+    {
+        for (var i = op.type.length; --i >= 0;) {
+            var type = op.type[i];
+            if (type == "Array" && value instanceof U2.AST_Array)
+                break badtype;
+            if ((type == "String" || type == "Selector") && value instanceof U2.AST_String)
+                break badtype;
+            if (type == "Number" && value instanceof U2.AST_Number)
+                break badtype;
+            if (type == "Boolean" && value instanceof U2.AST_Boolean)
+                break badtype;
+            if (type == "Function" && value instanceof U2.AST_Lambda)
+                break badtype;
+            if (type == "Object" && value instanceof U2.AST_Object) {
+                value.properties.forEach(function(prop){
+                    self.check_option(op.sub, prop, results);
+                });
+                break badtype;
             }
-            return "BADTYPE";
         }
+        results.push({
+            message: "Bad type for option " + name + ". Accepted: " + op.type.join(", "),
+            line: value.start.line,
+            col: value.start.col
+        });
+        return;
     }
 };
 
@@ -125,6 +156,7 @@ var kendo_apidoc = (function(P){
             var m = /^(.+)\.([^.]+)$/.exec(op.name);
             if (m) {
                 var parent = comp.get_config_option(m[1]), prop = m[2];
+                op.orig = op.name;
                 op.name = prop;
                 if (!parent.sub) parent.sub = [];
                 parent.sub.push(op);
@@ -143,7 +175,9 @@ var kendo_apidoc = (function(P){
     function read_events(comp, tree) {
         P.search(tree, pat3, function(m){
             var name = trim(m.title.first());
-            comp.events.push(get_method(name, m.body.content(), pat_event_data));
+            var ev = get_method(name, m.body.content(), pat_event_data);
+            ev.type = [ "Function" ];
+            comp.events.push(ev);
         });
     };
 
@@ -197,7 +231,7 @@ UTILS.fs_find(PATH.join(__dirname, "..", "kendosrc", "docs"), {
         }
     },
     finish: function() {
-        console.log(SYS.inspect(kendo_apidoc.components, null, null));
+        //console.log(SYS.inspect(kendo_apidoc.components, null, null));
     }
 });
 

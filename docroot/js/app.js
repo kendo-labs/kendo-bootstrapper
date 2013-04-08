@@ -261,6 +261,16 @@ function projectLintJavaScript(proj_id) {
     });
 }
 
+function projectLintKendo(proj_id) {
+    RPC.call("project/lint-kendo", proj_id, function(results, err){
+        if (results.length > 0) {
+            showBuildErrors(proj_id, "JSHint warnings", results);
+        } else {
+            alert("No warnings. :-)");
+        }
+    });
+}
+
 function projectAddFile(proj_id) {
     var proj = PROJECTS.get(proj_id);
     var expect = "add-file-" + Date.now();
