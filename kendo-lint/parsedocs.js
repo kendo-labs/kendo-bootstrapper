@@ -1,19 +1,57 @@
-#! /usr/bin/env node
+var PATTERN = require("./pattern");
+var UTILS = require("../lib/utils");
+var PATH = require("path");
+var U2 = require("uglify-js");
+var SYS = require("util");
+var FS = require("fs");
 
-var pattern = require("../lib/pattern");
-var sys = require("util");
-var fs = require("fs");
+function Component(name) {
+    this.name = name;
+    this.config = [];
+    this.methods = [];
+    this.events = [];
+    this.fields = [];
+};
+
+Component.prototype = {
+    get_config_option: function(name) {
+        return this.config.filter(function(o){
+            return o.name == name;
+        })[0] || this.get_event(name);
+    },
+    get_event: function(name) {
+        return this.events.filter(function(e){
+            return e.name == name;
+        })[0];
+    },
+    check_option: function(op, value) {
+        if (!op) return "NOTFOUND";
+        badtype: if (value instanceof U2.AST_Constant ||
+                     value instanceof U2.AST_Object ||
+                     value instanceof U2.AST_Array ||
+                     value instanceof U2.AST_Lambda)
+        {
+            for (var i = op.type.length; --i >= 0;) {
+                var type = op.type[i];
+                if (type == "Array" && value instanceof U2.AST_Array)
+                    break badtype;
+                if ((type == "String" || type == "Selector") && value instanceof U2.AST_String)
+                    break badtype;
+                if (type == "Number" && value instanceof U2.AST_Number)
+                    break badtype;
+                if (type == "Boolean" && value instanceof U2.AST_Boolean)
+                    break badtype;
+                if (type == "Function" && value instanceof U2.AST_Lambda)
+                    break badtype;
+            }
+            return "BADTYPE";
+        }
+    }
+};
 
 var kendo_apidoc = (function(P){
 
     var MD = require("markdown").markdown;
-
-    function Component(name) {
-        this.name = name;
-        this.config = [];
-        this.methods = [];
-        this.events = [];
-    };
 
     function RX(rx) {
         return P.CHECK(function(node){
@@ -81,6 +119,18 @@ var kendo_apidoc = (function(P){
         P.search(tree, pat3, function(m){
             comp.config.push(get_param(m.title.content()));
         });
+        // place sub-options in their parent option too
+        for (var i = comp.config.length; --i >= 0;) {
+            var op = comp.config[i];
+            var m = /^(.+)\.([^.]+)$/.exec(op.name);
+            if (m) {
+                var parent = comp.get_config_option(m[1]), prop = m[2];
+                op.name = prop;
+                if (!parent.sub) parent.sub = [];
+                parent.sub.push(op);
+                comp.config.splice(i, 1);
+            }
+        }
     };
 
     function read_methods(comp, tree) {
@@ -97,10 +147,17 @@ var kendo_apidoc = (function(P){
         });
     };
 
+    function read_fields(comp, tree) {
+        P.search(tree, pat3, function(m){
+            var param = get_param(m.title.content());
+            comp.fields.push(param);
+        });
+    };
+
     var components = {};
 
     function read_file(file) {
-        var text = fs.readFileSync(file, "utf8");
+        var text = FS.readFileSync(file, "utf8");
         var tree = MD.parse(text);
         P.search(tree, pat1, function(m){
             var name = trim(m.title.first());
@@ -113,21 +170,35 @@ var kendo_apidoc = (function(P){
                     read_methods(comp, m.body.content());
                 } else if (name == "Events") {
                     read_events(comp, m.body.content());
+                } else if (name == "Fields") {
+                    read_fields(comp, m.body.content());
                 }
             });
         });
     };
 
     return {
-        parse      : read_file,
-        components : components
+        parse         : read_file,
+        components    : components,
+        get_ui_comp   : function(name) {
+            return components["kendo.ui." + name];
+        }
     };
 
-})(pattern);
+})(PATTERN);
 
+UTILS.fs_find(PATH.join(__dirname, "..", "kendosrc", "docs"), {
+    filter: function(f) {
+        return f.stat.isFile() && PATH.extname(f.full) == ".md" && /docs\/api\/(web|dataviz|mobile)\//.test(f.full);
+    },
+    callback: function(err, f) {
+        if (!err) {
+            kendo_apidoc.parse(f.full);
+        }
+    },
+    finish: function() {
+        console.log(SYS.inspect(kendo_apidoc.components, null, null));
+    }
+});
 
-
-
-kendo_apidoc.parse("../kendosrc/docs/api/web/menu.md");
-
-console.log(sys.inspect(kendo_apidoc.components, null, null));
+exports.kendo_apidoc = kendo_apidoc;
