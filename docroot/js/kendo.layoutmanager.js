@@ -60,9 +60,9 @@
     function getFill(f) {
         if (typeof f == "object") return f;
         if (f == null)
-            return { type: "fixed" };
+            return { type: "fixed", min: 0 };
         if (typeof f == "number")
-            return { type: "fixed", fill: f };
+            return { type: "fixed", fill: f, min: 0 };
         var m = RX_FILL.exec(f);
         if (!m) throw new Error("Can't parse layout fill argument: " + f);
         f = {
@@ -73,6 +73,7 @@
             p = p.split(/\s*[=:]+\s*/);
             f[p[0]] = p.length > 1 ? parseFloat(p[1]) : true;
         });
+        if (f.min == null) f.min = 0;
         return f;
     }
 
@@ -103,20 +104,30 @@
                 w[1] = getFill(w[1]);
                 self.element.append(w[0].element);
             });
-            for (var i = options.widgets.length; --i >= 0;) (function(a, i){
+            for (var i = options.widgets.length, first = true; --i >= 0; first = false) (function(a, i, reverse){
                 var f = a[1];
                 if (f.resizable) {
                     var bar = $("<div class='kendo-resizebar'></div>");
-                    options.widgets.splice(i + 1, 0, [
+                    options.widgets.splice(i + 1 - reverse, 0, [
                         bar,
                         { type: "fixed" }
                     ]);
-                    getElement(a[0]).after(bar);
+                    if (reverse) getElement(a[0]).before(bar);
+                    else getElement(a[0]).after(bar);
                     new kendo.UserEvents(bar, {
                         global: true,
                         start: function(e) {
                             this.offset = kendo.getOffset(bar);
                             this.size = options.orientation == "horizontal" ? a[2].w : a[2].h;
+                        },
+                        press: function() {
+                            bar.addClass("k-dragging");
+                        },
+                        release: function() {
+                            bar.removeClass("k-dragging");
+                        },
+                        end: function() {
+                            bar.removeClass("k-dragging");
                         },
                         move: function(e) {
                             var delta;
@@ -125,6 +136,7 @@
                             } else {
                                 delta = e.y.location - this.offset.top;
                             }
+                            if (reverse) delta = -delta;
                             a[1] = {
                                 type : "fixed",
                                 fill : this.size + delta,
@@ -135,7 +147,7 @@
                         }
                     });
                 }
-            })(options.widgets[i], i);
+            })(options.widgets[i], i, first);
             self.element.addClass("kendo-layoutmanager " + options.orientation);
         },
         update: function() {
