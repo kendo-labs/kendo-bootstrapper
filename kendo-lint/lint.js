@@ -43,7 +43,6 @@ function lint_javascript_file(code, filename, results) {
         }
     }));
     warnings.forEach(function(w){ w.filename = filename });
-    console.log(warnings)
     if (results) {
         results.push.apply(results, warnings);
     }

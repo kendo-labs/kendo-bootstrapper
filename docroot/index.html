@@ -47,7 +47,34 @@
              data-role="treeview" kendo-layout="1"></div>
 
       </div>
-      <div id="content" kendo-layout="1"></div>
+      <div data-role="layoutmanager" data-orientation="vertical" kendo-layout="1">
+        <table class="project-toolbar k-toolbar" cellspacing="10">
+          <tr>
+            <td><h1 class="project-title">Select/create project</h1></td>
+            <td>
+              <div style="float: right">
+                <button onclick="withSelectedProject(projectLintJavaScript)"
+                        class="k-button">JSHint</button>
+                <button onclick="withSelectedProject(projectLintKendo)"
+                        class="k-button">Kendo Lint</button>
+                <button onclick="withSelectedProject(projectEditDependencies)"
+                        class="k-button">Dependencies</button>
+                <button onclick="withSelectedProject(rebuildProject)"
+                        class="k-button">Compile</button>
+                <button onclick="withSelectedProject(projectAddFile)"
+                        class="k-button">Add file</button>
+                <button onclick="withSelectedProject(projectBuildKendo)"
+                        class="k-button">Build Kendo</button>
+                |
+                <button onclick="withSelectedProject(projectBuildDistro)"
+                        class="k-button">Bundle</button>
+              </div>
+            </td>
+          </tr>
+        </table>
+        <div id="content" kendo-layout="1" style="overflow: auto"></div>
+        <div id="console" kendo-layout="25%,resizable" style="overflow: auto"></div>
+      </div>
     </div>
 
     <!-- TEMPLATES -->
@@ -111,40 +138,9 @@
         $)
       $)
 
-      <div data-role="layoutmanager" data-orientation="vertical">
-
-        <table class="header k-toolbar" cellspacing="10">
-          <tr>
-            <td><h1>$p.project_name|html</h1></td>
-            <td>
-              <div style="float: right">
-                <button onclick="projectLintJavaScript('$p.id|html')"
-                        class="k-button">JSHint</button>
-                <button onclick="projectLintKendo('$p.id|html')"
-                        class="k-button">Kendo Lint</button>
-                <button onclick="projectEditDependencies('$p.id|html')"
-                        class="k-button">Dependencies</button>
-                <button onclick="rebuildProject('$p.id|html')"
-                        class="k-button">Compile</button>
-                <button onclick="projectAddFile('$p.id|html')"
-                        class="k-button">Add file</button>
-                <button onclick="projectBuildKendo('$p.id|html')"
-                        class="k-button">Build Kendo</button>
-                |
-                <button onclick="projectBuildDistro('$p.id|html')"
-                        class="k-button">Bundle</button>
-              </div>
-            </td>
-          </tr>
-        </table>
-
-        <div kendo-layout="1" style="overflow: auto">
-          <table class="project-files">
-            ${ display_files(p.files) }
-          </table>
-        </div>
-
-      </div>
+      <table class="project-files">
+        ${ display_files(p.files) }
+      </table>
     </script>
 
     <script type="x/yajet-template" class="add-file-dialog">
@@ -342,6 +338,29 @@
           <button class="k-button btn-ok">${ this.okLabel || "OK" => html }</button>
           <button class="k-button btn-cancel">${ this.cancelLabel || "Cancel" => html }</button>
         </div>$)
+      $(EXPORT console_message(m)$-
+        <div class="message $(AIF (m.class) $it $)">
+          $(IF (m.filename)
+            <div class="filename"
+                 command="edit-file"
+                 project-id="$m.proj_id|html"
+                 filename="$m.filename|html"
+                 $(IF (m.line) line="$m.line"$)
+                 $(IF (m.col) col="$m.col"$)
+                 >$m.filename|html$-
+              <span class="location">$(IF (m.line):<span class="line">$m.line</span>$-
+                $(IF (m.col),<span class="col">$m.col</span>$)$)</span>
+            </div>$)
+          <div class="body">
+            $(AIF (m.cprefix) <span class="prefix">$it|html:</span> $)
+            $m.message|html
+          </div>
+        </div>$)
+    </script>
+
+    <!-- careful about the $- below.  Whitespace is important (in that it must be erased). -->
+    <script type="x/yajet-template" class="console-message">$-
+      $(PROCESS console_message(this))
     </script>
 
   </body>

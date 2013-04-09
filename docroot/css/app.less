@@ -32,6 +32,18 @@ html, body {
   background-color: #bbb;
 }
 
+.project-toolbar {
+  z-index: 100;
+  border-bottom: 1px solid #000;
+  h1 {
+    margin: 0;
+  }
+}
+
+h3 {
+  color: #444;
+}
+
 #content {
   background-color: #ddd;
   .border-box;
@@ -40,18 +52,6 @@ html, body {
   }
   a:hover {
     color: #f00;
-  }
-  .header {
-    z-index: 100;
-    border-bottom: 1px solid #000;
-    h1 {
-      margin: 0;
-    }
-  }
-  h2 {
-  }
-  h3 {
-    color: #444;
   }
   .warn {
     color: #c62;
@@ -148,6 +148,40 @@ label.hovering {
     padding: 5px;
     text-align: center;
     background: #eee
+  }
+}
+
+#console {
+  background-color: #fff;
+  .message {
+    &.error {
+      color: #c22;
+    }
+    border-bottom: 1px solid #ccc;
+    &.endcall {
+      border-bottom: 2px solid #000;
+    }
+    padding: 2px 5px;
+    .prefix {
+      color: #972;
+    }
+    &:hover {
+      background-color: wheat;
+    }
+    .filename {
+      cursor: pointer;
+      margin-left: 1em;
+      font-family: monospace;
+      float: right;
+      font-weight: bold;
+      .location {
+        font-weight: normal;
+        color: #555;
+      }
+      &:hover {
+        color: #00f;
+      }
+    }
   }
 }
 

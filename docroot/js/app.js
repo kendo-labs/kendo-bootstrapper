@@ -46,6 +46,12 @@ function setupListeners() {
             setActiveProject(proj); // refresh views
         }
     });
+    RPC.listen("console", function(msg){
+        consoleAddMessage(msg);
+    });
+    RPC.listen("ENDCALL", function(){
+        $("#console").children().last().addClass("endcall");
+    });
 }
 
 function getSelectedProject() {
@@ -104,9 +110,7 @@ function setupLayout() {
         });
     });
     $("#btn-file-new").click(function(){
-        withSelectedProject(function(proj){
-            projectAddFile(proj.id);
-        });
+        withSelectedProject(projectAddFile);
     });
     $("#btn-file-edit").click(function(){
         withSelectedFile(function(proj, file){
@@ -124,10 +128,12 @@ function setupLayout() {
             });
         });
     });
-    $("#content").on("click", "[command=edit-file]", function(ev){
+    $(document).on("click", "[command=edit-file]", function(ev){
         var proj = $(this).attr("project-id");
         var file = $(this).attr("filename");
-        RPC.call("project/edit-file", proj, file);
+        var line = $(this).attr("line");
+        var col = $(this).attr("col");
+        RPC.call("project/edit-file", proj, file, line, col);
         ev.preventDefault();
     }).on("click", "[command=deps-file]", function(ev){
         var proj = $(this).attr("project-id");
@@ -151,7 +157,7 @@ function setActiveProject(proj) {
     if (typeof proj != "object")
         proj = PROJECTS.get(proj);
     ACTIVE_PROJECT = proj.id;
-    $(".project-title").html("Files in " + proj.name);
+    $(".project-title").html(proj.name);
 
     // display project tree
     var files_data = new kendo.data.HierarchicalDataSource({
@@ -237,11 +243,10 @@ function showBuildErrors(proj_id, title, errors) {
     dlg.trigger("resize");
 }
 
-function rebuildProject(proj_id, callback) {
-    var proj = PROJECTS.get(proj_id);
-    RPC.call("project/rebuild-all", proj_id, function(fileinfo, err){
+function rebuildProject(proj, callback) {
+    RPC.call("project/rebuild-all", proj.id, function(fileinfo, err){
         if (err && err instanceof Array) {
-            showBuildErrors(proj_id, "Build errors", err);
+            showBuildErrors(proj.id, "Build errors", err);
             if (callback) callback(null, true);
         }
         else {
@@ -251,28 +256,27 @@ function rebuildProject(proj_id, callback) {
     });
 }
 
-function projectLintJavaScript(proj_id) {
-    RPC.call("project/lint-javascript", proj_id, function(results, err){
+function projectLintJavaScript(proj) {
+    RPC.call("project/lint-javascript", proj.id, function(results, err){
         if (results.length > 0) {
-            showBuildErrors(proj_id, "JSHint warnings", results);
+            showBuildErrors(proj.id, "JSHint warnings", results);
         } else {
             alert("No warnings. :-)");
         }
     });
 }
 
-function projectLintKendo(proj_id) {
-    RPC.call("project/lint-kendo", proj_id, function(results, err){
+function projectLintKendo(proj) {
+    RPC.call("project/lint-kendo", proj.id, function(results, err){
         if (results.length > 0) {
-            showBuildErrors(proj_id, "JSHint warnings", results);
+            showBuildErrors(proj.id, "Kendo Lint warnings", results);
         } else {
             alert("No warnings. :-)");
         }
     });
 }
 
-function projectAddFile(proj_id) {
-    var proj = PROJECTS.get(proj_id);
+function projectAddFile(proj) {
     var expect = "add-file-" + Date.now();
     var dlg_el = $("<div></div>").html(getTemplate("add-file-dialog")({
         expect : expect,
@@ -364,8 +368,8 @@ function projectNew() {
     dlg.center();
 }
 
-function projectBuildKendo(proj_id) {
-    RPC.call("project/widget-usage", proj_id, function(data, err){
+function projectBuildKendo(proj) {
+    RPC.call("project/widget-usage", proj.id, function(data, err){
         var detected = [];
         var kcomp = data.kendo_config.components;
         var loading = [];
@@ -420,12 +424,12 @@ function projectBuildKendo(proj_id) {
             $("input[id^=\"kcomp-\"]:checked", dlg_el).each(function(){
                 user_selection.push(this.value);
             });
-            RPC.call("project/build-kendo", proj_id, {
+            RPC.call("project/build-kendo", proj.id, {
                 detected: detected,
                 selected: user_selection
             }, function(ret, err){
                 dlg.close();
-                projectRefreshContent(proj_id);
+                projectRefreshContent(proj.id);
             });
         }).on("click", ".btn-cancel", function(){
             dlg.close();
@@ -440,8 +444,8 @@ function projectBuildKendo(proj_id) {
     });
 }
 
-function projectBuildDistro(proj_id) {
-    rebuildProject(proj_id, function(_, err){
+function projectBuildDistro(proj) {
+    rebuildProject(proj, function(_, err){
         if (!err) {
             var dlg_el = $("<div></div>").html(getTemplate("build-distro")({
 
@@ -451,7 +455,7 @@ function projectBuildDistro(proj_id) {
             }).on("click", ".btn-ok", function(){
                 var type = dlg_el.find("input[name=\"build-type\"]:checked").val();
                 dlg.close();
-                var url = "/@build/" + type + "/" + proj_id;
+                var url = "/@build/" + type + "/" + proj.id;
                 window.location.replace(url);
             }).on("click", ".btn-cancel", function(){
                 dlg.close();
@@ -540,8 +544,7 @@ function projectEditFileDependencies(proj_id, file_id) {
     dlg.trigger("resize");
 }
 
-function projectEditDependencies(proj_id) {
-    var proj = PROJECTS.get(proj_id);
+function projectEditDependencies(proj) {
     var the_deps = projectGetDepsHash(proj);
     var dlg_el = $("<div></div>").html(getTemplate("project-deps-dialog")({
         files: proj.files,
@@ -598,6 +601,15 @@ function projectEditDependencies(proj_id) {
     dlg.open();
     dlg.center();
     dlg.trigger("resize");
+}
+
+////// Console
+
+function consoleAddMessage(msg) {
+    var cs = $("#console");
+    var el = $(getTemplate("console-message")(msg));
+    cs.append(el);
+    el.get(0).scrollIntoView();
 }
 
 function areYouSure(options, callback) {

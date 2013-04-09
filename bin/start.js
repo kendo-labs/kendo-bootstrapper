@@ -162,7 +162,8 @@ function start_server() {
     PROJECT.EVENTS.listen([
         "register_project",
         "project_add_file",
-        "project_delete_file"
+        "project_delete_file",
+        "console"
     ], function(data){
         var event = this.event;
         CLIENTS.forEach(function(ws){

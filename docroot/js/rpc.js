@@ -28,6 +28,7 @@
             cmd.callback.call(null, result, error);
             delete PENDING[id];
         }
+        notify("ENDCALL", cmd);
     };
     WS.onerror = function(ev) {
         console.log("Got error: ", ev);
