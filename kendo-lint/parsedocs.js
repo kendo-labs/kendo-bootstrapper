@@ -45,6 +45,7 @@ Component.prototype.check_option = function(list, prop, results) {
         });
         return;
     }
+    // typecheck
     name = op.orig || op.name;
     badtype: if (op.type &&
                  (value instanceof U2.AST_Constant ||
@@ -77,6 +78,18 @@ Component.prototype.check_option = function(list, prop, results) {
             col: value.start.col
         });
         return;
+    }
+    // check for default value
+    if (op.default) {
+        var v1 = U2.parse("(" + op.default + ")").print_to_string();
+        var v2 = U2.parse("(" + value.print_to_string() + ")").print_to_string();
+        if (v1 == v2) {
+            results.push({
+                message: "Passed value for option " + name + " is the same as default value: " + v1,
+                line: prop.start.line,
+                col: prop.start.col
+            });
+        }
     }
 };
 
@@ -128,7 +141,7 @@ var kendo_apidoc = (function(P){
             if (tag == "inlinecode") {
                 param.type = param.type.concat(text.split(/\s*\|\s*/));
             } else if (tag == "em") {
-                var a = /\(default:?\s+(.*?)\)/i.exec(text);
+                var a = /\(default:?\s*(.*?)\s*\)$/i.exec(text);
                 if (a) param.default = a[1];
             }
         });
