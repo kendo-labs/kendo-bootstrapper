@@ -128,7 +128,7 @@ function setupLayout() {
             });
         });
     });
-    $(document).on("click", "[command=edit-file]", function(ev){
+    $(document.body).on("click", "[command=edit-file]", function(ev){
         var proj = $(this).attr("project-id");
         var file = $(this).attr("filename");
         var line = $(this).attr("line");
@@ -227,13 +227,6 @@ function showBuildErrors(proj_id, title, errors) {
         }
     }).on("click", ".btn-close", function(){
         dlg.close();
-    }).on("click", "[command=edit-file]", function(ev){
-        var proj = $(this).attr("project-id");
-        var file = $(this).attr("filename");
-        var line = $(this).attr("line");
-        var col = $(this).attr("col");
-        RPC.call("project/edit-file", proj_id, file, line, col);
-        ev.preventDefault();
     });
     kendo.bind(dlg_el);
     var lm = $(".layout", dlg_el).data("kendoLayoutManager");
