@@ -26,7 +26,7 @@ The pane configuration options.
 
  The id of the default Pane Layout.
 
-### pane.loading `String`*(default: Loading...)*
+### pane.loading `String`*(default: "Loading...")*
 
  The text displayed in the loading popup. Setting this value to false will disable the loading popup.
 
@@ -38,7 +38,7 @@ The pane configuration options.
 
 The popup configuration options.
 
-### popup.direction String`*(default: down)*
+### popup.direction String`*(default: "down")*
 
 The direction to which the popup will expand, relative to the target that opened it.
 Supported directions are up, right, down, and left.

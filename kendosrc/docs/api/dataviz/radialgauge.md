@@ -67,9 +67,10 @@ Specifies a line consisting of a repeating pattern of long-dash-dot-dot.
 
  The width of the border.
 
-### gaugeArea.height `Number`*(default: vertical gauge is 200px; horizontal gauge is 60px)*
+### gaugeArea.height `Number`
 
-The height of the gauge area.
+The height of the gauge area.  By default, the vertical gauge is 200px and
+the horizontal one is 60px.
 
 ### gaugeArea.margin `Number|Object`*(default: 5)*
 
@@ -84,9 +85,10 @@ The height of the gauge area.
     // margin right and bottom are with 5px (by default)
     margin: { top: 1, left: 1 }
 
-### gaugeArea.width `Number`*(default: vertical gauge is 60px; horizontal gauge is 200px)*
+### gaugeArea.width `Number`
 
-The width of the gauge area.
+The width of the gauge area.  By default the vertical gauge is 60px
+and horizontal gauge is 200px.
 
 ### pointer `Object`
 

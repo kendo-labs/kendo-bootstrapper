@@ -69,7 +69,7 @@ The animation played when the suggestion popup is closed.
 
 The effect(s) to use when playing the close animation. Multiple effects should be separated with a space.
 
-[Complete list of available animations](/api/framework/fx#effects)
+[Complete list of available animations](http://docs.kendoui.com/api/framework/fx#effects)
 
 ### animation.close.duration `Number` *(default: 100)*
 
@@ -97,7 +97,7 @@ The animation played when the suggestion popup is opened.
 
 The effect(s) to use when playing the open animation. Multiple effects should be separated with a space.
 
-[Complete list of available animations](/api/framework/fx#effects)
+[Complete list of available animations](http://docs.kendoui.com/api/framework/fx#effects)
 
 ### animation.open.duration `Number` *(default: 200)*
 
@@ -108,9 +108,9 @@ The duration of the open animation in milliseconds.
 The data source of the widget which is used to display suggestions for the current value. Can be a JavaScript object which represents a valid data source configuration, a JavaScript array or an existing [kendo.data.DataSource](/api/framework/datasource)
 instance.
 
-If the `dataSource` option is set to a JavaScript object or array the widget will initialize a new [kendo.data.DataSource](/api/framework/datasource) instance using that value as data source configuration.
+If the `dataSource` option is set to a JavaScript object or array the widget will initialize a new [kendo.data.DataSource](http://docs.kendoui.com/api/framework/datasource) instance using that value as data source configuration.
 
-If the `dataSource` option is an existing [kendo.data.DataSource](/api/framework/datasource) instance the widget will use that instance and will **not** initialize a new one.
+If the `dataSource` option is an existing [kendo.data.DataSource](http://docs.kendoui.com/api/framework/datasource) instance the widget will use that instance and will **not** initialize a new one.
 
 #### Example - set dataSource as a JavaScript object
 
@@ -311,7 +311,7 @@ If set to `true` the widget will automatically use the first suggestion as its v
 
 ### template `String|Function`
 
-The [template](/api/framework/kendo#methods-template) used to render the suggestions. By default the widget displays only the text of the suggestion (configured via `dataTextField`).
+The [template](http://docs.kendoui.com/api/framework/kendo#methods-template) used to render the suggestions. By default the widget displays only the text of the suggestion (configured via `dataTextField`).
 
 #### Example - specify template as a function
 

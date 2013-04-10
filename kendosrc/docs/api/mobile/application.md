@@ -53,7 +53,7 @@ Whether to update the document title.
       <div data-role="header">Header</div>
     </div>
 
-### loading `String`*(default: &lt;h1&gt;Loading...&lt;/h1&gt;)*
+### loading `String`*(default: "&lt;h1&gt;Loading...&lt;/h1&gt;")*
 
  The text displayed in the loading popup. Setting this value to false will disable the loading popup.
 

@@ -305,6 +305,17 @@ Template to be used for rendering the tags of the selected items.
          value: ["Item2", "item3"]
     });
 
+> **Important:** Define a list of data items if widget is not initially bound
+
+#### Example
+
+    $("#multiselect").kendoMultiSelect({
+        autoBind: false,
+        dataTextField: "text",
+        dataValueField: "value",
+        [{ text: "Item 1", value: "1" }, { text: "Item 2", value: "2" }]
+    });
+
 ## Methods
 
 ### close

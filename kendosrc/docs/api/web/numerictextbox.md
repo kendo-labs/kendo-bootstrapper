@@ -14,7 +14,7 @@ Represents the Kendo UI NumericTextBox widget. Inherits from [Widget](/api/frame
 
 ## Configuration
 
-### culture `String`*(default: en-US)*
+### culture `String`*(default: "en-US")*
 
  Specifies the culture info used by the NumericTextBox widget.
 
@@ -39,7 +39,7 @@ Represents the Kendo UI NumericTextBox widget. Inherits from [Widget](/api/frame
         decimals: 1
     });
 
-### downArrowText `String`*(default: Decrease value)*
+### downArrowText `String`*(default: "Decrease value")*
 
  Specifies the text of the tooltip on the down arrow.
 
@@ -54,7 +54,7 @@ Represents the Kendo UI NumericTextBox widget. Inherits from [Widget](/api/frame
         downArrowText: "Less"
     });
 
-### format `String`*(default: n)*
+### format `String`*(default: "n")*
 
  Specifies the format of the number. Any valid number format is allowed.
 
@@ -139,7 +139,7 @@ Represents the Kendo UI NumericTextBox widget. Inherits from [Widget](/api/frame
         step: 0.1
     });
 
-### upArrowText `String`*(default: Increase value)*
+### upArrowText `String`*(default: "Increase value")*
 
  Specifies the text of the tooltip on the up arrow.
 

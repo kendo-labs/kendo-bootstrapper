@@ -68,7 +68,7 @@ Effect to be used for opening of the popup.
 
 Difines the animation duration.
 
-### culture `String`*(default: en-US)*
+### culture `String`*(default: "en-US")*
 
  Specifies the culture info used by the widget.
 
@@ -131,7 +131,7 @@ shows the decades from the centery
          });
      </script>
 
-### format `String`*(default: MM/dd/yyyy h:mm tt)*
+### format `String`*(default: "MM/dd/yyyy h:mm tt")*
 
  Specifies the format, which is used to format the value of the DateTimePicker displayed in the input. The format also will be used to parse the input.
 
@@ -227,7 +227,7 @@ the minimum and maximum values.
         parseFormats: ["MMMM yyyy", "HH:mm"] //format also will be added to parseFormats
     });
 
-### start `String`*(default: month)*
+### start `String`*(default: "month")*
 
  Specifies the start view of the calendar.
 The following settings are available for the **start** value:
@@ -255,7 +255,7 @@ shows the decades from the centery
         start: "decade" // the dateTimePicker will start with a decade display
     });
 
-### timeFormat `String`*(default: h:mm tt)*
+### timeFormat `String`*(default: "h:mm tt")*
 
  Specifies the format, which is used to format the values in the time drop-down list.
 

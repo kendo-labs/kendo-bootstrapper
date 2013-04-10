@@ -67,7 +67,7 @@ Effect to be used for opening of the popup.
 
 Difines the animation duration.
 
-### culture `String`*(default: en-US)*
+### culture `String`*(default: "en-US")*
 
  Specifies the culture info used by the widget.
 
@@ -89,19 +89,19 @@ Difines the animation duration.
         dates: [new Date(2000, 10, 10, 10, 0, 0), new Date(2000, 10, 10, 30, 0)] //the drop-down list will consist only two entries - "10:00 AM" and "10:30 AM"
     });
 
-### format `String`*(default: h:mm tt)*
+### format `String`*(default: "h:mm tt")*
 
  Specifies the format, which is used to format the value of the TimePicker displayed in the input. The format also will be used to parse the input.
 
-### interval `Number`*(default: 30)*
+### interval `Number`*(default: "30")*
 
 Specifies the interval, between values in the popup list, in minutes.
 
-### max `Date`*(default: 00:00)*
+### max `Date`*(default: "00:00")*
 
 Specifies the end value in the popup list.
 
-### min `Date`*(default: 00:00)*
+### min `Date`*(default: "00:00")*
 
 Specifies the start value in the popup list.
 

@@ -11,7 +11,7 @@ publish: true
 
 ## Configuration
 
-### aggregate `Array` *(default: undefined)*
+### aggregate `Array`
 
 The aggregate(s) which are calculated when the data source populates with data. The supported aggregates are "average", "count", "max", "min" and "sum".
 
@@ -142,9 +142,11 @@ makes a HTTP request for every CRUD operation.
     });
     </script>
 
-### data `Array`
+### data `Array|String`
 
 The array of data items. The data source will internally wrap them as [kendo.data.ObservableObject](/api/framework/obvservableobject).
+
+Can be set to a string value if the [schema.type](#configuration-schema.type) option is set to "xml".
 
 #### Example - set the data items of a data source
 
@@ -158,6 +160,33 @@ The array of data items. The data source will internally wrap them as [kendo.dat
       var janeDoe = dataSource.at(0);
       console.log(janeDoe.name); // displays "Jane Doe"
     });
+
+#### Example - set the data items as an XML string
+    <script>
+    var dataSource = new kendo.data.DataSource({
+      data: '<books><book id="1"><title>Secrets of the JavaScript Ninja</title></book></books>',
+      schema: {
+        // specify the the schema is XML
+        type: "xml",
+        // the XML element which represents a single data record
+        data: "/books/book",
+        // define the model - the object which will represent a single data record
+        model: {
+          // configure the fields of the object
+          fields: {
+            // the "title" field is mapped to the text of the "title" XML element
+            title: "title/text()",
+            // the "id" field is mapped to the "id" attribute of the "book" XML element
+            id: "@cover"
+          }
+        }
+      }
+    });
+    dataSource.fetch(function() {
+      var books = dataSource.data();
+      console.log(books[0].title); // displays "Secrets of the JavaScript Ninja"
+    });
+    </script>
 
 ### filter `Array|Object`
 
@@ -541,51 +570,67 @@ The number of data items which a single page of data contains.
 
 ### schema `Object`
 
-Set the object responsible for describing the raw data format.
+The description of the response returned by the remote service.
 
-#### Example
+#### Example - specify the schema of the remote service
 
+    <script>
     var dataSource = new kendo.data.DataSource({
-         transport: {
-             read: "Catalog/Titles",
-         },
-         schema: {
-             errors: function(response) {
-                return response.errors;
-             },
-             aggregates: function(response) {
-                response.aggregates;
-             },
-             data: function(response) {
-                 return response.data;
-             },
-             total: function(response) {
-                 return response.totalCount;
-             },
-             parse: function(response) {
-                 return response.data;
-             }
-         }
+      transport: {
+        read: {
+          url: "http://demos.kendoui.com/service/twitter/search",
+          dataType: "jsonp", // JSONP is required for cross-domain requests
+          data: { q: "html5" } // search for tweets that contain "html5"
+        }
+      },
+      schema: {
+        data: function(response) {
+          return response.results; // twitter's response is { "results": [ /* results */ ] }
+        }
+      }
     });
+    dataSource.fetch(function(){
+      var data = this.data();
+      console.log(data.length);
+    });
+    </script>
 
 ### schema.aggregates `Function|String`
 
-Specifies the field from the response which contains the aggregate results. If set to a function - the function will be called to
-return the aggregate results for the current response.
+The field from the server response which contains the aggregate results. If set to a function - the function will be called to
+return the aggregate results from the response.
 
-Result should have the following format:
+> The `aggregates` option is used only when the [serverAggregates](#configuration-serverAggregates) option is set to `true`.
+
+The result of the function should be a JavaScript object which contains the aggregate results for every fields in the following format:
 
     {
       FIEL1DNAME: {
-          FUNCTON1NAME: FUNCTION1VALUE,
-          FUNCTON2NAME: FUNCTION2VALUE
+        FUNCTON1NAME: FUNCTION1VALUE,
+        FUNCTON2NAME: FUNCTION2VALUE
       },
       FIELD2NAME: {
-          FUNCTON1NAME: FUNCTION1VALUE
+        FUNCTON1NAME: FUNCTION1VALUE
       }
     }
 
-i.e.
+For example if the data source is configured like this:
+
+    <script>
+    var dataSource = new kendo.data.DataSource({
+      transport: {
+        /* transport configuration */
+      }
+      serverAggregates: true,
+      aggregate: [
+        { field: "unitPrice", aggregate: "max" },
+        { field: "unitPrice", aggregate: "min" },
+        { field: "ProductName", aggregate: "count" }
+      ]
+    });
+    </script>
+
+The aggregate results should have the following format:
 
     {
       unitPrice: {
@@ -597,430 +642,599 @@ i.e.
       }
     }
 
-#### Example: Aggregates As a String
+#### Example - set aggregates as a string
 
-    schema: {
+    <script>
+    var dataSource = new kendo.data.DataSource({
+      transport: {
+        /* transport configuration */
+      }
+      serverAggregates: true,
+      schema: {
         aggregates: "aggregates" // aggregate results are returned in the "aggregates" field of the response
-    }
+      }
+    });
+    </script>
 
-#### Example: Aggregates As a Function
+#### Example - set aggregates as a function
 
-    schema: {
+    <script>
+    var dataSource = new kendo.data.DataSource({
+      transport: {
+        /* transport configuration */
+      }
+      serverAggregates: true,
+      schema: {
         aggregates: function(response) {
-            return response.aggregates;
+          return response.aggregates;
         }
-    }
+      }
+    });
+    </script>
+
 
 ### schema.data `Function|String`
 
-Specifies the field from the response which contains the data items. If set to a function - the function will be called to
-return the data items for the current response.
+The field from the server response which contains the data items. If set to a function - the function will be called to
+return the data items for the response.
 
 #### Returns
 
 `Array` The data items from the response.
 
-#### Example: Data As a String
+#### Example - specify the field which contains the data items as a string
 
-    schema: {
-        data: "items" // data items are returned in the "items" field of the response
-    }
-
-#### Example: Data As a Function
-
-    schema: {
-        data: function(response) {
-            return response.items;
+    <script>
+    var dataSource = new kendo.data.DataSource({
+      transport: {
+        read: {
+          url: "http://demos.kendoui.com/service/twitter/search",
+          dataType: "jsonp", // JSONP is required for cross-domain requests
+          data: { q: "html5" } // search for tweets that contain "html5"
         }
-    }
+      },
+      schema: {
+        data: "results" // twitter's response is { "results": [ /* results */ ] }
+      }
+    });
+    dataSource.fetch(function(){
+      var data = this.data();
+      console.log(data.length);
+    });
+    </script>
+
+#### Example - specify the field which contains the data items as a function
+
+    <script>
+    var dataSource = new kendo.data.DataSource({
+      transport: {
+        read: {
+          url: "http://demos.kendoui.com/service/twitter/search",
+          dataType: "jsonp", // JSONP is required for cross-domain requests
+          data: { q: "html5" } // search for tweets that contain "html5"
+        }
+      },
+      schema: {
+        data: function(response) {
+          return response.results; // twitter's response is { "results": [ /* results */ ] }
+        }
+      }
+    });
+    dataSource.fetch(function(){
+      var data = this.data();
+      console.log(data.length);
+    });
+    </script>
 
 ### schema.errors `Function|String` *(default: "errors")*
 
-Specifies the field from the response which contains any errors. If set to a function - the function will be called to
-return the errors for the current response (if present). If there are any errors the `error` event of the DataSource will be raised.
+The field from the server response which contains server-side errors. If set to a function - the function will be called to
+return the errors for response. If there are any errors the [error](#events-error) event will be fired.
 
-#### Example: Errors As a String
-
-    schema: {
-        errors: "exceptions" // errors are returned in the "exceptions" field of the response
-    }
-
-#### Example: Errors As a Function
-
-    schema: {
-        errors: function(response) {
-            return response.errors;
+#### Example - specify the error field as a string
+    <script>
+    var dataSource = new kendo.data.DataSource({
+      transport: {
+        read: {
+          url: "http://demos.kendoui.com/service/twitter/search",
+          dataType: "jsonp", // JSONP is required for cross-domain requests
+          data: { q: "#" }
         }
-    }
+      },
+      schema: {
+        errors: "error" // twitter's response is { "error": "Invalid query" }
+      },
+      error: function(e) {
+        console.log(e.errors); // displays "Invalid query"
+      }
+    });
+    dataSource.fetch();
+    </script>
+
+#### Example - specify the error field as a function
+    <script>
+    var dataSource = new kendo.data.DataSource({
+      transport: {
+        read: {
+          url: "http://demos.kendoui.com/service/twitter/search",
+          dataType: "jsonp", // JSONP is required for cross-domain requests
+          data: { q: "#" }
+        }
+      },
+      schema: {
+        errors: function(response) {
+          response.error; // twitter's response is { "error": "Invalid query" }
+        }
+      },
+      error: function(e) {
+        console.log(e.errors); // displays "Invalid query"
+      }
+    });
+    dataSource.fetch();
+    </script>
 
 ### schema.groups `Function|String`
 
-Specifies the field from the response which contains the groups. If set to a function - the function will be called to
-return the groups for the current response.
+The field from the server response which contains the groups. If set to a function - the function will be called to
+return the groups from the response.
 
-Used instead of the `schema.data` setting if remote grouping operation is executed.
+> The `groups` option is used only when the [serverGrouping](#configuration-serverGrouping) option is set to `true`.
 
 The result should have the following format:
 
     [{
       aggregates: {
-          FIEL1DNAME: {
-              FUNCTON1NAME: FUNCTION1VALUE,
-              FUNCTON2NAME: FUNCTION2VALUE
-          },
-          FIELD2NAME: {
-              FUNCTON1NAME: FUNCTION1VALUE
-          }
+        FIEL1DNAME: {
+          FUNCTON1NAME: FUNCTION1VALUE,
+          FUNCTON2NAME: FUNCTION2VALUE
+        },
+        FIELD2NAME: {
+          FUNCTON1NAME: FUNCTION1VALUE
+        }
       },
-      field: FIELDNAME, // the field name on which is grouped
-      hasSubgroups: true, // false if there are not sub group items and this is the top most group
+      field: FIELDNAME, // the field by which the data items are grouped
+      hasSubgroups: true, // true if there are subgroups
       items: [
-      // either the inner group items (if hasSubgroups is true) or the data records
-         {
-             aggregates: {
-                 //nested group aggregates
-             },
-             field: NESTEDGROUPFIELDNAME,
-             hasSubgroups: false,
-             items: [
-             // data records
-             ],
-             value: NESTEDGROUPVALUE
-         },
-         //nestedgroup2, nestedgroup3, etc.
+        // either the subgroups or the data items
+        {
+          aggregates: {
+            //nested group aggregates
+          },
+          field: NESTEDGROUPFIELDNAME,
+          hasSubgroups: false,
+          items: [
+          // data records
+          ],
+          value: NESTEDGROUPVALUE
+        },
+        //nestedgroup2, nestedgroup3, etc.
       ],
-      value: VALUE // value of the field on which is grouped
-    }
-    // group2, group3, etc.
+      value: VALUE // the group key
+    } /* other groups */
     ]
 
-#### Example: Groups As a String
+#### Example - set groups as a string
 
-    schema: {
+    <script>
+    var dataSource = new kendo.data.DataSource({
+      transport: {
+        /* transport configuration */
+      }
+      serverGrouping: true,
+      schema: {
         groups: "groups" // groups are returned in the "groups" field of the response
-    }
+      }
+    });
+    </script>
 
-#### Example: Groups As a Function
+#### Example - set groups as a function
 
-    schema: {
+    <script>
+    var dataSource = new kendo.data.DataSource({
+      transport: {
+        /* transport configuration */
+      }
+      serverGrouping: true,
+      schema: {
         groups: function(response) {
-            return response.groups;
+          return response.groups; // groups are returned in the "groups" field of the response
         }
-    }
+      }
+    });
+    </script>
 
 ### schema.model `Object|kendo.data.Model`
 
-Describes the `Model` of the `DataSource`. If set to `Object` the `Model.define` method will be used to create the model. Check the documentation of
- [Model.define](/api/framework/model#model.define) for the available configuration options.
+The data item (model) configuration.
 
-#### Example: Specify Model Definition In-line
+If set to an object the [Model.define](/api/framework/model#model.define) method will be used to initialize the data source model.
 
+If set to an existing [kendo.data.Model](/api/framework/model) instance the data source will use that instance and will **not** initialize a new one.
+
+#### Example - set the model as a JavaScript object
+
+    <script>
     var dataSource = new kendo.data.DataSource({
-            schema: {
-                model: {
-                    id: "ProductID",
-                    fields: {
-                         ProductID: {
-                            //this field will not be editable (default value is true)
-                            editable: false,
-                            // a defaultValue will not be assigned (default value is false)
-                            nullable: true
-                         },
-                         ProductName: {
-                             validation: { //set validation rules
-                                 required: true
-                             }
-                         },
-                         UnitPrice: {
-                           //data type of the field {Number|String|Boolean|Date} default is String
-                           type: "number",
-                           // used when new model is created
-                           defaultValue: 42,
-                           validation: {
-                               required: true,
-                               min: 1
-                           }
-                       }
-                   }
-               }
-           }
-       });
-
-#### Example: Specify Existing Model
-
-    var Product = kendo.data.Model.define({
-        id: "ProductID",
-        fields: {
-             ProductID: {
-                //this field will not be editable (default value is true)
-                editable: false,
-                // a defaultValue will not be assigned (default value is false)
-                nullable: true
-             },
-             ProductName: {
-                 validation: { //set validation rules
-                     required: true
-                 }
-             },
-             UnitPrice: {
-               //data type of the field {Number|String|Boolean|Date} default is String
-               type: "number",
-               // used when new model is created
-               defaultValue: 42,
-               validation: {
-                   required: true,
-                   min: 1
-               }
-           }
-       }
-    });
-
-    var dataSource = new kendo.data.DataSource({
-        schema: {
-            model: Product // Use the existing Product model
+      schema: {
+        model: {
+          id: "ProductID",
+          fields: {
+            ProductID: {
+              //this field will not be editable (default value is true)
+              editable: false,
+              // a defaultValue will not be assigned (default value is false)
+              nullable: true
+            },
+            ProductName: {
+              //set validation rules
+              validation: { required: true }
+            },
+            UnitPrice: {
+              //data type of the field {Number|String|Boolean|Date} default is String
+              type: "number",
+              // used when new model is created
+              defaultValue: 42,
+              validation: { required: true, min: 1 }
+            }
+          }
         }
+      }
     });
+    </script>
+
+#### Example - set the model as an existing kendo.data.Model instance
+
+    <script>
+    var Product = kendo.model.define({
+      id: "ProductID",
+      fields: {
+        ProductID: {
+          //this field will not be editable (default value is true)
+          editable: false,
+          // a defaultValue will not be assigned (default value is false)
+          nullable: true
+        },
+        ProductName: {
+          //set validation rules
+          validation: { required: true }
+        },
+        UnitPrice: {
+          //data type of the field {Number|String|Boolean|Date} default is String
+          type: "number",
+          // used when new model is created
+          defaultValue: 42,
+          validation: { required: true, min: 1 }
+        }
+      }
+    });
+    var dataSource = new kendo.data.DataSource({
+      schema: {
+        model: Product
+      }
+    });
+    </script>
 
 ### schema.parse `Function`
 
 Executed before the server response is used. Appropriate for preprocessing or parsing of the server response.
 
-#### Example: Specify Parse Function
+#### Example - data projection
 
-    schema: {
+    <script>
+    var dataSource = new kendo.data.DataSource({
+      transport: {
+        read: {
+          url: "http://demos.kendoui.com/service/products",
+          dataType: "jsonp"
+        }
+      },
+      schema: {
         parse: function(response) {
-            // perform some processing over the response
-
-            return processResponse(response);
+          var products = [];
+          for (var i = 0; i < response.length; i++) {
+            var product = {
+              id: response[i].ProductID,
+              name: response[i].ProductName
+            };
+            products.push(product);
+          }
+          return products;
         }
-    }
-
-#### Example: One-way data projection
-
-    parse: function(response) {
-        for (var i = 0; i < response.length; i++) {
-            response[i].lowerFoo = response[i].foo.toLowerCase();
-        }
-
-        return response;
-    }
+      }
+    });
+    dataSource.fetch(function(){
+      var data = dataSource.data();
+      var product = data[0];
+      console.log(product.name); // displays "Chai"
+    });
+    </script>
 
 ### schema.total `Function|String`
 
-Specifies the field from the response which contains the total number of data items. If set to a function - the function will be called to
-return the total number of data items for the current response.
+The field from the server response which contains the total number of data items. If set to a function - the function will be called to
+return the total number of data items for the response.
+
+> If `schema.total` is not specified the `length` of the `Array` returned by [schema.data](#configuration-schema.data) will be used.
+
+The `schema.total` option must be specified when the [serverPaging](#configuration-serverPaging) option is set to `true`.
 
 #### Returns
 
 `Number` The total number of data items.
 
-#### Example: Total As a String
+#### Example: set total as a string
 
-    schema: {
-        total: "count" // total number of data items is returned in the "count" field of the response
-    }
+    <script>
+    var dataSource = new kendo.data.DataSource({
+      transport: {
+        /* transport configuration */
+      }
+      serverGrouping: true,
+      schema: {
+        total: "total" // total is returned in the "total" field of the response
+      }
+    });
+    </script>
 
-#### Example: Data As a Function
+#### Example: set total as a function
 
-    schema: {
+    <script>
+    var dataSource = new kendo.data.DataSource({
+      transport: {
+        /* transport configuration */
+      }
+      serverGrouping: true,
+      schema: {
         total: function(response) {
-            return response.items.length;
+          return response.total; // total is returned in the "total" field of the response
         }
-    }
-
-> **Note:** If `schema.total` is not specified the `length` of the `Array` returned by `schema.data` will be used.
+      }
+    });
+    </script>
 
 ### schema.type `String` *(default: "json")*
 
-Specify the type of the response - XML or JSON. The only supported values are `"xml"` and `"json"`.
+The type of the response. The supported values are "xml" and "json". By default the schema interprets the server response as JSON.
 
-#### Example: Specify XML Type
-    schema: {
-        type: "xml"
-    }
+#### Example - use XML data
+    <script>
+    var dataSource = new kendo.data.DataSource({
+      data: '<books><book id="1"><title>Secrets of the JavaScript Ninja</title></book></books>',
+      schema: {
+        // specify the the schema is XML
+        type: "xml",
+        // the XML element which represents a single data record
+        data: "/books/book",
+        // define the model - the object which will represent a single data record
+        model: {
+          // configure the fields of the object
+          fields: {
+            // the "title" field is mapped to the text of the "title" XML element
+            title: "title/text()",
+            // the "id" field is mapped to the "id" attribute of the "book" XML element
+            id: "@cover"
+          }
+        }
+      }
+    });
+    dataSource.fetch(function() {
+      var books = dataSource.data();
+      console.log(books[0].title); // displays "Secrets of the JavaScript Ninja"
+    });
+    </script>
 
 ### serverAggregates `Boolean` *(default: false)*
 
-Determines if aggregates are calculated on the server or not. By default aggregates are calculated client-side.
+If set to `true` the data source will leave the aggregate calculation to the remote service. By default the data source calculates aggregates client-side.
 
-#### Example
+> Don't forget to set [schema.aggreagates](#configuration-schema.aggregates) if you set `serverAggregates` to `true`.
 
+#### Example - enable server aggregates
+
+    <script>
     var dataSource = new kendo.data.DataSource({
-        transport: {
-            read: "/orders"
-        },
-        serverAggregates: true,
-        aggregate: { field: "orderId", operator: "eq", value: 10248 } // return only data where orderId equals 10248
+      transport: {
+        /* transport configuration */
+      },
+      serverAggregates: true,
+      aggregate: [
+        { field: "age", aggregate: "sum" }
+      ],
+      schema: {
+        aggregates: "aggregates" // aggregate results are returned in the "aggregates" field of the response
+      }
     });
-
-> **Important:** When `serverAggregates` is set to `true` the developer is responsible for calculating the aggregate results.
+    </script>
 
 ### serverFiltering `Boolean` *(default: false)*
 
-Determines if filtering of the data is handled on the server. By default filtering is performed client-side.
+If set to `true` the data source will leave the filtering implementation to the remote service. By default the data source performs filtering client-side.
 
-> **Important:** When `serverFiltering` is set to `true` the developer is responsible for filtering the data.
+By default the [filter](#configuration-filter) is sent to the server following jQuery's [conventions](http://api.jquery.com/jQuery.param/).
 
-By default, a filter object is sent to the server with the query string in the following form:
+For example the filter `{ logic: "and", filters: [ { field: "name", operator: "startswith", value: "Jane" } ] }` is sent as:
 
 *   filter[logic]: and
-*   filter[filters][0][field]: orderId
-*   filter[filters][0][operator]: desc
-*   filter[filters][0][value]: 10248
+*   filter[filters][0][field]: name
+*   filter[filters][0][operator]: startswith
+*   filter[filters][0][value]: Jane
 
-Possible values for **operator** include:
+Use the [parameterMap](#configuration-transport.parameterMap) option to send the filter option in a different format.
 
-#### *Equal To*
+#### Example - enable server filtering
 
-"eq", "==", "isequalto", "equals", "equalto", "equal"
-
-#### *Not Equal To*
-
-"neq", "!=", "isnotequalto", "notequals", "notequalto", "notequal", "ne"
-
-#### *Less Then*
-
-"lt", "<", "islessthan", "lessthan", "less"
-
-#### *Less Then or Equal To*
-
-"lte", "<=", "islessthanorequalto", "lessthanequal", "le"
-
-#### *Greater Then*
-
-"gt", ">", "isgreaterthan", "greaterthan", "greater"
-
-#### *Greater Then or Equal To*
-
-"gte", ">=", "isgreaterthanorequalto", "greaterthanequal", "ge"
-
-#### *Starts With*
-
-"startswith"
-
-#### *Ends With*
-
-"endswith"
-
-#### *Contains*
-
-"contains"
-
-It is possible to modify these parameters by using the `parameterMap` function found in the [transport](#transport-object).
-
-#### Example
-
+    <script>
     var dataSource = new kendo.data.DataSource({
-        transport: {
-            read: "/orders"
-        },
-        serverFiltering: true,
-        filter: { field: "orderId", operator: "eq", value: 10248 } // return only data where orderId equals 10248
+      transport: {
+        /* transport configuration */
+      },
+      serverFiltering: true,
+      filter: { logic: "and", filters: [ { field: "name", operator: "startswith", value: "Jane" } ] }
     });
+    </script>
 
 ### serverGrouping `Boolean` *(default: false)*
 
-Determines if grouping of the data is handled on the server. By default grouping is performed client-side.
+If set to `true` the data source will leave the grouping implementation to the remote service. By default the data source performs grouping client-side.
 
-> **Important:** When `serverGrouping` is set to `true` the developer is responsible for grouping the data.
+By default the [group](#configuration-group) is sent to the server following jQuery's [conventions](http://api.jquery.com/jQuery.param/).
 
-By default, a group object is sent to the server with the query string in the following form:
+For example the group `{ field: "category", dir: "desc" }` is sent as:
 
-*   group[0][field]: orderId
+*   group[0][field]: category
 *   group[0][dir]: desc
 
 
-It is possible to modify these parameters by using the `parameterMap` function found on the [transport](#transport-object).
+Use the [parameterMap](#configuration-transport.parameterMap) option to send the group option in a different format.
 
-#### Example
+#### Example - enable server grouping
 
+    <script>
     var dataSource = new kendo.data.DataSource({
-        transport: {
-            read: "/orders"
-        },
-        serverGrouping: true,
-        sort: { field: "orderId", dir: "asc" } // group by orderId descending
+      transport: {
+        /* transport configuration */
+      },
+      serverGrouping: true,
+      group: { field: "category", dir: "desc" }
     });
+    </script>
 
 ### serverPaging `Boolean` *(default: false)*
 
-Determines if paging of the data is on the server. By default paging is performed client-side. If `serverPaging` is enabled the
-total number of data items should also be returned in the response. Use the `schema.total` setting to customize that.
+If set to `true` the data source will leave the data item paging implementation to the remote service. By default the data source performs paging client-side.
 
-> **Important:** When `serverPaging` is set to `true` the developer is responsible for paging the data.
+> Don't forget to set [schema.total](#configuration-schema.total) if you set `serverPaging` to `true`.
 
-The following options are sent to the server as part of the query string by default:
+The following options are sent to the server when server paging is enabled:
 
-#### *take*
+- page - the page of data item to return (`1` means the first page)
+- pageSize - the number of items to return
+- skip - how many data items to skip
+- take - the number of data items to return (the same as `pageSize`)
 
-contains the number of records to retreive
+Use the [parameterMap](#configuration-transport.parameterMap) option to send the paging options in a different format.
 
-#### *skip*
+#### Example - enable server paging
 
-how many records from the front of the dataset to begin reading
-
-#### *page*
-
-the index of the current page of data
-
-#### *pageSize*
-
-the number of records per page
-
-It is possible to modify these parameters by using the `parameterMap` function found on the [transport](#transport-object).
-
-#### Example
-
+    <script>
     var dataSource = new kendo.data.DataSource({
-        transport: {
-            read: "/orders"
-        },
-        serverPaging: true,
-        pageSize: 5 // 5 records per page
+      transport: {
+        /* transport configuration */
+      },
+      serverPaging: true,
+      schema: {
+        total: "total" // total is returned in the "total" field of the response
+      }
     });
+    </script>
 
 ### serverSorting `Boolean` *(default: false)*
 
-Determines if sorting of the data should is handled on the server. By default sorting is performed client-side.
+If set to `true` the data source will leave the data item sorting implementation to the remote service. By default the data source performs sorting client-side.
 
-> **Important:** When `serverSorting` is set to `true` the developer is responsible for sorting the data.
+By default the [sort](#configuration-sort) is sent to the server following jQuery's [conventions](http://api.jquery.com/jQuery.param/).
 
-By default, a sort object is sent to the server with the query string in the following form:
+For example the sort `{ field: "age", dir: "desc" }` is sent as:
 
-*   sort[0][field]: orderId
-*   sort[0][dir]: asc
+*   sort[0][field]: age
+*   sort[0][dir]: desc
 
-It is possible to modify these parameters by using the `parameterMap` function found on the [transport](#transport-object).
+Use the [parameterMap](#configuration-transport.parameterMap) option to send the paging options in a different format.
 
-#### Example
+#### Example - enable server sorting
 
+    <script>
     var dataSource = new kendo.data.DataSource({
-        transport: {
-            read: "/orders"
-        },
-        serverSorting: true,
-        sort: { field: "orderId", dir: "asc" }
+      transport: {
+        /* transport configuration */
+      },
+      serverSorting: true,
+      sort: { field: "age", dir: "desc" }
     });
+    </script>
 
-### sort `Array|Object` *(default: undefined)*
+### sort `Array|Object`
 
- Sets initial sort order
+The sort order which will be applied over the data items. By the data items are not sorted.
+
+#### Example - sort the data items
+
+    <script>
+    var dataSource = new kendo.data.DataSource({
+      data: [
+        { name: "Jane Doe", age: 30 },
+        { name: "John Doe", age: 33 }
+      ],
+      sort: { field: "age", dir: "desc" }
+    });
+    dataSource.fetch(function(){
+      var data = dataSource.view();
+      console.log(data[0].age); // displays "33"
+    });
+    </script>
+
+#### Example - sort the data items by multiple fields
+
+    <script>
+    var dataSource = new kendo.data.DataSource({
+      data: [
+        { name: "Tea", category: "Beverages" },
+        { name: "Coffee", category: "Beverages" },
+        { name: "Ham", category: "Food" }
+      ],
+      sort: [
+        // sort by "category" in descending order and then by "name" in ascending order
+        { field: "category", dir: "desc" },
+        { field: "name", dir: "asc" }
+      ]
+    });
+    dataSource.fetch(function(){
+      var data = dataSource.view();
+      console.log(data[1].name); // displays "Coffee"
+    });
+    </script>
 
 ### sort.field `String`
 
- Sets the field to sort on.
+The field by which the data items are sorted.
+
+#### Example - specify the sort field
+
+    <script>
+    var dataSource = new kendo.data.DataSource({
+      data: [
+        { name: "Jane Doe", age: 30 },
+        { name: "John Doe", age: 33 }
+      ],
+      // order by "age" in descending order
+      sort: { field: "age", dir: "desc" }
+    });
+    dataSource.fetch(function(){
+      var data = dataSource.view();
+      console.log(data[0].age); // displays "33"
+    });
+    </script>
 
 ### sort.dir `String`
 
- Sets the sort direction. Possible values are: "asc", "desc", null. If null is set, the sort expression is removed.
+The sort order (direction). The supported values are "asc" (ascending order) and "desc" (descending order).
 
-#### Example
+#### Example - specify the sort order (direction)
 
-    // sorts data ascending by orderId field
-    sort: { field: "orderId", dir: "asc" }
-
-    // sorts data ascending by orderId field and then descending by shipmentDate
-    sort: [ { field: "orderId", dir: "asc" }, { field: "shipmentDate", dir: "desc" } ]
+    <script>
+    var dataSource = new kendo.data.DataSource({
+      data: [
+        { name: "Jane Doe", age: 30 },
+        { name: "John Doe", age: 33 }
+      ],
+      // order by "age" in descending order
+      sort: { field: "age", dir: "desc" }
+    });
+    dataSource.fetch(function(){
+      var data = dataSource.view();
+      console.log(data[0].age); // displays "33"
+    });
+    </script>
 
 ### transport `Object`
 

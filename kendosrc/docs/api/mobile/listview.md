@@ -63,7 +63,7 @@ Last dataItem of the first loaded page of the ListView.
 
  If set to true, the group headers will persist their position when the user scrolls through the listview. Applicable only when the type is set to group, or when binding to grouped datasource.
 
-### headerTemplate `String`*(default: #:value#)*
+### headerTemplate `String`*(default: "#:value#")*
 
  The header item template (applicable when the type is set to group).
 
@@ -128,9 +128,31 @@ First dataItem of the ListView // => listView.dataSource.get(0);
 
 The style of the control. Can be either empty string(""), or inset.
 
-### template `String`*(default: #:data#)*
+### template `String`*(default: "#:data#")*
 
  The item template.
+
+#### Example:
+
+    <div id="foo" data-role="view">
+        <ul id="list" data-role="listview" data-source="dataSource" data-template="tmp"></ul>
+    </div>
+
+    <script id="tmp" type="text/x-kendo-template">
+        <p>#: name # <span>Age: #: age #</span></p>
+    </script>
+    
+    <script>
+        var app = new kendo.mobile.Application();
+        var dataSource = new kendo.data.DataSource({
+            data: [
+                { name: "Jane Doe", age: 30 },
+                { name: "John Doe", age: 33 }
+            ]
+        });
+    </script>
+
+> The ListView automatically wraps the template content in `<li>` tag. Putting a `<li>` tag inside the template creates invalid nesting of elements.
 
 ### type `String`
 

@@ -333,7 +333,7 @@ Specifies a line consisting of a repeating pattern of long-dash-dot-dot.
 
 The visibility of the lines.
 
-### categoryAxis.minorGridLines.width `Number`*(default: 1> The width of the lines. <p)*
+### categoryAxis.minorGridLines.width `Number`
 
 The width of the lines.
 
@@ -557,9 +557,10 @@ Specifiying "auto" will set the step to such value that the total number of cate
 This option is ignored if **baseUnit** is set to "fit".
 
 
-### categoryAxis.labels.culture `String`*(default: global culture)*
+### categoryAxis.labels.culture `String`
 
 Culture to use for formatting the dates. See [Globalization](http://www.kendoui.com/documentation/framework/globalization/overview.aspx) for more information.
+It uses the global culture by default.
 
 ### categoryAxis.labels.dateFormats `Object`
 
@@ -961,8 +962,6 @@ If a type value is missing, the type is assumed to be the one specified in serie
 
 Each series type has a different set of options.
 
-> **Info:** Some options accept function as argument. They will be evaluated for each point (supplied as parameter). The theme/seriesDefaults value will be used if no value is returned.
-
 ### series.type `String`*(default: "line")*
 
 The type of the series. Available types:
@@ -1134,11 +1133,11 @@ The border of the points.
 
 ** Applicable to bar, column and pie series **
 
-### series.border.color `String|Function`*(default: the color of the curren series)*
+### series.border.color `String`
 
-The color of the border.
+The color of the border.  It defaults to the color of the current series.
 
-### series.border.dashType `String|Function`*(default: "solid")*
+### series.border.dashType `String`*(default: "solid")*
 
 The dash type of the border.
 
@@ -1170,11 +1169,7 @@ Specifies a line consisting of a repeating pattern of long-dash-dot.
 
 Specifies a line consisting of a repeating pattern of long-dash-dot-dot.
 
-### series.border.opacity `Number|Function`
-
-The border opacity.
-
-### series.border.width `Number|Function`*(default: 1)*
+### series.border.width `Number`*(default: 0)*
 
 The width of the border.
 
@@ -1184,36 +1179,9 @@ The data field containing the point category name.
 
 ** Applicable to pie series. **
 
-### series.color `String|Function`
+### series.color `String`
 
 The series base color.
-
-#### Example
-
-    $("#sparkline").kendoSparkline({
-         series: [{
-             type: "column",
-             data: [200, 450, 300, 125],
-             color: "#ff0000"
-         }]
-    });
-
-#### Example
-
-    $("#sparkline").kendoSparkline({
-         series: [{
-             type: "column",
-             data: [200, 450, 300, 125],
-             color: function(point) {
-                if (point.value > 300) {
-                    // Colorize matching points
-                    return "#f00";
-                }
-
-                // Use default theme color
-             }
-         }]
-    });
 
 ### series.colorField `String`
 
@@ -1263,7 +1231,7 @@ The labels are positioned in circle around the chart.
 
 The labels are positioned in columns to the left and right of the chart.
 
-### series.labels.background `String|Function`
+### series.labels.background `String`
 
 The background color of the labels.
 
@@ -1271,11 +1239,11 @@ The background color of the labels.
 
 The border of the labels.
 
-### series.labels.border.color `String|Function`*(default: "black")*
+### series.labels.border.color `String`*(default: "black")*
 
  The color of the border.
 
-### series.labels.border.dashType `String|Function`*(default: "solid")*
+### series.labels.border.dashType `String`*(default: "solid")*
 
  The dash type of the border.
 
@@ -1307,11 +1275,11 @@ Specifies a line consisting of a repeating pattern of long-dash-dot.
 
 Specifies a line consisting of a repeating pattern of long-dash-dot-dot.
 
-### series.labels.border.width `Number|Function`*(default: 0)*
+### series.labels.border.width `Number`*(default: 0)*
 
  The width of the border.
 
-### series.labels.color `String|Function`
+### series.labels.color `String`
 
 The text color of the labels.
 
@@ -1321,11 +1289,11 @@ The distance of the labels.
 
 ** Available for pie series. **
 
-### series.labels.font `String|Function`*(default: "12px Arial,Helvetica,sans-serif")*
+### series.labels.font `String`*(default: "12px Arial,Helvetica,sans-serif")*
 
 The font style of the labels.
 
-### series.labels.format `String|Function`
+### series.labels.format `String`
 
 The format of the labels.
 
@@ -1360,7 +1328,7 @@ The margin of the labels.
     // padding right and bottom are with 0px (by default)
     padding: { top: 1, left: 1 }
 
-### series.labels.position `String|Function`*(default: "above")*
+### series.labels.position `String`*(default: "above")*
 
 Defines the position of the labels.
 
@@ -1426,7 +1394,7 @@ The label template. Template variables:
 *   **dataItem** - the original data item used to construct the point.
     Will be null if binding to array.
 
-### series.labels.visible `Boolean|Function`*(default: false)*
+### series.labels.visible `Boolean`*(default: false)*
 
  The visibility of the labels.
 
@@ -1454,27 +1422,27 @@ Marker options.
 
 ** Applicable to area and line series **
 
-### series.markers.background `String|Function`
+### series.markers.background `String`
 
 The background color of the current series markers.
 
-### series.markers.border `Object|Function`
+### series.markers.border `Object`
 
 The border of the markers.
 
-### series.markers.border.color `String|Function`*(default: "black")*
+### series.markers.border.color `String`*(default: "black")*
 
  The color of the border.
 
-### series.markers.border.width `Number|Function`*(default: 0)*
+### series.markers.border.width `Number`*(default: 0)*
 
  The width of the border.
 
-### series.markers.size `Number|Function`*(default: 6)*
+### series.markers.size `Number`*(default: 2)*
 
  The marker size.
 
-### series.markers.type `String|Function`*(default: "circle")*
+### series.markers.type `String`*(default: "circle")*
 
 Configures the markers shape type.
 
@@ -1490,13 +1458,9 @@ The marker shape is triangle.
 
 The marker shape is circle.
 
-### series.markers.visible `Boolean|Function`*(default: false)*
+### series.markers.visible `Boolean`*(default: false)*
 
 The markers visibility.
-
-### series.markers.rotation `Number|Function`
-
-The rotation angle of the markers.
 
 ### series.missingValues `String`*(default: "gap")*
 
@@ -1668,23 +1632,23 @@ The target of the bullet chart.
 
 The target line.
 
-### series.target.line.width `Object|Function`
+### series.target.line.width `Object`
 
 The width of the line.
 
-### series.target.color `String|Function`
+### series.target.color `String`
 
 The target color.
 
-### series.target.border `Object|Function`
+### series.target.border `Object`
 
 The border of the target.
 
-### series.target.border.color `String|Function`*(default: "black")*
+### series.target.border.color `String`*(default: "black")*
 
 The color of the border.
 
-### series.target.border.dashType `String|Function`*(default: "solid")*
+### series.target.border.dashType `String`*(default: "solid")*
 
 The dash type of the border.
 
@@ -2107,8 +2071,8 @@ Template variables:
              visible: true,
              shared: true,
              sharedTemplate:
-                "#= category # </br>" +                                       
-                "# for (var i = 0; i < points.length; i++) { #" +             
+                "#= category # </br>" +
+                "# for (var i = 0; i < points.length; i++) { #" +
                     "#= points[i].series.name #: #= points[i].value # </br>" +
                 "# } #"
          }
@@ -2790,32 +2754,6 @@ The original data item used to generate the label.
 ##### e.element `Object`
 
 The DOM element of the label.
-
-### legendItemClick
-
-Fires when an legend item is clicked.
-
-#### Example
-
-    function onLegendItemClick(e) {
-        alert("Clicked " + e.text + " series with color: " + e.color);
-    }
-
-#### Event Data
-
-##### e.text `Object`
-
-The name of the series.
-
-##### e.color `Object`
-
-The color of the series.
-
-##### e.series `Object`
-
-The series options.
-
-##### e.index `Object`
 
 ### dataBound
 

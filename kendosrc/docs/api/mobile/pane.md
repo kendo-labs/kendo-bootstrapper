@@ -20,7 +20,7 @@ publish: true
 
  The id of the default Pane Layout.
 
-### loading `String`*(default: Loading...)*
+### loading `String`*(default: "Loading...")*
 
  The text displayed in the loading popup. Setting this value to false will disable the loading popup.
 
