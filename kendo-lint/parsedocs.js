@@ -124,6 +124,7 @@ var kendo_apidoc = (function(P){
     var pat_parameters = section_pattern(4, RX(/Parameters/i));
     var pat_event_data = section_pattern(4, RX(/Event Data/i));
     var pat5 = section_pattern(5);
+    var filename = null;
 
     var pat_inline = P.compile([
         P.NAMED("tag", P.OR("inlinecode", "em")),
@@ -142,7 +143,14 @@ var kendo_apidoc = (function(P){
                 param.type = param.type.concat(text.split(/\s*\|\s*/));
             } else if (tag == "em") {
                 var a = /\(default:?\s*(.*?)\s*\)$/i.exec(text);
-                if (a) param.default = a[1];
+                if (a) {
+                    param.default = a[1];
+                    try {
+                        U2.parse("(" + a[1] + ")");
+                    } catch(ex) {
+                        console.log("ERROR in default: " + a[1] + " (" + filename + ")");
+                    }
+                }
             }
         });
         return param;
@@ -201,11 +209,46 @@ var kendo_apidoc = (function(P){
         });
     };
 
+    // That's what I get for working with sad third party libraries. :-(
+    // https://github.com/evilstreak/markdown-js/issues/80
+    var fix_tree = (function(references){
+        var pat_fix = P.compile(
+            [ P.NAMED("tag"),
+              P.WHATEVER(),
+              P.NAMED("link_ref", [ "link_ref", P.NAMED("data", P.CHECK(function(data){
+                  return !references.hasOwnProperty(data.ref);
+              }))])
+            ]
+        );
+        var pat_normalize = P.compile(
+            [ P.NAMED("tag"),
+              P.WHATEVERNG(),
+              P.NAMED("text",
+                      P.NAMED("str1", P.CHECK(function(node){ return typeof node == "string" })),
+                      P.NAMED("str2", P.CHECK(function(node){ return typeof node == "string" })))
+            ]
+        );
+        return function(tree) {
+            var refs = tree[1];
+            references = refs.references ? refs.references : {};
+            P.search(tree, pat_fix, function(m){
+                var orig_text = m.data.first().original;
+                m.link_ref.replace([ orig_text ]);
+            });
+            P.search(tree, pat_normalize, function(m){
+                m.text.replace([ m.str1.first() + m.str2.first() ]);
+                return 0;
+            });
+            return tree;
+        };
+    })();
+
     var components = {};
 
     function read_file(file) {
+        filename = file;
         var text = FS.readFileSync(file, "utf8");
-        var tree = MD.parse(text);
+        var tree = fix_tree(MD.parse(text));
         P.search(tree, pat1, function(m){
             var name = trim(m.title.first());
             var comp = components[name] = new Component(name);
