@@ -35,6 +35,20 @@ The tag used for the root element of the view.
      view.render($("#app"));
     </script>
 
+### wrap `Boolean` *(default: true)*
+
+If set to `false`, the view will not wrap its contents in a root element. In that case, the view element will point to the root element in the template.
+
+#### Example
+
+    <div id="app"></div>
+
+    <script>
+     var view = new kendo.View('<div id="foo"></div>', { wrap: false });
+     view.render($("#app"));
+     console.log(view.element.attr('id')) // foo
+    </script>
+
 ## Methods
 
 ### destroy

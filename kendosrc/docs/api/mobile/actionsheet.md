@@ -14,7 +14,7 @@ Represents the Kendo UI Mobile ActionSheet widget. Inherits from [kendo.mobile.u
 
 ## Configuration
 
-### cancel `String`*(default: Cancel)*
+### cancel `String`*(default: "Cancel")*
 
  The text of the cancel button.
 
@@ -22,11 +22,11 @@ Represents the Kendo UI Mobile ActionSheet widget. Inherits from [kendo.mobile.u
 
 The popup configuration options (tablet only).
 
-### popup.direction `Number | String`*(default: down)*
+### popup.direction `Number | String`*(default: "down")*
 
  The direction to which the popup will expand, relative to the target that opened it.
 
-### popup.height `Number | String`*(default: auto)*
+### popup.height `Number | String`*(default: "auto")*
 
  The height of the popup in pixels.
 

@@ -89,7 +89,7 @@ The height (in pixels) of the tooltip.
 
 The width (in pixels) of the tooltip.
 
-### position `String`*(default: bottom)*
+### position `String`*(default: "bottom")*
 
 The position relative to the target element, at which the tooltip will be shown. Predefined values are "bottom", "top", "left", "right", "center".
 
@@ -97,7 +97,7 @@ The position relative to the target element, at which the tooltip will be shown.
 
 Specify the delay in milliseconds before the tooltip is shown. This option is ignored if showOn is set to "click" or "focus".
 
-### showOn `String`*(default: mouseenter)*
+### showOn `String`*(default: "mouseenter")*
 
 The event on which the tooltip will be shown. Predefined values are "mouseenter", "click" and "focus".
 

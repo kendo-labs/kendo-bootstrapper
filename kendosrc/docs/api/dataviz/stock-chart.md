@@ -2050,7 +2050,7 @@ upwards from the current position.
         ...
     });
 
-### legend.position `String`*(default: right)*
+### legend.position `String`*(default: "right")*
 
  The positions of the legend.
 

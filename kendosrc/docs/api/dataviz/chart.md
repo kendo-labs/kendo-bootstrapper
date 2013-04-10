@@ -408,7 +408,7 @@ on the chart.
 
 The visibility of the minor ticks.
 
-### categoryAxis.name `String`*(default: primary)*
+### categoryAxis.name `String`*(default: "primary")*
 
 The unique axis name.
 
@@ -1246,7 +1246,7 @@ upwards from the current position.
         ...
     });
 
-### legend.position `String`*(default: right)*
+### legend.position `String`*(default: "right")*
 
  The positions of the legend.
 
@@ -1743,7 +1743,7 @@ Specifies the aggregate for each data item field.
         low: "max"
     }
 
-### series.axis `String`*(default: primary)*
+### series.axis `String`*(default: "primary")*
 
 The name of the value axis to use.
 
@@ -2375,7 +2375,7 @@ The line width.
 
 ** Available for line and scatterLine series **
 
-### series.xAxis `String`*(default: primary)*
+### series.xAxis `String`*(default: "primary")*
 
 The name of the X axis to use.
 
@@ -2387,7 +2387,7 @@ The data field containing the X value.
 
 ** Available for bubble, scatter and scatterLine series. **
 
-### series.yAxis `String`*(default: primary)*
+### series.yAxis `String`*(default: "primary")*
 
 The name of the Y axis to use.
 
@@ -3537,7 +3537,7 @@ The visibility of the minor ticks.
 The interval between minor divisions.
 It defaults to 1/5th of the majorUnit.
 
-### valueAxis.name `Object`*(default: primary)*
+### valueAxis.name `Object`*(default: "primary")*
 
 The unique axis name.
 
@@ -4125,7 +4125,7 @@ The axis major tick size. This is the length of the line in pixels that is drawn
 
 The visibility of the major ticks.
 
-### xAxis.name `Object`*(default: primary)*
+### xAxis.name `Object`*(default: "primary")*
 
 The unique axis name.
 
@@ -4713,7 +4713,7 @@ The axis major tick size. This is the length of the line in pixels that is drawn
 
 The visibility of the major ticks.
 
-### yAxis.name `Object`*(default: primary)*
+### yAxis.name `Object`*(default: "primary")*
 
 The unique axis name.
 

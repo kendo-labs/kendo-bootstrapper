@@ -14,7 +14,7 @@ Represents the Kendo UI Calendar widget. Inherits from [Widget](/api/framework/w
 
 ## Configuration
 
-### culture `String`*(default: en-US)*
+### culture `String`*(default: "en-US")*
 
  Specifies the culture info used by the widget.
 
@@ -59,7 +59,7 @@ Specifies the navigation depth.
          });
      </script>
 
-### format `String`*(default: MM/dd/yyyy)*
+### format `String`*(default: "MM/dd/yyyy")*
 
  Specifies the format, which is used to parse value set with value() method.
 
@@ -134,7 +134,7 @@ Specifies the navigation depth.
 
  Template to be used for rendering the cells in the "month" view, which are not in the min/max range.
 
-### start `String`*(default: month)*
+### start `String`*(default: "month")*
 
  Specifies the start view.
 

@@ -12,7 +12,7 @@ publish: true
 
 ## Configuration
 
-### style `String`*(default: horizontal)*
+### style `String`*(default: "horizontal")*
 
  Defines the SplitView style - horizontal or vertical.
 

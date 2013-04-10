@@ -353,7 +353,7 @@ on the chart.
 
 The visibility of the minor ticks.
 
-### categoryAxis.name `String`*(default: primary)*
+### categoryAxis.name `String`*(default: "primary")*
 
 The unique axis name.
 
@@ -1121,7 +1121,7 @@ The average of all values for the date period.
 
 User-defined aggregate function.
 
-### series.axis `String`*(default: primary)*
+### series.axis `String`*(default: "primary")*
 
 The name of the value axis to use.
 
@@ -2398,7 +2398,7 @@ The visibility of the minor ticks.
 The interval between minor divisions.
 It defaults to 1/5th of the majorUnit.
 
-### valueAxis.name `Object`*(default: primary)*
+### valueAxis.name `Object`*(default: "primary")*
 
 The unique axis name.
 

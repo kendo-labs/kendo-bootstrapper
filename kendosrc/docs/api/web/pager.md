@@ -79,7 +79,7 @@ Defines if an input element which allows the user to navigate to given page will
 ### numeric `Boolean`*(default: true)*
 Defines if numeric portion of the pager will be shown.
 
-### pageSizes `Boolean | Array`*(default: false | [5,10,20])*
+### pageSizes `Boolean|Array` *(default: false)*
 Displays a list with predefined page sizes. An array of values to be displayed can be provided. If pageSize option is provided for DataSource then this pageSize value will be automaticaly selected in created selectbox.
 
 ### previousNext `Boolean`*(default: true)*

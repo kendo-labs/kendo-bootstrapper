@@ -14,7 +14,7 @@ Represents the Kendo UI Splitter widget. Inherits from [Widget](/api/framework/w
 
 ## Configuration
 
-### orientation `String`*(default: horizontal)*
+### orientation `String`*(default: "horizontal")*
 
 Specifies the orientation of the **Splitter**.
 

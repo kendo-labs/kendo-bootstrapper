@@ -18,11 +18,11 @@ Represents the Kendo UI Mobile Switch widget. Inherits from [kendo.mobile.ui.Wid
 
  The checked state of the widget.
 
-### offLabel `String`*(default: OFF)*
+### offLabel `String`*(default: "OFF")*
 
  The OFF label.
 
-### onLabel `String`*(default: ON)*
+### onLabel `String`*(default: "ON")*
 
  The ON label.
 
