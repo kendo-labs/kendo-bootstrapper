@@ -30,7 +30,7 @@ The MVVM model to bind to. If a string is passed, The view will try to resolve a
 
 Applicable to remote views only. If set to true, the remote view contents will be reloaded from the server (using Ajax) each time the view is navigated to.
 
-### Example
+#### Example
 
     <!-- foo.html -->
     <div data-role="view">

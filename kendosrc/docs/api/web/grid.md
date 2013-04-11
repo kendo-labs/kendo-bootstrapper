@@ -4228,7 +4228,7 @@ The column whose position should be changed.
       ]
     });
     var grid = $("#grid").data("kendoGrid");
-    grid.reorderColumn(1, grid.kk[0]);
+    grid.reorderColumn(1, grid.columns[0]);
     </script>
 
 ### saveChanges

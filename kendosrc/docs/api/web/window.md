@@ -157,7 +157,7 @@ Gets or set the content of a **Window**.
     var kendoWindow = $("#window").data("kendoWindow");
     var windowContent = kendoWindow.content();
 
-#### Set the title of a Window; utilize chaining (if necessary)
+#### Set the content of a Window; utilize chaining (if necessary)
 
     var kendoWindow = $("#window").data("kendoWindow").content("Kendo UI for all the things!");
 
