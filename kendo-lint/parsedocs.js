@@ -107,10 +107,12 @@ var kendo_apidoc = (function(P){
         return P.compile(
             [ "header", P.CHECK(function(node){ return node.level == level }),
               P.NAMED("title", title || P.WHATEVER()) ],
-            P.NAMED("body", P.MANY(
-                P.OR([ "header", P.CHECK(function(node){ return node.level > level }) ],
-                     [ P.CHECK(function(node){ return node != "header" }) ])
-            ))
+            P.NAMED("whole",
+                    P.NAMED("intro", P.MANY([ P.CHECK(function(node){ return node != "header" })])),
+                    P.NAMED("body", P.MANY(
+                        P.OR([ "header", P.CHECK(function(node){ return node.level > level }) ],
+                             [ P.CHECK(function(node){ return node != "header" }) ])
+                    )))
         );
     };
 
@@ -132,11 +134,12 @@ var kendo_apidoc = (function(P){
     ]);
 
     function get_param(tree) {
+        var title = tree.title.content();
         var param = {
-            name: trim(tree[0]),
+            name: trim(title[0]),
             type: []
         }
-        P.search(tree, pat_inline, function(m){
+        P.search(title, pat_inline, function(m){
             var tag = m.tag.first();
             var text = trim(m.text.first());
             if (tag == "inlinecode") {
@@ -146,30 +149,36 @@ var kendo_apidoc = (function(P){
                 if (a) {
                     param.default = a[1];
                     try {
-                        U2.parse("(" + a[1] + ")");
+                        var ast = U2.parse("(" + a[1] + ")");
+                        var exp = ast.body[0].body;
+                        if ((exp instanceof U2.AST_Symbol && exp.name != "Infinity") || exp instanceof U2.AST_Binary) {
+                            console.log("ERROR? in default: " + a[1] + " (" + filename + ")");
+                        }
                     } catch(ex) {
                         console.log("ERROR in default: " + a[1] + " (" + filename + ")");
                     }
                 }
             }
         });
+        param.short_doc = tree.intro.content();
+        param.doc = tree.whole.content();
         return param;
     };
 
     function get_method(name, tree, pat_params) {
         var args = [];
-        P.search(tree, pat_params, function(m){
+        P.search(tree.body.content(), pat_params, function(m){
             P.search(m.body.content(), pat5, function(m){
-                var param = get_param(m.title.content());
+                var param = get_param(m);
                 args.push(param);
             });
         });
-        return { name: name, args: args };
+        return { name: name, args: args, short_doc: tree.intro.content(), doc: tree.whole.content() };
     };
 
     function read_config(comp, tree) {
         P.search(tree, pat3, function(m){
-            comp.config.push(get_param(m.title.content()));
+            comp.config.push(get_param(m));
         });
         // place sub-options in their parent option too
         for (var i = comp.config.length; --i >= 0;) {
@@ -189,14 +198,14 @@ var kendo_apidoc = (function(P){
     function read_methods(comp, tree) {
         P.search(tree, pat3, function(m){
             var name = trim(m.title.first());
-            comp.methods.push(get_method(name, m.body.content(), pat_parameters));
+            comp.methods.push(get_method(name, m, pat_parameters));
         });
     };
 
     function read_events(comp, tree) {
         P.search(tree, pat3, function(m){
             var name = trim(m.title.first());
-            var ev = get_method(name, m.body.content(), pat_event_data);
+            var ev = get_method(name, m, pat_event_data);
             ev.type = [ "Function" ];
             comp.events.push(ev);
         });
@@ -204,7 +213,7 @@ var kendo_apidoc = (function(P){
 
     function read_fields(comp, tree) {
         P.search(tree, pat3, function(m){
-            var param = get_param(m.title.content());
+            var param = get_param(m);
             comp.fields.push(param);
         });
     };
@@ -249,9 +258,13 @@ var kendo_apidoc = (function(P){
         filename = file;
         var text = FS.readFileSync(file, "utf8");
         var tree = fix_tree(MD.parse(text));
+        var refs = tree.references;
         P.search(tree, pat1, function(m){
             var name = trim(m.title.first());
             var comp = components[name] = new Component(name);
+            comp.short_doc = m.intro.content();
+            comp.doc = m.whole.content();
+            comp.refs = refs;
             P.search(m.body.content(), pat2, function(m){
                 var name = trim(m.title.first());
                 if (name == "Configuration") {
@@ -283,11 +296,12 @@ UTILS.fs_find(PATH.join(__dirname, "..", "kendosrc", "docs"), {
     },
     callback: function(err, f) {
         if (!err) {
+            //console.log("Parsing API: " + f.rel);
             kendo_apidoc.parse(f.full);
         }
     },
     finish: function() {
-        //console.log(SYS.inspect(kendo_apidoc.components, null, null));
+        console.log(SYS.inspect(kendo_apidoc.components, null, null));
     }
 });
 

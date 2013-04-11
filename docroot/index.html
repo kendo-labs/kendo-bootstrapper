@@ -28,16 +28,17 @@
 
         <div class="title">Projects</div>
 
-        <div class="k-toolbar">
+        <div class="k-toolbar" style="padding: 5px">
           <button class="k-button" id="btn-project-new">New</button>
           <button class="k-button" id="btn-project-preview">Preview</button>
+          <button class="k-button" id="btn-kendo-doc">KDoc</button>
         </div>
 
         <div id="project-list" kendo-layout="0.5,resizable" style="overflow:auto"></div>
 
         <div class="project-title title">No project selected</div>
 
-        <div class="k-toolbar">
+        <div class="k-toolbar" style="padding: 5px">
           <button class="k-button" id="btn-file-new">New file</button>
           <button class="k-button" id="btn-file-edit">Edit file</button>
           <button class="k-button" id="btn-file-delete">Delete file</button>
@@ -335,8 +336,9 @@
     <script type="x/yajet-template" class="template-library">
       $(EXPORT ok_cancel_buttons()
         <div class="dlg-buttons">
-          <button class="k-button btn-ok">${ this.okLabel || "OK" => html }</button>
-          <button class="k-button btn-cancel">${ this.cancelLabel || "Cancel" => html }</button>
+          <button class="k-button btn-ok">${ this.okLabel || this.closeLabel || "OK" => html }</button>
+          $(UNLESS (this.closeLabel)
+            <button class="k-button btn-cancel">${ this.cancelLabel || "Cancel" => html }</button>$)
         </div>$)
       $(EXPORT console_message(m)$-
         <div class="message $(AIF (m.class) $it $)">
@@ -361,6 +363,22 @@
     <!-- careful about the $- below.  Whitespace is important (in that it must be erased). -->
     <script type="x/yajet-template" class="console-message">$-
       $(PROCESS console_message(this))
+    </script>
+
+    <script type="x/yajet-template" class="docbrowser-dialog">
+      <div data-role="layoutmanager" data-orientation="vertical" class="layout">
+        <div style="padding: 5px">
+          <input data-role="autocomplete"
+                 data-placeholder="Search..."
+                 data-text-field="name"
+                 data-ignore-case="true"
+                 data-filter="contains"
+                 data-bind="events: { select: select }"
+                 style="width: 100%" class="search" />
+        </div>
+        <div kendo-layout="1" class="content" style="overflow: auto"></div>
+        $(PROCESS ok_cancel_buttons())
+      </div>
     </script>
 
   </body>

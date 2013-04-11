@@ -109,6 +109,9 @@ function setupLayout() {
             window.open("/@proj/" + proj.id + "/", "PROJECTPREVIEW");
         });
     });
+    $("#btn-kendo-doc").click(function(){
+        kendoDocBrowser();
+    });
     $("#btn-file-new").click(function(){
         withSelectedProject(projectAddFile);
     });
@@ -594,6 +597,55 @@ function projectEditDependencies(proj) {
     dlg.open();
     dlg.center();
     dlg.trigger("resize");
+}
+
+function kendoDocBrowser() {
+    RPC.call("kdoc/get-all-docs", function(DOCS){
+        var dlg_el = $("<div></div>").html(getTemplate("docbrowser-dialog")({
+            closeLabel: "Close"
+        })).kendoWindow({
+            title: "Kendo UI — API Documentation",
+            width: 800,
+            height: 500,
+            actions: [ "Minimize", "Maximize", "Close" ],
+            resize: function() {
+                var sz = this.getInnerSize();
+                lm.setOuterSize(sz.x, sz.y);
+            }
+        }).on("click", ".btn-ok", function(){
+            dlg.close();
+        });
+
+        kendo.bind(dlg_el, {
+            select: function(e) {
+                var comp = e.item.text();
+                comp = DOCS[comp];
+                $(".content", dlg_el).html(jsonml_to_html(comp.doc, comp.refs));
+            }
+        });
+
+        var search = $("input.search", dlg_el).data("kendoAutoComplete");
+
+        var data = [];
+        for (var i in DOCS) {
+            data.push(DOCS[i]);
+            var name = DOCS[i].name.replace(/^kendo\./, "");
+            DOCS[i].name = name;
+            DOCS[name] = DOCS[i];
+        }
+        data = new kendo.data.DataSource({
+            data: data,
+            sort: { field: "name", dir: "asc" }
+        });
+
+        search.setDataSource(data);
+
+        var lm = $(".layout", dlg_el).data("kendoLayoutManager");
+        var dlg = dlg_el.data("kendoWindow");
+        dlg.open();
+        dlg.center();
+        dlg.trigger("resize");
+    });
 }
 
 ////// Console
