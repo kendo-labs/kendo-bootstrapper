@@ -342,6 +342,7 @@ function projectNew() {
         }
         RPC.call("project/bootstrap", args, function(data, err){
             if (err) {
+                console.log(err);
                 alert(err.msg);
                 return;
             }
