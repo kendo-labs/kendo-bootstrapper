@@ -301,7 +301,7 @@ UTILS.fs_find(PATH.join(__dirname, "..", "kendosrc", "docs"), {
         }
     },
     finish: function() {
-        console.log(SYS.inspect(kendo_apidoc.components, null, null));
+        //console.log(SYS.inspect(kendo_apidoc.components, null, null));
     }
 });
 
