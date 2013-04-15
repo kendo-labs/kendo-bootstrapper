@@ -356,9 +356,17 @@ function projectNew() {
         setTimeout(function(){
             var val = $(self).val();
             var name = val.replace(/[^a-z0-9_.-]/ig, "_");
-            $("input[name=path]", dlg_el).val(dest + "/" + name);
+            if (!manually_changed_path)
+                $("input[name=path]", dlg_el).val(dest + "/" + name);
             $("input[name=id]", dlg_el).val(val.replace(/[^a-z0-9_]/ig, "_"));
         }, 100);
+    });
+    var manually_changed_path = false;
+    kendo.bind(dlg_el, {
+        directorySelected: function(ev) {
+            manually_changed_path = true;
+            $("input[name=path]", dlg_el).val(ev.value);
+        }
     });
     var dlg = dlg_el.data("kendoWindow");
     dlg.open();

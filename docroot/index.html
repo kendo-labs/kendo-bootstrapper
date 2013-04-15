@@ -17,6 +17,7 @@
 
     <script src="js/kendo.multipicker.js"></script>
     <script src="js/kendo.layoutmanager.js"></script>
+    <script src="js/directorypicker.js"></script>
     <script src="js/app.js"></script>
   </head>
 
@@ -196,6 +197,7 @@
           <input autocomplete="off" name="path" style="width: 25em"
                  class="k-input k-editable" type="text"
                  value="${ this.destination => html }/" />
+          <button data-role="directorypicker" data-bind="events: { change: directorySelected }">...</button>
         </label>
       </p>
       <p>
