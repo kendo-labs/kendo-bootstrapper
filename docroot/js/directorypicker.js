@@ -16,9 +16,9 @@
             this._value = options.value;
             element.on("click", function(){
                 RPC.call("fs/select-directory", self.value(), function(ret, err){
-                    if (ret !== self.value()) {
-                        self.value(ret);
-                        self.trigger("change", { value: ret });
+                    if (ret.selected && ret.directory != self.value()) {
+                        self.value(ret.directory);
+                        self.trigger("change", { value: ret.directory });
                     }
                 });
             });

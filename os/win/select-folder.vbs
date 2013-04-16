@@ -1,3 +1,5 @@
+Wscript.Echo "** The end of copyright notices **"
+
 Const WINDOW_HANDLE = 0
 Const OPTIONS = 0
 
@@ -6,10 +8,12 @@ Set objFolder = objShell.BrowseForFolder _
     (WINDOW_HANDLE, "Select a folder:", OPTIONS)
 
 If objFolder Is Nothing Then
+    Wscript.Echo "no"
     Wscript.Quit
 End If
 
 Set objFolderItem = objFolder.Self
 objPath = objFolderItem.Path
 
+Wscript.Echo "yes"
 Wscript.Echo objPath
