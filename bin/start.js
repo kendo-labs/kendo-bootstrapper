@@ -179,6 +179,10 @@ function start_server() {
 }
 
 if (!ARGS.n) CONFIG.get_chrome_exe(function(err, chrome_exe){
+    if (err) {
+	console.log(err);
+	process.exit(1);
+    }
     var cp = require("child_process");
     var tmp = PATH.join(TOPLEVEL_DIR, "TEMP", UTILS.uuid());
     UTILS.fs_ensure_directory(tmp, function(err){
