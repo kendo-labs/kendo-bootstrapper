@@ -203,14 +203,14 @@ if (!ARGS.n) CONFIG.get_chrome_exe(function(err, chrome_exe){
 	    "--no-proxy-server",
 	    "--no-referrers",
 	    "--disable-translate",
-            "--window-size=800,600",
-	    "--window-position=10,10",
+            //"--window-size=800,600",
+	    //"--window-position=10,10",
 	    "--start-maximized",
             "--user-data-dir=" + tmp,
 	    //"--profile-directory=" + tmp,
-            "--new-window",
-            //"--app=http://localhost:7569/",
-	    "http://localhost:7569/",
+            //"--new-window",
+            "--app=http://localhost:7569/",
+	    //"http://localhost:7569/",
         ], {
             cwd: TOPLEVEL_DIR
         });
