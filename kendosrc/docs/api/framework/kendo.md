@@ -350,7 +350,7 @@ Enables kinetic scrolling on touch devices
 
 The container element to enable scrolling for.
 ### toString
-Formats a `Number` or `Date` using the specified format and the current culture.
+Formats a `Number` or `Date` using the specified format and the current culture. It allows to pass a specific culture setting.
 #### Returns
 `String` the string representation of the formatted value.
 #### Formatting numbers and dates
@@ -362,6 +362,8 @@ Formats a `Number` or `Date` using the specified format and the current culture.
     kendo.toString(0.12, "p"); //12.00 %
     //format a number using custom number formats
     kendo.toString(19.12, "00##"); //0019
+    //format a number using standard number format and a specific culture de-DE (default culture is en-US)
+    kendo.toString(10.12, "c", "de-DE"); //10,12 €
     //format a date
     kendo.toString(new Date(2010, 9, 5), "yyyy/MM/dd" ); // "2010/10/05"
     kendo.toString(new Date(2010, 9, 5), "dddd MMMM d, yyyy" ); // "Tuesday October 5, 2010"
@@ -373,6 +375,9 @@ The `Date` or `Number` which should be formatted.
 
 ##### format `String`
 The format string which should be used to format the value.
+
+##### culture `String`
+The name of the culture which should be used to format the value. [The culture should be registered on the page](http://docs.kendoui.com/getting-started/framework/globalization/overview#add culture scripts to the page).
 
 ## Field
 

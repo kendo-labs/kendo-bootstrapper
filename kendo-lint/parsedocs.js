@@ -1,9 +1,11 @@
-var PATTERN = require("./pattern");
-var UTILS = require("../lib/utils");
 var PATH = require("path");
-var U2 = require("uglify-js");
 var SYS = require("util");
 var FS = require("fs");
+
+var U2 = require("uglify-js");
+
+var PATTERN = require("./pattern.js");
+var UTILS = require("../lib/utils.js");
 
 function Component(name) {
     this.name = name;
@@ -290,19 +292,17 @@ var kendo_apidoc = (function(P){
 
 })(PATTERN);
 
-UTILS.fs_find(PATH.join(__dirname, "..", "kendosrc", "docs"), {
-    filter: function(f) {
-        return f.stat.isFile() && PATH.extname(f.full) == ".md" && /docs\/api\/(web|dataviz|mobile)\//.test(f.full.sane_path());
-    },
-    callback: function(err, f) {
-        if (!err) {
-            //console.log("Parsing API: " + f.rel);
-            kendo_apidoc.parse(f.full);
-        }
-    },
-    finish: function() {
-        //console.log(SYS.inspect(kendo_apidoc.components, null, null));
+(function(){
+    var flat = JSON.parse(
+        FS.readFileSync(
+            PATH.join(__dirname, "..", "kendosrc", "api.json"),
+            "utf8"
+        )
+    );
+    for (var i in flat) {
+        flat[i].__proto__ = Component.prototype;
+        kendo_apidoc.components[i] = flat[i];
     }
-});
+})();
 
 exports.kendo_apidoc = kendo_apidoc;

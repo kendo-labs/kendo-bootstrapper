@@ -63,7 +63,7 @@ Last dataItem of the first loaded page of the ListView.
 
  If set to true, the group headers will persist their position when the user scrolls through the listview. Applicable only when the type is set to group, or when binding to grouped datasource.
 
-### headerTemplate `String`*(default: "#:value#")*
+### headerTemplate `String|Function`*(default: "#:value#")*
 
  The header item template (applicable when the type is set to group).
 
@@ -79,7 +79,7 @@ Last dataItem of the first loaded page of the ListView.
 
  Check the 'endlessScrollParameters' option.
 
-### pullTemplate `String`*(default: "Pull to refresh")*
+### pullTemplate `String|Function`*(default: "Pull to refresh")*
 
  The message template displayed when the user pulls the listView. Applicable only when pullToRefresh is set to true.
 
@@ -112,11 +112,11 @@ Last dataItem of the first loaded page of the ListView.
 
 First dataItem of the ListView // => listView.dataSource.get(0);
 
-### refreshTemplate `String`*(default: "Refreshing")*
+### refreshTemplate `String|Function`*(default: "Refreshing")*
 
  The message template displayed during the refresh. Applicable only when pullToRefresh is set to true.
 
-### releaseTemplate `String`*(default: "Release to refresh")*
+### releaseTemplate `String|Function`*(default: "Release to refresh")*
 
  The message template indicating that pullToRefresh will occur. Applicable only when pullToRefresh is set to true.
 
@@ -128,7 +128,7 @@ First dataItem of the ListView // => listView.dataSource.get(0);
 
 The style of the control. Can be either empty string(""), or inset.
 
-### template `String`*(default: "#:data#")*
+### template `String|Function`*(default: "#:data#")*
 
  The item template.
 
@@ -141,7 +141,7 @@ The style of the control. Can be either empty string(""), or inset.
     <script id="tmp" type="text/x-kendo-template">
         <p>#: name # <span>Age: #: age #</span></p>
     </script>
-    
+
     <script>
         var app = new kendo.mobile.Application();
         var dataSource = new kendo.data.DataSource({
@@ -160,7 +160,7 @@ The type of the control. Can be either `flat` (default) or group. Determined aut
 
 ### filterable `Boolean | Object`*(default: false)*
 
-Indicates whether the filter input must be visible or not. 
+Indicates whether the filter input must be visible or not.
 
 ### filterable.placeholder `String`*(default: "Search...")*
 

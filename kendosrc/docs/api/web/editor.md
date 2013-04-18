@@ -72,6 +72,7 @@ Defines the text of the labels that are shown within the editor. Used primarily 
             linkToolTip: "ToolTip",
             linkOpenInNewWindow: "Open link in new window",
             dialogInsert: "Insert",
+			dialogUpdate: "Update",
             dialogButtonSeparator: "or",
             dialogCancel: "Cancel"
         }
@@ -121,6 +122,8 @@ as a collection of required properties, while the insertHtml tool requires a col
              "unlink",
              "insertImage",
              "insertHtml",
+			 "subscript",
+			 "superscript",
              "viewHtml",
              {
                  name: "customTool",

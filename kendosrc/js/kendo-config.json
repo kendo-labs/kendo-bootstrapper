@@ -181,7 +181,7 @@
                     ],
                     "inherits": "ColorSelector",
                     "file": "kendo.colorpicker.js",
-                    "line": 282,
+                    "line": 281,
                     "col": 26
                 },
                 {
@@ -206,7 +206,7 @@
                     ],
                     "inherits": "Widget",
                     "file": "kendo.colorpicker.js",
-                    "line": 777,
+                    "line": 776,
                     "col": 22
                 }
             ]
@@ -816,7 +816,7 @@
                     ],
                     "inherits": "Widget",
                     "file": "kendo.editor.js",
-                    "line": 450,
+                    "line": 453,
                     "col": 17
                 },
                 {
@@ -826,7 +826,7 @@
                     ],
                     "inherits": "DropDownList",
                     "file": "kendo.editor.js",
-                    "line": 5554,
+                    "line": 5617,
                     "col": 16
                 }
             ]
@@ -1284,7 +1284,7 @@
                     ],
                     "inherits": "Button",
                     "file": "kendo.mobile.button.js",
-                    "line": 149,
+                    "line": 150,
                     "col": 21
                 },
                 {
@@ -1295,7 +1295,7 @@
                     ],
                     "inherits": "Button",
                     "file": "kendo.mobile.button.js",
-                    "line": 165,
+                    "line": 166,
                     "col": 23
                 }
             ]
@@ -1737,7 +1737,7 @@
                     ],
                     "inherits": "Widget",
                     "file": "kendo.mobile.view.js",
-                    "line": 36,
+                    "line": 37,
                     "col": 15
                 },
                 {
@@ -1752,7 +1752,7 @@
                     ],
                     "inherits": "Widget",
                     "file": "kendo.mobile.view.js",
-                    "line": 332,
+                    "line": 333,
                     "col": 17
                 }
             ]
@@ -2064,7 +2064,7 @@
                     ],
                     "inherits": "SliderBase",
                     "file": "kendo.slider.js",
-                    "line": 581,
+                    "line": 582,
                     "col": 17
                 },
                 {
@@ -2079,7 +2079,7 @@
                     ],
                     "inherits": "SliderBase",
                     "file": "kendo.slider.js",
-                    "line": 1221,
+                    "line": 1225,
                     "col": 22
                 }
             ]
@@ -2450,6 +2450,8 @@
                         "minHeight",
                         "maxWidth",
                         "maxHeight",
+                        "pinned",
+                        "position",
                         "visible",
                         "height",
                         "width"
@@ -2467,7 +2469,7 @@
                     ],
                     "inherits": "Widget",
                     "file": "kendo.window.js",
-                    "line": 104,
+                    "line": 113,
                     "col": 17
                 }
             ]

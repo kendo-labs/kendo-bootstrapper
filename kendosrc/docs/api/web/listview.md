@@ -103,7 +103,7 @@ Specifies ListView item template in edit mode.
          navigatable: true
      });
 
-### selectable `String`*(default: false)*
+### selectable `Boolean|String` *(default: false)*
 
  Indicates whether selection is enabled/disabled. Possible values:
 

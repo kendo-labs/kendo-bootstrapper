@@ -42,7 +42,7 @@ To define a new model use the `Model.define` method.
 
 ### uid
 
-The unique identifier of the `Model`. Inherited from `ObservableObject`. More info can be found in the [uid](/api/framework/observableobject#uid) section of the
+The unique identifier of the `Model`. Inherited from `ObservableObject`. More info can be found in the [uid](/api/framework/observableobject#fields-uid) section of the
 ObservableObject API reference.
 
 ### dirty `Boolean`
@@ -53,7 +53,7 @@ Indicates whether the model is modified.
 
 ### bind
 
-Attaches a handler to an event. More info can be found in the [bind](/api/framework/observable#bind) section of the
+Attaches a handler to an event. More info can be found in the [bind](/api/framework/observable#methods-bind) section of the Observable API reference.
 
 ### Model.define
 
@@ -159,7 +159,7 @@ The field to check.
 
 ### get
 
-Gets the value of the specified field. Inherited from `ObservableObject`. More info can be found in the [get](/api/framework/observableobject#get) section of the
+Gets the value of the specified field. Inherited from `ObservableObject`. More info can be found in the [get](/api/framework/observableobject#methods-get) section of the
 ObservableObject API reference.
 
 ### isNew
@@ -187,27 +187,27 @@ If the value of the field specified is equal to the default value (specifed thro
 
 ### set
 
-Sets the value of the specified field. Inherited from `ObservableObject`. More info can be found in the [set](/api/framework/observableobject#set) section of the
+Sets the value of the specified field. Inherited from `ObservableObject`. More info can be found in the [set](/api/framework/observableobject#methods-set) section of the
 ObservableObject API reference.
 
 ### toJSON
 
-Creates a plain JavaScript object which contains all fields of the `Model`. Inherited from `ObservableObject`. More info can be found in the [toJSON](/api/framework/observableobject#tojson) section of the
+Creates a plain JavaScript object which contains all fields of the `Model`. Inherited from `ObservableObject`. More info can be found in the [toJSON](/api/framework/observableobject#methods-toJSON) section of the
 ObservableObject API reference.
 
 ## Events
 
 ### change event
 
-Raised when a field value is updated via the `set` method. Inherited from `ObservableObject`. More info can be found in the [change](/api/framework/observableobject#change-event) section of the
+Raised when a field value is updated via the `set` method. Inherited from `ObservableObject`. More info can be found in the [change](/api/framework/observableobject#events-change) section of the
 ObservableObject API reference.
 
 ### get event
 
-Raised when the `get` method is invoked. Inherited from `ObservableObject`. More info can be found in the [get](/api/framework/observableobject#get-event) section of the
+Raised when the `get` method is invoked. Inherited from `ObservableObject`. More info can be found in the [get](/api/framework/observableobject#events-get) section of the
 ObservableObject API reference.
 
 ### set event
 
-Raised when the `set` method is invoked. Inherited from `ObservableObject`. More info can be found in the [set](/api/framework/observableobject#set-event) section of the
+Raised when the `set` method is invoked. Inherited from `ObservableObject`. More info can be found in the [set](/api/framework/observableobject#events-set) section of the
 ObservableObject API reference.

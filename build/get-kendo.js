@@ -4,7 +4,8 @@ var PATH = require("path");
 var STEP = require("step");
 var FS = require("fs");
 
-var UTILS = require("../lib/utils");
+var UTILS = require("../lib/utils.js");
+var KDOCS = require("../kendo-lint/parsedocs.js").kendo_apidoc;
 
 var TOPLEVEL_DIR = PATH.join(PATH.dirname(__filename), "..");
 var KENDO_DIR = PATH.join(TOPLEVEL_DIR, "..", "kendo");
@@ -76,6 +77,26 @@ STEP(
             UTILS.fs_copytree(PATH.join(KENDO_DIR, "..", "kendo-docs", "api", dir),
                               PATH.join(TOPLEVEL_DIR, "kendosrc", "docs", "api", dir),
                               group());
+        });
+    },
+
+    function parse_kendo_docs() {
+        var next = this;
+        UTILS.fs_find(PATH.join(__dirname, "..", "kendosrc", "docs"), {
+            filter: function(f) {
+                return f.stat.isFile() && PATH.extname(f.full) == ".md" && /docs\/api\/(web|dataviz|mobile)\//.test(f.full.sane_path());
+            },
+            callback: function(err, f) {
+                if (!err) {
+                    console.log("Parsing API: " + f.rel);
+                    KDOCS.parse(f.full);
+                }
+            },
+            finish: function() {
+                FS.writeFile(PATH.join(__dirname, "..", "kendosrc", "api.json"),
+                             JSON.stringify(KDOCS.components),
+                             next);
+            }
         });
     }
 
