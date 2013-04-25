@@ -1,4 +1,4 @@
-#! /usr/bin/env node
+#! /usr/local/bin/node --stack_size=100000
 
 var PATH = require("path");
 var STEP = require("step");
