@@ -28,7 +28,10 @@
             "category": "wrappers",
             "description": "Scripts required by Kendo UI for ASP.NET MVC",
             "depends": [
-                "data"
+                "data",
+                "combobox",
+                "multiselect",
+                "validator"
             ],
             "source": "kendo.aspnetmvc.min.js",
             "widgets": []
@@ -153,7 +156,7 @@
                     ],
                     "inherits": "Widget",
                     "file": "kendo.colorpicker.js",
-                    "line": 34,
+                    "line": 33,
                     "col": 24
                 },
                 {
@@ -166,7 +169,7 @@
                     ],
                     "inherits": "ColorSelector",
                     "file": "kendo.colorpicker.js",
-                    "line": 143,
+                    "line": 142,
                     "col": 23
                 },
                 {
@@ -181,7 +184,7 @@
                     ],
                     "inherits": "ColorSelector",
                     "file": "kendo.colorpicker.js",
-                    "line": 281,
+                    "line": 279,
                     "col": 26
                 },
                 {
@@ -206,7 +209,7 @@
                     ],
                     "inherits": "Widget",
                     "file": "kendo.colorpicker.js",
-                    "line": 776,
+                    "line": 777,
                     "col": 22
                 }
             ]
@@ -387,6 +390,7 @@
                         "seriesHover",
                         "window.kendo.dataviz.AXIS_LABEL_CLICK",
                         "legendItemClick",
+                        "legendItemHover",
                         "plotAreaClick",
                         "dragStart",
                         "drag",
@@ -400,7 +404,7 @@
                     ],
                     "inherits": "Widget",
                     "file": "kendo.dataviz.chart.js",
-                    "line": 194,
+                    "line": 196,
                     "col": 16
                 }
             ]
@@ -763,7 +767,7 @@
                     ],
                     "inherits": "Widget",
                     "file": "kendo.editable.js",
-                    "line": 146,
+                    "line": 147,
                     "col": 19
                 }
             ]
@@ -1015,7 +1019,7 @@
                     ],
                     "inherits": "Widget",
                     "file": "kendo.grid.js",
-                    "line": 557,
+                    "line": 560,
                     "col": 15
                 }
             ]
@@ -1074,7 +1078,7 @@
                     ],
                     "inherits": "Widget",
                     "file": "kendo.imagebrowser.js",
-                    "line": 186,
+                    "line": 177,
                     "col": 23
                 },
                 {
@@ -1089,7 +1093,7 @@
                     ],
                     "inherits": "Widget",
                     "file": "kendo.imagebrowser.js",
-                    "line": 874,
+                    "line": 851,
                     "col": 20
                 },
                 {
@@ -1103,7 +1107,7 @@
                     ],
                     "inherits": "Widget",
                     "file": "kendo.imagebrowser.js",
-                    "line": 989,
+                    "line": 966,
                     "col": 22
                 }
             ]
@@ -2099,7 +2103,8 @@
                     "options": [
                         "name",
                         "mode",
-                        "allowUnsort"
+                        "allowUnsort",
+                        "compare"
                     ],
                     "inherits": "Widget",
                     "file": "kendo.sortable.js",
@@ -2420,7 +2425,8 @@
             "category": "framework",
             "description": "The View class instantiates and handles the events of a certain screen from the application.",
             "depends": [
-                "core"
+                "core",
+                "binder"
             ],
             "hidden": false,
             "source": "kendo.view.min.js",

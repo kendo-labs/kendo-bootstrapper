@@ -172,4 +172,31 @@ Fires when the mobile View becomes visible.
 
 ##### e.view `kendo.mobile.ui.View`
 
-The mobile view instance
+The mobile view instance.
+
+## Fields
+
+### header `jQuery`
+
+The **View** (or the applied mobile layout) header DOM element.
+
+### footer `jQuery`
+
+The **View** (or the applied mobile layout) footer DOM element.
+
+### content `jQuery`
+
+The **View** content DOM element. If there is a scroller in the View, it will become a child of this element. Please use the contentElement method instead, to always get the correct content element.
+
+### scrollerContent `jQuery`
+
+The View mobile scroller container DOM element. Recommended if scrollable mobile View contents need to be manipulated or replaced. If you don't know if the View has a Scroller initialized, please use the contentElement method instead.
+
+#### Replace scrollable View contents
+
+    <div data-role="view" data-init="replaceContents"> ... </div>
+    <script>
+        function replaceContents(e) {
+          e.view.scrollerContent.html("<b>New content</b>");
+        }
+    </script>

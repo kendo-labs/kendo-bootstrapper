@@ -471,6 +471,24 @@ Note: The upload event fires only when the upload is in
         });
     }
 
+#### Example
+
+    $("#photos").kendoUpload({
+        // ...
+        upload: onUpload
+    });
+
+    function onUpload(e) {
+        var xhr = e.XMLHttpRequest;
+        if (xhr) {
+            xhr.addEventListener("readystatechange", function(e) {
+                if (xhr.readyState == 1 /* OPENED */) {
+                    xhr.setRequestHeader("X-Foo", "Bar");
+                }
+            });
+        }
+    }
+
 #### Event Data
 
 ##### e.files `Array`
@@ -494,22 +512,4 @@ Note: Will be *undefined* if the browser does not support File API.
 
 The XMLHttpRequest instance that will be used to carry out the upload.
 The request will be in UNSENT state.
-
-#### Example
-
-    $("#photos").kendoUpload({
-        // ...
-        upload: onUpload
-    });
-
-    function onUpload(e) {
-        var xhr = e.XMLHttpRequest;
-        if (xhr) {
-            xhr.addEventListener("readystatechange", function(e) {
-                if (xhr.readyState == 1 /* OPENED */) {
-                    xhr.setRequestHeader("X-Foo", "Bar");
-                }
-            });
-        }
-    }
 

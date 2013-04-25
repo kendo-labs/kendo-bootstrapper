@@ -350,7 +350,7 @@ Returns the raw data record at the specified index. If the index is not specifie
 
 #### Parameters
 
-##### index `Number`
+##### index `Number` *(optional)*
 
 The zero-based index of the data record
 

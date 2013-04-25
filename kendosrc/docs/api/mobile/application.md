@@ -57,7 +57,7 @@ Whether to update the document title.
 
  The text displayed in the loading popup. Setting this value to false will disable the loading popup.
  
- *Note*: The text should be wrapped inside &lt;h1&gt; tag.
+ *Note*: The text should be wrapped inside `<h1>` tag.
 
 #### Example
     <script>

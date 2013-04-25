@@ -122,6 +122,10 @@ The target element for which the tooltip should be shown.
 
 Hides the tooltip.
 
+### refresh
+
+Refresh the tooltip content.
+
 ### target
 
 Gets the tooltip current target.

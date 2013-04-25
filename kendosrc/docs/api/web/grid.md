@@ -733,7 +733,9 @@ The text that is displayed in the column header cell. If not set the [field](#co
 The width of the column. Numeric values are treated as pixels.
 
 > If the total sum of the column widths exceeds the width of the grid a horizontal scrollbar will appear (if scrolling is enabled). If that sum is less than the width of the grid
-one of the columns would stretch out to occupy the remaining space. Thus it is a good idea to have a column without specified width.
+one of the columns would stretch out to occupy the remaining space. Thus it is a good idea to have a column without specified width. On the other hand, explicit widths for all columns
+should be set only if their sum exceeds the Grid width and the goal is to have horizontal scrolling. Otherwise if the sum of all column widths is small, the widths will be ignored and
+unexpected side effects may occur, e.g. jumpy column resizing.
 
 #### Example - set the column width as a string
      <div id="grid"></div>

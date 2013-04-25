@@ -165,3 +165,27 @@ The number of pixels that are hidden from view above the scrollable area.
 ##### e.scrollLeft `Number`
 
 The number of pixels that are hidden from view to the left of the scrollable area.
+
+## Fields
+
+### scrollElement `jQuery`
+
+The inner **Scroller** element that holds the scrolling content. Use this field if you wish to change the element contents after the Scroller is initialized on it.
+
+#### Replace the Scroller contents
+
+    <div id="scroller" data-role="scroller"> ... </div>
+    <script>
+        function viewInit(e) {
+          var scroller = $("#scroller").data("kendoMobileScroller");
+          scroller.scrollElement.html("<b>New content</b>");
+        }
+    </script>
+
+### scrollTop `Number`
+
+The number of pixels that are hidden from view above the scrollable area.
+
+### scrollElement `Number`
+
+The number of pixels that are hidden from view to the left of the scrollable area.

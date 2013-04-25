@@ -114,7 +114,8 @@ input.k-textbox,
 textarea.k-textbox,
 input.k-textbox:hover,
 textarea.k-textbox:hover,
-.k-textbox > input {
+.k-textbox > input,
+.k-multiselect-wrap {
   background-color: #0e0e0e;
   color: #ffffff;
 }
@@ -542,6 +543,7 @@ div.k-imagebrowser-dropzone em {
 .k-grouping-header .k-group-indicator,
 .k-autocomplete,
 .k-multiselect,
+.k-combobox,
 .k-dropdown,
 .k-dropdown-wrap,
 .k-datepicker,

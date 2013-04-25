@@ -2714,6 +2714,9 @@ span.k-numerictextbox {
   height: 11px;
   vertical-align: top;
 }
+.k-numeric-wrap .k-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
 /* ColorPicker */
 .k-colorpicker .k-selected-color {
   font-size: 0;
@@ -2793,7 +2796,6 @@ span.k-numerictextbox {
   display: inline-block;
   width: 250px;
   padding-bottom: 5px;
-  position: relative;
 }
 div.k-flatcolorpicker {
   background-color: transparent;
@@ -2802,17 +2804,14 @@ div.k-flatcolorpicker {
 .k-flatcolorpicker .k-selected-color {
   background-image: url("textures/transtexture.png");
   background-position: 50% 50%;
-}
-.k-flatcolorpicker .k-selected-color .k-selected-color-display {
-  overflow: hidden;
+  text-align: right;
 }
 .k-flatcolorpicker .k-selected-color input.k-color-value {
-  float: right;
   font-family: Consolas, "Ubuntu Mono", "Lucida Console", "Courier New", monospace;
   padding: .75em .3em .65em 1em;
   border: 0;
+  margin: 0;
   width: 70%;
-  height: 100%;
 }
 .k-flatcolorpicker .k-hsv-rectangle {
   position: relative;

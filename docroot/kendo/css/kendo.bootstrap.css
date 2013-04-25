@@ -138,7 +138,8 @@ input.k-textbox,
 textarea.k-textbox,
 input.k-textbox:hover,
 textarea.k-textbox:hover,
-.k-textbox > input {
+.k-textbox > input,
+.k-multiselect-wrap {
   background-color: #ffffff;
   color: #333333;
 }
@@ -303,8 +304,8 @@ textarea.k-textbox:hover,
 td.k-state-focused,
 .k-button:focus,
 .k-button.k-state-focused {
-  -webkit-box-shadow: inset 0 0 3px 1px rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
-  box-shadow: inset 0 0 3px 1px rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+  -webkit-box-shadow: inset 0 0 3px 1px rgba(0, 0, 0, 0.2);
+  box-shadow: inset 0 0 3px 1px rgba(0, 0, 0, 0.2);
 }
 .k-list > .k-state-selected.k-state-focused {
   -webkit-box-shadow: none;
@@ -578,6 +579,7 @@ div.k-imagebrowser-dropzone em {
 .k-grouping-header .k-group-indicator,
 .k-autocomplete,
 .k-multiselect,
+.k-combobox,
 .k-dropdown,
 .k-dropdown-wrap,
 .k-datepicker,
