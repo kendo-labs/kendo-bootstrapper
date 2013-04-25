@@ -581,7 +581,7 @@ function projectEditDependencies(proj) {
             }
             selected_file = getProjectFileById(proj, id);
             $(".deps .title", dlg_el).html(
-                "Select below direct dependencies of <b>" + kendo.htmlEncode(selected_file.name) + "</b>"
+                "Select below direct dependencies of <b>" + htmlescape(selected_file.name) + "</b>"
             );
             var deps = [].slice.call(the_deps[selected_file.id] || []);
             deps_select.reset(proj.files.filter(function(f){
@@ -685,3 +685,124 @@ function areYouSure(options, callback) {
     dlg.open();
     dlg.center();
 }
+
+// <File-Picker>
+
+function projectFilePicker(proj, options, callback) {
+    options = defaults(options, {
+        newFolder : true,
+        filter    : null,
+        dirsonly  : false
+    });
+    if (!callback) callback = function(){};
+    var tmpl = getTemplate("filepicker-dialog");
+    var html = tmpl(options);
+    var tmp = $("<div></div>").html(html);
+    var dlg_el = tmp.children()[0];
+    var model = kendo.observable({
+        filelist: [],
+        onOK: function() {
+            dlg.close();
+        },
+        onCancel: function() {
+            dlg.close();
+            callback(false);
+        },
+        dlgResize: function(ev) {
+            var sz = ev.sender.getInnerSize();
+            layout.setOuterSize(sz.x, sz.y);
+            grid._setContentHeight();
+        },
+        onNewFolder: function() {
+        },
+        onUpFolder: function() {
+            setPath(current_path, true);
+        }
+    });
+    kendo.bind(dlg_el, model);
+    var dlg = $(dlg_el).data("kendoWindow");
+    var layout = $(".layout", dlg_el).data("kendoLayoutManager");
+    var grid = $(".filesystem-grid", dlg_el)
+        .on("dblclick", "tr.k-state-selected", function(){
+            var attr = grid.select().attr("data-uid");
+            var item = grid.dataSource.getByUid(attr);
+            dblClick(item);
+        })
+        .data("kendoGrid");
+    dlg.open();
+    dlg.center();
+    dlg.trigger("resize");
+
+    var current_path;
+
+    function setPath(path, parent) {
+        RPC.call("fs/readdir", path, {
+            dirsonly : options.dirsonly,
+            filter   : options.filter,
+            parent   : parent
+        }, function(ret, err){
+            current_path = ret.path;
+            var data = ret.list;
+            data.sort(select_file.compare_name);
+            var filelist = model.filelist;
+            data.unshift(0, filelist.length);
+            filelist.splice.apply(filelist, data);
+        });
+    };
+
+    function dblClick(item) {
+        if (item.isDirectory) {
+            setPath(item.full);
+            return;
+        }
+    };
+
+    setPath(proj.path);
+};
+
+// XXX: temporary hacks, hopefully, for the file picker.
+
+var select_file = {};
+
+function formatFileSize(sz, fixed) {
+    sz = parseFloat(sz);
+    var K = 1024, M = 1024 * K, G = 1024 * M, T = 1024 * G;
+    var spec = "b";
+    if (sz < K);
+    else if (sz < M) sz /= K, spec = "K";
+    else if (sz < G) sz /= M, spec = "M";
+    else if (sz < T) sz /= G, spec = "G";
+    if (fixed && sz != Math.round(sz)) return sz.toFixed(fixed) + spec;
+    return Math.round(sz) + spec;
+};
+
+select_file.template_stat_size = function(item) {
+    if (item.isDirectory) {
+        return "";
+    }
+    return formatFileSize(item.stat.size) + "";
+};
+
+select_file.template_name = function(item) {
+    var cls = [];
+    if (item.isDirectory) {
+        cls.push("icon", "directory");
+    }
+    return "<span class='" + cls.join(" ") + "'>" + htmlescape(item.name) + "</span>";
+};
+
+select_file.compare_name = function(a, b, rev) {
+    if (a.isDirectory && !b.isDirectory) return rev ? 1 : -1;
+    if (b.isDirectory && !a.isDirectory) return rev ? -1 : 1;
+    a = a.rel.toLowerCase();
+    b = b.rel.toLowerCase();
+    return a < b ? -1 : a > b ? 1 : 0;
+};
+
+select_file.compare_stat_size = function(a, b, rev) {
+    if (a.isDirectory) return rev ? -1 : 1;
+    if (b.isDirectory) return rev ? 1 : -1;
+    return a.stat.size - b.stat.size;
+};
+
+// </File-Picker>

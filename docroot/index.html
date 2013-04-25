@@ -70,6 +70,7 @@
                 |
                 <button onclick="withSelectedProject(projectBuildDistro)"
                         class="k-button">Bundle</button>
+                | <button onclick="withSelectedProject(function(proj){ projectFilePicker(proj, {}, function(ret){ alert(ret) }) })">TEST</button>
               </div>
             </td>
           </tr>
@@ -380,6 +381,49 @@
         </div>
         <div kendo-layout="1" class="content" style="overflow: auto"></div>
         $(PROCESS ok_cancel_buttons())
+      </div>
+    </script>
+
+    <script type="x/yajet-template" class="filepicker-dialog">
+      <div data-role="window"
+           data-actions="[ 'Minimize', 'Maximize', 'Close' ]"
+           data-title="${ this.title || 'Browse' => html }"
+           data-modal="true"
+           data-width="${ this.width || 600 }"
+           data-height="${ this.height || 400 }"
+           data-bind="events: { resize: dlgResize }">
+        <div data-role="layoutmanager" data-orientation="vertical" class="layout">
+          <div kendo-layout="30px,after:5"
+               class="k-toolbar toolbar"
+               data-role="layoutmanager" data-orientation="horizontal" data-spacing="5">
+            <input class="k-input k-editable border-box cwd" kendo-layout="1" />
+            $(WHEN (this.newFolder)
+            <button data-bind="click: onNewFolder" class="icon empty new-directory k-button"></button>$)
+            <button data-bind="click: onUpFolder" class="icon empty up-directory k-button"></button>
+          </div>
+          <div kendo-layout="1" class="filesystem-grid content"
+               data-selectable="true"
+               data-role="grid" data-sortable="true"
+               data-bind="source: filelist"
+               data-columns="[ { field: 'rel', title: 'Name',
+                                 template: select_file.template_name,
+                                 sortable: { compare: select_file.compare_name },
+                                 },
+                               { field: 'stat.size', title: 'Size', width: '100px',
+                                 template: select_file.template_stat_size,
+                                 sortable: { compare: select_file.compare_stat_size },
+                                 }
+                             ]">
+          </div>
+          <div class="dlg-buttons">
+            <button class="k-button btn-ok" data-bind="events: { click: onOK }">
+              ${ this.okLabel || this.closeLabel || "OK" => html }
+            </button>
+            <button class="k-button btn-cancel" data-bind="events: { click: onCancel }">
+              ${ this.cancelLabel || "Cancel" => html }
+            </button>
+          </div>
+        </div>
       </div>
     </script>
 

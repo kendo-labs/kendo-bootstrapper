@@ -47,6 +47,13 @@ function deep_clone(obj) {
     return obj;
 };
 
+function defaults(args, defs) {
+    var ret = {};
+    for (var i in defs)
+        ret[i] = args.hasOwnProperty(i) ? args[i] : defs[i];
+    return ret;
+};
+
 function jsonml_to_html(tree, refs) {
     if (!refs) refs = {};
     if (typeof tree == "string") return htmlescape(tree);

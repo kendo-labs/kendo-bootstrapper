@@ -237,3 +237,30 @@ label.hovering {
     }
   }
 }
+
+.filesystem-grid {
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  cursor: default;
+}
+
+.icon {
+  background-size: 20px 20px;
+  background-repeat: no-repeat;
+  background-position: 0 50%;
+  padding-left: 25px;
+  &.directory { background-image: url("img/folder-orange.png") }
+  &.new-directory { background-image: url("img/new-directory.png") }
+  &.up-directory { background-image: url("img/arrow-up.png") }
+}
+
+button.icon, button.icon:active {
+  padding-left: 30px;
+  background-position: 5px 50%;
+  &.empty {
+    padding: 5px;
+    width: 30px;
+    background-position: 50% 50%;
+  }
+}

@@ -55,7 +55,7 @@
         }
     }
 
-    var RX_FILL = /^([0-9.]+)([%f])?((,.*?)*)$/i;
+    var RX_FILL = /^([0-9.]+)([%f]|px)?((,.*?)*)$/i;
 
     function getFill(f) {
         if (typeof f == "object") return f;
@@ -66,7 +66,7 @@
         var m = RX_FILL.exec(f);
         if (!m) throw new Error("Can't parse layout fill argument: " + f);
         f = {
-            type: m[2] == "%" ? "percent" : "fraction",
+            type: m[2] == "%" ? "percent" : m[2] != "px" ? "fraction" : "fixed",
             fill: parseFloat(m[1])
         };
         m[3].split(/\s*,+\s*/).slice(1).forEach(function(p){
@@ -81,6 +81,7 @@
         options: {
             name        : "LayoutManager",
             orientation : "horizontal",
+            spacing     : 0,
             widgets     : null
         },
         init: function(element, options) {
@@ -190,6 +191,7 @@
                         else if (f.type == "percent") sz = width * f.fill / 100;
                         sz = limit(f, sz);
                         rem_width -= sz + spacing;
+                        if (f.after) rem_width -= f.after;
                     }
                     a[2] = { x: 0, y: 0, w: sz, h: height };
                     break;
@@ -199,6 +201,7 @@
                         else if (f.type == "percent") sz = height * f.fill / 100;
                         sz = limit(f, sz);
                         rem_height -= sz + spacing;
+                        if (f.after) rem_height -= f.after;
                     }
                     a[2] = { x: 0, y: 0, w: width, h: sz };
                     break;
@@ -215,6 +218,7 @@
                     }
                     a[2].x = prev_x;
                     prev_x += a[2].w + spacing;
+                    if (f.after) prev_x += f.after;
                     break;
                   case "vertical":
                     if (f.type == "fraction") {
@@ -223,6 +227,7 @@
                     }
                     a[2].y = prev_y;
                     prev_y += a[2].h + spacing;
+                    if (f.after) prev_y += f.after;
                     break;
                 }
             });
