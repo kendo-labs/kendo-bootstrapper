@@ -366,9 +366,16 @@ function projectNew() {
     });
     var manually_changed_path = false;
     kendo.bind(dlg_el, {
-        directorySelected: function(ev) {
-            manually_changed_path = true;
-            $("input[name=path]", dlg_el).val(ev.value);
+        onBrowse: function() {
+            var input = $("input[name=path]", dlg_el);
+            filePicker(input.val(), { dirsonly: true, newFolder: true }, function(ret){
+                if (ret) {
+                    // XXX: need to check if empty folder.  Otherwise suggest "import project".
+                    input.val(ret.path + SERVER_CONFIG.pathsep + ret.name);
+                    manually_changed_path = true;
+                    ret.dlg.close();
+                }
+            });
         }
     });
     var dlg = dlg_el.data("kendoWindow");
@@ -691,7 +698,7 @@ function areYouSure(options, callback) {
 
 // <File-Picker>
 
-function projectFilePicker(path, options, callback) {
+function filePicker(path, options, callback) {
     options = defaults(options, {
         newFolder : true,
         filter    : null,
@@ -786,8 +793,6 @@ function projectFilePicker(path, options, callback) {
         })
         .data("kendoGrid");
 
-    window.G = grid;
-
     dlg.open();
     dlg.center();
     dlg.trigger("resize");
@@ -838,10 +843,7 @@ function projectFilePicker(path, options, callback) {
             $(".current-path", dlg_el).html(makePathLink(current_path));
             var data = ret.list;
             data.sort(select_file.compare_name);
-            var filelist = model.filelist;
-            data.unshift(0, filelist.length);
-            filelist.splice.apply(filelist, data);
-            grid.dataSource.filter(null);
+            grid.setDataSource(new kendo.data.DataSource({ data: data }));
         });
     };
 

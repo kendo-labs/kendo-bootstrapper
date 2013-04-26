@@ -70,7 +70,6 @@
                 |
                 <button onclick="withSelectedProject(projectBuildDistro)"
                         class="k-button">Bundle</button>
-                | <button onclick="withSelectedProject(function(proj){ projectFilePicker(proj.path, { newFolder: true }, function(ret){ alert(ret.path + '/' + ret.name) }) })">TEST</button>
               </div>
             </td>
           </tr>
@@ -198,7 +197,7 @@
           <input autocomplete="off" name="path" style="width: 25em"
                  class="k-input k-editable" type="text"
                  value="${ this.destination => html }/" />
-          <button data-role="directorypicker" data-bind="events: { change: directorySelected }">...</button>
+          <button data-bind="click: onBrowse">...</button>
         </label>
       </p>
       <p>
