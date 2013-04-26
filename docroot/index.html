@@ -70,7 +70,7 @@
                 |
                 <button onclick="withSelectedProject(projectBuildDistro)"
                         class="k-button">Bundle</button>
-                | <button onclick="withSelectedProject(function(proj){ projectFilePicker(proj, { newFolder: true }, function(ret){ alert(ret) }) })">TEST</button>
+                | <button onclick="withSelectedProject(function(proj){ projectFilePicker(proj.path, { newFolder: true }, function(ret){ alert(ret.path + '/' + ret.name) }) })">TEST</button>
               </div>
             </td>
           </tr>

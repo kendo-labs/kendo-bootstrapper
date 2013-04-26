@@ -1,5 +1,5 @@
-var PROJECTS;
 var SERVER_CONFIG = {};
+var PLATFORM;
 
 $(document).ready(function(){
     getTemplate("template-library");
@@ -23,6 +23,9 @@ var getTemplate = function(cache){
 function setupListeners() {
     RPC.listen("setup", function(config){
         SERVER_CONFIG = config;
+        if (/^win/i.test(config.platform)) {
+            SERVER_CONFIG.windows = true;
+        }
     });
     RPC.listen("register_project", function(proj){
         PROJECTS.insert(proj);
@@ -688,14 +691,14 @@ function areYouSure(options, callback) {
 
 // <File-Picker>
 
-function projectFilePicker(proj, options, callback) {
+function projectFilePicker(path, options, callback) {
     options = defaults(options, {
         newFolder : true,
         filter    : null,
         dirsonly  : false
     });
     if (!callback) callback = function(){};
-    options.path = proj.path;
+    options.path = path;
     var tmpl = getTemplate("filepicker-dialog");
     var html = tmpl(options);
     var tmp = $("<div></div>").html(html);
@@ -703,8 +706,11 @@ function projectFilePicker(proj, options, callback) {
     var model = kendo.observable({
         filelist: [],
         onOK: function() {
-            dlg.close();
-            callback(current_item);
+            callback({
+                path : current_path,
+                name : search.val(),
+                dlg  : dlg
+            });
         },
         onCancel: function() {
             dlg.close();
@@ -718,9 +724,8 @@ function projectFilePicker(proj, options, callback) {
         onNewFolder: function() {
         },
         onBack: function() {
-            if (history.length > 1) {
-                history.unshift(history.pop());
-                setPath(history.pop());
+            if (history_pointer > 0) {
+                setPath(history[--history_pointer], null, true);
             }
         },
         onUpFolder: function() {
@@ -728,9 +733,18 @@ function projectFilePicker(proj, options, callback) {
         }
     });
     kendo.bind(dlg_el, model);
-    var dlg = $(dlg_el).data("kendoWindow");
+    var dlg = $(dlg_el)
+        .on("click", ".folder-link", function(ev){
+            var path = $(this).attr("path");
+            setPath(path);
+            ev.preventDefault();
+        })
+        .data("kendoWindow");
     var layout = $(".layout", dlg_el).data("kendoLayoutManager");
-    var search = $("input.search", dlg_el);
+    var search = $("input.search", dlg_el).keydown(function(ev){
+        updateSearch.cancel();
+        updateSearch(ev.keyCode);
+    });
     var grid = $(".filesystem-grid", dlg_el)
         .on("click", "tr.k-state-selected", function(){
             var attr = grid.select().attr("data-uid");
@@ -747,11 +761,38 @@ function projectFilePicker(proj, options, callback) {
     dlg.center();
     dlg.trigger("resize");
 
-    var current_path;
-    var current_item;
-    var history = [];
+    var updateSearch = function(key) {
+        if (key == kendo.keys.ESC) search.val("");
+        var query = search.val().trim();
+        if (!query) {
+            grid.dataSource.filter(null);
+            return;
+        }
+        grid.dataSource.filter({ field: "name", operator: "startswith", value: query });
+    }.delayed(300);
 
-    function setPath(path, parent) {
+    var current_path;
+    var history = [];
+    var history_pointer = 0;
+
+    function makePathLink(path) {
+        var parts = path.split(/[\/\\]+/), prefix = [];
+        function one(path, part) {
+            return "<a class='folder-link' href='#' path='" + htmlescape(path) + "'>" + htmlescape(part) + "</a>";
+        };
+        var x = parts.map(function(part){
+            prefix.push(part);
+            return one(prefix.join(SERVER_CONFIG.pathsep), part);
+        });
+        if (SERVER_CONFIG.windows) {
+            x[0] = one(parts[0] + "\\", parts[0]);
+        } else {
+            x[0] = one("/", "ROOT");
+        }
+        return x.join(SERVER_CONFIG.pathsep);
+    };
+
+    function setPath(path, parent, isUndo) {
         search.val("");
         RPC.call("fs/readdir", path, {
             dirsonly : options.dirsonly,
@@ -759,13 +800,17 @@ function projectFilePicker(proj, options, callback) {
             parent   : parent
         }, function(ret, err){
             current_path = ret.path;
-            history.push(current_path);
-            $(".current-path", dlg_el).html(htmlescape(current_path));
+            if (history[history.length - 1] != current_path)
+                history.push(current_path);
+            if (!isUndo)
+                history_pointer = history.length - 1;
+            $(".current-path", dlg_el).html(makePathLink(current_path));
             var data = ret.list;
             data.sort(select_file.compare_name);
             var filelist = model.filelist;
             data.unshift(0, filelist.length);
             filelist.splice.apply(filelist, data);
+            grid.dataSource.filter(null);
         });
     };
 
@@ -781,11 +826,10 @@ function projectFilePicker(proj, options, callback) {
     };
 
     function click(item) {
-        current_item = item;
         search.val(item.rel);
     };
 
-    setPath(proj.path);
+    setPath(path);
 };
 
 // XXX: temporary hacks, hopefully, for the file picker.
