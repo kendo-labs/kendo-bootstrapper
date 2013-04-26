@@ -67,7 +67,7 @@
         if (!m) throw new Error("Can't parse layout fill argument: " + f);
         f = {
             type: m[2] == "%" ? "percent" : m[2] != "px" ? "fraction" : "fixed",
-            fill: parseFloat(m[1])
+            fill: parseFloat(m[1]) || null
         };
         m[3].split(/\s*,+\s*/).slice(1).forEach(function(p){
             p = p.split(/\s*[=:]+\s*/);

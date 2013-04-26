@@ -695,6 +695,7 @@ function projectFilePicker(proj, options, callback) {
         dirsonly  : false
     });
     if (!callback) callback = function(){};
+    options.path = proj.path;
     var tmpl = getTemplate("filepicker-dialog");
     var html = tmpl(options);
     var tmp = $("<div></div>").html(html);
@@ -703,10 +704,11 @@ function projectFilePicker(proj, options, callback) {
         filelist: [],
         onOK: function() {
             dlg.close();
+            callback(current_item);
         },
         onCancel: function() {
             dlg.close();
-            callback(false);
+            callback(null);
         },
         dlgResize: function(ev) {
             var sz = ev.sender.getInnerSize();
@@ -715,6 +717,12 @@ function projectFilePicker(proj, options, callback) {
         },
         onNewFolder: function() {
         },
+        onBack: function() {
+            if (history.length > 1) {
+                history.unshift(history.pop());
+                setPath(history.pop());
+            }
+        },
         onUpFolder: function() {
             setPath(current_path, true);
         }
@@ -722,7 +730,13 @@ function projectFilePicker(proj, options, callback) {
     kendo.bind(dlg_el, model);
     var dlg = $(dlg_el).data("kendoWindow");
     var layout = $(".layout", dlg_el).data("kendoLayoutManager");
+    var search = $("input.search", dlg_el);
     var grid = $(".filesystem-grid", dlg_el)
+        .on("click", "tr.k-state-selected", function(){
+            var attr = grid.select().attr("data-uid");
+            var item = grid.dataSource.getByUid(attr);
+            click(item);
+        })
         .on("dblclick", "tr.k-state-selected", function(){
             var attr = grid.select().attr("data-uid");
             var item = grid.dataSource.getByUid(attr);
@@ -734,14 +748,19 @@ function projectFilePicker(proj, options, callback) {
     dlg.trigger("resize");
 
     var current_path;
+    var current_item;
+    var history = [];
 
     function setPath(path, parent) {
+        search.val("");
         RPC.call("fs/readdir", path, {
             dirsonly : options.dirsonly,
             filter   : options.filter,
             parent   : parent
         }, function(ret, err){
             current_path = ret.path;
+            history.push(current_path);
+            $(".current-path", dlg_el).html(htmlescape(current_path));
             var data = ret.list;
             data.sort(select_file.compare_name);
             var filelist = model.filelist;
@@ -755,6 +774,15 @@ function projectFilePicker(proj, options, callback) {
             setPath(item.full);
             return;
         }
+        search.val(item.rel);
+        setTimeout(function(){
+            model.onOK();
+        }, 10);
+    };
+
+    function click(item) {
+        current_item = item;
+        search.val(item.rel);
     };
 
     setPath(proj.path);

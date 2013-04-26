@@ -238,11 +238,22 @@ label.hovering {
   }
 }
 
-.filesystem-grid {
-  user-select: none;
-  -moz-user-select: none;
-  -webkit-user-select: none;
-  cursor: default;
+.filepicker-dialog {
+  .filesystem-grid {
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    cursor: default;
+  }
+  .status {
+    .current-path {
+      font-family: monospace;
+    }
+  }
+  input.search {
+    font-family: monospace;
+    padding-left: 5px;
+  }
 }
 
 .icon {
@@ -253,6 +264,7 @@ label.hovering {
   &.directory { background-image: url("img/folder-orange.png") }
   &.new-directory { background-image: url("img/new-directory.png") }
   &.up-directory { background-image: url("img/arrow-up.png") }
+  &.back-directory { background-image: url("img/arrow-left.png") }
 }
 
 button.icon, button.icon:active {

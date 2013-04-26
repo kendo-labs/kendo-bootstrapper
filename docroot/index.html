@@ -70,7 +70,7 @@
                 |
                 <button onclick="withSelectedProject(projectBuildDistro)"
                         class="k-button">Bundle</button>
-                | <button onclick="withSelectedProject(function(proj){ projectFilePicker(proj, {}, function(ret){ alert(ret) }) })">TEST</button>
+                | <button onclick="withSelectedProject(function(proj){ projectFilePicker(proj, { newFolder: true }, function(ret){ alert(ret) }) })">TEST</button>
               </div>
             </td>
           </tr>
@@ -385,7 +385,7 @@
     </script>
 
     <script type="x/yajet-template" class="filepicker-dialog">
-      <div data-role="window"
+      <div data-role="window" class="filepicker-dialog"
            data-actions="[ 'Minimize', 'Maximize', 'Close' ]"
            data-title="${ this.title || 'Browse' => html }"
            data-modal="true"
@@ -396,12 +396,16 @@
           <div kendo-layout="30px,after:5"
                class="k-toolbar toolbar"
                data-role="layoutmanager" data-orientation="horizontal" data-spacing="5">
-            <input class="k-input k-editable border-box cwd" kendo-layout="1" />
+            <input class="border-box search" kendo-layout="1" />
+            <button title="Back to previous folder" data-bind="click: onBack" class="icon empty back-directory k-button"></button>
+            <button title="Up one level" data-bind="click: onUpFolder" class="icon empty up-directory k-button"></button>
             $(WHEN (this.newFolder)
-            <button data-bind="click: onNewFolder" class="icon empty new-directory k-button"></button>$)
-            <button data-bind="click: onUpFolder" class="icon empty up-directory k-button"></button>
+            <button title="New folder" data-bind="click: onNewFolder" class="icon empty new-directory k-button"></button>$)
           </div>
-          <div kendo-layout="1" class="filesystem-grid content"
+          <div class="status" kendo-layout="0px,after:5">
+            In <span class="current-path">$this.path|html</span>
+          </div>
+          <div kendo-layout="1" class="filesystem-grid"
                data-selectable="true"
                data-role="grid" data-sortable="true"
                data-bind="source: filelist"
