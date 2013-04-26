@@ -70,6 +70,7 @@
                 |
                 <button onclick="withSelectedProject(projectBuildDistro)"
                         class="k-button">Bundle</button>
+                | <button onclick="withSelectedProject(function(proj){ filePicker(proj.path, { newFolder: true }, function(ret){ alert(ret.path + '/' + ret.name) }) })">TEST</button>
               </div>
             </td>
           </tr>
@@ -406,8 +407,15 @@
           </div>
           <div kendo-layout="1" class="filesystem-grid"
                data-selectable="true"
-               data-role="grid" data-sortable="true"
-               data-bind="source: filelist, events: { edit: onGridEdit, save: onGridSave, cancel: onGridCancel }"
+               data-role="grid" data-sortable="true" data-navigatable="true"
+
+               data-bind="source: filelist,
+                          events: { edit: onGridEdit,
+                                    save: onGridSave,
+                                    cancel: onGridCancel,
+                                    change: onGridChange,
+                                    }"
+
                data-columns="[ { field: 'rel', title: 'Name',
                                  template: select_file.template_name,
                                  sortable: { compare: select_file.compare_name },

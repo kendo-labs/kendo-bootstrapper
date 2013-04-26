@@ -761,11 +761,15 @@ function filePicker(path, options, callback) {
             });
         }.delayed(10), // XXX: need the delay, otherwise the model is not populated. :^{
 
-        onGridCancel: function() {
-            // never here.
-            console.log("*** CANCEL");
-            console.log(arguments);
-            console.log(this);
+        onGridCancel: function(ev) {
+            var row = ev.container.closest("tr");
+            grid.removeRow(row);
+        },
+
+        onGridChange: function() {
+            var attr = grid.select().attr(kendo.attr("uid"));
+            var item = grid.dataSource.getByUid(attr);
+            click(item);
         }
     });
     kendo.bind(dlg_el, model);
@@ -781,17 +785,14 @@ function filePicker(path, options, callback) {
         updateSearch.cancel()(ev.keyCode);
     });
     var grid = $(".filesystem-grid", dlg_el)
-        .on("click", "tr.k-state-selected", function(){
-            var attr = grid.select().attr("data-uid");
-            var item = grid.dataSource.getByUid(attr);
-            click(item);
-        })
         .on("dblclick", "tr.k-state-selected", function(){
-            var attr = grid.select().attr("data-uid");
+            var attr = grid.select().attr(kendo.attr("uid"));
             var item = grid.dataSource.getByUid(attr);
             dblClick(item);
         })
         .data("kendoGrid");
+
+    window.G = grid;            // XXX: drop me.
 
     dlg.open();
     dlg.center();
@@ -812,9 +813,11 @@ function filePicker(path, options, callback) {
     var history_pointer = 0;
 
     function makePathLink(path) {
-        var parts = path.split(/[\/\\]+/), prefix = [];
+        var parts = path.replace(/[\/\\]+$/, "").split(/[\/\\]+/), prefix = [];
         function one(path, part) {
-            return "<a class='folder-link' href='#' path='" + htmlescape(path) + "'>" + htmlescape(part) + "</a>";
+            return "<a class='folder-link' href='#' path='" + htmlescape(path) + "'>" +
+                htmlescape(part) +
+                "</a>" + SERVER_CONFIG.pathsep;
         };
         var x = parts.map(function(part){
             prefix.push(part);
@@ -825,7 +828,7 @@ function filePicker(path, options, callback) {
         } else {
             x[0] = one("/", "ROOT");
         }
-        return x.join(SERVER_CONFIG.pathsep);
+        return x.join("");
     };
 
     function setPath(path, parent, isUndo) {
