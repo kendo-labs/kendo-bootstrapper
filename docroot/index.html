@@ -408,7 +408,7 @@
           <div kendo-layout="1" class="filesystem-grid"
                data-selectable="true"
                data-role="grid" data-sortable="true"
-               data-bind="source: filelist"
+               data-bind="source: filelist, events: { edit: onGridEdit, save: onGridSave, cancel: onGridCancel }"
                data-columns="[ { field: 'rel', title: 'Name',
                                  template: select_file.template_name,
                                  sortable: { compare: select_file.compare_name },

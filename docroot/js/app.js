@@ -705,6 +705,7 @@ function projectFilePicker(path, options, callback) {
     var dlg_el = tmp.children()[0];
     var model = kendo.observable({
         filelist: [],
+
         onOK: function() {
             callback({
                 path : current_path,
@@ -712,24 +713,52 @@ function projectFilePicker(path, options, callback) {
                 dlg  : dlg
             });
         },
+
         onCancel: function() {
             dlg.close();
             callback(null);
         },
+
         dlgResize: function(ev) {
             var sz = ev.sender.getInnerSize();
             layout.setOuterSize(sz.x, sz.y);
             grid._setContentHeight();
         },
+
         onNewFolder: function() {
+            grid.addRow();
         },
+
         onBack: function() {
             if (history_pointer > 0) {
                 setPath(history[--history_pointer], null, true);
             }
         },
+
         onUpFolder: function() {
             setPath(current_path, true);
+        },
+
+        onGridEdit: function() {
+        },
+
+        onGridSave: function(ev) {
+            RPC.call("fs/mkdir", current_path, ev.model.rel, function(ret, err){
+                if (err) {
+                    // XXX: do nicely
+                    console.log(err);
+                    alert(err);
+                    return;
+                }
+                setPath(ret);
+            });
+        }.delayed(10), // XXX: need the delay, otherwise the model is not populated. :^{
+
+        onGridCancel: function() {
+            // never here.
+            console.log("*** CANCEL");
+            console.log(arguments);
+            console.log(this);
         }
     });
     kendo.bind(dlg_el, model);
@@ -742,8 +771,7 @@ function projectFilePicker(path, options, callback) {
         .data("kendoWindow");
     var layout = $(".layout", dlg_el).data("kendoLayoutManager");
     var search = $("input.search", dlg_el).keydown(function(ev){
-        updateSearch.cancel();
-        updateSearch(ev.keyCode);
+        updateSearch.cancel()(ev.keyCode);
     });
     var grid = $(".filesystem-grid", dlg_el)
         .on("click", "tr.k-state-selected", function(){
@@ -757,6 +785,9 @@ function projectFilePicker(path, options, callback) {
             dblClick(item);
         })
         .data("kendoGrid");
+
+    window.G = grid;
+
     dlg.open();
     dlg.center();
     dlg.trigger("resize");
@@ -849,6 +880,7 @@ function formatFileSize(sz, fixed) {
 };
 
 select_file.template_stat_size = function(item) {
+    if (!item.stat) return "--NEW--";
     if (item.isDirectory) {
         return "";
     }
@@ -856,6 +888,7 @@ select_file.template_stat_size = function(item) {
 };
 
 select_file.template_name = function(item) {
+    if (!item.name) return "--NEW--";
     var cls = [];
     if (item.isDirectory) {
         cls.push("icon", "directory");

@@ -23,7 +23,7 @@ Function.prototype.delayed = function(delay) {
             return f.apply(self, args);
         }, delay);
     };
-    g.cancel = function(){ clearTimeout(timer) };
+    g.cancel = function(){ return clearTimeout(timer), g };
     return g;
 };
 
