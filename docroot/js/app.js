@@ -64,7 +64,6 @@ function getSelectedProject() {
 
 function getSelectedFile() {
     if (!ACTIVE_PROJECT) throw ("Select a project first");
-    var proj = PROJECTS.get(ACTIVE_PROJECT);
     var tree = $("#project-file-tree").data("kendoTreeView");
     var sel = tree.select();
     if (sel.length == 0) throw ("No file selected");
@@ -143,8 +142,13 @@ function setupLayout() {
         ev.preventDefault();
     }).on("click", "[command=deps-file]", function(ev){
         var proj = $(this).attr("project-id");
-        var file = $(this).attr("fileid");
+        var file = $(this).attr("file-id");
         projectEditFileDependencies(proj, file);
+        ev.preventDefault();
+    }).on("click", "[command=props-file]", function(ev){
+        var proj = $(this).attr("project-id");
+        var file = $(this).attr("file-id");
+        projectFilePropsDialog(proj, file);
         ev.preventDefault();
     });
     $(window).focus(function(){
@@ -183,9 +187,11 @@ function setActiveProject(proj) {
 }
 
 function projectRefreshContent(proj_id) {
-    RPC.call("project/file-info", proj_id, function(fileinfo, err){
+    var proj = PROJECTS.get(proj_id);
+    RPC.call("project/file-info", proj_id, function(ret, err){
         if (!err) {
-            drawContent(PROJECTS.get(proj_id), fileinfo);
+            proj.files = ret.files;
+            drawContent(proj, ret.stats);
         }
     });
 }
@@ -243,14 +249,14 @@ function showBuildErrors(proj_id, title, errors) {
 }
 
 function rebuildProject(proj, callback) {
-    RPC.call("project/rebuild-all", proj.id, function(fileinfo, err){
+    RPC.call("project/rebuild-all", proj.id, function(ret, err){
         if (err && err instanceof Array) {
             showBuildErrors(proj.id, "Build errors", err);
             if (callback) callback(null, true);
         }
         else {
-            drawContent(proj, fileinfo);
-            if (callback) callback(fileinfo, false);
+            drawContent(proj, ret.stats);
+            if (callback) callback(ret, false);
         }
     });
 }
@@ -276,58 +282,93 @@ function projectLintKendo(proj) {
 }
 
 function projectAddFile(proj) {
-    var expect = "add-file-" + Date.now();
-    var dlg_el = $("<div></div>").html(getTemplate("add-file-dialog")({
-        expect : expect,
-        id     : proj.id,
-        path   : proj.path
-    })).kendoWindow({
-        title : "Add file to project " + proj.name,
-        modal : true
-    }).on("change", "input[name=file]", function(ev){
-        var filename = this.value.replace(/^.*[\/\\]([^\/\\]+)$/, "$1");
-        if (!/\S/.test(input.val())) {
-            input.val(filename);
-            updateName();
-        }
-    }).on("click", ".btn-cancel", function(ev){
-        dlg.close();
-        ev.preventDefault();
-    });
-    var timeout;
-    var input = dlg_el.find("input[name=filename]");
-    function updateName(){
-        clearTimeout(timeout);
-        setTimeout(function(){
-            var name = $(input).val().replace(/^\/+/, "");
-            dlg_el.find(".display-full-path").text(proj.path + "/" + name);
-            dlg_el.find("[name=\"page\"]").each(function(){
-                this.checked = /\.(html?|php|asp)$/i.test(name);
+    filePicker(proj.path, {
+        proj: proj,
+        moreButtons: [
+            {
+                label: "Add remote file",
+                handler: function(ev, dlg) {
+                    dlg.close();
+                }
+            }
+        ],
+        infoText: "<b>Add project file.</b>  If the file already exists, select it.  Otherwise enter the target directory and type a new file name in the text field below.  To load a remote file use the “Remote” button."
+    }, function(filepicker){
+        if (filepicker) {
+            var filename = path_join(filepicker.path, filepicker.name);
+            var relative = path_relative(filename, proj.path);
+            // XXX: check/warn/error if it's outside the project directory?
+            RPC.call("fs/stat", [ filename ], function(ret, err){
+                function addFile() {
+                    RPC.call("project/add-file", proj.id, {
+                        filename: relative
+                    }, function(ret, err){
+                        if (err) {
+                            console.log(err);
+                            alert(err);
+                            return;
+                        }
+                        filepicker.dlg.close();
+                        projectRefreshContent(proj.id);
+                    });
+                }
+                var stat = ret[0];
+                if (stat.error) {
+                    if (stat.error.code == "ENOENT") {
+                        // file not found
+                        addFile();
+                    } else {
+                        console.log(stat.error);
+                        alert("An error has occurred\n\n" + JSON.stringify(stat.error, null, 2));
+                    }
+                } else {
+                    // existing file
+                    addFile();
+                }
             });
-        }, 100);
-    }
-    input.on({
-        keydown: updateName,
-        paste: updateName
+        }
     });
-    dlg_el.find("input[type=file]").kendoUpload({
-        autoUpload : false,
-        multiple   : false
+};
+
+function projectFilePropsDialog(proj_id, file_id) {
+    var proj = PROJECTS.get(proj_id);
+    var file = getProjectFileById(proj, file_id);
+    var tmpl = getTemplate("fileprops-dialog");
+    var html = tmpl({
+        mvvm: true
     });
-    var dlg = dlg_el.data("kendoWindow");
+    var tmp = $("<div></div>").html(html);
+    var dlg_el = tmp.children()[0];
+    var model = kendo.observable({
+        f_name   : file.name,
+        f_type   : file.type,
+        f_lib    : file.lib,
+        f_page   : file.page,
+        f_url    : file.url,
+        f_remote : file.remote,
+
+        onCancel : function() {
+            dlg.close();
+        },
+        onOK: function() {
+            RPC.call("project/set-file-props", proj.id, file.name, {
+                name   : model.f_name,
+                type   : model.f_type,
+                lib    : model.f_lib,
+                page   : model.f_page,
+                url    : model.f_url,
+                remote : model.f_remote
+            }, function(ret){
+                projectRefreshContent(proj.id);
+                dlg.close();
+            });
+        }
+    });
+    kendo.bind(dlg_el, model);
+    var dlg = $(dlg_el).data("kendoWindow");
     dlg.open();
     dlg.center();
-
-    dlg_el.find("form").on("submit", function(){
-        RPC.listen_once(expect, function(ret){
-            if (ret && ret.error) {
-                alert(ret.error);
-            } else {
-                dlg.close();
-            }
-        });
-    });
-}
+};
 
 function projectNew() {
     var timeout = null;
@@ -371,7 +412,7 @@ function projectNew() {
             filePicker(input.val(), { dirsonly: true, newFolder: true }, function(ret){
                 if (ret) {
                     // XXX: need to check if empty folder.  Otherwise suggest "import project".
-                    input.val(ret.path + SERVER_CONFIG.pathsep + ret.name);
+                    input.val(path_join(ret.path, ret.name));
                     manually_changed_path = true;
                     ret.dlg.close();
                 }
@@ -700,12 +741,21 @@ function areYouSure(options, callback) {
 
 function filePicker(path, options, callback) {
     options = defaults(options, {
-        newFolder : true,
-        filter    : null,
-        dirsonly  : false
+        proj        : null,
+        moreButtons : null,
+        title       : null,
+        infoText    : null,
+        newFolder   : true,
+        filter      : null,
+        dirsonly    : false
     });
     if (!callback) callback = function(){};
     options.path = path;
+    if (options.moreButtons) {
+        options.moreButtons.forEach(function(btn, i){
+            btn.handler_name = i;
+        });
+    }
     var tmpl = getTemplate("filepicker-dialog");
     var html = tmpl(options);
     var tmp = $("<div></div>").html(html);
@@ -772,6 +822,13 @@ function filePicker(path, options, callback) {
             click(item);
         }
     });
+    if (options.moreButtons) {
+        options.moreButtons.forEach(function(btn){
+            model["moreButtons_" + btn.handler_name] = function(ev) {
+                btn.handler(ev, dlg);
+            };
+        });
+    }
     kendo.bind(dlg_el, model);
     var dlg = $(dlg_el)
         .on("click", ".folder-link", function(ev){
@@ -791,8 +848,6 @@ function filePicker(path, options, callback) {
             dblClick(item);
         })
         .data("kendoGrid");
-
-    window.G = grid;            // XXX: drop me.
 
     dlg.open();
     dlg.center();

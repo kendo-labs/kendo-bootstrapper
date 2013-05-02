@@ -123,3 +123,48 @@ function jsonml_to_html(tree, refs) {
         return output;
     }
 };
+
+function path_join(x) {
+    if (!(x instanceof Array)) x = [].slice.call(arguments);
+    return x.map(function(x, i){
+        x = x.replace(/[\\\/]+$/, "");
+        if (i > 0) x = x.replace(/^[\\\/]+/, "");
+        return x;
+    }).join(SERVER_CONFIG.pathsep);
+};
+
+function path_normalize(path) {
+    path = path.replace(/[\\\/]+/, SERVER_CONFIG.pathsep).replace(/[\\\/]+$/, "");
+    if (SERVER_CONFIG.windows) {
+        path = path.replace(/^[\\\/]+/, "");
+    }
+    return path;
+};
+
+function path_split(path) {
+    path = path_normalize(path);
+    return path.split(/[\\\/]+/);
+};
+
+function path_relative(full, dir) {
+    full = path_normalize(full);
+    dir = path_normalize(dir);
+    if (SERVER_CONFIG.windows) {
+        full = full.toLowerCase();
+        dir = dir.toLowerCase();
+    }
+    full = path_split(full);
+    dir = path_split(dir);
+    var i = 0;
+    while (true) {
+        if (dir.length == 0) return path_join(full);
+        if (full.length == 0) return null; // WAT.
+        if (full[0] == dir[0]) {
+            full.shift();
+            dir.shift();
+        } else {
+            for (var i = dir.length, ret = full; i-- > 0;) ret.unshift("..");
+            return path_join(ret);
+        }
+    }
+};
