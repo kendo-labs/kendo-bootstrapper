@@ -281,6 +281,57 @@ function projectLintKendo(proj) {
     });
 }
 
+function projectAddRemoteFile(proj) {
+    var tmpl = getTemplate("add-remote-file-dialog");
+    var tmp = $("<div></div>").html(tmpl({ mvvm: true }));
+    var dlg_el = tmp.children()[0];
+    var model = kendo.observable({
+        libraries: [
+            { name: "---", id: "", url: "" },
+            { name: "jQuery", id: "jquery", file: "jquery.js", url: "//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.0/jquery.min.js" },
+            { name: "Angular JS", id: "angular", file: "angular.js", url: "//cdnjs.cloudflare.com/ajax/libs/angular.js/1.1.3/angular.min.js" },
+            { name: "Underscore", id: "underscore", file: "underscore.js", url: "//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.4/underscore-min.js" },
+        ],
+        library: null,
+        onLibraryChange: function(ev) {
+            var lib = model.libraries.find(function(l){
+                return l.id == ev.sender.value();
+            });
+            model.set("url", lib.url);
+            model.set("filename", "libs/" + lib.file);
+            model.set("download", !!lib.file);
+            model.set("id", lib.id);
+        },
+        onCancel: function() {
+            dlg.close();
+        },
+        onOK: function() {
+            var opts = {
+                filename : model.filename,
+                library  : true,
+                remote   : true,
+                url      : model.url,
+                download : model.download
+            };
+            RPC.call("project/add-file", proj.id, opts, function(file, err){
+                console.log(file);
+                if (err) {
+                    console.log(err);
+                    alert(err);
+                    return;
+                }
+                projectRefreshContent(proj.id);
+                projectFilePropsDialog(proj.id, file.id);
+                dlg.close();
+            });
+        }
+    });
+    kendo.bind(dlg_el, model);
+    var dlg = $(dlg_el).data("kendoWindow");
+    dlg.open();
+    dlg.center();
+}
+
 function projectAddFile(proj) {
     filePicker(proj.path, {
         proj: proj,
@@ -288,6 +339,7 @@ function projectAddFile(proj) {
             {
                 label: "Add remote file",
                 handler: function(ev, dlg) {
+                    projectAddRemoteFile(proj);
                     dlg.close();
                 }
             }
@@ -302,14 +354,15 @@ function projectAddFile(proj) {
                 function addFile() {
                     RPC.call("project/add-file", proj.id, {
                         filename: relative
-                    }, function(ret, err){
+                    }, function(file, err){
                         if (err) {
                             console.log(err);
                             alert(err);
                             return;
                         }
-                        filepicker.dlg.close();
                         projectRefreshContent(proj.id);
+                        projectFilePropsDialog(proj.id, file.id);
+                        filepicker.dlg.close();
                     });
                 }
                 var stat = ret[0];
@@ -340,24 +393,26 @@ function projectFilePropsDialog(proj_id, file_id) {
     var tmp = $("<div></div>").html(html);
     var dlg_el = tmp.children()[0];
     var model = kendo.observable({
-        f_name   : file.name,
-        f_type   : file.type,
-        f_lib    : file.lib,
-        f_page   : file.page,
-        f_url    : file.url,
-        f_remote : file.remote,
+        f_name      : file.name,
+        f_type      : file.type,
+        f_lib       : file.lib,
+        f_page      : file.page,
+        f_url       : file.url,
+        f_remote    : file.remote,
+        f_download  : file.download,
 
         onCancel : function() {
             dlg.close();
         },
         onOK: function() {
             RPC.call("project/set-file-props", proj.id, file.name, {
-                name   : model.f_name,
-                type   : model.f_type,
-                lib    : model.f_lib,
-                page   : model.f_page,
-                url    : model.f_url,
-                remote : model.f_remote
+                name     : model.f_name,
+                type     : model.f_type,
+                lib      : model.f_lib,
+                page     : model.f_page,
+                url      : model.f_url,
+                remote   : model.f_remote,
+                download : model.f_download,
             }, function(ret){
                 projectRefreshContent(proj.id);
                 dlg.close();

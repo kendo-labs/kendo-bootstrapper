@@ -14,6 +14,12 @@ Array.prototype.pushNew = function(el) {
     if (!this.contains(el)) this.push(el);
 };
 
+Array.prototype.find = function(pred) {
+    for (var i = 0; i < this.length; ++i)
+        if (pred(this[i], i))
+            return this[i];
+};
+
 Function.prototype.delayed = function(delay) {
     if (delay == null) delay = 0;
     var f = this, timer;

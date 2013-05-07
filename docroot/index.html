@@ -494,6 +494,45 @@
             <input class="k-input k-editable" name="url" data-bind="value: f_url" style="width: 20em" />
           </label>
         </p>
+        <p>
+          <label>
+            <input type="checkbox" data-bind="checked: f_download" />
+            Download file locally on build.
+          </label>
+        </p>
+        $(PROCESS ok_cancel_buttons())
+      </div>
+    </script>
+
+    <script type="x/yajet-template" class="add-remote-file-dialog">
+      <div data-role="window" data-title="Add remote file" data-modal="true" data-resizable="false">
+        <p>
+          <label>
+            Select library, or just paste the URL below.<br />
+            <select name="library" data-role="dropdownlist"
+                    data-bind="source: libraries, value: library, events: { change: onLibraryChange }"
+                    data-text-field="name" data-value-field="id">
+            </select>
+          </label>
+        </p>
+        <p>
+          <label>
+            Remote file URL:<br />
+            <input class="k-input k-editable" data-bind="value: url" style="width: 20em" />
+          </label>
+        </p>
+        <p>
+          <label>
+            <input type="checkbox" data-bind="checked: download" />
+            Download file locally on build.
+          </label>
+        </p>
+        <p>
+          <label>
+            Local name for this file:<br />
+            <input data-bind="value: filename" style="width: 20em" />
+          </label>
+        </p>
         $(PROCESS ok_cancel_buttons())
       </div>
     </script>
