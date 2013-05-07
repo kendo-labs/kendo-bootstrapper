@@ -287,7 +287,7 @@ function projectAddRemoteFile(proj) {
     var dlg_el = tmp.children()[0];
     var model = kendo.observable({
         libraries: [
-            { name: "---", id: "", url: "" },
+            { name: "---", id: "", url: "", file: "" },
             { name: "jQuery", id: "jquery", file: "jquery.js", url: "//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.0/jquery.min.js" },
             { name: "Angular JS", id: "angular", file: "angular.js", url: "//cdnjs.cloudflare.com/ajax/libs/angular.js/1.1.3/angular.min.js" },
             { name: "Underscore", id: "underscore", file: "underscore.js", url: "//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.4/underscore-min.js" },
@@ -298,7 +298,7 @@ function projectAddRemoteFile(proj) {
                 return l.id == ev.sender.value();
             });
             model.set("url", lib.url);
-            model.set("filename", "libs/" + lib.file);
+            model.set("filename", lib.file ? "libs/" + lib.file : "");
             model.set("download", !!lib.file);
             model.set("id", lib.id);
         },
@@ -313,16 +313,22 @@ function projectAddRemoteFile(proj) {
                 url      : model.url,
                 download : model.download
             };
-            RPC.call("project/add-file", proj.id, opts, function(file, err){
-                console.log(file);
-                if (err) {
-                    console.log(err);
-                    alert(err);
-                    return;
+            RPC.call("fs/stat", [ path_join(proj.path, opts.filename) ], function(ret){
+                var stat = ret[0];
+                if (stat.error && stat.error.code == "ENOENT") {
+                    RPC.call("project/add-file", proj.id, opts, function(file, err){
+                        if (err) {
+                            console.log(err);
+                            alert(err);
+                            return;
+                        }
+                        projectRefreshContent(proj.id);
+                        projectFilePropsDialog(proj.id, file.id);
+                        dlg.close();
+                    });
+                } else {
+                    alert("File " + opts.filename + " already exists in the project directory.\nPlease chose another local name for this library.");
                 }
-                projectRefreshContent(proj.id);
-                projectFilePropsDialog(proj.id, file.id);
-                dlg.close();
             });
         }
     });
