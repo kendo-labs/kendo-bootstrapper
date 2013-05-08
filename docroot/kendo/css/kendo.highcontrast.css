@@ -210,12 +210,6 @@ textarea.k-textbox:hover,
 }
 .k-button {
   color: #ffffff;
-}
-.k-button,
-.k-button.k-state-disabled:hover,
-.k-state-disabled .k-button:hover,
-.k-button.k-state-disabled:active,
-.k-state-disabled .k-button:active {
   border-color: #664e62;
   background-color: #2c232b;
 }
@@ -223,6 +217,14 @@ textarea.k-textbox:hover,
   color: #ffffff;
   border-color: #a7008f;
   background-color: #a7008f;
+}
+.k-button.k-state-disabled:hover,
+.k-state-disabled .k-button:hover,
+.k-button.k-state-disabled:active,
+.k-state-disabled .k-button:active {
+  color: #a17e9c;
+  border-color: #664e62;
+  background-image: url(textures/glass-lighter.png);
 }
 .k-draghandle {
   border-color: none;
@@ -384,7 +386,6 @@ div.k-imagebrowser-dropzone em {
 .k-state-disabled,
 .k-state-disabled .k-link,
 .k-state-disabled .k-button,
-.k-button.k-state-disabled:active,
 .k-other-month .k-link,
 .k-dropzone em,
 .k-tile-empty strong,

@@ -1138,6 +1138,11 @@ ul.k-menu-vertical .k-separator,
     text-overflow: ellipsis;
 }
 
+.k-ie10 .k-grid-header a:active
+{
+    background-color: transparent; /*remove gray background*/
+}
+
 .k-grid-header .k-header .k-link
 {
     display: block;
@@ -1815,6 +1820,11 @@ html .k-grid-edit-row .k-tooltip
     opacity: .3;
 }
 
+.k-column-menu
+{
+	min-width:150px;
+}
+
 .k-column-menu .k-sprite
 {
     margin-right:10px;
@@ -2168,7 +2178,6 @@ body .k-datetimepicker .k-select
 
 .k-picker-wrap .k-icon
 {
-	vertical-align: top;
 	margin-top: 1px;
 }
 
@@ -2591,13 +2600,16 @@ span.k-numerictextbox
 .k-colorpicker
 {
     .k-selected-color {
-        font-size: 0;
         vertical-align: top;
         line-height: 0;
         display: inline-block;
-        height: @grid-size + 8;
-        width: @grid-size + 8;
+        height: 2em;
+        width: 2em;
     }
+	.k-select {
+		min-height:	18px;
+		line-height: 18px;
+	}
     .k-tool-icon {
         position: relative;
         top: -2px;

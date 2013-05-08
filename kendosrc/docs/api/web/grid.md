@@ -1159,7 +1159,8 @@ The [template](/api/framework/kendo#methods-template) which renders the detail r
     });
     </script>
 
-> Check [Detail Template](http://demos.kendoui.com/web/grid/detailtemplate.html) for a live demo.
+> The detail template content cannot be wider than the total width of all master columns, unless the detail template is scrollable.
+Check [Detail Template](http://demos.kendoui.com/web/grid/detailtemplate.html) for a live demo.
 
 ### editable `Boolean|Object` *(default: false)*
 
@@ -3563,6 +3564,28 @@ The text displayed by the command button. If not set the [name](#configuration-t
 
 ## Fields
 
+### columns `Array`
+
+The columns of the grid initialized from the [columns](#configuration-columns) option. Every item from the `columns` array has the same fields as the corresponding [columns](#configuration-columns) option.
+
+#### Example - iterate the grid columns
+    <div id="grid"></div>
+    <script>
+    $("#grid").kendoGrid({
+      columns: [
+        { field: "name" },
+        { field: "age" }
+      ],
+      dataSource: [
+        { name: "Jane Doe", age: 30 },
+        { name: "John Doe", age: 33 }
+      ]
+    });
+    var grid = $("#grid").data("kendoGrid");
+    for (var i = 0; i < grid.columns.length; i++) {
+      console.log(grid.columns[i].field); // displays "name" and then "age"
+    }
+    </script>
 ### dataSource `kendo.data.DataSource`
 
 The [data source](/api/framework/datasource) of the widget. Configured via the [dataSource](#configuration-dataSource) option.
@@ -4209,7 +4232,7 @@ Changes the position of the specified column.
 
 ##### destIndex `Number`
 
-The new position of the column.
+The new position of the column. The destination index should be calculated with regard to all columns, including the hidden ones.
 
 ##### column `Object`
 
@@ -5503,7 +5526,7 @@ The widget instance which fired the event.
 
 ##### e.values `Object`
 
-The values entered by the user.
+The values entered by the user. **Availabe only when the [editable.mode](#configuration-editable.mode) option is set to "incell".**
 
 #### Example - subscribe to the "save" event during initialization
     <div id="grid"></div>

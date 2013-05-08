@@ -1629,6 +1629,11 @@ ul.k-menu-vertical .k-separator,
   white-space: nowrap;
   text-overflow: ellipsis;
 }
+.k-ie10 .k-grid-header a:active {
+  background-color: transparent;
+  /*remove gray background*/
+
+}
 .k-grid-header .k-header .k-link {
   display: block;
   min-height: 18px;
@@ -2125,6 +2130,9 @@ html .k-grid-edit-row .k-tooltip {
   filter: alpha(opacity=30);
   opacity: .3;
 }
+.k-column-menu {
+  min-width: 150px;
+}
 .k-column-menu .k-sprite {
   margin-right: 10px;
 }
@@ -2408,7 +2416,6 @@ body .k-datetimepicker .k-select {
   border-radius: 0;
 }
 .k-picker-wrap .k-icon {
-  vertical-align: top;
   margin-top: 1px;
 }
 .k-combobox .k-icon,
@@ -2719,12 +2726,15 @@ span.k-numerictextbox {
 }
 /* ColorPicker */
 .k-colorpicker .k-selected-color {
-  font-size: 0;
   vertical-align: top;
   line-height: 0;
   display: inline-block;
-  height: 24px;
-  width: 24px;
+  height: 2em;
+  width: 2em;
+}
+.k-colorpicker .k-select {
+  min-height: 18px;
+  line-height: 18px;
 }
 .k-colorpicker .k-tool-icon {
   position: relative;

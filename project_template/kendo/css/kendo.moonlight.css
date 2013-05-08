@@ -238,12 +238,6 @@ textarea.k-textbox:hover,
 }
 .k-button {
   color: #ffffff;
-}
-.k-button,
-.k-button.k-state-disabled:hover,
-.k-state-disabled .k-button:hover,
-.k-button.k-state-disabled:active,
-.k-state-disabled .k-button:active {
   border-color: #171e28;
   background-color: #212a33;
 }
@@ -251,6 +245,18 @@ textarea.k-textbox:hover,
   color: #ffffff;
   border-color: #212a33;
   background-color: #40444f;
+}
+.k-button.k-state-disabled:hover,
+.k-state-disabled .k-button:hover,
+.k-button.k-state-disabled:active,
+.k-state-disabled .k-button:active {
+  color: #535a63;
+  border-color: #171e28;
+  background-image: url("textures/brushed-metal.png");
+  background-image: url("textures/brushed-metal.png"), -webkit-linear-gradient(top, #2f3640 0%, #212a33 100%);
+  background-image: url("textures/brushed-metal.png"), -moz-linear-gradient(top, #2f3640 0%, #212a33 100%);
+  background-image: url("textures/brushed-metal.png"), -o-linear-gradient(top, #2f3640 0%, #212a33 100%);
+  background-image: url("textures/brushed-metal.png"), linear-gradient(to bottom, #2f3640 0%, #212a33 100%);
 }
 .k-draghandle {
   border-color: #f4af03;
@@ -424,7 +430,6 @@ div.k-imagebrowser-dropzone em {
 .k-state-disabled,
 .k-state-disabled .k-link,
 .k-state-disabled .k-button,
-.k-button.k-state-disabled:active,
 .k-other-month .k-link,
 .k-dropzone em,
 .k-tile-empty strong,

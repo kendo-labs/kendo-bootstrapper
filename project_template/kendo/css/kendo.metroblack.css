@@ -210,12 +210,6 @@ textarea.k-textbox:hover,
 }
 .k-button {
   color: #ffffff;
-}
-.k-button,
-.k-button.k-state-disabled:hover,
-.k-state-disabled .k-button:hover,
-.k-button.k-state-disabled:active,
-.k-state-disabled .k-button:active {
   border-color: #333333;
   background-color: #0e0e0e;
 }
@@ -223,6 +217,14 @@ textarea.k-textbox:hover,
   color: #ffffff;
   border-color: #00aba9;
   background-color: #00aba9;
+}
+.k-button.k-state-disabled:hover,
+.k-state-disabled .k-button:hover,
+.k-button.k-state-disabled:active,
+.k-state-disabled .k-button:active {
+  color: rgba(170, 170, 170, 0.4);
+  border-color: #333333;
+  background-image: none;
 }
 .k-draghandle {
   border-color: #00aba9;
@@ -384,7 +386,6 @@ div.k-imagebrowser-dropzone em {
 .k-state-disabled,
 .k-state-disabled .k-link,
 .k-state-disabled .k-button,
-.k-button.k-state-disabled:active,
 .k-other-month .k-link,
 .k-dropzone em,
 .k-tile-empty strong,

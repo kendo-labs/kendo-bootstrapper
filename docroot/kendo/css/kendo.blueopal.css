@@ -238,12 +238,6 @@ textarea.k-textbox:hover,
 }
 .k-button {
   color: #003f59;
-}
-.k-button,
-.k-button.k-state-disabled:hover,
-.k-state-disabled .k-button:hover,
-.k-button.k-state-disabled:active,
-.k-state-disabled .k-button:active {
   border-color: #94c0d2;
   background-color: #daecf4;
 }
@@ -251,6 +245,18 @@ textarea.k-textbox:hover,
   color: #005c83;
   border-color: #7ec6e3;
   background-color: #7dd3f6;
+}
+.k-button.k-state-disabled:hover,
+.k-state-disabled .k-button:hover,
+.k-button.k-state-disabled:active,
+.k-state-disabled .k-button:active {
+  color: #64a1bb;
+  border-color: #94c0d2;
+  background-image: url('textures/highlight.png');
+  background-image: none, -webkit-linear-gradient(top, #eaf4f9 0%, #dbecf4 100%);
+  background-image: none, -moz-linear-gradient(top, #eaf4f9 0%, #dbecf4 100%);
+  background-image: none, -o-linear-gradient(top, #eaf4f9 0%, #dbecf4 100%);
+  background-image: none, linear-gradient(to bottom, #eaf4f9 0%, #dbecf4 100%);
 }
 .k-draghandle {
   border-color: #94c0d2;
@@ -424,7 +430,6 @@ div.k-imagebrowser-dropzone em {
 .k-state-disabled,
 .k-state-disabled .k-link,
 .k-state-disabled .k-button,
-.k-button.k-state-disabled:active,
 .k-other-month .k-link,
 .k-dropzone em,
 .k-tile-empty strong,

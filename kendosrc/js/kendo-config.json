@@ -820,7 +820,7 @@
                     ],
                     "inherits": "Widget",
                     "file": "kendo.editor.js",
-                    "line": 453,
+                    "line": 454,
                     "col": 17
                 },
                 {
@@ -830,7 +830,7 @@
                     ],
                     "inherits": "DropDownList",
                     "file": "kendo.editor.js",
-                    "line": 5617,
+                    "line": 5623,
                     "col": 16
                 }
             ]
@@ -971,7 +971,7 @@
                     ],
                     "inherits": "Widget",
                     "file": "kendo.grid.js",
-                    "line": 118,
+                    "line": 117,
                     "col": 29
                 },
                 {
@@ -996,7 +996,8 @@
                         "resizable",
                         "reorderable",
                         "columnMenu",
-                        "detailTemplate"
+                        "detailTemplate",
+                        "columnResizeHandleWidth"
                     ],
                     "events": [
                         "change",
@@ -1019,7 +1020,7 @@
                     ],
                     "inherits": "Widget",
                     "file": "kendo.grid.js",
-                    "line": 560,
+                    "line": 559,
                     "col": 15
                 }
             ]
