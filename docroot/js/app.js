@@ -313,7 +313,7 @@ function projectAddRemoteFile(proj) {
                 url      : model.url,
                 download : model.download
             };
-            RPC.call("fs/stat", [ path_join(proj.path, opts.filename) ], function(ret){
+            RPC.call("fs/stat", [ path_join(proj.path, opts.filename || "") ], function(ret){
                 var stat = ret[0];
                 if (stat.error && stat.error.code == "ENOENT") {
                     RPC.call("project/add-file", proj.id, opts, function(file, err){
