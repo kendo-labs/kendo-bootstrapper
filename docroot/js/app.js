@@ -62,28 +62,33 @@ function getSelectedProject() {
     return PROJECTS.get(ACTIVE_PROJECT);
 }
 
-function getSelectedFile() {
-    if (!ACTIVE_PROJECT) throw ("Select a project first");
-    var tree = $("#project-file-tree").data("kendoTreeView");
-    var sel = tree.select();
-    if (sel.length == 0) throw ("No file selected");
-    sel = tree.dataItem(sel);
-    if (sel.hasChildren) throw ("Please select a file");
-    return sel;
-}
-
 function withSelectedProject(f) {
     try { f(getSelectedProject()) }
     catch(ex) { alert(ex) }
 }
 
-function withSelectedFile(f) {
-    try { f(getSelectedProject(), getSelectedFile().filename) }
-    catch(ex) { alert(ex) }
-}
-
 function setupLayout() {
-    kendo.bind($("#top-layout"));
+    KDOCS = {};
+
+    var updateDocSearch = function() {
+        var query = $("#apidoc-search").val().trim();
+        if (query) {
+            model.apidoc_lv.dataSource.filter({
+                field: "name", operator: "contains", value: query
+            });
+        } else {
+            model.apidoc_lv.dataSource.filter(null);
+        }
+    }.delayed(300);
+
+    var model = kendo.observable({
+        apidoc: [],
+        onSearchKeydown: function() {
+            updateDocSearch.cancel()();
+        }
+    });
+
+    kendo.bind($("#top-layout"), model);
     var top_layout = $("#top-layout").data("kendoLayoutManager");
     $(window).resize(function(){
         top_layout.setOuterSize($(window).innerWidth(),
@@ -111,28 +116,70 @@ function setupLayout() {
             window.open("/@proj/" + proj.id + "/", "PROJECTPREVIEW");
         });
     });
-    $("#btn-kendo-doc").click(function(){
-        kendoDocBrowser();
-    });
-    $("#btn-file-new").click(function(){
-        withSelectedProject(projectAddFile);
-    });
-    $("#btn-file-edit").click(function(){
-        withSelectedFile(function(proj, file){
-            RPC.call("project/edit-file", proj.id, file);
-        });
-    });
-    $("#btn-file-delete").click(function(){
-        withSelectedFile(function(proj, file){
-            areYouSure({
-                message: "Really delete file " + file + "?",
-                okLabel: "Yes",
-                cancelLabel: "NOOO!",
-            }, function(ok){
-                if (ok) RPC.call("project/delete-file", proj.id, file);
+
+    RPC.call("kdoc/get-all-docs", function(ret){
+        KDOCS = ret;
+        var widgets = [];
+        for (var i in ret) {
+            widgets.push({
+                name : ret[i].name.replace(/^kendo\./, ""),
+                id   : i
             });
+        }
+        model.apidoc = new kendo.data.DataSource({
+            data: widgets,
+            sort: { field: "name", dir: "asc" }
         });
+        model.apidoc_lv = $("#apidoc-list").kendoListView({
+            template   : getTemplate("simple-list-item"),
+            dataSource : model.apidoc,
+            selectable : true,
+            change     : function(ev) {
+                var item = ev.sender.select();
+                var id = item.attr("value");
+                var comp = KDOCS[id];
+                var dlg_el = $("<div></div>").html(getTemplate("docbrowser-dialog")({
+                    closeLabel: "Close"
+                })).kendoWindow({
+                    title   : "Kendo UI — " + comp.name,
+                    width   : 800,
+                    height  : 500,
+                    actions : [ "Minimize", "Maximize", "Close" ],
+                    resize: function() {
+                        var sz = this.getInnerSize();
+                        lm.setOuterSize(sz.x, sz.y);
+                    }
+                }).on("click", ".btn-ok", function(){
+                    dlg.close();
+                }).on("click", "a", function(ev){
+                    alert("FIXME");
+                    ev.preventDefault();
+                });
+                kendo.bind(dlg_el, {
+
+                });
+                $(".content", dlg_el).html(jsonml_to_html(comp.doc, comp.refs));
+                var lm = $(".layout", dlg_el).data("kendoLayoutManager");
+                var dlg = dlg_el.data("kendoWindow");
+                dlg.open();
+                dlg.center();
+                dlg.trigger("resize");
+            }
+        }).data("kendoListView");
     });
+
+    // $("#btn-file-delete").click(function(){
+    //     withSelectedFile(function(proj, file){
+    //         areYouSure({
+    //             message: "Really delete file " + file + "?",
+    //             okLabel: "Yes",
+    //             cancelLabel: "NOOO!",
+    //         }, function(ok){
+    //             if (ok) RPC.call("project/delete-file", proj.id, file);
+    //         });
+    //     });
+    // });
+
     $(document.body).on("click", "[command=edit-file]", function(ev){
         var proj = $(this).attr("project-id");
         var file = $(this).attr("filename");
@@ -168,21 +215,6 @@ function setActiveProject(proj) {
         proj = PROJECTS.get(proj);
     ACTIVE_PROJECT = proj.id;
     $(".project-title").html(proj.name);
-
-    // display project tree
-    var files_data = new kendo.data.HierarchicalDataSource({
-        data: [
-            make_tree(proj.files, "Project files"),
-        ]
-    });
-    function make_tree(files, label) {
-        var top_item = { text: label, items: [] };
-        files.forEach(function(f){
-            top_item.items.push({ text: f.name, filename: f.name });
-        });
-        return top_item;
-    };
-    $("#project-file-tree").data("kendoTreeView").setDataSource(files_data);
     projectRefreshContent(proj.id);
 }
 
@@ -718,55 +750,6 @@ function projectEditDependencies(proj) {
     dlg.open();
     dlg.center();
     dlg.trigger("resize");
-}
-
-function kendoDocBrowser() {
-    RPC.call("kdoc/get-all-docs", function(DOCS){
-        var dlg_el = $("<div></div>").html(getTemplate("docbrowser-dialog")({
-            closeLabel: "Close"
-        })).kendoWindow({
-            title: "Kendo UI — API Documentation",
-            width: 800,
-            height: 500,
-            actions: [ "Minimize", "Maximize", "Close" ],
-            resize: function() {
-                var sz = this.getInnerSize();
-                lm.setOuterSize(sz.x, sz.y);
-            }
-        }).on("click", ".btn-ok", function(){
-            dlg.close();
-        });
-
-        kendo.bind(dlg_el, {
-            select: function(e) {
-                var comp = e.item.text();
-                comp = DOCS[comp];
-                $(".content", dlg_el).html(jsonml_to_html(comp.doc, comp.refs));
-            }
-        });
-
-        var search = $("input.search", dlg_el).data("kendoAutoComplete");
-
-        var data = [];
-        for (var i in DOCS) {
-            data.push(DOCS[i]);
-            var name = DOCS[i].name.replace(/^kendo\./, "");
-            DOCS[i].name = name;
-            DOCS[name] = DOCS[i];
-        }
-        data = new kendo.data.DataSource({
-            data: data,
-            sort: { field: "name", dir: "asc" }
-        });
-
-        search.setDataSource(data);
-
-        var lm = $(".layout", dlg_el).data("kendoLayoutManager");
-        var dlg = dlg_el.data("kendoWindow");
-        dlg.open();
-        dlg.center();
-        dlg.trigger("resize");
-    });
 }
 
 ////// Console

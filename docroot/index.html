@@ -24,7 +24,7 @@
   <body>
 
     <div id="top-layout" data-role="layoutmanager" data-orientation="horizontal">
-      <div id="projects-and-files" class="sections" kendo-layout="20%,min:200,resizable"
+      <div class="sections" kendo-layout="20%,min:200,resizable"
            data-role="layoutmanager" data-orientation="vertical">
 
         <div class="title">Projects</div>
@@ -32,21 +32,21 @@
         <div class="k-toolbar" style="padding: 5px">
           <button class="k-button" id="btn-project-new">New</button>
           <button class="k-button" id="btn-project-preview">Preview</button>
-          <button class="k-button" id="btn-kendo-doc">KDoc</button>
         </div>
 
         <div id="project-list" kendo-layout="0.5,resizable" style="overflow:auto"></div>
 
-        <div class="project-title title">No project selected</div>
+        <div class="title">Kendo API docs</div>
 
         <div class="k-toolbar" style="padding: 5px">
-          <button class="k-button" id="btn-file-new">New file</button>
-          <button class="k-button" id="btn-file-edit">Edit file</button>
-          <button class="k-button" id="btn-file-delete">Delete file</button>
+          <label>
+            Search widget:
+            <input id="apidoc-search"
+                   data-bind="value: search_api, events: { keydown: onSearchKeydown }" />
+          </label>
         </div>
 
-        <div style="background: #fff; overflow: auto" id="project-file-tree"
-             data-role="treeview" kendo-layout="1"></div>
+        <div style="background: #fff; overflow: auto" id="apidoc-list" kendo-layout="1"></div>
 
       </div>
       <div data-role="layoutmanager" data-orientation="vertical" kendo-layout="1">
@@ -70,7 +70,6 @@
                 |
                 <button onclick="withSelectedProject(projectBuildDistro)"
                         class="k-button">Bundle</button>
-                | <button onclick="withSelectedProject(function(proj){ filePicker(proj.path, { newFolder: true }, function(ret){ alert(ret.path + '/' + ret.name) }) })">TEST</button>
               </div>
             </td>
           </tr>
@@ -376,15 +375,6 @@
 
     <script type="x/yajet-template" class="docbrowser-dialog">
       <div data-role="layoutmanager" data-orientation="vertical" class="layout">
-        <div style="padding: 5px">
-          <input data-role="autocomplete"
-                 data-placeholder="Search..."
-                 data-text-field="name"
-                 data-ignore-case="true"
-                 data-filter="contains"
-                 data-bind="events: { select: select }"
-                 style="width: 100%" class="search" />
-        </div>
         <div kendo-layout="1" class="content" style="overflow: auto"></div>
         $(PROCESS ok_cancel_buttons())
       </div>
