@@ -463,6 +463,14 @@ A reference tab to insert the new item before
 
 `kendo.ui.TabStrip` Returns the TabStrip object to support chaining.
 
+### items
+
+Gets the list of DOM elements that represent the tabs.
+
+#### Returns
+
+`HTMLCollection` the tabs as jQuery objects.
+
 ### reload
 
 Reloads TabStrip tab(s) via AJAX.
@@ -487,7 +495,7 @@ Removes a specified tab from a TabStrip.
 
 #### Parameters
 
-##### element `Selector`
+##### element `String|Number`
 
 The target tab(s), specified as a selector or jQuery object, to be removed.
 

@@ -178,7 +178,7 @@ Can be set to a string value if the [schema.type](#configuration-schema.type) op
             // the "title" field is mapped to the text of the "title" XML element
             title: "title/text()",
             // the "id" field is mapped to the "id" attribute of the "book" XML element
-            id: "@cover"
+            id: "@id"
           }
         }
       }

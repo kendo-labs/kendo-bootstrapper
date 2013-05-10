@@ -1583,6 +1583,7 @@ ul.k-menu-vertical > .k-item {
 .k-menu .k-animation-container,
 .k-popup .k-animation-container {
   margin-top: -1px;
+  margin-top: -2px\9;
   padding-left: 1px;
 }
 .k-popup .k-animation-container .k-popup {
@@ -2627,6 +2628,9 @@ div.k-treeview {
 .k-treeview .k-in {
   display: inline-block;
   vertical-align: top;
+}
+.k-treeview .k-request-retry {
+  vertical-align: baseline;
 }
 .k-treeview .k-plus,
 .k-treeview .k-minus,

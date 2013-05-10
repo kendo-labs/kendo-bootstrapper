@@ -732,10 +732,10 @@ The text that is displayed in the column header cell. If not set the [field](#co
 
 The width of the column. Numeric values are treated as pixels.
 
-> If the total sum of the column widths exceeds the width of the grid a horizontal scrollbar will appear (if scrolling is enabled). If that sum is less than the width of the grid
-one of the columns would stretch out to occupy the remaining space. Thus it is a good idea to have a column without specified width. On the other hand, explicit widths for all columns
-should be set only if their sum exceeds the Grid width and the goal is to have horizontal scrolling. Otherwise if the sum of all column widths is small, the widths will be ignored and
-unexpected side effects may occur, e.g. jumpy column resizing.
+> If all columns have widths and their sum exceeds the width of the grid, a horizontal scrollbar will appear (if scrolling is enabled). If that sum is less than the width of the grid,
+the column widths will be ignored and all columns will expand. This will lead to undesired side effects, e.g. when resizing columns. That's why it is recommended to have at least one column without specified width.
+Explicit widths for all columns should be set only if they are set in percent, or if their sum exceeds the Grid width and the goal is to have horizontal scrolling.
+If the Grid has no fixed width and resizes with the browser window, one can apply min-width to the Grid or its table elements to prevent columns from shrinking too much.
 
 #### Example - set the column width as a string
      <div id="grid"></div>
@@ -4312,8 +4312,8 @@ Switches the table row which is in edit mode and saves any changes made by the u
       editable: "inline"
     });
     var grid = $("#grid").data("kendoGrid");
-    grid.editRow($("#grid tr:eq(1)");
-    grid.saveChanges();
+    grid.editRow($("#grid tr:eq(1)"));
+    grid.saveRow();
     </script>
 
 ### select

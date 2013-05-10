@@ -381,3 +381,14 @@ Fires when the value is changed from the spin buttons
     numerictextbox.bind("spin", function(e) {
         // handle event
     });
+
+## Field
+
+### element
+A jQuery object of the original input element.
+
+### options
+An object, which holds the options of the widget.
+
+### wrapper
+A jQuery object of the span element which wraps the input.

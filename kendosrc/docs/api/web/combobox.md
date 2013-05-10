@@ -745,3 +745,29 @@ Triggered when value of the widget is changed via API or user interaction.
 
     // detach cascade event handler via unbind()
     $("#combobox").data("kendoComboBox").unbind("cascade", onCascade);
+
+## Field
+
+### element
+A jQuery object of the original input element.
+
+### options
+An object, which holds the options of the widget.
+
+### wrapper
+A jQuery object of the span element which wraps the input.
+
+### input
+A jQuery object of the visible input element, which holds the selected text.
+
+### list
+A jQuery object of the drop-down list element.
+
+### ul
+A jQuery object of the ul element, which holds the available options.
+
+### dataSource
+The DataSource instance used by the widget.
+
+### popup
+The Popup instace used by the widget.

@@ -75,5 +75,11 @@ or with a `true` argument, or disable with a `false` argument.
 
 Triggers when a new color has been selected.
 
+#### Event Data
+
+##### e.value `String`
+
+The value of the colorpicker.
+
 [parseColor]: ../framework/kendo#parseColor
 [Color]: ../framework/kendo#Color

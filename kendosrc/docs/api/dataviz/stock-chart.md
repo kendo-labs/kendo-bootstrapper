@@ -1542,7 +1542,7 @@ This option is ignored if **baseUnit** is set to "fit".
 
 ### categoryAxis.labels.culture `String`
 
-Culture to use for formatting the dates. See [Globalization](http://www.kendoui.com/documentation/framework/globalization/overview.aspx) for more information.
+Culture to use for formatting the dates. See [Globalization](/getting-started/framework/globalization/overview) for more information.
 It defaults to the global culture.
 
 ### categoryAxis.labels.dateFormats `Object`
@@ -4707,7 +4707,7 @@ The visibility of the labels.
 
 ### xAxis.labels.culture `String`
 
-Culture to use for formatting the dates. See [Globalization](http://www.kendoui.com/documentation/framework/globalization/overview.aspx) for more information.
+Culture to use for formatting the dates. See [Globalization](/getting-started/framework/globalization/overview) for more information.
 By default it uses the global culture.
 
 ### xAxis.labels.dateFormats `Object`
@@ -5295,7 +5295,7 @@ The visibility of the labels.
 
 ### yAxis.labels.culture `String`
 
-Culture to use for formatting the dates. See [Globalization](http://www.kendoui.com/documentation/framework/globalization/overview.aspx) for more information.
+Culture to use for formatting the dates. See [Globalization](/getting-started/framework/globalization/overview) for more information.
 It defaults to the global culture.
 
 ### yAxis.labels.dateFormats `Object`

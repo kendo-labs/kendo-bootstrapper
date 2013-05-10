@@ -340,3 +340,29 @@ Fires when the time drop-down list is opened
     timePicker.bind("open", function(e) {
         // handle event
     });
+
+## Field
+
+### element
+A jQuery object of the original input element.
+
+### options
+An object, which holds the options of the widget.
+
+### wrapper
+A jQuery object of the span element which wraps the input.
+
+### timeView
+An instance of the TimeView object, responsible for the drop-down list of available hours.
+
+#### popup
+The Popup instace used by the widget.
+
+#### ul
+A jQuery object of the ul element, which holds the available hours.
+
+#### list
+A jQuery object of the drop-down list element.
+
+#### template
+A template used to render available options in the list.

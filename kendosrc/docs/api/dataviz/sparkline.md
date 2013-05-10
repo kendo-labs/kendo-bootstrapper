@@ -559,7 +559,7 @@ This option is ignored if **baseUnit** is set to "fit".
 
 ### categoryAxis.labels.culture `String`
 
-Culture to use for formatting the dates. See [Globalization](http://www.kendoui.com/documentation/framework/globalization/overview.aspx) for more information.
+Culture to use for formatting the dates. See [Globalization](/getting-started/framework/globalization/overview) for more information.
 It uses the global culture by default.
 
 ### categoryAxis.labels.dateFormats `Object`

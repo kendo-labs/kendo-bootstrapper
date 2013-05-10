@@ -657,7 +657,7 @@
                     ],
                     "inherits": "Widget",
                     "file": "kendo.draganddrop.js",
-                    "line": 425,
+                    "line": 429,
                     "col": 21
                 },
                 {
@@ -669,7 +669,7 @@
                     ],
                     "inherits": "DropTarget",
                     "file": "kendo.draganddrop.js",
-                    "line": 517,
+                    "line": 521,
                     "col": 25
                 },
                 {
@@ -691,7 +691,7 @@
                     ],
                     "inherits": "Widget",
                     "file": "kendo.draganddrop.js",
-                    "line": 539,
+                    "line": 543,
                     "col": 20
                 }
             ]
@@ -1261,7 +1261,8 @@
             "category": "mobile",
             "description": "The Button widget navigates between mobile Application views when pressed.",
             "depends": [
-                "mobile.application"
+                "mobile.application",
+                "userevents"
             ],
             "source": "kendo.mobile.button.min.js",
             "widgets": [
@@ -1289,7 +1290,7 @@
                     ],
                     "inherits": "Button",
                     "file": "kendo.mobile.button.js",
-                    "line": 150,
+                    "line": 153,
                     "col": 21
                 },
                 {
@@ -1300,7 +1301,7 @@
                     ],
                     "inherits": "Button",
                     "file": "kendo.mobile.button.js",
-                    "line": 166,
+                    "line": 169,
                     "col": 23
                 }
             ]
@@ -1757,7 +1758,7 @@
                     ],
                     "inherits": "Widget",
                     "file": "kendo.mobile.view.js",
-                    "line": 333,
+                    "line": 341,
                     "col": 17
                 }
             ]
@@ -1803,7 +1804,7 @@
                     ],
                     "inherits": "List",
                     "file": "kendo.multiselect.js",
-                    "line": 53,
+                    "line": 54,
                     "col": 22
                 }
             ]
@@ -1945,7 +1946,7 @@
                     ],
                     "inherits": "Widget",
                     "file": "kendo.popup.js",
-                    "line": 54,
+                    "line": 55,
                     "col": 16
                 }
             ]
@@ -2341,7 +2342,7 @@
                     ],
                     "inherits": "Widget",
                     "file": "kendo.treeview.js",
-                    "line": 143,
+                    "line": 144,
                     "col": 15
                 }
             ]

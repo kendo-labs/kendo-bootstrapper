@@ -399,7 +399,7 @@ Returns the data item at the specified index.
 
 #### Parameters
 
-##### index `Number`
+##### index `Number` *(optional)*
 
 The zero-based index of of the data item.
 
@@ -813,3 +813,26 @@ The widget instance which fired the event.
     var autocomplete = $("#autocomplete").data("kendoAutoComplete");
     autocomplete.bind("select", autocomplete_select);
     </script>
+
+## Field
+
+### element
+A jQuery object of the original input element.
+
+### options
+An object, which holds the options of the widget.
+
+### wrapper
+A jQuery object of the span element which wraps the input.
+
+### list
+A jQuery object of the drop-down list element.
+
+### ul
+A jQuery object of the ul element, which holds the available options.
+
+### dataSource
+The DataSource instance used by the widget.
+
+### popup
+The Popup instace used by the widget.

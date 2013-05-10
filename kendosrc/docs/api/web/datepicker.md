@@ -482,3 +482,26 @@ Fires when the calendar is opened
     datePicker.bind("open", function(e) {
         // handle event
     });
+
+## Field
+
+### element
+A jQuery object of the original input element.
+
+### options
+An object, which holds the options of the widget.
+
+### wrapper
+A jQuery object of the span element which wraps the input.
+
+### dateView
+An instance of the DateView object, responsible for the popup calendar.
+
+#### calendar
+The Calendar instance.
+
+#### popup
+The Popup instance.
+
+#### div
+jQuery object of the popup element.

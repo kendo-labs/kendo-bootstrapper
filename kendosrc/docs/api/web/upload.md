@@ -17,7 +17,7 @@ Represents the Kendo UI Upload. Inherits from [Widget](/api/framework/widget).
 ### async `Object`
 
 Configures the ability to upload a file(s) in an asynchronous manner. Please refer to the
-[async mode help topic](http://www.kendoui.com/documentation/ui-widgets/upload/modes.aspx#async)
+[async mode help topic](/getting-started/web/upload/modes#asynchronous-mode)
 for more details.
 
 ### async.autoUpload `Boolean`*(default: true)*
@@ -147,7 +147,7 @@ Enables the upload.
 
 #### Parameters
 
-##### enable `Boolean`
+##### enable `Boolean` *(optional)*
 
 The argument, which defines whether to enable/disable the upload.
 
@@ -177,7 +177,7 @@ Fires when the upload has been cancelled while in progress.
 
 
 Note: The cancel event fires only when the upload is in
-[async mode](http://www.kendoui.com/documentation/ui-widgets/upload/modes.aspx#async).
+[async mode](/getting-started/web/upload/modes#asynchronous-mode).
 
 #### Example
 
@@ -212,7 +212,7 @@ Fires when all active uploads have completed either successfully or with errors.
 
 
 Note: The complete event fires only when the upload is in
-[async mode](http://www.kendoui.com/documentation/ui-widgets/upload/modes.aspx#async).
+[async mode](/getting-started/web/upload/modes#asynchronous-mode).
 
 #### Example
 
@@ -232,7 +232,7 @@ Fires when an upload / remove operation has failed.
 
 
 Note: The error event fires only when the upload is in
-[async mode](http://www.kendoui.com/documentation/ui-widgets/upload/modes.aspx#async).
+[async mode](/getting-started/web/upload/modes#asynchronous-mode).
 
 #### Example
 
@@ -282,7 +282,7 @@ Fires when upload progress data is available.
 
 
 Note: The progress event fires only when the upload is in
-[async mode](http://www.kendoui.com/documentation/ui-widgets/upload/modes.aspx#async).
+[async mode](/getting-started/web/upload/modes#asynchronous-mode).
 
 #### Example
 
@@ -395,7 +395,7 @@ Fires when an upload / remove operation has been completed successfully.
 
 
 Note: The success event fires only when the upload is in
-[async mode](http://www.kendoui.com/documentation/ui-widgets/upload/modes.aspx#async).
+[async mode](/getting-started/web/upload/modes#asynchronous-mode).
 
 #### Example
 
@@ -449,7 +449,7 @@ Fires when one or more files are about to be uploaded.
 Cancelling the event will prevent the upload.
 
 Note: The upload event fires only when the upload is in
-[async mode](http://www.kendoui.com/documentation/ui-widgets/upload/modes.aspx#async).
+[async mode](/getting-started/web/upload/modes#asynchronous-mode).
 
 #### Example
 

@@ -313,7 +313,7 @@ Template to be used for rendering the tags of the selected items.
         autoBind: false,
         dataTextField: "text",
         dataValueField: "value",
-        [{ text: "Item 1", value: "1" }, { text: "Item 2", value: "2" }]
+        value: [{ text: "Item 1", value: "1" }, { text: "Item 2", value: "2" }]
     });
 
 ## Methods
@@ -502,6 +502,16 @@ The value to set.
 
 `Array` The value of the multiselect.
 
+> If initial items are lost in attempt to set new values, probably the widget is filtered by the end user, but no value has been selected. You will need to remove applied filter, before calling value method
+
+    var multiselect = $("#multiselect").data("kendoMultiSelect");
+
+    //clear filter
+    multiselect.dataSource.filter({});
+
+    //set value
+    multiselect.value(["1", "2"]);
+
 ## Events
 
 ### change
@@ -625,3 +635,32 @@ Triggered when a Li element is selected.
 ##### e.item `jQuery`
 
 The selected item chosen by a user.
+
+## Field
+
+### element
+A jQuery object of the original input element.
+
+### options
+An object, which holds the options of the widget.
+
+### wrapper
+A jQuery object of the span element which wraps the input.
+
+### input
+A jQuery object of the visible input element, used to filter the available options.
+
+### tagList
+A jQuery object of the ul element, which holds the selected tags.
+
+### list
+A jQuery object of the drop-down list element.
+
+### ul
+A jQuery object of the ul element, which holds the available options.
+
+### dataSource
+The DataSource instance used by the widget.
+
+### popup
+The Popup instace used by the widget.

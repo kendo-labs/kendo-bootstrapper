@@ -388,7 +388,7 @@ Target item selector.
 
 ### close
 
-Fires after a sub menu gets closed.
+Fires before a sub menu gets closed. You can cancel this event to prevent closure.
 
 #### Example
 
@@ -415,7 +415,7 @@ The closed item
 
 ### open
 
-Fires before a sub menu gets opened.
+Fires before a sub menu gets opened. You can cancel this event to prevent opening the sub menu.
 
 #### Example
 

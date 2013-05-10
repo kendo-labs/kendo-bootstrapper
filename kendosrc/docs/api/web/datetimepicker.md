@@ -568,3 +568,41 @@ Fires when the calendar or the time drop-down list is opened
 ##### e.view `String`
 
 The view which is opened. Possible values are "date" and "time".
+
+## Field
+
+### element
+A jQuery object of the original input element.
+
+### options
+An object, which holds the options of the widget.
+
+### wrapper
+A jQuery object of the span element which wraps the input.
+
+### dateView
+An instance of the DateView object, responsible for the popup calendar.
+
+#### calendar
+The Calendar instance.
+
+#### popup
+The Popup instance.
+
+#### div
+jQuery object of the popup element.
+
+### timeView
+An instance of the TimeView object, responsible for the drop-down list of available hours.
+
+#### popup
+The Popup instace used by the widget.
+
+#### ul
+A jQuery object of the ul element, which holds the available hours.
+
+#### list
+A jQuery object of the drop-down list element.
+
+#### template
+A template used to render available options in the list.
