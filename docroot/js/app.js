@@ -68,8 +68,6 @@ function withSelectedProject(f) {
 }
 
 function setupLayout() {
-    KDOCS = {};
-
     var updateDocSearch = function() {
         var query = $("#apidoc-search").val().trim();
         if (query) {
@@ -85,7 +83,10 @@ function setupLayout() {
         apidoc: [],
         onSearchKeydown: function() {
             updateDocSearch.cancel()();
-        }
+        },
+        onSearchChange: function() {
+            updateDocSearch.cancel()();
+        },
     });
 
     kendo.bind($("#top-layout"), model);
@@ -117,12 +118,11 @@ function setupLayout() {
         });
     });
 
-    RPC.call("kdoc/get-all-docs", function(ret){
-        KDOCS = ret;
+    RPC.call("kdoc/get-all-docs", function(components){
         var widgets = [];
-        for (var i in ret) {
+        for (var i in components) {
             widgets.push({
-                name : ret[i].name.replace(/^kendo\./, ""),
+                name : components[i].name.replace(/^kendo\./, ""),
                 id   : i
             });
         }
@@ -137,35 +137,11 @@ function setupLayout() {
             change     : function(ev) {
                 var item = ev.sender.select();
                 var id = item.attr("value");
-                var comp = KDOCS[id];
-                var dlg_el = $("<div></div>").html(getTemplate("docbrowser-dialog")({
-                    closeLabel: "Close"
-                })).kendoWindow({
-                    title   : "Kendo UI — " + comp.name,
-                    width   : 800,
-                    height  : 500,
-                    actions : [ "Minimize", "Maximize", "Close" ],
-                    resize: function() {
-                        var sz = this.getInnerSize();
-                        lm.setOuterSize(sz.x, sz.y);
-                    }
-                }).on("click", ".btn-ok", function(){
-                    dlg.close();
-                }).on("click", "a", function(ev){
-                    alert("FIXME");
-                    ev.preventDefault();
-                });
-                kendo.bind(dlg_el, {
-
-                });
-                $(".content", dlg_el).html(jsonml_to_html(comp.doc, comp.refs));
-                var lm = $(".layout", dlg_el).data("kendoLayoutManager");
-                var dlg = dlg_el.data("kendoWindow");
-                dlg.open();
-                dlg.center();
-                dlg.trigger("resize");
+                var comp = components[id];
+                docBrowserDialog.open_comp(comp);
             }
         }).data("kendoListView");
+        docBrowserDialog.setup(components);
     });
 
     // $("#btn-file-delete").click(function(){
@@ -204,6 +180,119 @@ function setupLayout() {
         }
     });
 }
+
+var docBrowserDialog = (function(){
+    var COMPS;
+    function setup(comps) {
+        COMPS = comps;
+    }
+    function parse_anchor(anchor) {
+        var m = /^(.*?)-(.*)$/.exec(anchor);
+        var section = m[1];
+        var prop = m[2].split(".");
+        if (section == "configuration")
+            section = "config";
+        return {
+            section : section,
+            prop    : prop
+        };
+    }
+    function link_target(anchor) {
+        var comp = current_comp;
+        anchor = parse_anchor(anchor);
+        var bag = comp[anchor.section];
+        for (var i = 0; i < bag.length; ++i) {
+            var prop = bag[i];
+            if (prop.name == anchor.prop[0]) {
+                if (anchor.prop.length == 1) {
+                    return {
+                        comp    : comp,
+                        section : anchor.section,
+                        prop    : prop,
+                    };
+                }
+                anchor.prop.shift();
+                bag = prop.sub;
+                i = 0;
+            }
+        }
+    }
+    function open_link(url) {
+        if (/^(https?:)?\/\//i.test(url)) {
+            window.open(url, "KENDODOC");
+            return;
+        }
+        var m = /^(.*?)(#(.*))?$/.exec(url);
+        var file = m[1];
+        var anchor = m[3];
+        if (file) {
+            file += ".md";
+            for (var i in COMPS) {
+                var c = COMPS[i];
+                if (c.file.substr(-file.length) == file) {
+                    open_comp(c);
+                    return;
+                }
+            }
+        } else {
+            var cont = $(".content", DLG_EL);
+            var target = link_target(anchor);
+            if (target) {
+                open_comp(target.comp);
+
+            } else {
+                // XXX: what now?
+                // try to open it on docs.kendoui.com seems the best option
+                open_link("http://docs.kendoui.com" + url);
+            }
+        }
+    }
+    //var current_comp;
+    function open_comp(comp) {
+        current_comp = comp;
+        get_dlg();
+        $(".content", DLG_EL).html(jsonml_to_html(comp.doc, comp.refs));
+        DLG.title("Kendo API — " + current_comp.name);
+    }
+    var DLG = null;
+    var DLG_EL = null;
+    function get_dlg() {
+        if (!DLG) {
+            DLG_EL = $("<div></div>").html(getTemplate("docbrowser-dialog")({
+                closeLabel: "close"
+            })).kendoWindow({
+                title: "Kendo UI — API Documentation",
+                width: "90%",
+                height: 500,
+                resize: function() {
+                    var sz = this.getInnerSize();
+                    lm.setOuterSize(sz.x, sz.y);
+                },
+            }).on("click", ".btn-ok", function(){
+                DLG.close();
+            }).on("click", "a", function(ev){
+                try {
+                    open_link($(ev.target).attr("href"));
+                } catch (ex) {
+                    console.log(ex);
+                    console.log(ex.stack);
+                }
+                ev.preventDefault();
+            });
+            kendo.bind(DLG_EL, {});
+            var lm = $(".layout", DLG_EL).data("kendoLayoutManager");
+            DLG = DLG_EL.data("kendoWindow");
+            DLG.open();
+            DLG.center();
+            DLG.trigger("resize");
+        }
+        DLG.open();
+    }
+    return {
+        open_comp : open_comp,
+        setup     : setup
+    };
+})();
 
 function projectFileLink(proj, path) {
     return "/@proj/" + proj.id + "/" + path.replace(/^\/+/, "");

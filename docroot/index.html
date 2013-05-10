@@ -42,7 +42,9 @@
           <label>
             Search widget:
             <input id="apidoc-search"
-                   data-bind="value: search_api, events: { keydown: onSearchKeydown }" />
+                   data-bind="value: search_api,
+                              events: { keydown: onSearchKeydown,
+                                        change: onSearchChange }" />
           </label>
         </div>
 

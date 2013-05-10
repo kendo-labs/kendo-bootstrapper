@@ -7,7 +7,8 @@ var U2 = require("uglify-js");
 var PATTERN = require("./pattern.js");
 var UTILS = require("../lib/utils.js");
 
-function Component(name) {
+function Component(name, file) {
+    this.file = file;
     this.name = name;
     this.config = [];
     this.methods = [];
@@ -127,6 +128,7 @@ var kendo_apidoc = (function(P){
     var pat3 = section_pattern(3);
     var pat_parameters = section_pattern(4, RX(/Parameters/i));
     var pat_event_data = section_pattern(4, RX(/Event Data/i));
+    var pat_example = section_pattern(4, RX(/Example/i));
     var pat5 = section_pattern(5);
     var filename = null;
 
@@ -175,7 +177,17 @@ var kendo_apidoc = (function(P){
                 args.push(param);
             });
         });
-        return { name: name, args: args, short_doc: tree.intro.content(), doc: tree.whole.content() };
+        var examples = [];
+        P.search(tree.body.content(), pat_example, function(m){
+            examples.push(m.$match().content());
+        });
+        return {
+            name      : name,
+            args      : args,
+            short_doc : tree.intro.content(),
+            doc       : tree.whole.content(),
+            examples  : examples,
+        };
     };
 
     function read_config(comp, tree) {
@@ -188,11 +200,13 @@ var kendo_apidoc = (function(P){
             var m = /^(.+)\.([^.]+)$/.exec(op.name);
             if (m) {
                 var parent = comp.get_config_option(m[1]), prop = m[2];
-                op.orig = op.name;
-                op.name = prop;
-                if (!parent.sub) parent.sub = [];
-                parent.sub.push(op);
-                comp.config.splice(i, 1);
+                if (parent) {
+                    op.orig = op.name;
+                    op.name = prop;
+                    if (!parent.sub) parent.sub = [];
+                    parent.sub.push(op);
+                    comp.config.splice(i, 1);
+                }
             }
         }
     };
@@ -263,7 +277,7 @@ var kendo_apidoc = (function(P){
         var refs = tree.references;
         P.search(tree, pat1, function(m){
             var name = trim(m.title.first());
-            var comp = components[name] = new Component(name);
+            var comp = components[name] = new Component(name, file);
             comp.short_doc = m.intro.content();
             comp.doc = m.whole.content();
             comp.refs = refs;

@@ -84,7 +84,7 @@ STEP(
         var next = this;
         UTILS.fs_find(PATH.join(__dirname, "..", "kendosrc", "docs"), {
             filter: function(f) {
-                return f.stat.isFile() && PATH.extname(f.full) == ".md" && /docs\/api\/(web|dataviz|mobile)\//.test(f.full.sane_path());
+                return f.stat.isFile() && PATH.extname(f.full) == ".md" && /docs\/api\/(web|dataviz|mobile|framework)\//.test(f.full.sane_path());
             },
             callback: function(err, f) {
                 if (!err) {
