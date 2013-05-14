@@ -117,6 +117,39 @@ function setupLayout() {
             window.open("/@proj/" + proj.id + "/", "PROJECTPREVIEW");
         });
     });
+    $("#btn-project-import").click(function(){
+        filePicker(SERVER_CONFIG.projects_dir, {
+            infoText: "Select existing project directory",
+            dirsonly: true
+        }, function(fp){
+            RPC.call("fs/stat", [ path_join(fp.path, "bootstrapper.json") ], function(stat, err){
+                stat = stat[0];
+                if (stat.error) {
+                    RPC.call("project/import-project", { path: fp.path }, function(ret, err){
+                        if (err) {
+                            console.log(err);
+                            alert(err.msg);
+                            return;
+                        }
+                        fp.dlg.close();
+                    });
+                } else {
+                    RPC.call("project/import-bootstrapper-project", fp.path, function(ret, err){
+                        if (err) {
+                            console.log(err);
+                            alert(err.msg);
+                            return;
+                        }
+                        // nothing to do here, the project should be
+                        // already shown in the list via a
+                        // notification from the server.
+                        fp.dlg.close();
+                    });
+                }
+            });
+            //ret.dlg.close();
+        });
+    });
 
     RPC.call("kdoc/get-all-docs", function(components){
         var widgets = [];
@@ -562,12 +595,17 @@ function projectNew() {
         modal: true
     }).on("click", ".btn-ok", function(){
         var args = {
-            id   : $("input[name=id]"   , dlg_el).val(),
-            name : $("input[name=name]" , dlg_el).val(),
-            path : $("input[name=path]" , dlg_el).val(),
+            id      : $("input[name=id]"      , dlg_el).val(),
+            name    : $("input[name=name]"    , dlg_el).val(),
+            path    : $("input[name=path]"    , dlg_el).val(),
+            confirm : $("input[name=confirm]" , dlg_el).prop("checked")
         }
         RPC.call("project/bootstrap", args, function(data, err){
             if (err) {
+                if (err == "NOTEMPTY") {
+                    $(".confirm", dlg_el).fadeIn();
+                    return;
+                }
                 console.log(err);
                 alert(err.msg);
                 return;

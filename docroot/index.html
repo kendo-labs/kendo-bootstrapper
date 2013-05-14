@@ -30,6 +30,7 @@
         <div class="title">Projects</div>
 
         <div class="k-toolbar" style="padding: 5px">
+          <button class="k-button" id="btn-project-import">Import</button>
           <button class="k-button" id="btn-project-new">New</button>
           <button class="k-button" id="btn-project-preview">Preview</button>
         </div>
@@ -208,6 +209,11 @@
         <label>
           Project ID:<br />
           <input autocomplete="off" name="id" style="width: 10em" class="k-input k-editable" type="text" />
+        </label>
+      </p>
+      <p class="confirm" style="display: none">
+        <label>
+          <input type="checkbox" name="confirm" /> Confirm new project in non-empty directory
         </label>
       </p>
       $(PROCESS ok_cancel_buttons())

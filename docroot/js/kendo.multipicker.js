@@ -4,7 +4,7 @@
 
     var yajet = new YAJET();
     var itemTemplate = yajet.compile(
-        "<label><input type='checkbox' value='$this.value|html' /> $this.label|html</label>"
+        "<label style='white-space: nowrap'><input type='checkbox' value='$this.value|html' /> $this.label|html</label>"
     );
 
     var Widget = kendo.ui.Widget;
