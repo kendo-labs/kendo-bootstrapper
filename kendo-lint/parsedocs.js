@@ -43,8 +43,8 @@ Component.prototype.check_option = function(list, prop, results) {
     if (!op) {
         results.push({
             message : "Option " + name + " not found",
-            line    : prop.start.line,
-            col     : prop.start.col
+            line    : prop.start ? prop.start.line : null,
+            col     : prop.start ? prop.start.col : null
         });
         return;
     }
@@ -89,8 +89,8 @@ Component.prototype.check_option = function(list, prop, results) {
         if (v1 == v2) {
             results.push({
                 message: "Passed value for option " + name + " is the same as default value: " + v1,
-                line: prop.start.line,
-                col: prop.start.col
+                line: prop.start ? prop.start.line : null,
+                col: prop.start ? prop.start.col : null
             });
         }
     }
@@ -301,6 +301,13 @@ var kendo_apidoc = (function(P){
         components    : components,
         get_ui_comp   : function(name) {
             return components["kendo.ui." + name];
+        },
+        get_ui_comp_ci: function(name) {
+            name = "kendo.ui." + name.toLowerCase();
+            for (var i in components) {
+                if (i.toLowerCase() == name)
+                    return components[i];
+            }
         }
     };
 
