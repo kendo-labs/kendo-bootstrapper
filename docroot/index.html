@@ -66,6 +66,8 @@
                         class="k-button">Dependencies</button>
                 <button onclick="withSelectedProject(rebuildProject)"
                         class="k-button">Compile</button>
+                <button onclick="withSelectedProject(optimizeImages)"
+                        class="k-button">Optimize images</button>
                 <button onclick="withSelectedProject(projectAddFile)"
                         class="k-button">Add file</button>
                 <button onclick="withSelectedProject(projectBuildKendo)"
@@ -320,7 +322,7 @@
       </div>
     </script>
 
-    <script type="x/yajet-template" class="build-distro">
+    <script type="x/yajet-template" class="build-distro-dialog">
       <div>
         <h2>Select build type:</h2>
         <p>

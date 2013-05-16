@@ -723,7 +723,7 @@ function projectBuildKendo(proj) {
 function projectBuildDistro(proj) {
     rebuildProject(proj, function(_, err){
         if (!err) {
-            var dlg_el = $("<div></div>").html(getTemplate("build-distro")({
+            var dlg_el = $("<div></div>").html(getTemplate("build-distro-dialog")({
 
             })).kendoWindow({
                 title: "Build distro",
@@ -907,6 +907,19 @@ function areYouSure(options, callback) {
     dlg.open();
     dlg.center();
 }
+
+function optimizeImages(proj) {
+    RPC.call("project/optimize-images", proj.id);
+}
+
+
+
+
+
+
+
+
+
 
 // <File-Picker>
 
