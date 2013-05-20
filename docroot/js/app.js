@@ -8,17 +8,24 @@ $(document).ready(function(){
     setupLayout();
 });
 
-var getTemplate = function(cache){
+var TMPL = function(cache){
     var yajet = new YAJET({
         with_scope: false
     });
-    return function(cls) {
-        var tmpl = cache["$" + cls];
-        if (tmpl) return tmpl;
-        var html = $("script[type='x/yajet-template']." + cls).text();
-        return cache["$" + cls] = yajet.compile(html);
+    return {
+        getTemplate: function(cls) {
+            var tmpl = cache["$" + cls];
+            if (tmpl) return tmpl;
+            var html = $("script[type='x/yajet-template']." + cls).text();
+            return cache["$" + cls] = yajet.compile(html);
+        },
+        process: function(tmpl, obj, args) {
+            return yajet.process(tmpl, obj, args);
+        }
     };
 }({});
+
+var getTemplate = TMPL.getTemplate;
 
 function setupListeners() {
     RPC.listen("setup", function(config){
@@ -220,18 +227,17 @@ var docBrowserDialog = (function(){
         COMPS = comps;
     }
     function parse_anchor(anchor) {
-        var m = /^(.*?)-(.*)$/.exec(anchor);
+        var m = /^(.*?)(-(.*))?$/.exec(anchor);
         var section = m[1];
-        var prop = m[2].split(".");
         if (section == "configuration")
             section = "config";
-        return {
+        var ret = {
             section : section,
-            prop    : prop
         };
+        if (m[3]) ret.prop = m[3].split(".");
+        return ret;
     }
-    function link_target(anchor) {
-        var comp = current_comp;
+    function link_target(comp, anchor) {
         anchor = parse_anchor(anchor);
         var bag = comp[anchor.section];
         for (var i = 0; i < bag.length; ++i) {
@@ -258,37 +264,59 @@ var docBrowserDialog = (function(){
         var m = /^(.*?)(#(.*))?$/.exec(url);
         var file = m[1];
         var anchor = m[3];
+        var comp = null;
         if (file) {
             file += ".md";
             for (var i in COMPS) {
                 var c = COMPS[i];
                 if (c.file.substr(-file.length) == file) {
-                    open_comp(c);
-                    return;
+                    comp = c;
+                    break;
                 }
             }
+        }
+        if (!comp && !anchor) {
+            open_link("http://docs.kendoui.com" + url);
+        }
+        if (!comp) comp = current_comp;
+        open_comp(comp, anchor);
+    }
+    var current_comp, prevUndo = false;
+    function open_comp(comp, target, isUndo) {
+        get_dlg();
+        var content = $(".docbrowser-content", DLG_EL)
+        var h = {
+            comp: comp,
+            pos: content.scrollTop()
+        }, q;
+        if (history.length == 0 || (q = history[history.length - 1],
+                                    q.comp !== h.comp || q.pos != h.pos)) {
+            history.push(h);
+        }
+        if (!isUndo) {
+            history_pointer = history.length - 1;
+        }
+        prevUndo = isUndo;
+        if (current_comp !== comp) {
+            current_comp = comp;
+            content.html(jsonml_to_html(comp.doc, comp.refs));
+            $(".docbrowser-index", DLG_EL).html(
+                TMPL.process("docbrowser_index", comp, [ comp ])
+            );
+            DLG.title("Kendo API — " + current_comp.name);
+        }
+        if (isUndo) {
+            content.scrollTop(target);
         } else {
-            var cont = $(".content", DLG_EL);
-            var target = link_target(anchor);
             if (target) {
-                open_comp(target.comp);
-
-            } else {
-                // XXX: what now?
-                // try to open it on docs.kendoui.com seems the best option
-                open_link("http://docs.kendoui.com" + url);
+                var el = $("[name='" + target + "']", content);
+                el[0].scrollIntoView();
             }
         }
     }
-    //var current_comp;
-    function open_comp(comp) {
-        current_comp = comp;
-        get_dlg();
-        $(".content", DLG_EL).html(jsonml_to_html(comp.doc, comp.refs));
-        DLG.title("Kendo API — " + current_comp.name);
-    }
     var DLG = null;
     var DLG_EL = null;
+    var history = [], history_pointer = 0;
     function get_dlg() {
         if (!DLG) {
             DLG_EL = $("<div></div>").html(getTemplate("docbrowser-dialog")({
@@ -312,7 +340,20 @@ var docBrowserDialog = (function(){
                 }
                 ev.preventDefault();
             });
-            kendo.bind(DLG_EL, {});
+            kendo.bind(DLG_EL, {
+                onHistoryPrev: function() {
+                    if (history_pointer >= 0) {
+                        var h = history[history_pointer--];
+                        open_comp(h.comp, h.pos, true);
+                    }
+                },
+                onHistoryNext: function() {
+                    if (prevUndo && history_pointer < history.length - 1) {
+                        var h = history[++history_pointer];
+                        open_comp(h.comp, h.pos, true);
+                    }
+                }
+            });
             var lm = $(".layout", DLG_EL).data("kendoLayoutManager");
             DLG = DLG_EL.data("kendoWindow");
             DLG.open();

@@ -15,6 +15,7 @@
        "jshint"         : "",
        "markdown"       : "",
        "coffee-script"  : "~1.4.0",
-       "cheerio"        : "~0.10.8"
+       "cheerio"        : "~0.10.8",
+       "requirejs"      : ""
    }
 }
