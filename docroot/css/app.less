@@ -64,7 +64,18 @@ h3 {
     padding: 4px 5px;
     background: #ddd;
     color: #444;
-    font: bold 16px Georgia;
+    font: bold 16px Arial;
+    .links {
+      float: right;
+      font: normal 80% Arial,sans-serif;
+      .link {
+        color: #00f;
+        cursor: pointer;
+        &:hover {
+          color: #f00;
+        }
+      }
+    }
   }
   .k-toolbar {
     text-align: right;

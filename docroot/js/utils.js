@@ -187,3 +187,9 @@ function path_relative(full, dir) {
         }
     }
 };
+
+function path_dirname(path) {
+    var x = path_split(path);
+    x.pop()
+    return path_join(x);
+};

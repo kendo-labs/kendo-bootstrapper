@@ -27,7 +27,12 @@
       <div class="sections" kendo-layout="20%,min:200,resizable"
            data-role="layoutmanager" data-orientation="vertical">
 
-        <div class="title">Projects</div>
+        <div class="title">
+          <span class="links">
+            <span class="link" data-bind="click: onSettings">settings</span>
+          </span>
+          Projects
+        </div>
 
         <div class="k-toolbar" style="padding: 5px">
           <button class="k-button" id="btn-project-import">Import</button>
@@ -559,6 +564,45 @@
           <label>
             Local name for this file:<br />
             <input data-bind="value: filename" style="width: 20em" />
+          </label>
+        </p>
+        $(PROCESS ok_cancel_buttons())
+      </div>
+    </script>
+
+    <script type="x/yajet-template" class="bootstrapper-settings-dialog">
+      <div data-role="window" data-title="Settings" data-modal="true">
+        <h2>Editor configuration</h2>
+        <p>
+          <label>
+            Editor (executable):<br />
+            <input class="k-input k-editable" style="width: 20em" data-bind="value: editor.path" />
+            <button class="k-button" title="Browse" data-bind="click: onBrowse">...</button>
+          </label>
+        </p>
+        <p style="max-width: 25em">
+          There are 3 editor commands.  One that takes only the filename
+          (<tt><b>{file}</b></tt>), the second takes a line number
+          (<tt><b>{line}</b></tt>), and the third also receives a column
+          number (<tt><b>{col}</b></tt>).  Customize the arguments in the
+          fields below.
+        </p>
+        <p>
+          <label>
+            Editor command 1:
+            <input class="k-input k-editable" data-bind="value: editor.args.cmd1" />
+          </label>
+        </p>
+        <p>
+          <label>
+            Editor command 2:
+            <input class="k-input k-editable" data-bind="value: editor.args.cmd2" />
+          </label>
+        </p>
+        <p>
+          <label>
+            Editor command 3:
+            <input class="k-input k-editable" data-bind="value: editor.args.cmd3" />
           </label>
         </p>
         $(PROCESS ok_cancel_buttons())

@@ -94,6 +94,9 @@ function setupLayout() {
         onSearchChange: function() {
             updateDocSearch.cancel()();
         },
+        onSettings: function() {
+            bootstrapperSettingsDialog();
+        }
     });
 
     kendo.bind($("#top-layout"), model);
@@ -953,7 +956,67 @@ function optimizeImages(proj) {
     RPC.call("project/optimize-images", proj.id);
 }
 
-
+function bootstrapperSettingsDialog() {
+    var dlg_el = $("<div></div>").html(getTemplate("bootstrapper-settings-dialog")({
+        mvvm: true,
+    })).children().first();
+    var model = kendo.observable({
+        editor: {
+            path: SERVER_CONFIG.editor.path,
+            args: {
+                cmd1: SERVER_CONFIG.editor.args.cmd1.join(" "),
+                cmd2: SERVER_CONFIG.editor.args.cmd2.join(" "),
+                cmd3: SERVER_CONFIG.editor.args.cmd3.join(" "),
+            }
+        },
+        onBrowse: function() {
+            filePicker(path_dirname(model.editor.path), {}, function(ret){
+                if (ret) {
+                    model.set("editor.path", path_join(ret.path, ret.name));
+                    ret.dlg.close();
+                }
+            });
+        },
+        onOK: function() {
+            var filename = model.editor.path;
+            RPC.call("fs/stat", [ filename ], function(stats){
+                var stat = stats[0];
+                if (stat.error) {
+                    if (stat.error.code == "ENOENT") {
+                        alert("File " + filename + " doesn't exist.");
+                        return;
+                    }
+                    alert("There was an error accessing " + filename + ", code: " + stat.error.code);
+                    return;
+                }
+                if (stat.isDirectory) {
+                    alert("You selected a directory");
+                    return;
+                }
+                var args = {
+                    editor: {
+                        path: filename,
+                        args: {
+                            cmd1: model.editor.args.cmd1.trim().split(/\s+/),
+                            cmd2: model.editor.args.cmd2.trim().split(/\s+/),
+                            cmd3: model.editor.args.cmd3.trim().split(/\s+/),
+                        }
+                    }
+                };
+                RPC.call("settings/save", args, function(){
+                    dlg.close();
+                });
+            });
+        },
+        onCancel: function() {
+            dlg.close();
+        }
+    });
+    kendo.bind(dlg_el, model);
+    var dlg = dlg_el.data("kendoWindow");
+    dlg.open();
+    dlg.center();
+}
 
 
 

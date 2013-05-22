@@ -144,11 +144,7 @@ function start_server() {
     var wss = new WS.Server({ server: server });
     wss.on("connection", function(ws){
         CLIENTS.push(ws);
-        RPC.notify(ws, "setup", {
-            projects_dir : CONFIG.get_projects_directory().replace(/\\/g, "/"),
-            platform     : process.platform,
-            pathsep      : PATH.sep
-        });
+        CONFIG.notify_setup(ws);
         PROJECT.forEach(function(proj){
             RPC.notify(ws, "register_project", proj);
         });
