@@ -161,7 +161,8 @@ function start_server() {
         "register_project",
         "project_add_file",
         "project_delete_file",
-        "console"
+        "console",
+        "fswatch",
     ], function(data){
         var event = this.event;
         CLIENTS.forEach(function(ws){
