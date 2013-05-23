@@ -47,7 +47,7 @@ HANDLERS = [
         if (!path) path = "index.html";
         var f = PROJECT.get_file_by_name(proj, path);
         if (f && f.page) {
-            SS.serve_content(PROJECT.build_page(proj, f, { devel: true }), path, response);
+            SS.serve_content(PROJECT.build_page(proj, f, { devel: true, autoreload: true }), path, response);
         } else {
             path = "/" + path;
             if (url.search) path += url.search;
