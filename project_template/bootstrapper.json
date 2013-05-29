@@ -1,6 +1,7 @@
 {
     "id"   : "{{PROJECT_ID}}",
     "name" : "{{PROJECT_NAME}}",
+    "requirejs" : {{#if USE_REQUIREJS}}true{{else}}false{{/if}},
 
     "files": [
         {

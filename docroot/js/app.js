@@ -708,11 +708,12 @@ function projectNew() {
         modal: true
     }).on("click", ".btn-ok", function(){
         var args = {
-            id      : $("input[name=id]"      , dlg_el).val(),
-            name    : $("input[name=name]"    , dlg_el).val(),
-            path    : $("input[name=path]"    , dlg_el).val(),
-            confirm : $("input[name=confirm]" , dlg_el).prop("checked")
-        }
+            id        : $("input[name=id]"        , dlg_el).val(),
+            name      : $("input[name=name]"      , dlg_el).val(),
+            path      : $("input[name=path]"      , dlg_el).val(),
+            confirm   : $("input[name=confirm]"   , dlg_el).prop("checked"),
+            requirejs : $("input[name=requirejs]" , dlg_el).prop("checked"),
+        };
         RPC.call("project/bootstrap", args, function(data, err){
             if (err) {
                 if (err == "NOTEMPTY") {

@@ -1,5 +1,5 @@
 if (!window.RPC) {
-    document.write("<script src='/js/rpc.js'></script>");
+    document.write("<script src='http://localhost:7569/js/rpc.js'></script>");
 }
 
 $(document).ready(function(){
