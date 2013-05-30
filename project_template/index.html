@@ -4,6 +4,18 @@
 
     <title>{{PROJECT_NAME}}</title>
 
+    {{#if USE_REQUIREJS}}
+    <script>
+      var require = {
+          paths: {
+              "jquery": "kendo/js/jquery.min",
+              "kendo": "kendo/js/kendo.web.min"
+          }
+      };
+    </script>
+    <script src="js/require.js"></script>
+    {{/if}}
+
     <!-- Inside the following comment marked with KENDO_BOOTSTRAPPER:FILES,
          the bootstrapper will auto-load any files that this page depends
          on.  Do not manually place anything there as it will be overwritten
