@@ -128,7 +128,7 @@
                         , <a href="#" command="deps-file" project-id="$p.id|html" file-id="$f.id|html">deps</a>$-
                         , <a href="#" command="props-file" project-id="$p.id|html" file-id="$f.id|html">props</a>$-
                         )
-                      $(WHEN (!finfo.library && finfo.canbuild)
+                      $(WHEN (!finfo.library && finfo.canbuild && !f.drop)
                         →
                         $(AIF (finfo.build)
                           <span class="build">

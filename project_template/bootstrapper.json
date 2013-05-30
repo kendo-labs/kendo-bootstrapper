@@ -4,6 +4,14 @@
     "requirejs" : {{#if USE_REQUIREJS}}true{{else}}false{{/if}},
 
     "files": [
+        {{#if USE_REQUIREJS}}
+        {
+            "id"   : "build.js",
+            "name" : "build.js",
+            "type" : "js",
+            "drop" : true
+        },
+        {{/if}}
         {
             "id"   : "jquery",
             "name" : "kendo/js/jquery.min.js",

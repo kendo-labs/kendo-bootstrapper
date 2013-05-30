@@ -919,7 +919,7 @@ function projectEditFileDependencies(proj_id, file_id) {
         textField  : "name",
         valueField : "id",
         sort       : "type",
-        choices    : proj.files.filter(function(f){ return f !== file }),
+        choices    : proj.files.filter(function(f){ return f !== file && !f.drop }),
         value      : the_deps[file_id],
         change     : function(ev) {
             the_deps[file_id] = ev.value;
@@ -956,7 +956,9 @@ function projectEditDependencies(proj) {
     });
     var selected_file;
     var left_files = new kendo.ui.ListView($(".left-files", dlg_el), {
-        dataSource : proj.files,
+        dataSource : {
+            data: proj.files.filter(function(f){ return !f.drop }),
+        },
         selectable : true,
         template   : getTemplate("simple-list-item"),
         change     : function(ev) {
@@ -970,7 +972,7 @@ function projectEditDependencies(proj) {
             );
             var deps = [].slice.call(the_deps[selected_file.id] || []);
             deps_select.reset(proj.files.filter(function(f){
-                return f !== selected_file;
+                return f !== selected_file && !f.drop;
             }));
             deps_select.value(deps);
             dlg.trigger("resize");
