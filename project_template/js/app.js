@@ -1,6 +1,13 @@
 // application entry point
 {{#if USE_REQUIREJS}}
-require([ "../kendo/js/jquery.min", "../kendo/js/kendo.web.min" ], function(){
+require.config({
+    paths: {
+        "jquery": "kendo/js/jquery.min",
+        "kendo": "kendo/js/kendo.web.min"
+    }
+});
+
+require([ "jquery", "kendo" ], function(){
     $(document).ready(function(){
         var dlg = $("#hello-world-window").kendoWindow({
             title: "Hello World!",

@@ -1,9 +1,4 @@
-if (!window.RPC) {
-    document.write("<script src='http://localhost:7569/js/rpc.js'></script>");
-}
-
-$(document).ready(function(){
-
+(function(){
     function is_this_page(name) {
         return name == __THIS_PAGE__.name;
     }
@@ -35,5 +30,4 @@ $(document).ready(function(){
             window.location.reload(true);
         }
     });
-
-});
+}());
