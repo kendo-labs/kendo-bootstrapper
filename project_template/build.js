@@ -6,5 +6,5 @@
         kendo: "kendo/js/kendo.web.min"
     },
     name: "js/app",
-    out: "js/app.min.js"
+    out: "js/app-build.js"
 })

@@ -10,7 +10,12 @@ $(document).ready(function(){
 
 var TMPL = function(cache){
     var yajet = new YAJET({
-        with_scope: false
+        with_scope: false,
+        filters: {
+            txthtml: function(msg) {
+                return htmlescape(msg).trim().replace(/\n/g, "<br/>");
+            }
+        }
     });
     return {
         getTemplate: function(cls) {
