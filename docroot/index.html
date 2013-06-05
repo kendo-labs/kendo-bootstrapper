@@ -611,5 +611,31 @@
       </div>
     </script>
 
+    <script type="x/yajet-template" class="import-project-exclusions-dlg">
+      <div data-role="window"
+           data-title="Include / exclude files" data-modal="true"
+           data-width="800" data-height="500"
+           data-bind="events: { resize: dlgResize }">
+        <div class="layout" data-role="layoutmanager" data-orientation="vertical">
+          <div data-role="layoutmanager" data-orientation="horizontal" data-spacing="5" kendo-layout="1">
+            <div data-role="layoutmanager" data-orientation="vertical" data-spacing="5" kendo-layout="40%,resizable">
+              <div class="information">
+                Enter below the rules for selecting project files.  Click
+                the Preview button to see on the right the list of files
+                that would be included.
+              </div>
+              <textarea kendo-layout="1" style="white-space: nowrap; overflow: auto;"
+                        data-bind="value: rules"></textarea>
+              <div style="text-align: right">
+                <button class="k-button" data-bind="click: onPreview">Preview</button>
+              </div>
+            </div>
+            <div class="preview" style="overflow: auto" kendo-layout="1"></div>
+          </div>
+          $(PROCESS ok_cancel_buttons())
+        </div>
+      </div>
+    </script>
+
   </body>
 </html>

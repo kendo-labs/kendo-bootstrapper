@@ -139,13 +139,20 @@ function setupLayout() {
             RPC.call("fs/stat", [ path_join(fp.path, "bootstrapper.json") ], function(stat, err){
                 stat = stat[0];
                 if (stat.error) {
-                    RPC.call("project/import-project", { path: fp.path }, function(ret, err){
-                        if (err) {
-                            console.log(err);
-                            alert(err.msg);
-                            return;
-                        }
-                        fp.dlg.close();
+                    editIncludedFiles({
+                        path: fp.path
+                    }, function(rules){
+                        if (rules) RPC.call("project/import-project", {
+                            import_rules : rules,
+                            path         : fp.path,
+                        }, function(ret, err){
+                            if (err) {
+                                console.log(err);
+                                alert(err.msg);
+                                return;
+                            }
+                            fp.dlg.close();
+                        });
                     });
                 } else {
                     RPC.call("project/import-bootstrapper-project", fp.path, function(ret, err){
@@ -1035,6 +1042,57 @@ function bootstrapperSettingsDialog() {
     var dlg = dlg_el.data("kendoWindow");
     dlg.open();
     dlg.center();
+}
+
+function editIncludedFiles(args, callback) {
+    args = defaults(args, {
+        path: null,
+        rules: [
+            "- node_modules/**",
+            "+ /\\.(js|coffee|css|less|html|php|asp|jsp)$/i",
+        ].join("\n")
+    });
+    var dlg_el = $("<div></div>").html(getTemplate("import-project-exclusions-dlg")({
+        mvvm: true
+    })).children().first();
+    var model = kendo.observable({
+        rules: args.rules,
+        dlgResize: function() {
+            var sz = dlg.getInnerSize();
+            top_layout.setOuterSize(sz.x, sz.y);
+        },
+        onPreview: function() {
+            RPC.call("project/preview-files-to-import", {
+                path: args.path,
+                rules: this.rules
+            }, function(ret){
+                ret = ret.sort(function(a, b){
+                    a = a.rel.toLowerCase();
+                    b = b.rel.toLowerCase();
+                    return a < b ? -1 : a > b ? 1 : 0;
+                });
+                var html = "<ul>" +
+                    ret.map(function(f){ return "<li>" + htmlescape(f.rel) + "</li>" }).join("") +
+                    "</ul>";
+                $(".preview", dlg_el).html(html);
+            });
+        },
+        onOK: function() {
+            dlg.close();
+            callback(this.rules);
+        },
+        onCancel: function() {
+            dlg.close();
+            callback(null);
+        }
+    });
+    kendo.bind(dlg_el, model);
+    var dlg = dlg_el.data("kendoWindow");
+    var top_layout = $(".layout", dlg_el).data("kendoLayoutManager");
+    dlg.open();
+    dlg.center();
+    dlg.trigger("resize");
+    model.onPreview();
 }
 
 
