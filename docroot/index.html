@@ -38,6 +38,8 @@
           <button class="k-button" id="btn-project-import">Import</button>
           <button class="k-button" id="btn-project-new">New</button>
           <button class="k-button" id="btn-project-preview">Preview</button>
+          |
+          <button class="k-button" id="btn-project-delete">Delete</button>
         </div>
 
         <div id="project-list" kendo-layout="0.5,resizable" style="overflow:auto"></div>
@@ -228,7 +230,7 @@
 
     <script type="x/yajet-template" class="confirm-dialog">
       <p style="font-size: 120%; font-weight: bold">
-        $this.message|html
+        $(IF (this.htmlMessage) $this.htmlMessage $(ELSE) $this.message|html $)
       </p>
       $(PROCESS ok_cancel_buttons())
     </script>

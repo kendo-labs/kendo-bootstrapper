@@ -159,6 +159,7 @@ function start_server() {
     // forward events as notifications to the client
     PROJECT.EVENTS.listen([
         "register_project",
+        "unregister_project",
         "project_add_file",
         "project_delete_file",
         "console",

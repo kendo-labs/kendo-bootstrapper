@@ -37,6 +37,10 @@ function setupListeners() {
     RPC.listen("register_project", function(proj){
         PROJECTS.insert(proj);
     });
+    RPC.listen("unregister_project", function(proj_id){
+        var proj = PROJECTS.get(proj_id);
+        PROJECTS.remove(proj);
+    });
     RPC.listen("project_add_file", function(data){
         var proj = PROJECTS.get(data.proj_id);
         delete data["proj_id"];
@@ -158,6 +162,20 @@ function setupLayout() {
                 }
             });
             //ret.dlg.close();
+        });
+    });
+    $("#btn-project-delete").click(function(){
+        withSelectedProject(function(proj){
+            areYouSure({
+                htmlMessage: ("Sure you want to unregister project “" + htmlescape(proj.name) + "”?<br />" +
+                              "The files will not be deleted from disk."),
+                okLabel: "Yes",
+                cancelLabel: "No"
+            }, function(ok){
+                if (ok) {
+                    RPC.call("project/unregister", proj.id);
+                }
+            });
         });
     });
 
@@ -935,6 +953,7 @@ function consoleAddMessage(msg) {
 function areYouSure(options, callback) {
     var dlg_el = $("<div></div>").html(getTemplate("confirm-dialog")({
         message     : options.message,
+        htmlMessage : options.htmlMessage,
         okLabel     : options.okLabel,
         cancelLabel : options.cancelLabel
     })).kendoWindow({

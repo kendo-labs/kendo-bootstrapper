@@ -111,12 +111,12 @@
         }
     };
 
-    window.RPC = {
-        call        : call,
-        notify      : notify,
-        listen      : listen,
-        unlisten    : unlisten,
-        listen_once : listen_once
-    };
+    var RPC = window.RPC = call;
+
+    RPC.call = call;
+    RPC.notify = notify;
+    RPC.listen = listen;
+    RPC.unlisten = unlisten;
+    RPC.listen_once = listen_once;
 
 })();
