@@ -57,12 +57,29 @@
         <div style="background: #fff; overflow: auto" id="apidoc-list" kendo-layout="1"></div>
 
       </div>
-      <div data-role="layoutmanager" data-orientation="vertical" kendo-layout="1">
-        <table class="project-toolbar k-toolbar" cellspacing="10">
+      <div data-role="layoutmanager" data-orientation="vertical" kendo-layout="1"
+           style="overflow: visible">
+        <table class="project-toolbar k-toolbar" cellspacing="10" style="overflow: visible">
           <tr>
-            <td><h1 class="project-title">Select/create project</h1></td>
-            <td>
+            <td style="width: 100%"><h1 class="project-title">Select/create project</h1></td>
+            <td style="white-space: nowrap">
               <div style="float: right">
+                <ul data-role="menu" style="float: left; margin-right: 0.5em">
+                  <li>Selection
+                    <ul>
+                      <li data-bind="click: onMenuSelectAllFiles">Select all visible files</li>
+                      <li data-bind="click: onMenuUnselectAllFiles">Unselect all</li>
+                    </ul>
+                  </li>
+                  <li>Operate
+                    <ul>
+                      <li data-bind="click: onMenuMakeProjectFiles">Make project files</li>
+                      <li data-bind="click: onMenuMakeLibraryFiles">Make library files</li>
+                      <li data-bind="click: onMenuUnregisterFiles">Unregister files</li>
+                      <li data-bind="click: onMenuDeleteFiles">Delete files</li>
+                    </ul>
+                  </li>
+                </ul>
                 <input class="k-input k-editable" id="file-filter"
                        placeholder="Filter project files"
                        data-bind="value: filter_files,
@@ -117,32 +134,31 @@
           </tr>
           $(BLOCK showfiles(lib)
             $(AWHEN (files.filter(function(f){ return !!f.lib == !!lib }))
-              <ul>
-                $(FOREACH (f => it)
-                  <li>
-                    ${ plink(f.name) }
-                    $(LET ((finfo => p.file_info[f.name]))
-                      (${ finfo.size } bytes$-
-                      $(WHEN (!f.lib)$-
-                        ; <a href="#" command="edit-file" project-id="$p.id|html" filename="$f.name|html">edit</a>$)$-
-                        , <a href="#" command="deps-file" project-id="$p.id|html" file-id="$f.id|html">deps</a>$-
-                        , <a href="#" command="props-file" project-id="$p.id|html" file-id="$f.id|html">props</a>$-
-                        )
-                      $(WHEN (!finfo.library && finfo.canbuild && !f.drop)
-                        →
-                        $(AIF (finfo.build)
-                          <span class="build">
-                            ${ plink(it.rel) } ($it.size bytes)$-
-                            $(WHEN (it.dirty), <span class="warn">outdated</span>$)
-                          </span>
-                        $(ELSE)
-                          <span class="warn">not built</span>
-                        $)
+              $(FOREACH (f => it)
+                <div class="file-name-props">
+                  <input class="file-checkbox" name="file" value="$f.name|html" type="checkbox" />
+                  ${ plink(f.name) }
+                  $(LET ((finfo => p.file_info[f.name]))
+                    (${ finfo.size } bytes$-
+                    $(WHEN (!f.lib)$-
+                      ; <a href="#" command="edit-file" project-id="$p.id|html" filename="$f.name|html">edit</a>$)$-
+                      , <a href="#" command="deps-file" project-id="$p.id|html" file-id="$f.id|html">deps</a>$-
+                      , <a href="#" command="props-file" project-id="$p.id|html" file-id="$f.id|html">props</a>$-
+                      )
+                    $(WHEN (!finfo.library && finfo.canbuild && !f.drop)
+                      →
+                      $(AIF (finfo.build)
+                        <span class="build">
+                          ${ plink(it.rel) } ($it.size bytes)$-
+                          $(WHEN (it.dirty), <span class="warn">outdated</span>$)
+                        </span>
+                      $(ELSE)
+                        <span class="warn">not built</span>
                       $)
                     $)
-                  </li>
-                $)
-              </ul>
+                  $)
+                </div>
+              $)
             $)
           $)
           <tr>

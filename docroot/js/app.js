@@ -27,6 +27,9 @@ var TMPL = function(cache){
         },
         process: function(tmpl, obj, args) {
             return yajet.process(tmpl, obj, args);
+        },
+        compile: function(html) {
+            return yajet.compile(html);
         }
     };
 }({});
@@ -142,8 +145,73 @@ function setupLayout() {
         },
         onFileSearchChange: function() {
             updateFileSearch.cancel()();
-        }
+        },
+
+        // menu
+        onMenuSelectAllFiles: function() {
+            withSelectedProject(function(proj){
+                $("#content .file-checkbox").prop("checked", true);
+            });
+        },
+        onMenuUnselectAllFiles: function() {
+            withSelectedProject(function(proj){
+                $("#content .file-checkbox").prop("checked", false);
+            });
+        },
+        onMenuMakeProjectFiles : operateOnSelectedFiles("make_project_files"),
+        onMenuMakeLibraryFiles : operateOnSelectedFiles("make_library_files"),
+        onMenuUnregisterFiles  : operateOnSelectedFiles("unregister_files"),
+        onMenuDeleteFiles      : operateOnSelectedFiles("delete_files"),
     });
+
+    function getSelectedFiles() {
+        return [].slice.call($("#content .file-checkbox:checked").map(function(){
+            return $(this).val();
+        }));
+    };
+
+    function operateOnSelectedFiles(how) {
+        var ops = {
+            make_project_files: {
+                confirm: "Mark ${ this.count => plural([ 'NO', 'one file', '# files' ]) } as “project files”?"
+            },
+            make_library_files: {
+                confirm: "Mark ${ this.count => plural([ 'NO', 'one file', '# files' ]) } as “library files”?"
+            },
+            unregister_files: {
+                confirm: "Unregister ${ this.count => plural([ 'NO', 'one file', '# files' ]) }?<br />The files will not be removed from the project directory."
+            },
+            delete_files: {
+                confirm: "Delete ${ this.count => plural([ 'NO', 'one file', '# files' ]) }?<br />They will be removed from the disk too!"
+            }
+        };
+        var confirmation = ops[how].confirm;
+        if (confirmation)
+            confirmation = TMPL.compile(confirmation);
+        function doit(proj, file_names) {
+            RPC.call("project/operate-on-files", proj.id, how, file_names, function(ret, err){
+                projectRefreshContent(proj.id);
+            });
+        }
+        return function() {
+            withSelectedProject(function(proj){
+                var sel = getSelectedFiles();
+                if (sel.length == 0) {
+                    alert("No files selected");
+                    return;
+                }
+                if (confirmation) {
+                    areYouSure({
+                        message: confirmation({ count: sel.length }),
+                    }, function(ok){
+                        if (ok) doit(proj, sel);
+                    });
+                } else {
+                    doit(proj, sel);
+                }
+            });
+        }
+    }
 
     kendo.bind($("#top-layout"), model);
     var top_layout = $("#top-layout").data("kendoLayoutManager");
