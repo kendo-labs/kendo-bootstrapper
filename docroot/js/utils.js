@@ -20,6 +20,19 @@ Array.prototype.find = function(pred) {
             return this[i];
 };
 
+String.prototype.globToRegexp = function() {
+    var pat = this.replace(/(\*\*|\*|\.|\\|\?)/g, function(s, p){
+        return {
+            "**" : "[^]*?",
+            "*"  : "[^/]*?",
+            "."  : "\\.",
+            "\\" : "\\\\",
+            "?"  : ".",
+        }[p];
+    });
+    return new RegExp(pat, "i");
+};
+
 Function.prototype.delayed = function(delay) {
     if (delay == null) delay = 0;
     var f = this, timer;

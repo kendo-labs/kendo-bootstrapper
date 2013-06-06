@@ -90,16 +90,52 @@ function setupLayout() {
         }
     }.delayed(300);
 
+    var updateFileSearch = function() {
+        if (ACTIVE_PROJECT) {
+            projectRefreshContent(ACTIVE_PROJECT);
+        }
+    }.delayed(300);
+
     var model = kendo.observable({
         apidoc: [],
-        onSearchKeydown: function() {
+        onAPISearchKeydown: function() {
             updateDocSearch.cancel()();
         },
-        onSearchChange: function() {
+        onAPISearchChange: function() {
             updateDocSearch.cancel()();
         },
         onSettings: function() {
             bootstrapperSettingsDialog();
+        },
+        onAddFile: function() {
+            withSelectedProject(projectAddFile);
+        },
+        onJSHint: function() {
+            withSelectedProject(projectLintJavaScript);
+        },
+        onKendoLint: function() {
+            withSelectedProject(projectLintKendo);
+        },
+        onEditDeps: function() {
+            withSelectedProject(projectEditDependencies);
+        },
+        onCompile: function() {
+            withSelectedProject(rebuildProject);
+        },
+        onOptimizeImages: function() {
+            withSelectedProject(optimizeImages);
+        },
+        onBuildKendo: function() {
+            withSelectedProject(projectBuildKendo);
+        },
+        onBundle: function() {
+            withSelectedProject(projectBuildDistro);
+        },
+        onFileSearchKeydown: function() {
+            updateFileSearch.cancel()();
+        },
+        onFileSearchChange: function() {
+            updateFileSearch.cancel()();
         }
     });
 
@@ -402,6 +438,7 @@ function projectFileLink(proj, path) {
 
 var ACTIVE_PROJECT = null;
 function setActiveProject(proj) {
+    $("#file-filter").val("");
     if (typeof proj != "object")
         proj = PROJECTS.get(proj);
     ACTIVE_PROJECT = proj.id;
@@ -419,11 +456,18 @@ function projectRefreshContent(proj_id) {
     });
 }
 
-function filesByType(files) {
+function filesByType(files, query) {
     var hash = {};
+    if (query) query = query.globToRegexp();
+    function matches(f) {
+        if (!query) return true;
+        return query.test(f.name);
+    }
     files.forEach(function(f){
-        var a = hash[f.type] || (hash[f.type] = []);
-        a.push(f);
+        if (matches(f)) {
+            var a = hash[f.type] || (hash[f.type] = []);
+            a.push(f);
+        }
     });
     return hash;
 }
@@ -437,7 +481,7 @@ function drawContent(proj, data) {
     var el = $("#content").html(getTemplate("project-view")({
         id           : proj.id,
         project_name : proj.name,
-        files        : filesByType(proj.files),
+        files        : filesByType(proj.files, $("#file-filter").val()),
         file_info    : file_info,
         make_link    : function(path) {
             return projectFileLink(proj, path);
@@ -1093,6 +1137,10 @@ function editIncludedFiles(args, callback) {
     dlg.center();
     dlg.trigger("resize");
     model.onPreview();
+}
+
+function clearConsole() {
+    $("#console").html("");
 }
 
 
