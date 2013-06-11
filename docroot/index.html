@@ -24,39 +24,49 @@
   <body>
 
     <div id="top-layout" data-role="layoutmanager" data-orientation="horizontal">
-      <div class="sections" kendo-layout="20%,min:200,resizable"
+
+      <div class="left-side" kendo-layout="20%,min:200,resizable"
            data-role="layoutmanager" data-orientation="vertical">
 
-        <div class="title">
-          <span class="links">
-            <span class="link" data-bind="click: onSettings">settings</span>
-          </span>
+        <div class="title left-side-bg1">
           Projects
+          <span class="links"
+            ><button title="New project" class="k-button BI icon-file" id="btn-project-new"></button
+            ><button title="Import project" class="k-button BI icon-plus" id="btn-project-import"></button
+            ><button title="Preview" class="k-button BI icon-eye-open" id="btn-project-preview"></button
+            ><button title="Remove project" class="k-button BI icon-trash" id="btn-project-delete"></button
+            ><button title="Kendo Bootstrapper options" class="k-button BI icon-wrench" data-bind="click: onSettings"></button
+            ></span>
         </div>
 
-        <div class="k-toolbar" style="padding: 5px">
-          <button class="k-button" id="btn-project-import">Import</button>
-          <button class="k-button" id="btn-project-new">New</button>
-          <button class="k-button" id="btn-project-preview">Preview</button>
-          |
-          <button class="k-button" id="btn-project-delete">Delete</button>
+        <div id="project-list" class="left-side-bg1"
+             kendo-layout="0.5,resizable" style="overflow:auto"></div>
+
+        <div class="title left-side-bg2">
+          Kendo API docs
+          <span class="links"
+            ><button title="View the documentation and samples on KendoUI.com"
+                     class="k-button BI icon-external-link-sign"
+                     onclick="window.open('http://docs.kendoui.com/')"
+            ></button
+            ></span>
         </div>
 
-        <div id="project-list" kendo-layout="0.5,resizable" style="overflow:auto"></div>
-
-        <div class="title">Kendo API docs</div>
-
-        <div class="k-toolbar" style="padding: 5px">
-          <input id="apidoc-search"
+        <div class="left-side-bg2" style="padding: 5px">
+          <input id="apidoc-search" style="width: 100%; box-sizing: border-box;"
                  placeholder="Filter API pages"
                  data-bind="value: search_api,
                             events: { keydown: onAPISearchKeydown,
                                       change: onAPISearchChange }" />
         </div>
 
-        <div style="background: #fff; overflow: auto" id="apidoc-list" kendo-layout="1"></div>
+        <div class="left-side-bg2"
+             style="overflow: auto"
+             id="apidoc-list"
+             kendo-layout="1"></div>
 
       </div>
+
       <div data-role="layoutmanager" data-orientation="vertical" kendo-layout="1"
            style="overflow: visible">
         <table class="project-toolbar k-toolbar" cellspacing="10" style="overflow: visible">
@@ -85,7 +95,7 @@
                        data-bind="value: filter_files,
                                   events: { keydown: onFileSearchKeydown,
                                             change: onFileSearchChange }" />
-                <button data-bind="click: onAddFile" class="k-button">Add file</button>
+                <button data-bind="click: onAddFile" class="k-button icon-plus-sign"> Add file</button>
               </div>
             </td>
           </tr>
@@ -94,16 +104,16 @@
         <div data-role="layoutmanager" data-orientation="vertical" kendo-layout="25%,resizable">
           <div class="console-toolbar k-toolbar">
             <div style="float: right">
-              <button class="k-button" onclick="clearConsole()">Clear console</button>
+              <button class="k-button BIL icon-ban-circle" onclick="clearConsole()">Clear console</button>
             </div>
-            <button data-bind="click: onJSHint" class="k-button">JSHint</button>
-            <button data-bind="click: onKendoLint" class="k-button">Kendo Lint</button>
-            <button data-bind="click: onEditDeps" class="k-button">Dependencies</button>
-            <button data-bind="click: onCompile" class="k-button">Compile</button>
-            <button data-bind="click: onOptimizeImages" class="k-button">Optimize images</button>
-            <button data-bind="click: onBuildKendo" class="k-button">Build Kendo</button>
+            <button data-bind="click: onJSHint" class="k-button BIL icon-filter">JSHint</button>
+            <button data-bind="click: onKendoLint" class="k-button BIL icon-filter">Kendo Lint</button>
+            <button data-bind="click: onEditDeps" class="k-button BIL icon-random">Dependencies</button>
+            <button data-bind="click: onCompile" class="k-button BIL icon-bolt">Compile</button>
+            <button data-bind="click: onOptimizeImages" class="k-button BIL icon-picture">Optimize images</button>
+            <button data-bind="click: onBuildKendo" class="k-button BIL icon-bolt">Build Kendo</button>
             |
-            <button data-bind="click: onBundle" class="k-button">Bundle</button>
+            <button data-bind="click: onBundle" class="k-button BIL icon-beaker">Bundle</button>
           </div>
           <div id="console" kendo-layout="1" style="overflow: auto"></div>
         </div>

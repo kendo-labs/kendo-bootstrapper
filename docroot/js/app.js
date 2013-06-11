@@ -86,6 +86,9 @@ function setupListeners() {
                 this.href = this.href.replace(/\?.*$/, "") + "?" + Date.now();
             });
         }
+        setTimeout(function(){
+            $(window).resize();
+        }, 50);
     });
 }
 
@@ -231,7 +234,7 @@ function setupLayout() {
         top_layout.setOuterSize($(window).innerWidth(),
                                 $(window).innerHeight());
     });
-    $(window).resize();
+
     $("#project-list").kendoListView({
         dataSource : PROJECTS,
         selectable : true,
@@ -369,6 +372,9 @@ function setupLayout() {
             projectRefreshContent(ACTIVE_PROJECT);
         }
     });
+
+    $(window).resize();
+    $(window).resize();         // funny?
 }
 
 var docBrowserDialog = (function(){

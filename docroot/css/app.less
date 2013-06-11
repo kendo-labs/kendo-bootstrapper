@@ -1,3 +1,8 @@
+@import "font-awesome/less/font-awesome.less";
+@FontAwesomePath: "font-awesome/font";
+@import "icon-styles.less";
+@import "scrollbars.less";
+
 .pf1(@prop, @value) {
   x: ~`"y; " +
        (" -webkit-@{prop}: @{value};" +
@@ -56,29 +61,46 @@ h3 {
   .warn {
     color: #c62;
   }
-  box-shadow: -2px 0 5px #888;
 }
 
-.sections {
+@leftSideFontColor: #f0f0f1;
+
+.left-side {
   &>.title {
-    padding: 4px 5px;
-    background: #ddd;
-    color: #444;
-    font: bold 16px Arial;
+    padding: 10px 5px 5px 5px;
+    font: 18px Arial;
     .links {
       float: right;
-      font: normal 80% Arial,sans-serif;
-      .link {
-        color: #00f;
-        cursor: pointer;
-        &:hover {
-          color: #f00;
-        }
-      }
     }
+  }
+  .k-listview {
+    border: 0;
   }
   .k-toolbar {
     text-align: right;
+  }
+  .k-state-selected {
+    background-color: #ffac0b;
+    border-color: #ffac0b;
+  }
+  color: @leftSideFontColor;
+  .BI {
+    color: @leftSideFontColor;
+    background-color: #5d646e;
+    margin-left: 2px;
+    font-size: 16px;
+    padding: 1px;
+    &:active {
+      background-color: #ffac0b;
+    }
+  }
+  .left-side-bg1 {
+    background-color: #4e535c;
+    color: @leftSideFontColor;
+  }
+  .left-side-bg2 {
+    background-color: #363940;
+    color: @leftSideFontColor;
   }
 }
 
@@ -88,10 +110,6 @@ h3 {
   -webkit-user-select: none;
   cursor: default;
   padding: 2px 5px;
-  &:before {
-    content: "» ";
-    font-weight: bold;
-  }
 }
 
 .dlg-buttons {
@@ -226,7 +244,7 @@ label.hovering {
     .border-box;
   }
   .kendo-resizebar {
-    background-color: #aaa;
+    background-color: rgba(11, 22, 33, 0.9);
     &:hover {
       background-color: #ccc;
     }
