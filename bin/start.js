@@ -8,6 +8,7 @@ var QRS      = require("querystring");
 var URL      = require("url");
 var FORMS    = require("formidable");
 var OPTIMIST = require("optimist");
+var CHOKIDAR = require("chokidar");
 
 global.TOPLEVEL_DIR = PATH.join(PATH.dirname(__filename), "..");
 var DOCROOT = PATH.join(TOPLEVEL_DIR, "docroot");
@@ -26,6 +27,7 @@ var ARGS = OPTIMIST
     .describe("clean", "Drop config file, start fresh")
     .boolean("n")
     .boolean("clean")
+    .boolean("devel")
     .wrap(80)
     .argv
 ;
@@ -164,12 +166,32 @@ function start_server() {
         "project_delete_file",
         "console",
         "fswatch",
+        "docroot_watch",
     ], function(data){
         var event = this.event;
         CLIENTS.forEach(function(ws){
             RPC.notify(ws, event, data);
         });
     });
+
+    if (ARGS.devel) (function(){
+        function queue(event) {
+            var files = {};
+            return function(path) {
+                if (files[path]) clearTimeout(files[path]);
+                files[path] = setTimeout(function(){
+                    delete files[path];
+                    var rel = PATH.relative(DOCROOT, path).sane_path();
+                    PROJECT.EVENTS.notify("docroot_watch", {
+                        type: event,
+                        file: rel,
+                    });
+                }, 50);
+            }
+        };
+        CHOKIDAR.watch(DOCROOT, { persistent: true })
+            .on("change", queue("change"));
+    })();
 
     // setInterval(function(){
     //     CLIENTS.forEach(function(ws){

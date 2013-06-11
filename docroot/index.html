@@ -64,7 +64,7 @@
             <td style="width: 100%"><h1 class="project-title">Select/create project</h1></td>
             <td style="white-space: nowrap">
               <div style="float: right">
-                <ul data-role="menu" style="float: left; margin-right: 0.5em">
+                <ul data-role="menu" data-open-on-click="true" style="float: left; margin-right: 0.5em">
                   <li>Selection
                     <ul>
                       <li data-bind="click: onMenuSelectAllFiles">Select all visible files</li>
@@ -92,7 +92,7 @@
         </table>
         <div id="content" kendo-layout="1" style="overflow: auto"></div>
         <div data-role="layoutmanager" data-orientation="vertical" kendo-layout="25%,resizable">
-          <div class="toolbar k-toolbar">
+          <div class="console-toolbar k-toolbar">
             <div style="float: right">
               <button class="k-button" onclick="clearConsole()">Clear console</button>
             </div>

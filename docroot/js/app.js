@@ -75,6 +75,18 @@ function setupListeners() {
     RPC.listen("ENDCALL", function(){
         $("#console").children().last().addClass("endcall");
     });
+
+    // XXX: only useful while developing the bootstrapper
+    RPC.listen("docroot_watch", function(ev){
+        if (/\.less$/i.test(ev.file)) {
+            less.refresh();
+        }
+        else if (/\.css$/i.test(ev.file)) {
+            $("link[rel=\"stylesheet\"]").each(function(){
+                this.href = this.href.replace(/\?.*$/, "") + "?" + Date.now();
+            });
+        }
+    });
 }
 
 function getSelectedProject() {
@@ -173,16 +185,16 @@ function setupLayout() {
     function operateOnSelectedFiles(how) {
         var ops = {
             make_project_files: {
-                confirm: "Mark ${ this.count => plural([ 'NO', 'one file', '# files' ]) } as “project files”?"
+                confirm: "Mark ${ this.count => plural([ 'NO', 'one file', '# files' ]) } as “project ${ this.count => plural([ 0, 'file', 'files' ]) }”?"
             },
             make_library_files: {
-                confirm: "Mark ${ this.count => plural([ 'NO', 'one file', '# files' ]) } as “library files”?"
+                confirm: "Mark ${ this.count => plural([ 'NO', 'one file', '# files' ]) } as “library ${ this.count => plural([ 0, 'file', 'files' ]) }”?"
             },
             unregister_files: {
-                confirm: "Unregister ${ this.count => plural([ 'NO', 'one file', '# files' ]) }?<br />The files will not be removed from the project directory."
+                confirm: "Unregister ${ this.count => plural([ 'NO', 'one file', '# files' ]) }?<br />The ${ this.count => plural([ 0, 'file', 'files' ]) } will not be removed from the project directory."
             },
             delete_files: {
-                confirm: "Delete ${ this.count => plural([ 'NO', 'one file', '# files' ]) }?<br />They will be removed from the disk too!"
+                confirm: "Delete ${ this.count => plural([ 'NO', 'one file', '# files' ]) }?<br />The ${ this.count => plural([ 0, 'file', 'files' ]) } will be removed from the disk too!"
             }
         };
         var confirmation = ops[how].confirm;
@@ -202,7 +214,7 @@ function setupLayout() {
                 }
                 if (confirmation) {
                     areYouSure({
-                        message: confirmation({ count: sel.length }),
+                        htmlMessage: confirmation({ count: sel.length }),
                     }, function(ok){
                         if (ok) doit(proj, sel);
                     });
