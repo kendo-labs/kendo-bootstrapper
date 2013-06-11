@@ -107,6 +107,27 @@ is expanded. Options include **"expandVertical"** and **"fadeIn"**.
 
 ### animation.expand.show `Boolean`*(default: true)*
 
+### autoBind `Boolean` *(default: true)*
+
+If set to `false` the widget will not bind to the data source during initialization. In this case data binding will occur when the [change](/api/framework/datasource#events-change) event of the
+data source is fired. By default the widget will bind to the data source specified in the configuration.
+
+> Setting `autoBind` to `false` is useful when multiple widgets are bound to the same data source. Disabling automatic binding ensures that the shared data source doesn't make more than one request to the remote service.
+
+#### Example - disable automatic binding
+
+    <div id="treeview"></div>
+    <script>
+    var dataSource = new kendo.data.HierarchicalDataSource({
+      data: [ { text: "Jane Doe" }, { text: "John Doe" }]
+    });
+    $("#treeview").kendoTreeView({
+      autoBind: false,
+      dataSource: dataSource
+    });
+    dataSource.read(); // "read()" will fire the "change" event of the dataSource and the widget will be bound
+    </script>
+
 ### checkboxes `Boolean|Object`
 
 If `true` or an object, renders checkboxes within each treeview item.

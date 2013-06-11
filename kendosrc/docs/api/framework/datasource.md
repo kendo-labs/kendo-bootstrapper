@@ -675,7 +675,7 @@ The aggregate results should have the following format:
 
 ### schema.data `Function|String`
 
-The field from the server response which contains the data items. Can be set to a functin which is called to
+The field from the server response which contains the data items. Can be set to a function which is called to
 return the data items for the response.
 
 #### Returns
@@ -1275,6 +1275,9 @@ If the value of `transport.create` is a function, the data source invokes that f
 
 If the value of `transport.create` is a string the data source uses this string as the URL of the remote service.
 
+> *Important:* The remote service must return the inserted data items and the data item field configured as the `id` must be set. For example
+if the `id` of the data item is `ProductID` the "create" server response must be `[{ "ProductID": 79 }]`.
+
 #### Example - set the create remote service
 
     <script>
@@ -1300,7 +1303,7 @@ If the value of `transport.create` is a string the data source uses this string 
     // create a new data item
     dataSource.add( { ProductName: "New Product" });
     // save the created data item
-    dataSource.sync();
+    dataSource.sync(); // server response is [{"ProductID":78,"ProductName":"New Product","UnitPrice":0,"UnitsInStock":0,"Discontinued":false}]
     </script>
 
 #### Example - set create as a function
@@ -1640,7 +1643,7 @@ Refer to the [jQuery.ajax](http://api.jquery.com/jQuery.ajax) documentation for 
     });
     </script>
 
-### transport.destroy.data `Object|String|Function`
+### transport.destroy.data `Object|Function`
 
 Additional parameters which are sent to the remote service.
 
@@ -1892,10 +1895,7 @@ The type of the request which the data source makes. The supported values are "c
           dataType: "jsonp" // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
         },
         parameterMap: function(data, type) {
-          if (type == "create") {
-            // send the created data items as the "models" service parameter encoded in JSON
-            return { models: kendo.stringify(data.models) };
-          }
+          return kendo.stringify(data);
         }
       },
       batch: true,
@@ -2015,7 +2015,7 @@ Refer to the [jQuery.ajax](http://api.jquery.com/jQuery.ajax) documentation for 
     });
     </script>
 
-### transport.read.data `Object|String|Function`
+### transport.read.data `Object|Function`
 
 Additional parameters which are sent to the remote service.
 

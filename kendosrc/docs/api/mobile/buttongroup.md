@@ -114,5 +114,5 @@ Fires when a Button is selected.
     <script>
      $("#buttongroup").data("kendoMobileButtonGroup").bind("select", function(e) {
          //handle select event
-     }
+     });
     </script>

@@ -39,7 +39,7 @@ The name of the form field submitted to the Remove URL.
 The URL of the handler responsible for removing uploaded files (if any). The handler must accept POST
 requests containing one or more "fileNames" fields specifying the files to be deleted.
 
-### async.removeVerb `String`*(default: "DELETE")*
+### async.removeVerb `String`*(default: "POST")*
 
 The HTTP verb to be used by the remove action.
 
@@ -283,6 +283,9 @@ Fires when upload progress data is available.
 
 Note: The progress event fires only when the upload is in
 [async mode](/getting-started/web/upload/modes#asynchronous-mode).
+
+Note: The progress event is not fired in IE.
+See [Supported Browsers](/getting-started/web/upload/supported-browsers)
 
 #### Example
 

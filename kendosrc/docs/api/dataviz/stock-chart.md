@@ -1482,22 +1482,14 @@ Specialized axis for displaying chronological data.
 
 ### categoryAxis.autoBaseUnitSteps `Object`
 
-Specifies the discrete **baseUnitStep** values when
-either **baseUnit** is set to "fit" or **baseUnitStep** is set to "auto".
+The discrete [categoryAxis.baseUnitStep](#configuration-categoryAxis.baseUnitStep) values when
+either [categoryAxis.baseUnit](#configuration-categoryAxis.baseUnit) is set to "fit" or
+[categoryAxis.baseUnitStep](#configuration-categoryAxis.baseUnitStep) is set to "auto".
 
-The default configuration is as follows:
+#### Example - set category axis auto base unit steps
 
-* `minutes: [1, 2, 5, 15, 30]`
-* `hours: [1, 2, 3, 6, 12]`
-* `days: [1, 2, 3]`
-* `weeks: [1, 2]`
-* `months: [1, 2, 3, 6]`
-* `years: [1, 2, 3, 5, 10, 25, 50]`
-
-Each setting can be overriden individually.
-
-#### Example
-
+    <div id="chart"></div>
+    <script>
     $("#chart").kendoChart({
         categoryAxis: {
             categories: [
@@ -1509,36 +1501,60 @@ Each setting can be overriden individually.
             autoBaseUnitSteps: {
                 days: [3]
             }
-        },
-        ...
+        }
     });
+    </script>
+
+### categoryAxis.autoBaseUnitSteps.days `Array` *(default: [1, 2, 3])*
+
+The days unit steps.
+
+### categoryAxis.autoBaseUnitSteps.hours `Array` *(default: [1, 2, 3])*
+
+The hours unit steps.
+
+### categoryAxis.autoBaseUnitSteps.minutes `Array` *(default: [1, 2, 5, 15, 30])*
+
+The minutes unit steps.
+
+### categoryAxis.autoBaseUnitSteps.months `Array` *(default: [1, 2, 3, 6])*
+
+The months unit steps.
+
+### categoryAxis.autoBaseUnitSteps.weeks `Array` *(default: [1, 2])*
+
+The weeks unit steps.
+
+### categoryAxis.autoBaseUnitSteps.years `Array` *(default: [1, 2, 3, 5, 10, 25, 50])*
+
+The years unit steps.
 
 ### categoryAxis.baseUnit `String`
 
-The base time interval for the axis.
-The default baseUnit is determined automatically from the minimum difference
-between subsequent categories. Available options:
+The base time interval for the date axis. The default base unit is determined automatically from the minimum difference
+between subsequent categories.
 
-* minutes
-* hours
-* days
-* weeks
-* months
-* years
-* **fit**
+The supported values are:
 
-Setting **baseUnit** to "fit" will set such base unit and **baseUnitStep**
-that the total number of categories does not exceed **maxDateGroups**.
+* "days"
+* "fit"
+* "hours"
+* "minutes"
+* "months"
+* "weeks"
+* "years"
 
-Series data is aggregated for the specified base unit by using the
-**series.aggregate** function.
+Setting `baseUnit` to "fit" will set such base unit and [categoryAxis.baseUnitStep](#configuration-categoryAxis.baseUnitStep)
+that the total number of categories does not exceed [categoryAxis.maxDateGroups](#configuration-categoryAxis.maxDateGroups).
 
-### categoryAxis.baseUnitStep `Object`*(default: 1)*
+Series data is aggregated for the specified base unit using the [series.aggregate](#configuration-series.aggregate) function.
 
-Sets the step (interval) between categories in base units.
-Specifiying "auto" will set the step to such value that the total number of categories does not exceed **maxDateGroups**.
+### categoryAxis.baseUnitStep `Object` *(default: 1)*
 
-This option is ignored if **baseUnit** is set to "fit".
+The step (interval) between categories in base units. Setting it to "auto" will set the step to such value
+that the total number of categories does not exceed [categoryAxis.maxDateGroups](#configuration-categoryAxis.maxDateGroups).
+
+This option is ignored if [categoryAxis.baseUnit](#configuration-categoryAxis.baseUnit) is set to "fit".
 
 ### categoryAxis.labels.culture `String`
 
@@ -1609,12 +1625,14 @@ Use the *kendo.days* constants to specify the day by name.
 * kendo.days.Saturday (6)
 
 
-### categoryAxis.maxDateGroups `Number`*(default: 10)*
+### categoryAxis.maxDateGroups `Number`
 
 Specifies the maximum number of groups (categories) to produce when
 either **baseUnit** is set to "fit" or **baseUnitStep** is set to "auto".
 
 This option is ignored in all other cases.
+
+The default value is approximately equal to `[widget width, px] / 30`
 
 ### categoryAxis.visible `Boolean`*(default: true)*
 

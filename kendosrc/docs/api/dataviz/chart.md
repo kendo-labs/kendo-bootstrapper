@@ -107,7 +107,7 @@ either [categoryAxis.baseUnit](#configuration-categoryAxis.baseUnit) is set to "
 
 The days unit steps.
 
-### categoryAxis.autoBaseUnitSteps.hours `Array` *(default: [1, 2, 3, 6, 12])*
+### categoryAxis.autoBaseUnitSteps.hours `Array` *(default: [1, 2, 3])*
 
 The hours unit steps.
 
@@ -4670,8 +4670,8 @@ Series are moved to the desired pane by associating them with an axis.
         { data: [1, 2, 3, 4], axis: "bottom" }
       ],
       valueAxis: [
-        { pane: "top" },
-        { pane: "bottom", name: "bottom-pane" }
+        { pane: "top-pane" },
+        { pane: "bottom-pane", name: "bottom" }
       ],
       panes: [
         { name: "top-pane" },
@@ -4694,8 +4694,8 @@ The background color of the chart pane. Accepts a valid CSS color string, includ
         { data: [1, 2, 3, 4], axis: "bottom" }
       ],
       valueAxis: [
-        { pane: "top" },
-        { pane: "bottom", name: "bottom-pane" }
+        { pane: "top-pane" },
+        { pane: "bottom-pane", name: "bottom" }
       ],
       panes: [
         { name: "top-pane", background: "#00ff00" },
@@ -4714,8 +4714,8 @@ The background color of the chart pane. Accepts a valid CSS color string, includ
         { data: [1, 2, 3, 4], axis: "bottom" }
       ],
       valueAxis: [
-        { pane: "top" },
-        { pane: "bottom", name: "bottom-pane" }
+        { pane: "top-pane" },
+        { pane: "bottom-pane", name: "bottom" }
       ],
       panes: [
         { name: "top-pane", background: "rgb(0, 255, 0)" },
@@ -4734,8 +4734,8 @@ The background color of the chart pane. Accepts a valid CSS color string, includ
         { data: [1, 2, 3, 4], axis: "bottom" }
       ],
       valueAxis: [
-        { pane: "top" },
-        { pane: "bottom", name: "bottom-pane" }
+        { pane: "top-pane" },
+        { pane: "bottom-pane", name: "bottom" }
       ],
       panes: [
         { name: "top-pane", background: "red" },
@@ -4758,8 +4758,8 @@ The border of the chart pane.
         { data: [1, 2, 3, 4], axis: "bottom" }
       ],
       valueAxis: [
-        { pane: "top" },
-        { pane: "bottom", name: "bottom-pane" }
+        { pane: "top-pane" },
+        { pane: "bottom-pane", name: "bottom" }
       ],
       panes: [
         { name: "top-pane",
@@ -4792,8 +4792,8 @@ The color of the border. Accepts a valid CSS color string, including hex and rgb
         { data: [1, 2, 3, 4], axis: "bottom" }
       ],
       valueAxis: [
-        { pane: "top" },
-        { pane: "bottom", name: "bottom-pane" }
+        { pane: "top-pane" },
+        { pane: "bottom-pane", name: "bottom" }
       ],
       panes: [
         { name: "top-pane",
@@ -4836,8 +4836,8 @@ The following dash types are supported:
         { data: [1, 2, 3, 4], axis: "bottom" }
       ],
       valueAxis: [
-        { pane: "top" },
-        { pane: "bottom", name: "bottom-pane" }
+        { pane: "top-pane" },
+        { pane: "bottom-pane", name: "bottom" }
       ],
       panes: [
         { name: "top-pane",
@@ -4870,8 +4870,8 @@ The width of the border in pixels. By default the border width is set to zero wh
         { data: [1, 2, 3, 4], axis: "bottom" }
       ],
       valueAxis: [
-        { pane: "top" },
-        { pane: "bottom", name: "bottom-pane" }
+        { pane: "top-pane" },
+        { pane: "bottom-pane", name: "bottom" }
       ],
       panes: [
         { name: "top-pane",
@@ -4902,8 +4902,8 @@ The chart pane height in pixels.
         { data: [1, 2, 3, 4], axis: "bottom" }
       ],
       valueAxis: [
-        { pane: "top" },
-        { pane: "bottom", name: "bottom-pane" }
+        { pane: "top-pane" },
+        { pane: "bottom-pane", name: "bottom" }
       ],
       panes: [
         { name: "top-pane", height: 200 },
@@ -4926,8 +4926,8 @@ The margin of the pane. A numeric value will set all margins.
         { data: [1, 2, 3, 4], axis: "bottom" }
       ],
       valueAxis: [
-        { pane: "top" },
-        { pane: "bottom", name: "bottom-pane" }
+        { pane: "top-pane" },
+        { pane: "bottom-pane", name: "bottom" }
       ],
       panes: [
         { name: "top-pane", margin: 10 },
@@ -4950,8 +4950,8 @@ The bottom margin of the chart panes.
         { data: [1, 2, 3, 4], axis: "bottom" }
       ],
       valueAxis: [
-        { pane: "top" },
-        { pane: "bottom", name: "bottom-pane" }
+        { pane: "top-pane" },
+        { pane: "bottom-pane", name: "bottom" }
       ],
       panes: [
         {
@@ -4984,8 +4984,8 @@ The left margin of the chart panes.
         { data: [1, 2, 3, 4], axis: "bottom" }
       ],
       valueAxis: [
-        { pane: "top" },
-        { pane: "bottom", name: "bottom-pane" }
+        { pane: "top-pane" },
+        { pane: "bottom-pane", name: "bottom" }
       ],
       panes: [
         {
@@ -5018,8 +5018,8 @@ The right margin of the chart panes.
         { data: [1, 2, 3, 4], axis: "bottom" }
       ],
       valueAxis: [
-        { pane: "top" },
-        { pane: "bottom", name: "bottom-pane" }
+        { pane: "top-pane" },
+        { pane: "bottom-pane", name: "bottom" }
       ],
       panes: [
         {
@@ -5052,8 +5052,8 @@ The top margin of the chart panes.
         { data: [1, 2, 3, 4], axis: "bottom" }
       ],
       valueAxis: [
-        { pane: "top" },
-        { pane: "bottom", name: "bottom-pane" }
+        { pane: "top-pane" },
+        { pane: "bottom-pane", name: "bottom" }
       ],
       panes: [
         {
@@ -5086,8 +5086,8 @@ The unique name of the chart pane.
         { data: [1, 2, 3, 4], axis: "bottom" }
       ],
       valueAxis: [
-        { pane: "top" },
-        { pane: "bottom", name: "bottom-pane" }
+        { pane: "top-pane" },
+        { pane: "bottom-pane", name: "bottom" }
       ],
       panes: [
         { name: "top-pane" },
@@ -5110,8 +5110,8 @@ The padding of the pane. A numeric value will set all paddings.
         { data: [1, 2, 3, 4], axis: "bottom" }
       ],
       valueAxis: [
-        { pane: "top" },
-        { pane: "bottom", name: "bottom-pane" }
+        { pane: "top-pane" },
+        { pane: "bottom-pane", name: "bottom" }
       ],
       panes: [
         { name: "top-pane", padding: 10 },
@@ -5134,8 +5134,8 @@ The bottom padding of the chart panes.
         { data: [1, 2, 3, 4], axis: "bottom" }
       ],
       valueAxis: [
-        { pane: "top" },
-        { pane: "bottom", name: "bottom-pane" }
+        { pane: "top-pane" },
+        { pane: "bottom-pane", name: "bottom" }
       ],
       panes: [
         {
@@ -5168,8 +5168,8 @@ The left padding of the chart panes.
         { data: [1, 2, 3, 4], axis: "bottom" }
       ],
       valueAxis: [
-        { pane: "top" },
-        { pane: "bottom", name: "bottom-pane" }
+        { pane: "top-pane" },
+        { pane: "bottom-pane", name: "bottom" }
       ],
       panes: [
         {
@@ -5202,8 +5202,8 @@ The right padding of the chart panes.
         { data: [1, 2, 3, 4], axis: "bottom" }
       ],
       valueAxis: [
-        { pane: "top" },
-        { pane: "bottom", name: "bottom-pane" }
+        { pane: "top-pane" },
+        { pane: "bottom-pane", name: "bottom" }
       ],
       panes: [
         {
@@ -5236,8 +5236,8 @@ The top padding of the chart panes.
         { data: [1, 2, 3, 4], axis: "bottom" }
       ],
       valueAxis: [
-        { pane: "top" },
-        { pane: "bottom", name: "bottom-pane" }
+        { pane: "top-pane" },
+        { pane: "bottom-pane", name: "bottom" }
       ],
       panes: [
         {

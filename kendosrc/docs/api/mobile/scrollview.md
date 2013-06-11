@@ -103,12 +103,26 @@ If set to true, the scrollview will jump instantly to the given page without any
 
 ## Events
 
+### changing
+
+Fires before the widget page is changed. The change can be prevented by calling the `preventDefault` method of the event parameter, in which case the widget will snap back to the current page.
+
+#### Event Data
+
+##### e.currentPage `Number`
+
+The current page (zero based index)
+
+##### e.nextPage `Number`
+
+The page about to be displayed (zero based index)
+
 ### change
 
 Fires when the widget page is changed.
 
 #### Event Data
 
-##### e.page `jQuery`
+##### e.page `Number`
 
 The current page (zero based index)

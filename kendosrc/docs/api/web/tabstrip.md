@@ -209,25 +209,6 @@ tab.
 
 ## Methods
 
-### activateTab
-
-Activates a tab specified as a selector. Note: Invoking this method will not trigger any events.
-
-#### Activate a tab with ID, tab1 in a TabStrip
-
-    var tabToActivate = $("#tab1");
-    $("#tabStrip").data("kendoTabStrip").activateTab(tabToActivate);
-
-#### Parameters
-
-##### item `Selector`
-
-The target tab, specified as a selector, to be activated.
-
-#### Returns
-
-`Boolean` Returns <strong>true</strong> if successful; otherwise, <strong>false</strong>.
-
 ### append
 
 Appends a tab to the collection of tabs in a **TabStrip**.

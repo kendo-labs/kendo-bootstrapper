@@ -14,6 +14,14 @@ Represents the Kendo UI Mobile Button widget. Inherits from [kendo.mobile.ui.Wid
 
 ## Configuration
 
+### badge `String`
+
+ The badge of the button.
+
+#### Example
+
+    var button = $("#button").kendoMobileButton({ badge: 10 });
+
 ### icon `String`
 
  The icon of the button. It can be either one of the built-in icons, or a custom one.

@@ -36,6 +36,10 @@ Effect to be used for closing of the popup.
 
 Difines the animation duration.
 
+### animation.close.reverse `Boolean` *(default: false)*
+
+Whether the effect should play backwards, useful when doing the same animation but with the opposite direction, like opening and closing.
+
 ### animation.open `Object`
 
 The animation that will be used when a Window opens.
@@ -48,9 +52,13 @@ Effect to be used for opening of the popup.
 
 Difines the animation duration.
 
+### animation.open.reverse `Boolean` *(default: false)*
+
+Whether the effect should play backwards, useful when doing the same animation but with the opposite direction, like opening and closing.
+
 ### appendTo `Object|String`*(default: document.body)*
 
-The element that the Window will be appended to.
+The element that the Window will be appended to. Beneficial if the [Window is used together with a form](http://docs.kendoui.com/getting-started/web/window/overview#using-kendo-ui-window-with-a-form).
 Note that this *does not* constrain the window dragging within the given element.
 
 #### Set the window container to be the form with id="mainForm"
@@ -69,7 +77,16 @@ versions, so it is advisable to always use the [iframe configuration option](#if
 
 ### content.template `String`
 
-Template for the content of a **Window**.
+Template for the content of a **Window**. Returned data from the server will be given as the `data` of this template.
+Note that if the returned data is JSON, the [`dataType` parameter](http://api.jquery.com/jQuery.ajax/) should be passed, so that the data gets parsed by jQuery.
+
+    $("#dialog").kendoWindow({
+        content: {
+            url: "/userDetails",
+            dataType: "json",
+            template: "User name: #= data.username #"
+        }
+    });
 
 ### draggable `Boolean`*(default: true)*
 
@@ -129,11 +146,11 @@ The text in the window title bar. If `false`, the window will be displayed witho
 
 Specifies whether the window will be initially visible.
 
-### width `Number`
+### width `Number | String`
 
 Specifies width of the window.
 
-### height `Number`
+### height `Number | String`
 
 Specifies height of the window.
 

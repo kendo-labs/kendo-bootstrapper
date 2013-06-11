@@ -363,6 +363,16 @@
                 "dataviz.core",
                 "dataviz.svg"
             ],
+            "features": [
+                {
+                    "id": "dataviz.chart-polar",
+                    "name": "Polar & Radar",
+                    "description": "Support for Polar and Radar charts.",
+                    "depends": [
+                        "dataviz.chart.polar"
+                    ]
+                }
+            ],
             "source": "kendo.dataviz.chart.min.js",
             "widgets": [
                 {
@@ -404,10 +414,21 @@
                     ],
                     "inherits": "Widget",
                     "file": "kendo.dataviz.chart.js",
-                    "line": 196,
+                    "line": 197,
                     "col": 16
                 }
             ]
+        },
+        {
+            "id": "dataviz.chart.polar",
+            "name": "Polar Charts",
+            "category": "dataviz",
+            "depends": [
+                "dataviz.chart"
+            ],
+            "hidden": true,
+            "source": "kendo.dataviz.chart.polar.min.js",
+            "widgets": []
         },
         {
             "id": "dataviz.core",
@@ -657,7 +678,7 @@
                     ],
                     "inherits": "Widget",
                     "file": "kendo.draganddrop.js",
-                    "line": 429,
+                    "line": 453,
                     "col": 21
                 },
                 {
@@ -669,7 +690,7 @@
                     ],
                     "inherits": "DropTarget",
                     "file": "kendo.draganddrop.js",
-                    "line": 521,
+                    "line": 545,
                     "col": 25
                 },
                 {
@@ -691,7 +712,7 @@
                     ],
                     "inherits": "Widget",
                     "file": "kendo.draganddrop.js",
-                    "line": 543,
+                    "line": 567,
                     "col": 20
                 }
             ]
@@ -820,7 +841,7 @@
                     ],
                     "inherits": "Widget",
                     "file": "kendo.editor.js",
-                    "line": 454,
+                    "line": 528,
                     "col": 17
                 },
                 {
@@ -830,7 +851,7 @@
                     ],
                     "inherits": "DropDownList",
                     "file": "kendo.editor.js",
-                    "line": 5623,
+                    "line": 5939,
                     "col": 16
                 }
             ]
@@ -862,7 +883,7 @@
                     ],
                     "inherits": "Widget",
                     "file": "kendo.filtermenu.js",
-                    "line": 113,
+                    "line": 127,
                     "col": 21
                 }
             ]
@@ -1369,12 +1390,11 @@
                     ],
                     "events": [
                         "click",
-                        "dataBound",
-                        "lastPageReached"
+                        "dataBound"
                     ],
                     "inherits": "Widget",
                     "file": "kendo.mobile.listview.js",
-                    "line": 79,
+                    "line": 767,
                     "col": 19
                 }
             ]
@@ -1452,7 +1472,7 @@
                     ],
                     "inherits": "Widget",
                     "file": "kendo.mobile.navbar.js",
-                    "line": 34,
+                    "line": 36,
                     "col": 17
                 }
             ]
@@ -1566,7 +1586,7 @@
                     ],
                     "inherits": "Widget",
                     "file": "kendo.mobile.scroller.js",
-                    "line": 209,
+                    "line": 211,
                     "col": 19
                 }
             ]
@@ -1593,12 +1613,34 @@
                         "bounceVelocityThreshold"
                     ],
                     "events": [
+                        "changing",
                         "change"
                     ],
                     "inherits": "Widget",
                     "file": "kendo.mobile.scrollview.js",
-                    "line": 30,
+                    "line": 32,
                     "col": 21
+                },
+                {
+                    "name": "VirtualScrollView",
+                    "options": [
+                        "name",
+                        "autoBind",
+                        "duration",
+                        "velocityThreshold",
+                        "contentHeight",
+                        "bounceVelocityThreshold",
+                        "batchSize",
+                        "template",
+                        "emptyTemplate"
+                    ],
+                    "events": [
+                        "changed"
+                    ],
+                    "inherits": "Widget",
+                    "file": "kendo.mobile.scrollview.js",
+                    "line": 235,
+                    "col": 28
                 }
             ]
         },
@@ -1743,7 +1785,7 @@
                     ],
                     "inherits": "Widget",
                     "file": "kendo.mobile.view.js",
-                    "line": 37,
+                    "line": 43,
                     "col": 15
                 },
                 {
@@ -1758,7 +1800,7 @@
                     ],
                     "inherits": "Widget",
                     "file": "kendo.mobile.view.js",
-                    "line": 341,
+                    "line": 348,
                     "col": 17
                 }
             ]
@@ -1842,7 +1884,7 @@
                     ],
                     "inherits": "Widget",
                     "file": "kendo.numerictextbox.js",
-                    "line": 44,
+                    "line": 45,
                     "col": 25
                 }
             ]
@@ -2070,7 +2112,7 @@
                     ],
                     "inherits": "SliderBase",
                     "file": "kendo.slider.js",
-                    "line": 582,
+                    "line": 581,
                     "col": 17
                 },
                 {
@@ -2085,7 +2127,7 @@
                     ],
                     "inherits": "SliderBase",
                     "file": "kendo.slider.js",
-                    "line": 1225,
+                    "line": 1228,
                     "col": 22
                 }
             ]
@@ -2141,7 +2183,7 @@
                     ],
                     "inherits": "Widget",
                     "file": "kendo.splitter.js",
-                    "line": 63,
+                    "line": 66,
                     "col": 19
                 }
             ]
@@ -2416,7 +2458,7 @@
                     ],
                     "inherits": "Widget",
                     "file": "kendo.validator.js",
-                    "line": 78,
+                    "line": 85,
                     "col": 20
                 }
             ]
@@ -2451,6 +2493,7 @@
                         "animation",
                         "title",
                         "actions",
+                        "autoFocus",
                         "modal",
                         "resizable",
                         "draggable",

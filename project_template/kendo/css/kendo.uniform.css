@@ -313,6 +313,22 @@ td.k-state-focused,
   -webkit-box-shadow: inset 0 0 3px 1px #cccccc;
   box-shadow: inset 0 0 3px 1px #cccccc;
 }
+.k-ie8 .k-panelbar span.k-state-focused,
+.k-ie8 .k-menu li.k-state-focused,
+.k-ie8 .k-listview > .k-state-focused,
+.k-ie8 .k-grid-header th.k-state-focused,
+.k-ie8 td.k-state-focused,
+.k-ie8 .k-button:focus,
+.k-ie8 .k-button.k-state-focused,
+.k-ie7 .k-panelbar span.k-state-focused,
+.k-ie7 .k-menu li.k-state-focused,
+.k-ie7 .k-listview > .k-state-focused,
+.k-ie7 .k-grid-header th.k-state-focused,
+.k-ie7 td.k-state-focused,
+.k-ie7 .k-button:focus,
+.k-ie7 .k-button.k-state-focused {
+  background-color: #f4f4f4;
+}
 .k-list > .k-state-selected.k-state-focused {
   -webkit-box-shadow: none;
   box-shadow: none;
@@ -574,6 +590,17 @@ div.k-imagebrowser-dropzone em {
   -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.3);
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.3);
 }
+/* Selection */
+.k-editor-inline ::-moz-selection {
+  background-color: #cccccc;
+  text-shadow: none;
+  color: #fff;
+}
+.k-editor-inline ::selection {
+  background-color: #cccccc;
+  text-shadow: none;
+  color: #fff;
+}
 /* Border radius */
 .k-block,
 .k-button,
@@ -605,6 +632,7 @@ div.k-imagebrowser-dropzone em {
 .k-treeview .k-in,
 .k-editor-button .k-state-hover,
 .k-editor-button .k-state-active,
+.k-editor-inline,
 .k-tooltip,
 .k-tile,
 .k-slider-track,
@@ -749,7 +777,7 @@ div.k-imagebrowser-dropzone em {
   border-radius: 7px;
 }
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
-  .k-icon,
+  .k-icon:not(.k-loading),
   .k-grouping-dropclue,
   .k-drop-hint,
   .k-callout,

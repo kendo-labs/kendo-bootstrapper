@@ -121,6 +121,12 @@
     background-image: @texture,       ~"linear-gradient(to bottom, @{gradient})";
 }
 
+.selection(@color) {
+    background-color: @color;
+    text-shadow: none;
+    color: #fff;
+}
+
 .k-in,
 .k-item,
 .k-window-action
@@ -471,6 +477,25 @@ td.k-state-focused,
     .box-shadow(@focused-item-shadow);
 }
 
+.k-ie8 .k-panelbar span.k-state-focused,
+.k-ie8 .k-menu li.k-state-focused,
+.k-ie8 .k-listview>.k-state-focused,
+.k-ie8 .k-grid-header th.k-state-focused,
+.k-ie8 td.k-state-focused,
+.k-ie8 .k-button:focus,
+.k-ie8 .k-button.k-state-focused,
+
+.k-ie7 .k-panelbar span.k-state-focused,
+.k-ie7 .k-menu li.k-state-focused,
+.k-ie7 .k-listview>.k-state-focused,
+.k-ie7 .k-grid-header th.k-state-focused,
+.k-ie7 td.k-state-focused,
+.k-ie7 .k-button:focus,
+.k-ie7 .k-button.k-state-focused
+{
+    background-color: @hover-background-color;
+}
+
 .k-list>.k-state-selected.k-state-focused
 {
     .box-shadow(none);
@@ -800,6 +825,15 @@ div.k-imagebrowser-dropzone em
     .box-shadow(inset 0 1px 1px @shadow-color);
 }
 
+/* Selection */
+.k-editor-inline ::-moz-selection {
+    .selection(@selected-border-color);
+}
+
+.k-editor-inline ::selection {
+    .selection(@selected-border-color);
+}
+
 /* Border radius */
 
 .k-block,
@@ -833,6 +867,7 @@ div.k-imagebrowser-dropzone em
 .k-treeview .k-in,
 .k-editor-button .k-state-hover,
 .k-editor-button .k-state-active,
+.k-editor-inline,
 .k-tooltip,
 .k-tile,
 .k-slider-track,
@@ -980,7 +1015,7 @@ div.k-imagebrowser-dropzone em
 
 @media only screen and (-webkit-min-device-pixel-ratio: 2),
        only screen and (min-device-pixel-ratio: 2) {
-    .k-icon,
+    .k-icon:not(.k-loading),
     .k-grouping-dropclue,
     .k-drop-hint,
     .k-callout,

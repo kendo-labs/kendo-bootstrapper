@@ -247,6 +247,16 @@ html body .k-button-bare.k-upload-button:hover {
   line-height: 0;
   text-indent: -3333px;
   text-align: center;
+}
+/* In IE7 vertical align: middle can't be overridden */
+.k-ie8 .k-icon,
+.k-ie8 .k-sprite,
+.k-ie8 .k-editor-button .k-tool-icon {
+  vertical-align: middle;
+}
+:root * > .k-icon,
+:root * > .k-sprite,
+:root * > .k-editor-button .k-tool-icon {
   vertical-align: middle;
 }
 .k-icon,
@@ -258,7 +268,7 @@ html body .k-button-bare.k-upload-button:hover {
   text-indent: 0;
 }
 .k-numerictextbox .k-select .k-link span.k-i-arrow-n {
-  background-position: 0 -2px;
+  background-position: 0 -3px;
 }
 .k-numerictextbox .k-select .k-link span.k-i-arrow-s {
   background-position: 0 -35px;
@@ -275,7 +285,7 @@ html body .k-button-bare.k-upload-button:hover {
 }
 .k-numerictextbox .k-link.k-state-selected span.k-i-arrow-n,
 .k-numerictextbox .k-state-hover .k-link span.k-i-arrow-n {
-  background-position: -16px -2px;
+  background-position: -16px -3px;
 }
 .k-state-selected .k-i-arrow-s {
   background-position: -16px -32px;
@@ -1212,6 +1222,9 @@ div.k-window-content {
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
+.k-window-content > .km-scroll-container {
+  height: 100%;
+}
 /* Compensate for content padding in IE7 */
 .k-ie7 .k-window {
   padding-bottom: 1.16em;
@@ -1583,8 +1596,11 @@ ul.k-menu-vertical > .k-item {
 .k-menu .k-animation-container,
 .k-popup .k-animation-container {
   margin-top: -1px;
-  margin-top: -2px\9;
   padding-left: 1px;
+}
+.k-ie .k-menu .k-animation-container,
+.k-ie .k-popup .k-animation-container {
+  margin-top: -2px;
 }
 .k-popup .k-animation-container .k-popup {
   margin-left: -1px;
@@ -1985,6 +2001,17 @@ form.k-filter-menu .k-textbox {
   vertical-align: middle;
 }
 /* Grid :: editing */
+.k-dirty-cell:before {
+  content: "\a0";
+  display: inline-block;
+  width: 0;
+}
+.k-ie7 .k-dirty-cell {
+  position: relative;
+}
+.k-ie7 .k-dirty {
+  top: 5px;
+}
 .k-dirty {
   position: absolute;
   width: 0;
@@ -2259,7 +2286,7 @@ span.k-dropdown {
 .k-numeric-wrap {
   border-width: 1px;
   border-style: solid;
-  padding: 0 22px 0 0;
+  padding: 0 1.9em 0 0;
 }
 .k-numeric-wrap.k-expand-padding {
   padding-right: 0;
@@ -2269,10 +2296,10 @@ span.k-dropdown {
   padding: 0;
 }
 .k-textbox.k-space-left {
-  padding-left: 22px;
+  padding-left: 1.9em;
 }
 .k-textbox.k-space-right {
-  padding-right: 22px;
+  padding-right: 1.9em;
 }
 .k-textbox .k-icon {
   font-size: inherit;
@@ -2344,9 +2371,6 @@ span.k-dropdown {
   /* skin-related, inherit does not work in ie7- */
 
 }
-.k-picker-wrap .k-select {
-  padding: 0 2px;
-}
 span.k-datetimepicker .k-select,
 span.k-datetimepicker .k-select + .k-select {
   right: 0;
@@ -2387,7 +2411,7 @@ span.k-datetimepicker .k-select + .k-select {
 .k-selectbox .k-input {
   height: 1.65em;
   line-height: 1.65em;
-  padding: 0.178em 0;
+  padding: 0.177em 0;
   text-indent: 4px;
   border: 0;
   margin: 0;
@@ -2402,10 +2426,13 @@ span.k-datetimepicker .k-select + .k-select {
 .k-picker-wrap .k-select,
 .k-numeric-wrap .k-select,
 .k-dropdown-wrap .k-select {
-  min-height: 1.52em;
-  line-height: 1.52em;
+  min-height: 1.65em;
+  line-height: 2em;
   vertical-align: middle;
-  padding: 3px;
+  -moz-box-sizing: border-box;
+  text-align: center;
+  width: 1.9em;
+  height: 100%;
 }
 .k-numeric-wrap .k-select {
   padding: 0;
@@ -2418,6 +2445,13 @@ body .k-datetimepicker .k-select {
 }
 .k-picker-wrap .k-icon {
   margin-top: 1px;
+}
+.k-ie7 .k-picker-wrap .k-icon,
+.k-ie7 .k-dropdown-wrap .k-icon {
+  line-height: 2em;
+  font-size: 1em;
+  padding-top: 16px;
+  height: 0;
 }
 .k-combobox .k-icon,
 .k-dropdown,
@@ -2440,6 +2474,7 @@ body .k-datetimepicker .k-select {
 .k-popup .k-list .k-item {
   padding: 1px 5px 1px 5px;
   line-height: 1.8em;
+  min-height: 1.8em;
 }
 .k-popup .k-list .k-state-hover,
 .k-popup .k-list .k-state-focused,
@@ -2575,10 +2610,14 @@ body .k-datetimepicker .k-select {
 }
 /* Date/Time Pickers */
 .k-datetimepicker .k-picker-wrap {
-  padding-right: 42px;
+  padding-right: 3.8em;
+}
+.k-datetimepicker .k-select {
+  width: 3.8em;
 }
 .k-datetimepicker .k-picker-wrap .k-icon {
-  margin-left: 2px;
+  margin: 0 .24em;
+  font-size: 1em;
 }
 .k-picker-wrap .k-icon {
   cursor: pointer;
@@ -2691,9 +2730,14 @@ div.k-treeview {
 }
 input.k-textbox {
   padding: 2px .3em;
-  height: 2.12em;
+  height: 2.13em;
   line-height: 1.6em;
-  text-indent: 2px\9;
+}
+.k-ie input.k-textbox {
+  text-indent: 2px;
+}
+.k-ff input.k-textbox {
+  height: 2.17em;
 }
 .k-ie7 input.k-textbox {
   line-height: 1.72em;
@@ -2716,29 +2760,28 @@ span.k-numerictextbox {
 }
 .k-numerictextbox .k-link {
   display: block;
-  height: 11px;
-  line-height: 11px;
+  height: 1em;
+  line-height: 1em;
+  vertical-align: middle;
   border-width: 0;
-  padding: 1px 3px 0;
+  padding: 0;
 }
 .k-numerictextbox .k-icon {
   height: 11px;
-  vertical-align: top;
 }
 .k-numeric-wrap .k-input::-webkit-inner-spin-button {
   -webkit-appearance: none;
 }
 /* ColorPicker */
+.k-colorpicker .k-picker-wrap {
+  line-height: 2em;
+}
 .k-colorpicker .k-selected-color {
   vertical-align: top;
   line-height: 0;
   display: inline-block;
   height: 2em;
   width: 2em;
-}
-.k-colorpicker .k-select {
-  min-height: 18px;
-  line-height: 18px;
 }
 .k-colorpicker .k-tool-icon {
   position: relative;
@@ -2984,7 +3027,7 @@ div.k-flatcolorpicker {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff',endColorstr='#00ffffff',GradientType=1) progid:DXImageTransform.Microsoft.gradient(startColorstr='#00000000',endColorstr='#ff000000',GradientType=0);
 }
 /* Editor */
-.k-editor {
+table.k-editor {
   width: 100%;
   height: 250px;
   table-layout: fixed;
@@ -2993,6 +3036,15 @@ div.k-flatcolorpicker {
   border-collapse: separate;
   font-size: 100%;
   vertical-align: top;
+}
+.k-editor-inline {
+  border-width: 2px;
+  padding: .3em .5em;
+}
+.k-editortoolbar-dragHandle {
+  cursor: move;
+  padding-left: 0;
+  padding-right: 3px;
 }
 .k-editor .k-editor-toolbar-wrap {
   border: 0;
@@ -3054,6 +3106,9 @@ div.k-flatcolorpicker {
   height: 22px;
   margin: 1px;
   vertical-align: middle;
+}
+.k-i-move {
+  background-position: -160px -288px;
 }
 .k-bold {
   background-position: -64px 0;
@@ -3182,6 +3237,10 @@ div.k-flatcolorpicker {
 }
 .k-formatBlock {
   width: 147px;
+}
+.k-editortoolbar-dragHandle {
+  float: left;
+  margin: 1px 0 0;
 }
 .k-editor-button .k-state-hover,
 .k-editor-button .k-state-active {
@@ -4256,7 +4315,7 @@ html .k-upload {
 .k-ie7 .k-colorpicker .k-tool-icon,
 .k-ie7 .k-palette.k-reset,
 .k-ie7 .k-editor-dialog .k-button,
-.k-form-text-row label,
+.k-ie7 .k-form-text-row label,
 .k-ie7 .k-tabstrip-items .k-item,
 .k-ie7 .k-tabstrip-items .k-link,
 .k-ie7 .k-slider-horizontal,

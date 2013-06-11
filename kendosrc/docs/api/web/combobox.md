@@ -460,7 +460,7 @@ The filter value.
 
 ### select
 
-Selects drop-down list item and sets the value and the text of the combobox.
+Selects a dropdown item and sets the value and the text of the combobox, or retrieves the selected item index.
 
 #### Example
 
@@ -477,6 +477,10 @@ Selects drop-down list item and sets the value and the text of the combobox.
         return dataItem.text === "test";
     });
 
+    // get selected index
+    var selectedIndex = combobox.select();
+	
+	
 #### Parameters
 
 ##### li `jQuery | Number | Function`
@@ -485,7 +489,9 @@ LI element or index of the item or predicate function, which defines the item th
 
 #### Returns
 
-`Number` The index of the selected LI element.
+`Number` The index of the selected item, if called with no parameters. If a custom value is entered, the returned selected index is `-1`.
+
+`undefined` If called with a parameter as a setter.
 
 ### setDataSource
 

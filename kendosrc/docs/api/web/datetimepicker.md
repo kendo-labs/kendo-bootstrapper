@@ -68,6 +68,18 @@ Effect to be used for opening of the popup.
 
 Difines the animation duration.
 
+### ARIATemplate `String`*(default: "Current focused date is #=kendo.toString(data.current, 'G')#")*
+
+ Specifies a template used to populate value of the aria-label attribute.
+
+#### Example
+
+    // specify on widget initialization
+    $("#datetimepicker").kendoDateTimePicker({
+        ARIATemplate: "Date: #=kendo.toString(data.current, 'G')#"
+    });
+
+
 ### culture `String`*(default: "en-US")*
 
  Specifies the culture info used by the widget.

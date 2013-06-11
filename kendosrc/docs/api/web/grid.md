@@ -730,11 +730,12 @@ The text that is displayed in the column header cell. If not set the [field](#co
 
 ### columns.width `String|Number`
 
-The width of the column. Numeric values are treated as pixels.
+The width of the column. Numeric values are treated as pixels. Also refer to [Column Widths](/getting-started/web/grid/walkthrough#column-widths).
 
 > If all columns have widths and their sum exceeds the width of the grid, a horizontal scrollbar will appear (if scrolling is enabled). If that sum is less than the width of the grid,
-the column widths will be ignored and all columns will expand. This will lead to undesired side effects, e.g. when resizing columns. That's why it is recommended to have at least one column without specified width.
-Explicit widths for all columns should be set only if they are set in percent, or if their sum exceeds the Grid width and the goal is to have horizontal scrolling.
+the column widths will be ignored and all columns will expand. This will lead to undesired side effects, e.g. when resizing columns. In old IE versions the column widths will be obeyed, but misalignment will occur.
+That's why it is recommended to have at least one column without specified width. Explicit widths for all columns should be set only if they are set in percent,
+or if their sum exceeds the Grid width and the goal is to have horizontal scrolling.
 If the Grid has no fixed width and resizes with the browser window, one can apply min-width to the Grid or its table elements to prevent columns from shrinking too much.
 
 #### Example - set the column width as a string
@@ -3650,7 +3651,7 @@ The [data source](/api/framework/datasource) of the widget. Configured via the [
 
 ### tbody `jQuery`
 
-The jQuery object which reprents the table body. Contains all grid table rows.
+The jQuery object which represents the table body. Contains all grid table rows.
 
 #### Example - get the first table row
 

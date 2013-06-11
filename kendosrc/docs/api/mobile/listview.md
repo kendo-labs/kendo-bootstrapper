@@ -120,7 +120,7 @@ First dataItem of the ListView // => listView.dataSource.get(0);
 
  The message template indicating that pullToRefresh will occur. Applicable only when pullToRefresh is set to true.
 
-### scrollTreshold `String`*(default: 30)*
+### scrollThreshold `String`*(default: 30)*
 
  The distance to the bottom in pixels, after which the listview will start fetching the next page. Applicable only when endlessScroll is set to true.
 
