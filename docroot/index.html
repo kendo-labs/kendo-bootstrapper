@@ -4,7 +4,7 @@
     <title>Kendo UI bootstrapper</title>
 
     <link rel="stylesheet" type="text/css" href="kendo/css/kendo.common.css" />
-    <link rel="stylesheet" type="text/css" href="kendo/css/kendo.default.css" />
+    <link rel="stylesheet" type="text/css" href="kendo/css/kendo.black.css" />
     <script src="kendo/js/jquery.min.js"></script>
     <script src="kendo/js/kendo.web.min.js"></script>
 
@@ -69,7 +69,8 @@
 
       <div data-role="layoutmanager" data-orientation="vertical" kendo-layout="1"
            style="overflow: visible">
-        <table class="project-toolbar k-toolbar" cellspacing="10" style="overflow: visible">
+
+        <table class="project-toolbar" cellspacing="10" style="overflow: visible">
           <tr>
             <td style="width: 100%"><h1 class="project-title">Select/create project</h1></td>
             <td style="white-space: nowrap">
@@ -100,9 +101,11 @@
             </td>
           </tr>
         </table>
+
         <div id="content" kendo-layout="1" style="overflow: auto"></div>
+
         <div data-role="layoutmanager" data-orientation="vertical" kendo-layout="25%,resizable">
-          <div class="console-toolbar k-toolbar">
+          <div class="console-toolbar">
             <div style="float: right">
               <button class="k-button BIL icon-ban-circle" onclick="clearConsole()">Clear console</button>
             </div>
@@ -112,12 +115,12 @@
             <button data-bind="click: onCompile" class="k-button BIL icon-bolt">Compile</button>
             <button data-bind="click: onOptimizeImages" class="k-button BIL icon-picture">Optimize images</button>
             <button data-bind="click: onBuildKendo" class="k-button BIL icon-bolt">Build Kendo</button>
-            |
             <button data-bind="click: onBundle" class="k-button BIL icon-beaker">Bundle</button>
           </div>
           <div id="console" kendo-layout="1" style="overflow: auto"></div>
         </div>
       </div>
+
     </div>
 
     <!-- TEMPLATES -->
