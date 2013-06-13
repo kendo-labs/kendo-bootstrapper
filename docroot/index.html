@@ -142,47 +142,58 @@
         $(MAPHASH (type, files, files_by_type)
           <h1>$type</h1>
           <table class="project-files">
-          <tr class="file-type">
-            <td>Project files</td>
-            <td>Library files</td>
-          </tr>
-          $(BLOCK showfiles(lib)
-            $(AWHEN (files.filter(function(f){ return !!f.lib == !!lib }))
-              $(FOREACH (f, it)
-                <div class="file-name-props">
-                  <input class="file-checkbox" name="file" value="$f.name|html" type="checkbox" />
-                  ${ plink(f.name) }
-                  $(LET ((finfo, p.file_info[f.name]))
-                    (${ finfo.size } bytes$-
-                    $(WHEN (!f.lib)$-
-                      ; <a href="#" command="edit-file" project-id="$p.id|html" filename="$f.name|html">edit</a>$)$-
-                      , <a href="#" command="deps-file" project-id="$p.id|html" file-id="$f.id|html">deps</a>$-
-                      , <a href="#" command="props-file" project-id="$p.id|html" file-id="$f.id|html">props</a>$-
-                      )
-                    $(WHEN (!finfo.library && finfo.canbuild && !f.drop)
-                      →
-                      $(AIF (finfo.build)
-                        <span class="build">
-                          ${ plink(it.rel) } ($it.size bytes)$-
-                          $(WHEN (it.dirty), <span class="warn">outdated</span>$)
-                        </span>
-                      $(ELSE)
-                        <span class="warn">not built</span>
+            <tr class="file-type">
+              <td style="width: 50%">Project files</td>
+              <td style="width: 50%">Library files</td>
+            </tr>
+
+            $(BLOCK showfiles(lib)
+              $(AWHEN (files.filter(function(f){ return !!f.lib == !!lib }))
+                $(FOREACH (f ∈ it)
+                  <div class="file-line">
+                    <div class="file-name">
+                      <label>
+                        <input class="file-checkbox" name="file" value="$f.name|html" type="checkbox" />
+                        ${ plink(f.name) }
+                      </label>
+                    </div>
+                    <div class="file-operations">
+                      $(LET ((finfo, p.file_info[f.name]))
+                        <span class="file-size">$finfo.size|bytes</span>
+                        $(WHEN (!f.lib)$-
+                          <span class="icon-edit" title="Edit this file"
+                                command="edit-file" project-id="$p.id|html" filename="$f.name|html"></span>$)
+                        <span class="icon-deps" title="File dependencies"
+                              command="deps-file" project-id="$p.id|html" file-id="$f.id|html"></span>
+                        <span class="icon-props" title="File properties"
+                              command="props-file" project-id="$p.id|html" file-id="$f.id|html"></span>
+
+                        $( /* $(WHEN (!finfo.library && finfo.canbuild && !f.drop)
+                          →
+                          $(AIF (finfo.build)
+                            <span class="build">
+                              ${ plink(it.rel) } ($it.size|bytes)$-
+                              $(WHEN (it.dirty), <span class="warn">outdated</span>$)
+                            </span>
+                          $(ELSE)
+                            <span class="warn">not built</span>
+                          $)
+                        $) */ )
+
                       $)
-                    $)
-                  $)
-                </div>
+                    </div>
+                  </div>
+                $)
               $)
             $)
-          $)
-          <tr>
-            <td>
-              ${ showfiles(false) }
-            </td>
-            <td>
-              ${ showfiles(true) }
-            </td>
-          </tr>
+            <tr>
+              <td style="width:50%">
+                ${ showfiles(false) }
+              </td>
+              <td style="width:50%">
+                ${ showfiles(true) }
+              </td>
+            </tr>
           </table>
         $)
       $)

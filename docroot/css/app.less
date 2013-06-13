@@ -90,12 +90,50 @@ h3 {
   table.project-files {
     width: 100%;
     border-collapse: collapse;
+    margin-bottom: 2em;
     td {
       padding: 2px 20px;
       vertical-align: top;
-      width: 50%;
     }
-    margin-bottom: 2em;
+    .file-line {
+      position: relative;
+      .file-name {
+        white-space: nowrap;
+        input[type="checkbox"] {
+          position: relative;
+          top: 2px;
+        }
+      }
+      .file-operations {
+        padding: 2px;
+        background-color: #fff;
+        z-index: 10;
+        position: absolute;
+        right: 0;
+        top: 0;
+        .file-size {
+          padding-right: 1em;
+        }
+        span[class^="icon-"] {
+          padding: 0 4px;
+          position: relative;
+          top: 1px;
+          font-size: 110%;
+          opacity: 0.2;
+          cursor: pointer;
+        }
+      }
+      &:hover {
+        .file-operations {
+          span[class^="icon-"] {
+            opacity: 0.6;
+            &:hover {
+              opacity: 1;
+            }
+          }
+        }
+      }
+    }
   }
 }
 

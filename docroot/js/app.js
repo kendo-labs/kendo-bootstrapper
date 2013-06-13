@@ -15,6 +15,17 @@ var TMPL = function(cache){
         filters: {
             txthtml: function(msg) {
                 return htmlescape(msg).trim().replace(/\n/g, "<br/>");
+            },
+            bytes: function(sz) {
+                sz = parseFloat(sz);
+                if (isNaN(sz)) return "Watman";
+                if (sz < 1000) return sz + "b";
+                sz /= 1024;
+                if (sz < 1000) return Math.round(sz) + "k";
+                sz /= 1024;
+                if (sz < 1000) return sz.toFixed(2) + "m";
+                sz /= 1024;
+                return sz.toFixed(3) + "g";
             }
         }
     });
