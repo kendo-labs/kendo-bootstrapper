@@ -1,5 +1,4 @@
-@import "font-awesome/less/font-awesome.less";
-@FontAwesomePath: "font-awesome/font";
+@import "font-kendoui/font.css";
 
 // @darkBg1: #4e535c;
 // @darkBg2: #363940;
@@ -9,6 +8,8 @@
 
 @selBg1: #29d6c5;
 @selBg2: #10c4b2;
+
+@linkColor: #199e91;
 
 @import "icon-styles.less";
 @import "scrollbars.less";
@@ -65,16 +66,36 @@ h3 {
 }
 
 #content {
-  background-color: #ddd;
+  background-color: #fff;
   .border-box;
   a, a:link, a:visited {
-    color: #00f;
+    color: @linkColor;
+    text-decoration: none;
   }
   a:hover {
-    color: #f00;
+    color: @linkColor;
+    text-decoration: underline;
   }
   .warn {
     color: #c62;
+  }
+  h1 {
+    font-size: 140%;
+    font-weight: normal;
+    padding: 3px 20px;
+    border-bottom: 1px solid #ddd;
+    color: #000;
+    margin-bottom: 10px;
+  }
+  table.project-files {
+    width: 100%;
+    border-collapse: collapse;
+    td {
+      padding: 2px 20px;
+      vertical-align: top;
+      width: 50%;
+    }
+    margin-bottom: 2em;
   }
 }
 
@@ -155,24 +176,6 @@ table.build-errors {
   }
 }
 
-table.project-files {
-  width: 100%;
-  border-collapse: collapse;
-  td {
-    padding: 2px 5px;
-    vertical-align: top;
-    width: 50%;
-  }
-  tr.file-type {
-    td {
-      background-color: #778;
-      color: #fff;
-      font-size: 120%;
-      font-weight: bold;
-    }
-  }
-}
-
 .two-columns {
   .pf1(column-count, 2);
   .pf1(column-gap, 20px);
@@ -199,7 +202,8 @@ label.hovering {
 }
 
 #console {
-  background-color: #fff;
+  background-color: #ddd;
+  font-size: 90%;
   .message {
     &.error {
       color: #c22;

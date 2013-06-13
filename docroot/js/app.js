@@ -1,11 +1,11 @@
 var SERVER_CONFIG = {};
 var PLATFORM;
+var PROJECTS = new kendo.data.DataSource();
 
 setupListeners();
 
 $(document).ready(function(){
     getTemplate("template-library");
-    PROJECTS = new kendo.data.DataSource();
     setupLayout();
 });
 

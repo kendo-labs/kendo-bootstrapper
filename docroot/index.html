@@ -31,22 +31,22 @@
         <div class="title left-side-bg1">
           Projects
           <span class="links"
-            ><button title="New project" class="k-button BI icon-file" id="btn-project-new"></button
-            ><button title="Import project" class="k-button BI icon-plus" id="btn-project-import"></button
-            ><button title="Preview" class="k-button BI icon-eye-open" id="btn-project-preview"></button
+            ><button title="New project" class="k-button BI icon-new-project" id="btn-project-new"></button
+            ><button title="Import project" class="k-button BI icon-import-project" id="btn-project-import"></button
+            ><button title="Preview" class="k-button BI icon-preview" id="btn-project-preview"></button
             ><button title="Remove project" class="k-button BI icon-trash" id="btn-project-delete"></button
-            ><button title="Kendo Bootstrapper options" class="k-button BI icon-wrench" data-bind="click: onSettings"></button
+            ><button title="Kendo Bootstrapper options" class="k-button BI icon-config" data-bind="click: onSettings"></button
             ></span>
         </div>
 
-        <div id="project-list" class="left-side-bg1"
-             kendo-layout="0.5,resizable" style="overflow:auto"></div>
+        <div id="project-list" class="left-side-bg1 fancy-scrollbars"
+             kendo-layout="0.5,resizable"></div>
 
         <div class="title left-side-bg2">
           Kendo API docs
           <span class="links"
             ><button title="View the documentation and samples on KendoUI.com"
-                     class="k-button BI icon-external-link-sign"
+                     class="k-button BI icon-new-window"
                      onclick="window.open('http://docs.kendoui.com/')"
             ></button
             ></span>
@@ -60,8 +60,7 @@
                                       change: onAPISearchChange }" />
         </div>
 
-        <div class="left-side-bg2"
-             style="overflow: auto"
+        <div class="left-side-bg2 fancy-scrollbars"
              id="apidoc-list"
              kendo-layout="1"></div>
 
@@ -96,28 +95,28 @@
                        data-bind="value: filter_files,
                                   events: { keydown: onFileSearchKeydown,
                                             change: onFileSearchChange }" />
-                <button data-bind="click: onAddFile" class="k-button icon-plus-sign"> Add file</button>
+                <button data-bind="click: onAddFile" class="k-button icon-add-file"> Add file</button>
               </div>
             </td>
           </tr>
         </table>
 
-        <div id="content" kendo-layout="1" style="overflow: auto"></div>
+        <div id="content" class="fancy-scrollbars" kendo-layout="1"></div>
 
         <div data-role="layoutmanager" data-orientation="vertical" kendo-layout="25%,resizable">
           <div class="console-toolbar">
             <div style="float: right">
-              <button class="k-button BIL icon-ban-circle" onclick="clearConsole()">Clear console</button>
+              <button class="k-button BIL icon-clear-console" onclick="clearConsole()">Clear console</button>
             </div>
-            <button data-bind="click: onJSHint" class="k-button BIL icon-filter">JSHint</button>
-            <button data-bind="click: onKendoLint" class="k-button BIL icon-filter">Kendo Lint</button>
-            <button data-bind="click: onEditDeps" class="k-button BIL icon-random">Dependencies</button>
-            <button data-bind="click: onCompile" class="k-button BIL icon-bolt">Compile</button>
+            <button data-bind="click: onJSHint" class="k-button BIL icon-jshint">JSHint</button>
+            <button data-bind="click: onKendoLint" class="k-button BIL icon-kendo">Kendo Lint</button>
+            <button data-bind="click: onEditDeps" class="k-button BIL icon-dependencies">Dependencies</button>
+            <button data-bind="click: onCompile" class="k-button BIL icon-compile">Compile</button>
             <button data-bind="click: onOptimizeImages" class="k-button BIL icon-picture">Optimize images</button>
-            <button data-bind="click: onBuildKendo" class="k-button BIL icon-bolt">Build Kendo</button>
-            <button data-bind="click: onBundle" class="k-button BIL icon-beaker">Bundle</button>
+            <button data-bind="click: onBuildKendo" class="k-button BIL icon-build">Build Kendo</button>
+            <button data-bind="click: onBundle" class="k-button BIL icon-bundle">Bundle</button>
           </div>
-          <div id="console" kendo-layout="1" style="overflow: auto"></div>
+          <div id="console" class="fancy-scrollbars" kendo-layout="1"></div>
         </div>
       </div>
 
@@ -140,18 +139,20 @@
              href="${ p.make_link(file) => html }">${ text || file => html }</a>$)$)
 
       $(BLOCK display_files(files_by_type)
-        $(MAPHASH (type, files => files_by_type)
+        $(MAPHASH (type, files, files_by_type)
+          <h1>$type</h1>
+          <table class="project-files">
           <tr class="file-type">
-            <td>$type (project files)</td>
-            <td>$type (library files)</td>
+            <td>Project files</td>
+            <td>Library files</td>
           </tr>
           $(BLOCK showfiles(lib)
             $(AWHEN (files.filter(function(f){ return !!f.lib == !!lib }))
-              $(FOREACH (f => it)
+              $(FOREACH (f, it)
                 <div class="file-name-props">
                   <input class="file-checkbox" name="file" value="$f.name|html" type="checkbox" />
                   ${ plink(f.name) }
-                  $(LET ((finfo => p.file_info[f.name]))
+                  $(LET ((finfo, p.file_info[f.name]))
                     (${ finfo.size } bytes$-
                     $(WHEN (!f.lib)$-
                       ; <a href="#" command="edit-file" project-id="$p.id|html" filename="$f.name|html">edit</a>$)$-
@@ -182,12 +183,11 @@
               ${ showfiles(true) }
             </td>
           </tr>
+          </table>
         $)
       $)
 
-      <table class="project-files">
-        ${ display_files(p.files) }
-      </table>
+      ${ display_files(p.files) }
     </script>
 
     <script type="x/yajet-template" class="add-file-dialog">
