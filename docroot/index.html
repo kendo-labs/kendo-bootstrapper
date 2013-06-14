@@ -32,10 +32,10 @@
           Projects
           <span class="links"
             ><button title="New project" class="k-button BI icon-new-project" id="btn-project-new"></button
-            ><button title="Import project" class="k-button BI icon-import-project" id="btn-project-import"></button
-            ><button title="Preview" class="k-button BI icon-preview" id="btn-project-preview"></button
-            ><button title="Remove project" class="k-button BI icon-trash" id="btn-project-delete"></button
-            ><button title="Kendo Bootstrapper options" class="k-button BI icon-config" data-bind="click: onSettings"></button
+            ><button title="Import project" class="k-button k-secondary BI icon-import-project" id="btn-project-import"></button
+            ><button title="Preview" class="k-button k-secondary BI icon-preview" id="btn-project-preview"></button
+            ><button title="Remove project" class="k-button k-secondary BI icon-trash" id="btn-project-delete"></button
+            ><button title="Kendo Bootstrapper options" class="k-button k-secondary BI icon-config" data-bind="click: onSettings"></button
             ></span>
         </div>
 
@@ -106,15 +106,15 @@
         <div data-role="layoutmanager" data-orientation="vertical" kendo-layout="25%,resizable">
           <div class="console-toolbar">
             <div style="float: right">
-              <button class="k-button BIL icon-clear-console" onclick="clearConsole()">Clear console</button>
+              <button class="k-button k-secondary BIL icon-clear-console" onclick="clearConsole()">Clear console</button>
             </div>
-            <button data-bind="click: onJSHint" class="k-button BIL icon-jshint">JSHint</button>
-            <button data-bind="click: onKendoLint" class="k-button BIL icon-kendo">Kendo Lint</button>
-            <button data-bind="click: onEditDeps" class="k-button BIL icon-dependencies">Dependencies</button>
-            <button data-bind="click: onCompile" class="k-button BIL icon-compile">Compile</button>
-            <button data-bind="click: onOptimizeImages" class="k-button BIL icon-picture">Optimize images</button>
-            <button data-bind="click: onBuildKendo" class="k-button BIL icon-build">Build Kendo</button>
-            <button data-bind="click: onBundle" class="k-button BIL icon-bundle">Bundle</button>
+            <button data-bind="click: onJSHint" class="k-button k-secondary BIL icon-jshint">JSHint</button>
+            <button data-bind="click: onKendoLint" class="k-button k-secondary BIL icon-kendo">Kendo Lint</button>
+            <button data-bind="click: onEditDeps" class="k-button k-secondary BIL icon-dependencies">Dependencies</button>
+            <button data-bind="click: onCompile" class="k-button k-secondary BIL icon-compile">Compile</button>
+            <button data-bind="click: onOptimizeImages" class="k-button k-secondary BIL icon-picture">Optimize images</button>
+            <button data-bind="click: onBuildKendo" class="k-button k-secondary BIL icon-build">Build Kendo</button>
+            <button data-bind="click: onBundle" class="k-button k-secondary BIL icon-bundle">Bundle</button>
           </div>
           <div id="console" class="fancy-scrollbars" kendo-layout="1"></div>
         </div>
