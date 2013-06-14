@@ -272,7 +272,7 @@ function setupLayout() {
             infoText: "Select existing project directory",
             dirsonly: true
         }, function(fp){
-            RPC.call("fs/stat", [ path_join(fp.path, "bootstrapper.json") ], function(stat, err){
+            if (fp) RPC.call("fs/stat", [ path_join(fp.path, "bootstrapper.json") ], function(stat, err){
                 stat = stat[0];
                 if (stat.error) {
                     editIncludedFiles({
