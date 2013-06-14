@@ -1,4 +1,5 @@
 @import "font-kendoui/font.css";
+@import "font-roboto/stylesheet.css";
 
 // @darkBg1: #4e535c;
 // @darkBg2: #363940;
@@ -44,9 +45,16 @@ html, body {
   padding: 0;
   margin: 0;
   overflow: hidden;
-  font: 14px arial,sans-serif;
+  font: normal 13px RobotoRegular,arial,sans-serif;
   background-color: #bbb;
 }
+
+h1, h2, h3, h4 {
+  font-family: RobotoLight,arial,sans-serif;
+  font-weight: normal;
+}
+
+h1 { font-size: 26px }
 
 .project-toolbar {
   z-index: 100;
@@ -80,9 +88,9 @@ h3 {
     color: #c62;
   }
   h1 {
-    font-size: 140%;
-    font-weight: normal;
     padding: 3px 20px;
+    text-transform: uppercase;
+    font-size: 19px;
     border-bottom: 1px solid #ddd;
     color: #000;
     margin-bottom: 10px;
@@ -142,7 +150,7 @@ h3 {
 .left-side {
   &>.title {
     padding: 10px;
-    font: 18px Arial;
+    font: 19px RobotoLight;
     .links {
       float: right;
     }
@@ -250,7 +258,6 @@ label.hovering {
 
 #console {
   background-color: #ddd;
-  font-size: 90%;
   .message {
     &.error {
       color: #c22;
