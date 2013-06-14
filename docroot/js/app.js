@@ -19,7 +19,7 @@ var TMPL = function(cache){
             bytes: function(sz) {
                 sz = parseFloat(sz);
                 if (isNaN(sz)) return "Watman";
-                if (sz < 1000) return sz + "b";
+                if (sz < 1000) return sz + "";
                 sz /= 1024;
                 if (sz < 1000) return Math.round(sz) + "k";
                 sz /= 1024;
@@ -589,7 +589,11 @@ function drawContent(proj, data) {
         make_link    : function(path) {
             return projectFileLink(proj, path);
         }
-    })).children();
+    })).kendoTooltip({
+        filter    : "[title]",
+        showAfter : 330,
+        position  : "top",
+    }).children();
     kendo.bind(el);
     $(window).resize();
 }
