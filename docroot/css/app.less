@@ -73,17 +73,18 @@ h3 {
   color: #444;
 }
 
+a, a:link, a:visited {
+  color: @linkColor;
+  text-decoration: none;
+}
+a:hover {
+  color: @linkColor;
+  text-decoration: underline;
+}
+
 #content {
   background-color: #fff;
   .border-box;
-  a, a:link, a:visited {
-    color: @linkColor;
-    text-decoration: none;
-  }
-  a:hover {
-    color: @linkColor;
-    text-decoration: underline;
-  }
   .warn {
     color: #c62;
   }
@@ -359,15 +360,6 @@ label.hovering {
   input.search {
     font-family: monospace;
     padding-left: 5px;
-  }
-  .folder-link {
-    color: #00f;
-    &:visited {
-      color: #00f;
-    }
-    &:hover {
-      color: #f00;
-    }
   }
 }
 
