@@ -269,7 +269,7 @@ Template to be used for rendering the items in the list.
              dataSource: dataSource,
              dataTextField: "Name",
              dataValueField: "Id",
-             template: $("#itemTemplate").html()
+             itemTemplate: $("#itemTemplate").html()
          });
      </script>
 
@@ -290,7 +290,7 @@ Template to be used for rendering the tags of the selected items.
              dataSource: dataSource,
              dataTextField: "Name",
              dataValueField: "Id",
-             template: $("#tagTemplate").html()
+             tagTemplate: $("#tagTemplate").html()
          });
      </script>
 

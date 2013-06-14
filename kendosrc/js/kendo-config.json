@@ -841,7 +841,7 @@
                     ],
                     "inherits": "Widget",
                     "file": "kendo.editor.js",
-                    "line": 528,
+                    "line": 529,
                     "col": 17
                 },
                 {
@@ -851,7 +851,7 @@
                     ],
                     "inherits": "DropDownList",
                     "file": "kendo.editor.js",
-                    "line": 5939,
+                    "line": 5974,
                     "col": 16
                 }
             ]
@@ -1355,6 +1355,37 @@
             ]
         },
         {
+            "id": "mobile.drawer",
+            "name": "Drawer",
+            "category": "mobile",
+            "description": "The Kendo Mobile Drawer widget provides slide to reveal global application toolbox",
+            "depends": [
+                "mobile.application"
+            ],
+            "source": "kendo.mobile.drawer.min.js",
+            "widgets": [
+                {
+                    "name": "Drawer",
+                    "options": [
+                        "name",
+                        "position",
+                        "views",
+                        "title"
+                    ],
+                    "events": [
+                        "beforeShow",
+                        "hide",
+                        "init",
+                        "show"
+                    ],
+                    "inherits": "ui.View",
+                    "file": "kendo.mobile.drawer.js",
+                    "line": 23,
+                    "col": 17
+                }
+            ]
+        },
+        {
             "id": "mobile.listview",
             "name": "ListView",
             "category": "mobile",
@@ -1500,11 +1531,12 @@
                     ],
                     "events": [
                         "navigate",
-                        "viewShow"
+                        "viewShow",
+                        "sameViewRequested"
                     ],
                     "inherits": "Widget",
                     "file": "kendo.mobile.pane.js",
-                    "line": 40,
+                    "line": 41,
                     "col": 15
                 }
             ]
@@ -2183,7 +2215,7 @@
                     ],
                     "inherits": "Widget",
                     "file": "kendo.splitter.js",
-                    "line": 66,
+                    "line": 63,
                     "col": 19
                 }
             ]
@@ -2503,6 +2535,7 @@
                         "maxHeight",
                         "pinned",
                         "position",
+                        "content",
                         "visible",
                         "height",
                         "width"
