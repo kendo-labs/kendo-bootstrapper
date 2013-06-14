@@ -54,7 +54,7 @@
 
         <div class="left-side-bg2" style="padding: 5px">
           <input id="apidoc-search" style="width: 100%; box-sizing: border-box;"
-                 placeholder="Filter API pages" class="k-input k-editable"
+                 placeholder="Filter API pages" class="k-textbox"
                  data-bind="value: search_api,
                             events: { keydown: onAPISearchKeydown,
                                       change: onAPISearchChange }" />
@@ -90,7 +90,7 @@
                     </ul>
                   </li>
                 </ul>
-                <input class="k-input k-editable" id="file-filter"
+                <input class="k-textbox" id="file-filter"
                        placeholder="Filter project files"
                        data-bind="value: filter_files,
                                   events: { keydown: onFileSearchKeydown,
@@ -220,7 +220,7 @@
         <p>
           <label>
             File name (relative to project directory):<br />
-            <input autocomplete="off" class="k-input k-editable" name="filename" style="width: 25em" type="text" />
+            <input autocomplete="off" class="k-textbox" name="filename" style="width: 25em" type="text" />
           </label>
         </p>
         <p style="text-align: center">
@@ -252,14 +252,14 @@
       <p>
         <label>
           Project name:<br />
-          <input autocomplete="off" name="name" style="width: 25em" class="k-input k-editable" type="text" />
+          <input autocomplete="off" name="name" style="width: 25em" class="k-textbox" type="text" />
         </label>
       </p>
       <p>
         <label>
           Project directory:<br />
           <input autocomplete="off" name="path" style="width: 25em"
-                 class="k-input k-editable" type="text"
+                 class="k-textbox" type="text"
                  value="${ this.destination => html }/" />
           <button data-bind="click: onBrowse">...</button>
         </label>
@@ -267,7 +267,7 @@
       <p>
         <label>
           Project ID:<br />
-          <input autocomplete="off" name="id" style="width: 10em" class="k-input k-editable" type="text" />
+          <input autocomplete="off" name="id" style="width: 10em" class="k-textbox" type="text" />
         </label>
       </p>
       <p>
@@ -493,7 +493,7 @@
           <div kendo-layout="30px,after:5"
                class="k-toolbar toolbar"
                data-role="layoutmanager" data-orientation="horizontal" data-spacing="5">
-            <input class="border-box search" kendo-layout="1" />
+            <input class="border-box search k-textbox" kendo-layout="1" />
             <button title="Back to previous folder" data-bind="click: onBack" class="icon empty back-directory k-button"></button>
             <button title="Up one level" data-bind="click: onUpFolder" class="icon empty up-directory k-button"></button>
             $(WHEN (this.newFolder)
@@ -544,7 +544,7 @@
         <p>
           <label>
             File name (relative to project directory):<br />
-            <input readonly class="k-input k-editable" name="name" style="width: 20em" data-bind="value: f_name" />
+            <input readonly class="k-textbox" name="name" style="width: 20em" data-bind="value: f_name" />
           </label>
         </p>
         <p>
@@ -581,7 +581,7 @@
         <p>
           <label>
             Remote file URL:<br />
-            <input class="k-input k-editable" name="url" data-bind="value: f_url" style="width: 20em" />
+            <input class="k-textbox" name="url" data-bind="value: f_url" style="width: 20em" />
           </label>
         </p>
         <p>
@@ -608,7 +608,7 @@
         <p>
           <label>
             Remote file URL:<br />
-            <input class="k-input k-editable" data-bind="value: url" style="width: 20em" />
+            <input class="k-textbox" data-bind="value: url" style="width: 20em" />
           </label>
         </p>
         <p>
@@ -633,7 +633,7 @@
         <p>
           <label>
             Editor (executable):<br />
-            <input class="k-input k-editable" style="width: 20em" data-bind="value: editor.path" />
+            <input class="k-textbox" style="width: 20em" data-bind="value: editor.path" />
             <button class="k-button" title="Browse" data-bind="click: onBrowse">...</button>
           </label>
         </p>
@@ -647,19 +647,19 @@
         <p>
           <label>
             Editor command 1:
-            <input class="k-input k-editable" data-bind="value: editor.args.cmd1" />
+            <input class="k-textbox" data-bind="value: editor.args.cmd1" />
           </label>
         </p>
         <p>
           <label>
             Editor command 2:
-            <input class="k-input k-editable" data-bind="value: editor.args.cmd2" />
+            <input class="k-textbox" data-bind="value: editor.args.cmd2" />
           </label>
         </p>
         <p>
           <label>
             Editor command 3:
-            <input class="k-input k-editable" data-bind="value: editor.args.cmd3" />
+            <input class="k-textbox" data-bind="value: editor.args.cmd3" />
           </label>
         </p>
         $(PROCESS ok_cancel_buttons())
