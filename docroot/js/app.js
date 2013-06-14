@@ -1476,7 +1476,7 @@ select_file.template_name = function(item) {
     if (!item.name) return "--NEW--";
     var cls = [];
     if (item.isDirectory) {
-        cls.push("icon", "directory");
+        cls.push("icon-folder bigger-icon");
     }
     return "<span class='" + cls.join(" ") + "'>" + htmlescape(item.name) + "</span>";
 };

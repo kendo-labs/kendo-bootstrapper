@@ -1,10 +1,9 @@
 .BI {
   border: none;
-  background: transparent;
   border-radius: 15px;
   width: 26px;
   height: 26px;
-  font-size: 18px;
+  font-size: 20px;
   padding: 0;
   text-align: center;
 }
@@ -26,6 +25,14 @@
     display: inline-block;
     speak: none;
   }
+  &.bigger-icon {
+    &:before {
+      font-size: 160%;
+      display: block;
+      float: left;
+      margin-right: 5px;
+    }
+  }
 }
 
 [class^="icon-"],
@@ -38,7 +45,7 @@
 .icon-preview:before { content: "\E09B" }
 .icon-trash:before { content: "\E0C3" }
 .icon-config:before { content: "\E0C9" }
-.icon-new-window:before { content: "\E076" }
+.icon-new-window:before { content: "\E0C8" }
 .icon-add-file:before { content: "\E039" }
 .icon-clear-console:before { content: "\E036" }
 .icon-jshint:before { content: "\E06C" }
@@ -52,3 +59,7 @@
 //.icon-edit:before { content: "\E07B" }
 .icon-edit:before { content: "\E0D5" }
 .icon-props:before { content: "\E0A5" }
+.icon-back-folder:before { content: "\E0ED" }
+.icon-up-folder:before { content: "\E0A3" }
+.icon-new-folder:before { content: "\E0A0" }
+.icon-folder:before { content: "\E0A1" }

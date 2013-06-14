@@ -417,7 +417,7 @@
                   $(IF (this.mvvm) data-bind="click: onOK" $)
                   >${ this.okLabel || this.closeLabel || "OK" => html }</button>
           $(UNLESS (this.closeLabel)
-            <button class="k-button btn-cancel"
+            <button class="k-button k-secondary btn-cancel"
                     $(IF (this.mvvm) data-bind="click: onCancel" $)
                     >${ this.cancelLabel || "Cancel" => html }</button>$)
         </div>$)
@@ -494,10 +494,10 @@
                class="k-toolbar toolbar"
                data-role="layoutmanager" data-orientation="horizontal" data-spacing="5">
             <input class="border-box search k-textbox" kendo-layout="1" />
-            <button title="Back to previous folder" data-bind="click: onBack" class="icon empty back-directory k-button"></button>
-            <button title="Up one level" data-bind="click: onUpFolder" class="icon empty up-directory k-button"></button>
+            <button title="Back to previous folder" data-bind="click: onBack" class="k-button k-secondary BI icon-back-folder back-directory"></button>
+            <button title="Up one level" data-bind="click: onUpFolder" class="k-button k-secondary BI icon-up-folder up-directory"></button>
             $(WHEN (this.newFolder)
-            <button title="New folder" data-bind="click: onNewFolder" class="icon empty new-directory k-button"></button>$)
+              <button title="New folder" data-bind="click: onNewFolder" class="k-button k-secondary BI icon-new-folder new-directory"></button>$)
           </div>
           <div class="status" kendo-layout="0px,after:5">
             In <span class="current-path">$this.path|html</span>
@@ -526,12 +526,12 @@
           <div class="dlg-buttons">
             $(AWHEN (this.moreButtons)
               $(FOREACH (btn => it)
-                <button style="float: left; white-space: nowrap; width: auto" class="k-button"
+                <button style="float: left; white-space: nowrap; width: auto" class="k-button k-secondary"
                         data-bind="click: moreButtons_$btn.handler_name">$btn.label</button>$)$)
             <button class="k-button btn-ok" data-bind="events: { click: onOK }">
               ${ this.okLabel || this.closeLabel || "OK" => html }
             </button>
-            <button class="k-button btn-cancel" data-bind="events: { click: onCancel }">
+            <button class="k-button k-secondary btn-cancel" data-bind="events: { click: onCancel }">
               ${ this.cancelLabel || "Cancel" => html }
             </button>
           </div>
