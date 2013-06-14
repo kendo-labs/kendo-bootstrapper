@@ -4,7 +4,7 @@
     <title>Kendo UI bootstrapper</title>
 
     <link rel="stylesheet" type="text/css" href="kendo/css/kendo.common.css" />
-    <link rel="stylesheet" type="text/css" href="kendo/css/kendo.black.css" />
+    <link rel="stylesheet" type="text/css" href="kendo/css/kendo.default.css" />
     <script src="kendo/js/jquery.min.js"></script>
     <script src="kendo/js/kendo.web.min.js"></script>
 
@@ -54,7 +54,7 @@
 
         <div class="left-side-bg2" style="padding: 5px">
           <input id="apidoc-search" style="width: 100%; box-sizing: border-box;"
-                 placeholder="Filter API pages"
+                 placeholder="Filter API pages" class="k-input k-editable"
                  data-bind="value: search_api,
                             events: { keydown: onAPISearchKeydown,
                                       change: onAPISearchChange }" />
@@ -126,6 +126,14 @@
 
     <script type="x/yajet-template" class="simple-list-item">
       <div class="simple-list-item" value="${this.id}">${this.name}</div>
+    </script>
+
+    <script type="x/yajet-template" class="simple-list-item-projects">
+      <div class="simple-list-item _projects" value="${this.id}">${this.name}</div>
+    </script>
+
+    <script type="x/yajet-template" class="simple-list-item-api">
+      <div class="simple-list-item _api" value="${this.id}">${this.name}</div>
     </script>
 
     <script type="x/yajet-template" class="project-view">

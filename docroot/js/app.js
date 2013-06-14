@@ -249,7 +249,7 @@ function setupLayout() {
     $("#project-list").kendoListView({
         dataSource : PROJECTS,
         selectable : true,
-        template   : getTemplate("simple-list-item"),
+        template   : getTemplate("simple-list-item-projects"),
         change     : function(ev) {
             var proj = this.select().attr("value");
             if (proj) {
@@ -335,7 +335,7 @@ function setupLayout() {
             sort: { field: "name", dir: "asc" }
         });
         model.apidoc_lv = $("#apidoc-list").kendoListView({
-            template   : getTemplate("simple-list-item"),
+            template   : getTemplate("simple-list-item-api"),
             dataSource : model.apidoc,
             selectable : true,
             change     : function(ev) {
@@ -589,11 +589,13 @@ function drawContent(proj, data) {
         make_link    : function(path) {
             return projectFileLink(proj, path);
         }
-    })).kendoTooltip({
-        filter    : "[title]",
-        showAfter : 330,
-        position  : "top",
-    }).children();
+    }))
+    // .kendoTooltip({
+    //     filter    : "[title]",
+    //     showAfter : 330,
+    //     position  : "top",
+    // })
+        .children();
     kendo.bind(el);
     $(window).resize();
 }

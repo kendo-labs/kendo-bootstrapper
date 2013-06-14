@@ -184,6 +184,15 @@ h3 {
   -webkit-user-select: none;
   cursor: default;
   padding: 2px 5px;
+  &._projects, &._api {
+    padding-left: 1em;
+    .has-icon-before;
+    &:before {
+      margin-right: 5px;
+    }
+  }
+  &._projects:before { content: "\E010" }
+  &._api:before { content: "\E09C" }
 }
 
 .dlg-buttons {
@@ -391,3 +400,16 @@ button.icon, button.icon:active {
 }
 
 textarea { resize: none }
+
+.k-input {
+  padding: 2px 5px;
+  border: 1px solid @linkColor;
+  &:focus {
+    border: 1px solid @selBg1;
+    background-color: lighten(@selBg1, 45%);
+  }
+}
+
+.k-button {
+  padding: 0 5px;
+}

@@ -16,8 +16,7 @@
   }
 }
 
-[class^="icon-"],
-[class*=" icon-"] {
+.has-icon-before {
   &:before {
     font-family: "KendoUI";
     font-weight: normal;
@@ -27,6 +26,11 @@
     display: inline-block;
     speak: none;
   }
+}
+
+[class^="icon-"],
+[class*=" icon-"] {
+  .has-icon-before;
 }
 
 .icon-new-project:before { content: "\E09C" }
