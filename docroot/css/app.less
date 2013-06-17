@@ -12,6 +12,8 @@
 
 @linkColor: #199e91;
 
+@checkboxHoverColor: lighten(desaturate(@selBg1, 30%), 40%);
+
 @import "icon-styles.less";
 @import "scrollbars.less";
 
@@ -226,7 +228,7 @@ table.build-errors {
 label.hovering {
   display: block;
   &:hover {
-    background-color: wheat;
+    background-color: @checkboxHoverColor;
   }
 }
 
@@ -258,7 +260,7 @@ label.hovering {
       color: #972;
     }
     &:hover {
-      background-color: wheat;
+      background-color: @checkboxHoverColor;
     }
     .filename {
       cursor: pointer;
@@ -331,7 +333,7 @@ label.hovering {
     display: block;
     padding: 1px 5px;
     &:hover {
-      background-color: wheat;
+      background-color: @checkboxHoverColor;
     }
   }
 }
