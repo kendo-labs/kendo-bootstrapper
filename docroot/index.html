@@ -69,34 +69,35 @@
       <div data-role="layoutmanager" data-orientation="vertical" kendo-layout="1"
            style="overflow: visible">
 
-        <table class="project-toolbar" cellspacing="10" style="overflow: visible">
+        <table class="project-toolbar" cellspacing="5" style="overflow: visible">
           <tr>
             <td style="width: 100%"><h1 class="project-title">Select/create project</h1></td>
             <td style="white-space: nowrap">
-              <div style="float: right">
-                <ul data-role="menu" data-open-on-click="true" style="float: left; margin-right: 0.5em">
-                  <li>Selection
-                    <ul>
-                      <li data-bind="click: onMenuSelectAllFiles">Select all visible files</li>
-                      <li data-bind="click: onMenuUnselectAllFiles">Unselect all</li>
-                    </ul>
-                  </li>
-                  <li>Operate
-                    <ul>
-                      <li data-bind="click: onMenuMakeProjectFiles">Make project files</li>
-                      <li data-bind="click: onMenuMakeLibraryFiles">Make library files</li>
-                      <li data-bind="click: onMenuUnregisterFiles">Unregister files</li>
-                      <li data-bind="click: onMenuDeleteFiles">Delete files</li>
-                    </ul>
-                  </li>
-                </ul>
-                <input class="k-textbox" id="file-filter"
-                       placeholder="Filter project files"
-                       data-bind="value: filter_files,
-                                  events: { keydown: onFileSearchKeydown,
-                                            change: onFileSearchChange }" />
-                <button data-bind="click: onAddFile" class="k-button icon-add-file"> Add file</button>
-              </div>
+              <ul data-role="menu" data-open-on-click="true" style="float: left; margin-right: 0.5em">
+                <li>Selection
+                  <ul>
+                    <li data-bind="click: onMenuSelectAllFiles">Select all visible files</li>
+                    <li data-bind="click: onMenuUnselectAllFiles">Unselect all</li>
+                  </ul>
+                </li>
+                <li>Operate
+                  <ul>
+                    <li data-bind="click: onMenuMakeProjectFiles">Make project files</li>
+                    <li data-bind="click: onMenuMakeLibraryFiles">Make library files</li>
+                    <li data-bind="click: onMenuUnregisterFiles">Unregister files</li>
+                    <li data-bind="click: onMenuDeleteFiles">Delete files</li>
+                  </ul>
+                </li>
+              </ul>
+            <td>
+              <input class="k-textbox" id="file-filter"
+                     placeholder="Filter project files"
+                     data-bind="value: filter_files,
+                                events: { keydown: onFileSearchKeydown,
+                                          change: onFileSearchChange }" />
+            </td>
+            <td style="white-space: nowrap">
+              <button data-bind="click: onAddFile" class="k-button BIL icon-add-file"> Add file</button>
             </td>
           </tr>
         </table>
