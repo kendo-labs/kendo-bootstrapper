@@ -199,15 +199,19 @@ function setupLayout() {
     function operateOnSelectedFiles(how) {
         var ops = {
             make_project_files: {
+                shortDesc: "Make project files",
                 confirm: "Mark ${ this.count => plural([ 'NO', 'one file', '# files' ]) } as “project ${ this.count => plural([ 0, 'file', 'files' ]) }”?"
             },
             make_library_files: {
+                shortDesc: "Make library files",
                 confirm: "Mark ${ this.count => plural([ 'NO', 'one file', '# files' ]) } as “library ${ this.count => plural([ 0, 'file', 'files' ]) }”?"
             },
             unregister_files: {
+                shortDesc: "Remove files",
                 confirm: "Unregister ${ this.count => plural([ 'NO', 'one file', '# files' ]) }?<br />The ${ this.count => plural([ 0, 'file', 'files' ]) } will not be removed from the project directory."
             },
             delete_files: {
+                shortDesc: "Delete files",
                 confirm: "Delete ${ this.count => plural([ 'NO', 'one file', '# files' ]) }?<br />The ${ this.count => plural([ 0, 'file', 'files' ]) } will be removed from the disk too!"
             }
         };
@@ -228,6 +232,8 @@ function setupLayout() {
                 }
                 if (confirmation) {
                     areYouSure({
+                        icon: "icon-question",
+                        shortDesc: ops[how].shortDesc,
                         htmlMessage: confirmation({ count: sel.length }),
                     }, function(ok){
                         if (ok) doit(proj, sel);
