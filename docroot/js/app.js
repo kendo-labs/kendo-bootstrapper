@@ -356,18 +356,6 @@ function setupLayout() {
         docBrowserDialog.setup(components);
     });
 
-    // $("#btn-file-delete").click(function(){
-    //     withSelectedFile(function(proj, file){
-    //         areYouSure({
-    //             message: "Really delete file " + file + "?",
-    //             okLabel: "Yes",
-    //             cancelLabel: "NOOO!",
-    //         }, function(ok){
-    //             if (ok) RPC.call("project/delete-file", proj.id, file);
-    //         });
-    //     });
-    // });
-
     $(document.body).on("click", "[command=edit-file]", function(ev){
         var proj = $(this).attr("project-id");
         var file = $(this).attr("filename");
@@ -384,6 +372,19 @@ function setupLayout() {
         var proj = $(this).attr("project-id");
         var file = $(this).attr("file-id");
         projectFilePropsDialog(proj, file);
+        ev.preventDefault();
+    }).on("click", "[command=delete-file]", function(ev){
+        var proj = $(this).attr("project-id");
+        var file = $(this).attr("filename");
+        areYouSure({
+            icon        : "icon-warning",
+            shortDesc   : "Delete file “" + file + "”",
+            htmlMessage : "Are you sure you want to delete this file?<br />It will be removed from the disk too!",
+            okLabel     : "Yes",
+            cancelLabel : "No",
+        }, function(ok){
+            if (ok) RPC.call("project/delete-file", proj.id, file);
+        });
         ev.preventDefault();
     });
     $(window).focus(function(){
@@ -1122,6 +1123,7 @@ function consoleAddMessage(msg) {
 }
 
 function areYouSure(options, callback) {
+    if (options.okSecondary === undefined) options.okSecondary = true;
     var dlg_el = $("<div></div>").html(getTemplate("confirm-dialog")(options)).kendoWindow({
         title: options.title || "Confirm",
         modal: true

@@ -176,6 +176,8 @@
                               command="deps-file" project-id="$p.id|html" file-id="$f.id|html"></span>
                         <span class="icon-props" title="File properties"
                               command="props-file" project-id="$p.id|html" file-id="$f.id|html"></span>
+                        <span class="icon-trash" title="Delete this file"
+                              command="delete-file" project-id="$p.id|html" filename="$f.name|html"></span>
 
                         $( /* $(WHEN (!finfo.library && finfo.canbuild && !f.drop)
                           →
@@ -423,11 +425,11 @@
 
       $(EXPORT ok_cancel_buttons()
         <div class="dlg-buttons">
-          <button class="k-button btn-ok"
+          <button class="k-button btn-ok $(IF (this.okSecondary) k-secondary $)"
                   $(IF (this.mvvm) data-bind="click: onOK" $)
                   >${ this.okLabel || this.closeLabel || "OK" => html }</button>
           $(UNLESS (this.closeLabel)
-            <button class="k-button k-secondary btn-cancel"
+            <button class="k-button $(UNLESS (this.okSecondary) k-secondary $) btn-cancel"
                     $(IF (this.mvvm) data-bind="click: onCancel" $)
                     >${ this.cancelLabel || "Cancel" => html }</button>$)
         </div>$)
