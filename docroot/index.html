@@ -294,7 +294,7 @@
 
     <script type="x/yajet-template" class="build-errors-dialog">
       <div data-role="layoutmanager" data-orientation="vertical" class="layout">
-        <div kendo-layout="1" style="overflow: auto">
+        <div kendo-layout="1" class="fancy-scrollbars">
           <table class="build-errors" style="width: 100%">
             <thead>
               <tr>
@@ -331,14 +331,14 @@
            data-role="layoutmanager" data-orientation="vertical">
         <div class="project-deps" kendo-layout="1"
              data-role="layoutmanager" data-orientation="horizontal">
-          <div class="left-files" kendo-layout="50%"></div>
+          <div class="left-files fancy-scrollbars" kendo-layout="50%"></div>
           <div class="deps" kendo-layout="1"
                data-role="layoutmanager" data-orientation="vertical">
             <div class="title">
               Chose a file on the left, then select its direct dependencies
               below.
             </div>
-            <div kendo-layout="1" class="deps-select" style="overflow: auto"></div>
+            <div kendo-layout="1" class="deps-select fancy-scrollbars"></div>
           </div>
         </div>
         $(PROCESS ok_cancel_buttons())
@@ -348,14 +348,14 @@
     <script type="x/yajet-template" class="project-file-deps-dialog">
       <div class="project-deps-dialog" data-role="layoutmanager" data-orientation="vertical">
         <div class="title">Select below direct dependencies of $this.name|html:</div>
-        <div kendo-layout="1" class="deps-select" style="overflow: auto"></div>
+        <div kendo-layout="1" class="deps-select fancy-scrollbars"></div>
         $(PROCESS ok_cancel_buttons())
       </div>
     </script>
 
     <script type="x/yajet-template" class="kendo-widget-usage-dialog">
       <div data-role="layoutmanager" data-orientation="vertical" class="layout">
-        <div kendo-layout="1" style="overflow: auto" class="dlg-content">
+        <div kendo-layout="1" class="dlg-content fancy-scrollbars">
           <p>Detected components in use:</p>
 
           <ul class="two-columns">$(FOREACH (w => this.components)
@@ -691,13 +691,13 @@
                 the Preview button to see on the right the list of files
                 that would be included.
               </div>
-              <textarea kendo-layout="1" style="white-space: nowrap; overflow: auto;"
+              <textarea class="fancy-scrollbars" kendo-layout="1" style="white-space: nowrap;"
                         data-bind="value: rules"></textarea>
               <div style="text-align: right">
                 <button class="k-button" data-bind="click: onPreview">Preview</button>
               </div>
             </div>
-            <div class="preview" style="overflow: auto" kendo-layout="1"></div>
+            <div class="preview fancy-scrollbars" kendo-layout="1"></div>
           </div>
           $(PROCESS ok_cancel_buttons())
         </div>
