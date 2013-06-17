@@ -166,10 +166,28 @@
             this.update();
         },
 
+        _getPaddings: function() {
+            var el = this.element;
+            function padding(side) {
+                var x = parseFloat(el.css(side));
+                return isNaN(x) ? 0 : x;
+            }
+            return {
+                top    : padding("padding-top"),
+                right  : padding("padding-right"),
+                bottom : padding("padding-bottom"),
+                left   : padding("padding-left"),
+            };
+        },
+
         _computeLayout: function(width, height) {
             var self = this;
+            var padding = self._getPaddings();
+            width -= padding.left + padding.right;
+            height -= padding.top + padding.bottom;
             var options = self.options;
-            var rem_width = width, rem_height = height;
+            var rem_width = width;
+            var rem_height = height;
             var widgets = options.widgets;
             var spacing = options.spacing || 0;
             function limit(f, sz) {
@@ -193,7 +211,7 @@
                         rem_width -= sz + spacing;
                         if (f.after) rem_width -= f.after;
                     }
-                    a[2] = { x: 0, y: 0, w: sz, h: height };
+                    a[2] = { x: padding.left, y: padding.top, w: sz, h: height };
                     break;
                   case "vertical":
                     if (f.type != "fraction") {
@@ -203,11 +221,11 @@
                         rem_height -= sz + spacing;
                         if (f.after) rem_height -= f.after;
                     }
-                    a[2] = { x: 0, y: 0, w: width, h: sz };
+                    a[2] = { x: padding.left, y: padding.top, w: width, h: sz };
                     break;
                 }
             });
-            var prev_x = 0, prev_y = 0;
+            var prev_x = padding.left, prev_y = padding.top;
             widgets.forEach(function(a){
                 var f = a[1];
                 switch (options.orientation) {
