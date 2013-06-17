@@ -284,8 +284,13 @@
     </script>
 
     <script type="x/yajet-template" class="confirm-dialog">
-      <div class="dlg-content">
-        <p style="font-size: 120%; font-weight: bold">
+      <div class="dlg-content confirm-dialog $(IF (this.icon) with-icon$)">
+        $(IF (this.icon) <div class="confirm-dialog-icon $this.icon"></div>$)
+        $(IF (this.shortDesc || this.htmlShortDesc)
+          <p class="shortdesc">
+            $(IF (this.htmlShortDesc) $this.htmlShortDesc $(ELSE) $this.shortDesc|html $)
+          </p>$)
+        <p>
           $(IF (this.htmlMessage) $this.htmlMessage $(ELSE) $this.message|html $)
         </p>
       </div>

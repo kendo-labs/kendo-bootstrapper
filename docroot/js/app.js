@@ -310,7 +310,9 @@ function setupLayout() {
     $("#btn-project-delete").click(function(){
         withSelectedProject(function(proj){
             areYouSure({
-                htmlMessage: ("Sure you want to unregister project “" + htmlescape(proj.name) + "”?<br />" +
+                icon: "icon-warning",
+                shortDesc: "Remove project “" + htmlescape(proj.name) + "”",
+                htmlMessage: ("Are you sure you want to unregister this project?<br />" +
                               "The files will not be deleted from disk."),
                 okLabel: "Yes",
                 cancelLabel: "No"
@@ -1114,12 +1116,7 @@ function consoleAddMessage(msg) {
 }
 
 function areYouSure(options, callback) {
-    var dlg_el = $("<div></div>").html(getTemplate("confirm-dialog")({
-        message     : options.message,
-        htmlMessage : options.htmlMessage,
-        okLabel     : options.okLabel,
-        cancelLabel : options.cancelLabel
-    })).kendoWindow({
+    var dlg_el = $("<div></div>").html(getTemplate("confirm-dialog")(options)).kendoWindow({
         title: options.title || "Confirm",
         modal: true
     }).on("click", ".btn-ok", function(){

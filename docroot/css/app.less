@@ -380,6 +380,7 @@ div.k-window-content {
     padding: 8px;
     border-top: 1px solid #cdcdcd;
     text-align: right;
+    color: #efefef;
     button {
       width: 5em;
     }
@@ -387,4 +388,27 @@ div.k-window-content {
   .dlg-content {
     padding: 5px;
   }
+}
+
+.confirm-dialog {
+  padding: 10px 20px !important;
+  position: relative;
+  &.with-icon {
+    padding-left: 60px !important;
+    .confirm-dialog-icon {
+      position: absolute;
+      left: 10px;
+      top: 20px;
+      font-size: 40px;
+      color: #ffac51;
+    }
+  }
+  .shortdesc {
+    font: 150% RobotoLight,arial,sans-serif;
+  }
+}
+
+.k-button.k-secondary {
+  background: transparent;
+  color: inherit;
 }
