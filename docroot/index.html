@@ -284,9 +284,11 @@
     </script>
 
     <script type="x/yajet-template" class="confirm-dialog">
-      <p style="font-size: 120%; font-weight: bold">
-        $(IF (this.htmlMessage) $this.htmlMessage $(ELSE) $this.message|html $)
-      </p>
+      <div class="dlg-content">
+        <p style="font-size: 120%; font-weight: bold">
+          $(IF (this.htmlMessage) $this.htmlMessage $(ELSE) $this.message|html $)
+        </p>
+      </div>
       $(PROCESS ok_cancel_buttons())
     </script>
 
@@ -353,7 +355,7 @@
 
     <script type="x/yajet-template" class="kendo-widget-usage-dialog">
       <div data-role="layoutmanager" data-orientation="vertical" class="layout">
-        <div kendo-layout="1" style="overflow: auto">
+        <div kendo-layout="1" style="overflow: auto" class="dlg-content">
           <p>Detected components in use:</p>
 
           <ul class="two-columns">$(FOREACH (w => this.components)
@@ -386,25 +388,27 @@
 
     <script type="x/yajet-template" class="build-distro-dialog">
       <div>
-        <h2>Select build type:</h2>
-        <p>
-          <label>
-            <input type="radio" name="build-type" value="prod" checked="checked" />
-            Production build (compiled/minified files)
-          </label>
-        </p>
-        <p>
-          <label>
-            <input type="radio" name="build-type" value="prod,concat" />
-            Production build (compiled/minified files, concatenated JS)
-          </label>
-        </p>
-        <p>
-          <label>
-            <input type="radio" name="build-type" value="devel" />
-            Development build (readable project files)
-          </label>
-        </p>
+        <div class="dlg-content">
+          <h2>Select build type:</h2>
+          <p>
+            <label>
+              <input type="radio" name="build-type" value="prod" checked="checked" />
+              Production build (compiled/minified files)
+            </label>
+          </p>
+          <p>
+            <label>
+              <input type="radio" name="build-type" value="prod,concat" />
+              Production build (compiled/minified files, concatenated JS)
+            </label>
+          </p>
+          <p>
+            <label>
+              <input type="radio" name="build-type" value="devel" />
+              Development build (readable project files)
+            </label>
+          </p>
+        </div>
         $(PROCESS ok_cancel_buttons())
       </div>
     </script>
@@ -489,8 +493,8 @@
            data-height="${ this.height || 400 }"
            data-bind="events: { resize: dlgResize }">
         <div data-role="layoutmanager" data-orientation="vertical" class="layout">
-          $(AWHEN (this.infoText) <div kendo-layout="0px,after:5">$it</div> $)
-          <div kendo-layout="30px,after:5"
+          $(AWHEN (this.infoText) <div kendo-layout="0px" style="padding:5px">$it</div> $)
+          <div kendo-layout="30px" style="padding: 0 5px"
                class="k-toolbar toolbar"
                data-role="layoutmanager" data-orientation="horizontal" data-spacing="5">
             <input class="border-box search k-textbox" kendo-layout="1" />
@@ -499,7 +503,7 @@
             $(WHEN (this.newFolder)
               <button title="New folder" data-bind="click: onNewFolder" class="k-button k-secondary BI icon-new-folder new-directory"></button>$)
           </div>
-          <div class="status" kendo-layout="0px,after:5">
+          <div class="status" kendo-layout="0px" style="padding:5px">
             In <span class="current-path">$this.path|html</span>
           </div>
           <div kendo-layout="1" class="filesystem-grid"
@@ -541,127 +545,133 @@
 
     <script type="x/yajet-template" class="fileprops-dialog">
       <div data-role="window" data-title="File properties" data-modal="true" data-resizable="false">
-        <p>
-          <label>
-            File name (relative to project directory):<br />
-            <input readonly class="k-textbox" name="name" style="width: 20em" data-bind="value: f_name" />
-          </label>
-        </p>
-        <p>
-          <label>
-            File type:<br />
-            <select name="type" data-role="dropdownlist" data-bind="value: f_type">
-              <option value="">Unknown</option>
-              <option value="js">JavaScript</option>
-              <option value="css">CSS</option>
-              <option value="less">LESS</option>
-              <option value="coffee">CoffeeScript</option>
-              <option value="html">HTML</option>
-            </select>
-          </label>
-        </p>
-        <p>
-          <label class="hovering">
-            <input type="checkbox" name="lib" data-bind="checked: f_lib" />
-            This is a library file
-          </label>
-        </p>
-        <p>
-          <label class="hovering">
-            <input type="checkbox" name="page" data-bind="checked: f_page" />
-            This is a Web page
-          </label>
-        </p>
-        <p>
-          <label class="hovering">
-            <input type="checkbox" name="remote" data-bind="checked: f_remote" />
-            This is a remote file (enter URL below)
-          </label>
-        </p>
-        <p>
-          <label>
-            Remote file URL:<br />
-            <input class="k-textbox" name="url" data-bind="value: f_url" style="width: 20em" />
-          </label>
-        </p>
-        <p>
-          <label>
-            <input type="checkbox" data-bind="checked: f_download" />
-            Download file locally on build.
-          </label>
-        </p>
+        <div class="dlg-content">
+          <p>
+            <label>
+              File name (relative to project directory):<br />
+              <input readonly class="k-textbox" name="name" style="width: 20em" data-bind="value: f_name" />
+            </label>
+          </p>
+          <p>
+            <label>
+              File type:<br />
+              <select name="type" data-role="dropdownlist" data-bind="value: f_type">
+                <option value="">Unknown</option>
+                <option value="js">JavaScript</option>
+                <option value="css">CSS</option>
+                <option value="less">LESS</option>
+                <option value="coffee">CoffeeScript</option>
+                <option value="html">HTML</option>
+              </select>
+            </label>
+          </p>
+          <p>
+            <label class="hovering">
+              <input type="checkbox" name="lib" data-bind="checked: f_lib" />
+              This is a library file
+            </label>
+          </p>
+          <p>
+            <label class="hovering">
+              <input type="checkbox" name="page" data-bind="checked: f_page" />
+              This is a Web page
+            </label>
+          </p>
+          <p>
+            <label class="hovering">
+              <input type="checkbox" name="remote" data-bind="checked: f_remote" />
+              This is a remote file (enter URL below)
+            </label>
+          </p>
+          <p>
+            <label>
+              Remote file URL:<br />
+              <input class="k-textbox" name="url" data-bind="value: f_url" style="width: 20em" />
+            </label>
+          </p>
+          <p>
+            <label>
+              <input type="checkbox" data-bind="checked: f_download" />
+              Download file locally on build.
+            </label>
+          </p>
+        </div>
         $(PROCESS ok_cancel_buttons())
       </div>
     </script>
 
     <script type="x/yajet-template" class="add-remote-file-dialog">
       <div data-role="window" data-title="Add remote file" data-modal="true" data-resizable="false">
-        <p>
-          <label>
-            Select library, or just paste the URL below.<br />
-            <select name="library" data-role="dropdownlist"
-                    data-bind="source: libraries, value: library, events: { change: onLibraryChange }"
-                    data-text-field="name" data-value-field="id">
-            </select>
-          </label>
-        </p>
-        <p>
-          <label>
-            Remote file URL:<br />
-            <input class="k-textbox" data-bind="value: url" style="width: 20em" />
-          </label>
-        </p>
-        <p>
-          <label>
-            <input type="checkbox" data-bind="checked: download" />
-            Download file locally on build.
-          </label>
-        </p>
-        <p>
-          <label>
-            Local name for this file:<br />
-            <input data-bind="value: filename" style="width: 20em" />
-          </label>
-        </p>
+        <div class="dlg-content">
+          <p>
+            <label>
+              Select library, or just paste the URL below.<br />
+              <select name="library" data-role="dropdownlist"
+                      data-bind="source: libraries, value: library, events: { change: onLibraryChange }"
+                      data-text-field="name" data-value-field="id">
+              </select>
+            </label>
+          </p>
+          <p>
+            <label>
+              Remote file URL:<br />
+              <input class="k-textbox" data-bind="value: url" style="width: 20em" />
+            </label>
+          </p>
+          <p>
+            <label>
+              <input type="checkbox" data-bind="checked: download" />
+              Download file locally on build.
+            </label>
+          </p>
+          <p>
+            <label>
+              Local name for this file:<br />
+              <input data-bind="value: filename" style="width: 20em" />
+            </label>
+          </p>
+        </div>
         $(PROCESS ok_cancel_buttons())
       </div>
     </script>
 
     <script type="x/yajet-template" class="bootstrapper-settings-dialog">
       <div data-role="window" data-title="Settings" data-modal="true">
-        <h2>Editor configuration</h2>
-        <p>
-          <label>
-            Editor (executable):<br />
-            <input class="k-textbox" style="width: 20em" data-bind="value: editor.path" />
-            <button class="k-button" title="Browse" data-bind="click: onBrowse">...</button>
-          </label>
-        </p>
-        <p style="max-width: 25em">
-          There are 3 editor commands.  One that takes only the filename
-          (<tt><b>{file}</b></tt>), the second takes a line number
-          (<tt><b>{line}</b></tt>), and the third also receives a column
-          number (<tt><b>{col}</b></tt>).  Customize the arguments in the
-          fields below.
-        </p>
-        <p>
-          <label>
-            Editor command 1:
-            <input class="k-textbox" data-bind="value: editor.args.cmd1" />
-          </label>
-        </p>
-        <p>
-          <label>
-            Editor command 2:
-            <input class="k-textbox" data-bind="value: editor.args.cmd2" />
-          </label>
-        </p>
-        <p>
-          <label>
-            Editor command 3:
-            <input class="k-textbox" data-bind="value: editor.args.cmd3" />
-          </label>
-        </p>
+        <div class="dlg-content">
+          <h2>Editor configuration</h2>
+          <p>
+            <label>
+              Editor (executable):<br />
+              <input class="k-textbox" style="width: 20em" data-bind="value: editor.path" />
+              <button class="k-button" title="Browse" data-bind="click: onBrowse">...</button>
+            </label>
+          </p>
+          <p style="max-width: 25em">
+            There are 3 editor commands.  One that takes only the filename
+            (<tt><b>{file}</b></tt>), the second takes a line number
+            (<tt><b>{line}</b></tt>), and the third also receives a column
+            number (<tt><b>{col}</b></tt>).  Customize the arguments in the
+            fields below.
+          </p>
+          <p>
+            <label>
+              Editor command 1:
+              <input class="k-textbox" data-bind="value: editor.args.cmd1" />
+            </label>
+          </p>
+          <p>
+            <label>
+              Editor command 2:
+              <input class="k-textbox" data-bind="value: editor.args.cmd2" />
+            </label>
+          </p>
+          <p>
+            <label>
+              Editor command 3:
+              <input class="k-textbox" data-bind="value: editor.args.cmd3" />
+            </label>
+          </p>
+        </div>
         $(PROCESS ok_cancel_buttons())
       </div>
     </script>
@@ -672,8 +682,10 @@
            data-width="800" data-height="500"
            data-bind="events: { resize: dlgResize }">
         <div class="layout" data-role="layoutmanager" data-orientation="vertical">
-          <div data-role="layoutmanager" data-orientation="horizontal" data-spacing="5" kendo-layout="1">
-            <div data-role="layoutmanager" data-orientation="vertical" data-spacing="5" kendo-layout="40%,resizable">
+          <div data-role="layoutmanager" data-orientation="horizontal"
+               kendo-layout="1" class="dlg-content">
+            <div data-role="layoutmanager" data-orientation="vertical" data-spacing="5"
+                 kendo-layout="40%,resizable">
               <div class="information">
                 Enter below the rules for selecting project files.  Click
                 the Preview button to see on the right the list of files

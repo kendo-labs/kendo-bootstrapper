@@ -199,15 +199,6 @@ a:hover {
   &._api:before { content: "\E09C" }
 }
 
-.dlg-buttons {
-  padding-top: 0.7em;
-  border-top: 1px solid #975;
-  text-align: right;
-  button {
-    width: 5em;
-  }
-}
-
 table.build-errors {
   border-spacing: 0;
   td {
@@ -376,4 +367,20 @@ textarea { resize: none }
 
 .k-button {
   padding: 0 5px;
+}
+
+div.k-window-content {
+  padding: 0;
+  .dlg-buttons {
+    background-color: @darkBg1;
+    padding: 8px;
+    border-top: 1px solid #cdcdcd;
+    text-align: right;
+    button {
+      width: 5em;
+    }
+  }
+  .dlg-content {
+    padding: 5px;
+  }
 }
