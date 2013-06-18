@@ -252,37 +252,39 @@
     </script>
 
     <script type="x/yajet-template" class="new-project-dialog">
-      <p>
-        <label>
-          Project name:<br />
-          <input autocomplete="off" name="name" style="width: 25em" class="k-textbox" type="text" />
-        </label>
-      </p>
-      <p>
-        <label>
-          Project directory:<br />
-          <input autocomplete="off" name="path" style="width: 25em"
-                 class="k-textbox" type="text"
-                 value="${ this.destination => html }/" />
-          <button data-bind="click: onBrowse">...</button>
-        </label>
-      </p>
-      <p>
-        <label>
-          Project ID:<br />
-          <input autocomplete="off" name="id" style="width: 10em" class="k-textbox" type="text" />
-        </label>
-      </p>
-      <p>
-        <label class="hovering">
-          <input type="checkbox" name="requirejs" /> Use RequireJS
-        </label>
-      </p>
-      <p class="confirm" style="display: none">
-        <label class="hovering">
-          <input type="checkbox" name="confirm" /> Confirm new project in non-empty directory
-        </label>
-      </p>
+      <div class="dlg-content">
+        <p>
+          <label>
+            Project name:<br />
+            <input autocomplete="off" name="name" style="width: 25em" class="k-textbox" type="text" />
+          </label>
+        </p>
+        <p>
+          <label>
+            Project directory:<br />
+            <input autocomplete="off" name="path" style="width: 25em"
+                   class="k-textbox" type="text"
+                   value="${ this.destination => html }/" />
+            <button data-bind="click: onBrowse">...</button>
+          </label>
+        </p>
+        <p>
+          <label>
+            Project ID:<br />
+            <input autocomplete="off" name="id" style="width: 10em" class="k-textbox" type="text" />
+          </label>
+        </p>
+        <p>
+          <label class="hovering">
+            <input type="checkbox" name="requirejs" /> Use RequireJS
+          </label>
+        </p>
+        <p class="confirm" style="display: none">
+          <label class="hovering">
+            <input type="checkbox" name="confirm" /> Confirm new project in non-empty directory
+          </label>
+        </p>
+      </div>
       $(PROCESS ok_cancel_buttons())
     </script>
 
@@ -479,14 +481,14 @@
     </script>
 
     <script type="x/yajet-template" class="docbrowser-dialog">
-      <div data-role="layoutmanager" data-orientation="vertical" class="layout">
-        <div class="docbrowser-toolbar k-toolbar" kendo-layout="0px,after:5">
+      <div data-role="layoutmanager" data-orientation="vertical" class="layout docbrowser">
+        <div class="docbrowser-toolbar k-toolbar" kendo-layout="0px">
           <button class="k-button" data-bind="click: onHistoryPrev">« Back</button>
           <button class="k-button" data-bind="click: onHistoryNext">Next »</button>
         </div>
         <div data-role="layoutmanager" kendo-layout="1">
-          <div kendo-layout="20%,resizable" class="docbrowser-index"></div>
-          <div kendo-layout="1" class="docbrowser-content"></div>
+          <div kendo-layout="20%,resizable" class="docbrowser-index fancy-scrollbars"></div>
+          <div kendo-layout="1" class="docbrowser-content fancy-scrollbars"></div>
         </div>
         $(PROCESS ok_cancel_buttons())
       </div>
