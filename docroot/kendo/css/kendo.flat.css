@@ -1,17 +1,10 @@
-/*
-* Kendo UI Complete v2013.1.530 (http://kendoui.com)
-* Copyright 2013 Telerik AD. All rights reserved.
-*
-* Kendo UI Complete commercial licenses may be obtained at
-* https://www.kendoui.com/purchase/license-agreement/kendo-ui-complete-commercial.aspx
-* If you do not own a commercial license, this file shall be governed by the trial license terms.
-*/
 /* Widget Base Styles */
 /* Selects, Dropdowns */
 /* Buttons */
 /* Group Base Styles */
 /* Content */
 /* Slider */
+/* Scheduler */
 /* Border Radii */
 /* Headers */
 /*Focused State*/
@@ -256,6 +249,37 @@ textarea.k-textbox:hover,
   -webkit-box-shadow: 0 0 0;
   box-shadow: 0 0 0;
 }
+/* Scheduler */
+.k-scheduler,
+.k-scheduler-datecolumn {
+  background-color: #ffffff;
+}
+.k-scheduler-times tr,
+.k-scheduler-times th,
+.k-scheduler-table td,
+.k-scheduler-header th,
+.k-scheduler-header-wrap,
+.k-scheduler-times {
+  border-color: #cdcdcd;
+}
+.k-scheduler-table .k-today,
+.k-today > .k-scheduler-datecolumn {
+  background-color: #f8f8f8;
+}
+.k-scheduler-now-arrow {
+  border-left-color: #e20000;
+}
+.k-scheduler-now-line {
+  background-color: #e20000;
+}
+.k-event {
+  border-color: rgba(0, 0, 0, 0.3);
+  /* appointment-background-color calculate rgba black or white*/
+
+  background-color: rgba(255, 255, 255, 0.3);
+  /* pallette not ready */
+
+}
 /* states */
 .k-state-active,
 .k-state-active:hover,
@@ -420,6 +444,7 @@ div.k-imagebrowser-dropzone em {
 .k-state-disabled,
 .k-state-disabled .k-link,
 .k-state-disabled .k-button,
+.k-other-month,
 .k-other-month .k-link,
 .k-dropzone em,
 .k-tile-empty strong,
@@ -746,6 +771,13 @@ div.k-imagebrowser-dropzone em {
   -webkit-border-radius: 13px;
   border-radius: 13px;
 }
+.k-more-events,
+.k-event,
+.k-event .k-link {
+  -moz-border-radius: 0px;
+  -webkit-border-radius: 0px;
+  border-radius: 0px;
+}
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
   .k-icon:not(.k-loading),
   .k-grouping-dropclue,
@@ -938,7 +970,7 @@ div.k-imagebrowser-dropzone em {
 .k-secondary .k-picker-wrap,
 .k-secondary .k-dropdown-wrap {
   background-color: #f4f4f4;
-  border-color: #4c5356;
+  border-color: #cdcdcd;
 }
 .k-secondary .k-editor-button .k-state-active {
   background-color: #363940;
@@ -951,11 +983,10 @@ div.k-imagebrowser-dropzone em {
   color: #ffffff;
 }
 .k-secondary.k-splitbar {
-  background-color: #f4f4f4;
   border-color: #cdcdcd;
 }
 .k-secondary .k-state-default > .k-select {
-  border-color: #4c5356;
+  border-color: #cdcdcd;
 }
 .k-secondary .k-state-hover > .k-select {
   border-color: #2eb3a6;

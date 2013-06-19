@@ -254,7 +254,7 @@ The user will still be able to move the Window with the mouse or keyboard.
 
 ### refresh
 
-Refreshes the content of a Window from a remote URL.
+Refreshes the content of a Window from a remote URL or the initially defined [content template](/api/web/window#configuration-content.template).
 
 #### Example
 

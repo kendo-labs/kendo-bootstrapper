@@ -239,6 +239,37 @@ textarea.k-textbox:hover,
   -webkit-box-shadow: none;
   box-shadow: none;
 }
+/* Scheduler */
+.k-scheduler,
+.k-scheduler-datecolumn {
+  background-color: #1b141a;
+}
+.k-scheduler-times tr,
+.k-scheduler-times th,
+.k-scheduler-table td,
+.k-scheduler-header th,
+.k-scheduler-header-wrap,
+.k-scheduler-times {
+  border-color: #664e62;
+}
+.k-scheduler-table .k-today,
+.k-today > .k-scheduler-datecolumn {
+  background-color: #443743;
+}
+.k-scheduler-now-arrow {
+  border-left-color: #e20000;
+}
+.k-scheduler-now-line {
+  background-color: #e20000;
+}
+.k-event {
+  border-color: rgba(0, 0, 0, 0.3);
+  /* appointment-background-color calculate rgba black or white*/
+
+  background-color: rgba(255, 255, 255, 0.3);
+  /* pallette not ready */
+
+}
 /* states */
 .k-state-active,
 .k-state-active:hover,
@@ -403,6 +434,7 @@ div.k-imagebrowser-dropzone em {
 .k-state-disabled,
 .k-state-disabled .k-link,
 .k-state-disabled .k-button,
+.k-other-month,
 .k-other-month .k-link,
 .k-dropzone em,
 .k-tile-empty strong,
@@ -733,6 +765,13 @@ div.k-imagebrowser-dropzone em {
   -webkit-border-radius: 0;
   border-radius: 0;
 }
+.k-more-events,
+.k-event,
+.k-event .k-link {
+  -moz-border-radius: 11px;
+  -webkit-border-radius: 11px;
+  border-radius: 11px;
+}
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
   .k-icon:not(.k-loading),
   .k-grouping-dropclue,
@@ -925,7 +964,7 @@ div.k-imagebrowser-dropzone em {
 .k-secondary .k-picker-wrap,
 .k-secondary .k-dropdown-wrap {
   background-color: #2c232b;
-  border-color: #4c5356;
+  border-color: #664e62;
 }
 .k-secondary .k-editor-button .k-state-active {
   background-color: #a7008f;
@@ -938,11 +977,10 @@ div.k-imagebrowser-dropzone em {
   color: #ffffff;
 }
 .k-secondary.k-splitbar {
-  background-color: #f4f4f4;
-  border-color: #cdcdcd;
+  border-color: #664e62;
 }
 .k-secondary .k-state-default > .k-select {
-  border-color: #4c5356;
+  border-color: #664e62;
 }
 .k-secondary .k-state-hover > .k-select {
   border-color: #a7008f;

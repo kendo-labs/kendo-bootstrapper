@@ -841,7 +841,7 @@
                     ],
                     "inherits": "Widget",
                     "file": "kendo.editor.js",
-                    "line": 529,
+                    "line": 534,
                     "col": 17
                 },
                 {
@@ -851,7 +851,7 @@
                     ],
                     "inherits": "DropDownList",
                     "file": "kendo.editor.js",
-                    "line": 5974,
+                    "line": 6039,
                     "col": 16
                 }
             ]
@@ -1115,7 +1115,7 @@
                     ],
                     "inherits": "Widget",
                     "file": "kendo.imagebrowser.js",
-                    "line": 851,
+                    "line": 852,
                     "col": 20
                 },
                 {
@@ -1129,7 +1129,7 @@
                     ],
                     "inherits": "Widget",
                     "file": "kendo.imagebrowser.js",
-                    "line": 966,
+                    "line": 967,
                     "col": 22
                 }
             ]
@@ -1380,7 +1380,7 @@
                     ],
                     "inherits": "ui.View",
                     "file": "kendo.mobile.drawer.js",
-                    "line": 23,
+                    "line": 22,
                     "col": 17
                 }
             ]
@@ -1671,7 +1671,7 @@
                     ],
                     "inherits": "Widget",
                     "file": "kendo.mobile.scrollview.js",
-                    "line": 235,
+                    "line": 237,
                     "col": 28
                 }
             ]
@@ -2094,6 +2094,221 @@
             "widgets": []
         },
         {
+            "id": "scheduler.agendaview",
+            "name": "Scheduler Agenda View",
+            "category": "web",
+            "description": "The Scheduler Agenda View",
+            "depends": [
+                "scheduler.view"
+            ],
+            "source": "kendo.scheduler.agendaview.min.js",
+            "widgets": [
+                {
+                    "name": "agenda",
+                    "options": [
+                        "title",
+                        "name",
+                        "selectedDateFormat",
+                        "eventTemplate",
+                        "eventTimeTemplate",
+                        "eventDateTemplate"
+                    ],
+                    "inherits": "ui.SchedulerView",
+                    "file": "kendo.scheduler.agendaview.js",
+                    "line": 15,
+                    "col": 20
+                }
+            ]
+        },
+        {
+            "id": "scheduler.dayview",
+            "name": "Scheduler Day View",
+            "category": "web",
+            "description": "The Scheduler Day View",
+            "depends": [
+                "scheduler.view"
+            ],
+            "source": "kendo.scheduler.dayview.min.js",
+            "widgets": [
+                {
+                    "name": "MultiDayView",
+                    "options": [
+                        "name",
+                        "selectedDateFormat",
+                        "allDaySlot",
+                        "title",
+                        "startTime",
+                        "endTime",
+                        "minorTickCount",
+                        "majorTick",
+                        "majorTimeHeaderTemplate",
+                        "minorTimeHeaderTemplate",
+                        "eventTemplate",
+                        "allDayEventTemplate",
+                        "dateHeaderTemplate",
+                        "editable"
+                    ],
+                    "events": [
+                        "remove",
+                        "add",
+                        "edit"
+                    ],
+                    "inherits": "SchedulerView",
+                    "file": "kendo.scheduler.dayview.js",
+                    "line": 86,
+                    "col": 23
+                }
+            ]
+        },
+        {
+            "id": "scheduler",
+            "name": "Scheduler",
+            "category": "web",
+            "description": "The Scheduler is an event calendar.",
+            "depends": [
+                "dropdownlist",
+                "editable",
+                "multiselect",
+                "window",
+                "datepicker",
+                "scheduler.recurrence",
+                "scheduler.view"
+            ],
+            "features": [
+                {
+                    "id": "scheduler-dayview",
+                    "name": "Scheduler Day View",
+                    "description": "Scheduler Day View",
+                    "depends": [
+                        "scheduler.dayview"
+                    ]
+                },
+                {
+                    "id": "scheduler-agendaview",
+                    "name": "Scheduler Agenda View",
+                    "description": "Scheduler Agenda View",
+                    "depends": [
+                        "scheduler.agendaview"
+                    ]
+                },
+                {
+                    "id": "scheduler-monthview",
+                    "name": "Scheduler Month View",
+                    "description": "Scheduler Month View",
+                    "depends": [
+                        "scheduler.monthview"
+                    ]
+                }
+            ],
+            "source": "kendo.scheduler.min.js",
+            "widgets": [
+                {
+                    "name": "Scheduler",
+                    "options": [
+                        "name",
+                        "date",
+                        "editable",
+                        "autoBind",
+                        "timezone",
+                        "messages",
+                        "height",
+                        "width",
+                        "resources",
+                        "views"
+                    ],
+                    "events": [
+                        "remove",
+                        "edit",
+                        "cancel",
+                        "save",
+                        "dataBinding",
+                        "dataBound"
+                    ],
+                    "inherits": "Widget",
+                    "file": "kendo.scheduler.js",
+                    "line": 310,
+                    "col": 20
+                }
+            ]
+        },
+        {
+            "id": "scheduler.monthview",
+            "name": "Scheduler Month View",
+            "category": "web",
+            "description": "The Scheduler Month View",
+            "depends": [
+                "scheduler.view"
+            ],
+            "source": "kendo.scheduler.monthview.min.js",
+            "widgets": [
+                {
+                    "name": "month",
+                    "options": [
+                        "title",
+                        "name",
+                        "eventHeight",
+                        "editable",
+                        "selectedDateFormat",
+                        "dayTemplate",
+                        "eventTemplate"
+                    ],
+                    "events": [
+                        "remove",
+                        "add",
+                        "edit",
+                        "navigate"
+                    ],
+                    "inherits": "SchedulerView",
+                    "file": "kendo.scheduler.monthview.js",
+                    "line": 46,
+                    "col": 19
+                }
+            ]
+        },
+        {
+            "id": "scheduler.recurrence",
+            "name": "Recurrence",
+            "category": "web",
+            "depends": [
+                "dropdownlist",
+                "datepicker",
+                "numerictextbox"
+            ],
+            "hidden": true,
+            "source": "kendo.scheduler.recurrence.min.js",
+            "widgets": [
+                {
+                    "name": "RecurrenceEditor",
+                    "options": [
+                        "name",
+                        "frequencies",
+                        "firstWeekDay",
+                        "start",
+                        "value",
+                        "messages"
+                    ],
+                    "events": [
+                        "change"
+                    ],
+                    "inherits": "Widget",
+                    "file": "kendo.scheduler.recurrence.js",
+                    "line": 1021,
+                    "col": 27
+                }
+            ]
+        },
+        {
+            "id": "scheduler.view",
+            "name": "Scheduler View",
+            "category": "web",
+            "description": "The Scheduler Common View",
+            "depends": [
+                "core"
+            ],
+            "source": "kendo.scheduler.view.min.js",
+            "widgets": []
+        },
+        {
             "id": "selectable",
             "name": "Selectable",
             "category": "framework",
@@ -2416,7 +2631,7 @@
                     ],
                     "inherits": "Widget",
                     "file": "kendo.treeview.js",
-                    "line": 144,
+                    "line": 148,
                     "col": 15
                 }
             ]
