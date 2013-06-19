@@ -460,18 +460,17 @@ var docBrowserDialog = (function(){
     var current_comp, prevUndo = false;
     function open_comp(comp, target, isUndo) {
         get_dlg();
-        var content = $(".docbrowser-content", DLG_EL)
+        var content = $(".docbrowser-content", DLG_EL);
         var h = {
             comp: comp,
-            pos: content.scrollTop()
         }, q;
-        if (history.length == 0 || (q = history[history.length - 1],
-                                    q.comp !== h.comp || q.pos != h.pos)) {
-            history.push(h);
+        if (history.now) {
+            history.now.pos = content.scrollTop();
+            if (!isUndo) {
+                history.unshift(history.now);
+            }
         }
-        if (!isUndo) {
-            history_pointer = history.length - 1;
-        }
+        history.now = h;
         prevUndo = isUndo;
         if (current_comp !== comp) {
             current_comp = comp;
@@ -492,7 +491,7 @@ var docBrowserDialog = (function(){
     }
     var DLG = null;
     var DLG_EL = null;
-    var history = [], history_pointer = 0;
+    var history = [];
     function get_dlg() {
         if (!DLG) {
             DLG_EL = $("<div></div>").html(getTemplate("docbrowser-dialog")({
@@ -517,15 +516,23 @@ var docBrowserDialog = (function(){
                 ev.preventDefault();
             });
             kendo.bind(DLG_EL, {
+                onOnlineDocs: function() {
+                    var url = "http://docs.kendoui.com" + current_comp.file
+                        .substr(current_comp.file.lastIndexOf("/api/"))
+                        .replace(/\.md$/i, "");
+                    window.open(url, "KENDODOC");
+                },
                 onHistoryPrev: function() {
-                    if (history_pointer >= 0) {
-                        var h = history[history_pointer--];
+                    if (history.now) {
+                        history.push(history.now);
+                        var h = history.shift();
                         open_comp(h.comp, h.pos, true);
                     }
                 },
                 onHistoryNext: function() {
-                    if (prevUndo && history_pointer < history.length - 1) {
-                        var h = history[++history_pointer];
+                    if (history.now) {
+                        history.unshift(history.now);
+                        var h = history.pop();
                         open_comp(h.comp, h.pos, true);
                     }
                 }

@@ -483,8 +483,11 @@
     <script type="x/yajet-template" class="docbrowser-dialog">
       <div data-role="layoutmanager" data-orientation="vertical" class="layout docbrowser">
         <div class="docbrowser-toolbar k-toolbar" kendo-layout="0px">
-          <button class="k-button" data-bind="click: onHistoryPrev">« Back</button>
-          <button class="k-button" data-bind="click: onHistoryNext">Next »</button>
+          <div style="float: right">
+            <button class="k-button BIL icon-new-window" data-bind="click: onOnlineDocs">Open on KendoUI.com</button>
+          </div>
+          <button class="k-button k-secondary" data-bind="click: onHistoryPrev">« Back</button>
+          <button class="k-button k-secondary" data-bind="click: onHistoryNext">Next »</button>
         </div>
         <div data-role="layoutmanager" kendo-layout="1">
           <div kendo-layout="20%,resizable" class="docbrowser-index fancy-scrollbars"></div>
