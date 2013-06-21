@@ -13,6 +13,8 @@ var CHOKIDAR = require("chokidar");
 global.TOPLEVEL_DIR = PATH.join(PATH.dirname(__filename), "..");
 var DOCROOT = PATH.join(TOPLEVEL_DIR, "docroot");
 
+require("../kendo-lint/lib/lint.js").initialize();
+
 var SS       = require("../lib/server");
 var RPC      = require("../lib/rpc");
 var PROJECT  = require("../lib/project");

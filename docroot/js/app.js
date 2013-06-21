@@ -517,8 +517,8 @@ var docBrowserDialog = (function(){
             });
             kendo.bind(DLG_EL, {
                 onOnlineDocs: function() {
-                    var url = "http://docs.kendoui.com" + current_comp.file
-                        .substr(current_comp.file.lastIndexOf("/api/"))
+                    var url = "http://docs.kendoui.com/" + current_comp.file
+                        .substr(current_comp.file.lastIndexOf("api/"))
                         .replace(/\.md$/i, "");
                     window.open(url, "KENDODOC");
                 },

@@ -1,0 +1,3 @@
+[submodule "kendo-lint"]
+	path = kendo-lint
+	url = git@github.com:kendo-labs/kendoLint.git
