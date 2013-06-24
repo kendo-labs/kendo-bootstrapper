@@ -499,7 +499,11 @@
 
     <script type="x/yajet-template" class="filepicker-dialog">
       <div data-role="window" class="filepicker-dialog"
-           data-actions="[ 'Minimize', 'Maximize', 'Close' ]"
+           $(IF (this.noCancel)
+             data-actions="[ 'Maximize' ]"
+           $(ELSE)
+             data-actions="[ 'Minimize', 'Maximize', 'Close' ]"
+           $)
            data-title="${ this.title || 'Browse' => html }"
            data-modal="true"
            data-width="${ this.width || 600 }"
@@ -548,9 +552,10 @@
             <button class="k-button btn-ok" data-bind="events: { click: onOK }">
               ${ this.okLabel || this.closeLabel || "OK" => html }
             </button>
-            <button class="k-button k-secondary btn-cancel" data-bind="events: { click: onCancel }">
-              ${ this.cancelLabel || "Cancel" => html }
-            </button>
+            $(UNLESS (this.noCancel)
+              <button class="k-button k-secondary btn-cancel" data-bind="events: { click: onCancel }">
+                ${ this.cancelLabel || "Cancel" => html }
+              </button>$)
           </div>
         </div>
       </div>
@@ -715,6 +720,15 @@
           $(PROCESS ok_cancel_buttons())
         </div>
       </div>
+    </script>
+
+    <script type="x/yajet-template" class="info-configure-kendo-src-dir">
+      <p style="margin: 1em; font-size: 120%">
+        Please specify the path to your <b>Kendo UI</b> source.  If you
+        don't have it already, you can download it from <a target="_blank"
+        href="http://www.kendoui.com/download.aspx">kendoui.com/download</a>,
+        unzip it somewhere and select that folder below.
+      </p>
     </script>
 
   </body>

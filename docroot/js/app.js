@@ -7,6 +7,23 @@ setupListeners();
 $(document).ready(function(){
     getTemplate("template-library");
     setupLayout();
+    if (!SERVER_CONFIG.kendo_src_dir) {
+        filePicker(".", {
+            infoText: getTemplate("info-configure-kendo-src-dir")(),
+            dirsonly: true,
+            noCancel: true,
+        }, function(fp){
+            if (fp) {
+                RPC.call("config/set-kendo-dir", fp.path, function(accepted, err){
+                    if (accepted) {
+                        fp.dlg.close();
+                    } else {
+                        alert("Seems it's not in " + fp.path + "\nPlease try again.");
+                    }
+                });
+            }
+        });
+    }
 });
 
 var TMPL = function(cache){
@@ -310,7 +327,6 @@ function setupLayout() {
                     });
                 }
             });
-            //ret.dlg.close();
         });
     });
     $("#btn-project-delete").click(function(){
@@ -1284,7 +1300,8 @@ function filePicker(path, options, callback) {
         infoText    : null,
         newFolder   : true,
         filter      : null,
-        dirsonly    : false
+        dirsonly    : false,
+        noCancel    : false,
     });
     if (!callback) callback = function(){};
     options.path = path;
