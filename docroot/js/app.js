@@ -7,23 +7,26 @@ setupListeners();
 $(document).ready(function(){
     getTemplate("template-library");
     setupLayout();
-    if (!SERVER_CONFIG.kendo_src_dir) {
-        filePicker(".", {
-            infoText: getTemplate("info-configure-kendo-src-dir")(),
-            dirsonly: true,
-            noCancel: true,
-        }, function(fp){
-            if (fp) {
-                RPC.call("config/set-kendo-dir", fp.path, function(accepted, err){
-                    if (accepted) {
-                        fp.dlg.close();
-                    } else {
-                        alert("Seems it's not in " + fp.path + "\nPlease try again.");
-                    }
-                });
-            }
-        });
-    }
+    RPC.call("settings/get", function(settings){
+        SERVER_CONFIG = settings;
+        if (!SERVER_CONFIG.kendo_src_dir) {
+            filePicker(".", {
+                infoText: getTemplate("info-configure-kendo-src-dir")(),
+                dirsonly: true,
+                noCancel: true,
+            }, function(fp){
+                if (fp) {
+                    RPC.call("config/set-kendo-dir", fp.path, function(accepted, err){
+                        if (accepted) {
+                            fp.dlg.close();
+                        } else {
+                            alert("Seems it's not in " + fp.path + "\nPlease try again.");
+                        }
+                    });
+                }
+            });
+        }
+    });
 });
 
 var TMPL = function(cache){
