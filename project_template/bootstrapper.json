@@ -11,6 +11,12 @@
             "type" : "js",
             "drop" : true
         },
+        {
+            "id"   : "require.js",
+            "name" : "js/require.js",
+            "type" : "js",
+            "lib"  : true
+        },
         {{/if}}
         {
             "id"   : "jquery",
