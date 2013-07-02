@@ -1,11 +1,7 @@
 kendo-bootstrapper
 ==================
 
-This is only tested on Linux so far.  Requirements:
-
-- NodeJS
-- Google Chrome
-- gedit (for editing files)
+TODO: CLEAN UP README BEFORE 7/17 (bsatrom)
 
 ## Running it:
 
