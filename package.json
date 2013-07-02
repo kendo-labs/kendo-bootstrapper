@@ -1,22 +1,23 @@
 {
-   "name": "kendo-bootstrapper",
-   "version": "0.0.1",
-   "dependencies": {
-       "uglify-js"      : "~2.3.0",
-       "cssmin"         : "",
-       "less"           : "",
-       "socket.io"      : "",
-       "ws"             : "",
-       "handlebars"     : "",
-       "ncp"            : "",
-       "step"           : "",
-       "formidable"     : "",
-       "optimist"       : "",
-       "jshint"         : "",
-       "coffee-script"  : "~1.4.0",
-       "cheerio"        : "~0.10.8",
-       "requirejs"      : "",
-       "chokidar"       : "",
-       "tmp"            : ""
-   }
+  "name": "kendo-bootstrapper",
+  "version": "0.0.1",
+  "dependencies": {
+    "uglify-js": "~2.3.0",
+    "cssmin": "",
+    "less": "",
+    "socket.io": "",
+    "ws": "",
+    "handlebars": "",
+    "ncp": "",
+    "step": "",
+    "formidable": "",
+    "optimist": "",
+    "jshint": "",
+    "coffee-script": "~1.4.0",
+    "cheerio": "~0.10.8",
+    "requirejs": "",
+    "chokidar": "",
+    "tmp": "",
+    "kendo-lint": "~0.0.7"
+  }
 }
