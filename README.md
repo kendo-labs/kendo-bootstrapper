@@ -11,8 +11,6 @@ This is only tested on Linux so far.  Requirements:
 
     git clone git@github.com:telerik/kendo-bootstrapper.git
     cd kendo-bootstrapper
-    git submodule init
-    git submodule update
     npm install
     node bin/start.js
 
