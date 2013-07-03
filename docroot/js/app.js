@@ -39,13 +39,13 @@ var TMPL = function(cache){
             bytes: function(sz) {
                 sz = parseFloat(sz);
                 if (isNaN(sz)) return "Watman";
-                if (sz < 1000) return sz + "";
+                if (sz < 1000) return (sz/1024).toFixed(2) + "K";
                 sz /= 1024;
-                if (sz < 1000) return Math.round(sz) + "k";
+                if (sz < 1000) return Math.round(sz) + "K";
                 sz /= 1024;
-                if (sz < 1000) return sz.toFixed(2) + "m";
+                if (sz < 1000) return sz.toFixed(2) + "M";
                 sz /= 1024;
-                return sz.toFixed(3) + "g";
+                return sz.toFixed(3) + "G";
             }
         }
     });
