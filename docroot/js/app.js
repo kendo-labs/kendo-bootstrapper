@@ -414,6 +414,8 @@ function setupLayout() {
 
     $(window).resize();
     $(window).resize();         // funny?
+
+    $("#top-layout").kendoTooltip({ filter: "[title]" });
 }
 
 var docBrowserDialog = (function(){
@@ -624,10 +626,7 @@ function drawContent(proj, data) {
         make_link    : function(path) {
             return projectFileLink(proj, path);
         }
-    })).kendoTooltip({
-        filter    : "[title]",
-        position  : "top",
-    }).children();
+    })).children();
     kendo.bind(el);
     $(window).resize();
 }
