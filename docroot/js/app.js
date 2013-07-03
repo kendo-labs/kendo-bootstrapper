@@ -624,13 +624,10 @@ function drawContent(proj, data) {
         make_link    : function(path) {
             return projectFileLink(proj, path);
         }
-    }))
-    // .kendoTooltip({
-    //     filter    : "[title]",
-    //     showAfter : 330,
-    //     position  : "top",
-    // })
-        .children();
+    })).kendoTooltip({
+        filter    : "[title]",
+        position  : "top",
+    }).children();
     kendo.bind(el);
     $(window).resize();
 }
