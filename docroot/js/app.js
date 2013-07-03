@@ -1182,10 +1182,22 @@ function bootstrapperSettingsDialog() {
                 cmd3: SERVER_CONFIG.editor.args.cmd3.join(" "),
             }
         },
-        onBrowse: function() {
+        kendo_src_dir: SERVER_CONFIG.kendo_src_dir,
+        onBrowseEditor: function() {
             filePicker(path_dirname(model.editor.path), {}, function(ret){
                 if (ret) {
                     model.set("editor.path", path_join(ret.path, ret.name));
+                    ret.dlg.close();
+                }
+            });
+        },
+        onBrowseKendoSrc: function() {
+            filePicker(model.kendo_src_dir, {
+                dirsonly: true,
+                infoText: "Select path to Kendo UI source directory:"
+            }, function(ret){
+                if (ret) {
+                    model.set("kendo_src_dir", ret.path);
                     ret.dlg.close();
                 }
             });
@@ -1216,8 +1228,14 @@ function bootstrapperSettingsDialog() {
                         }
                     }
                 };
-                RPC.call("settings/save", args, function(){
-                    dlg.close();
+                RPC.call("config/set-kendo-dir", model.kendo_src_dir, function(accepted, err){
+                    if (accepted) {
+                        RPC.call("settings/save", args, function(){
+                            dlg.close();
+                        });
+                    } else {
+                        alert("Cannot find Kendo UI sources in " + model.kendo_src_dir + "\nPlease try again.");
+                    }
                 });
             });
         },

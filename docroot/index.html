@@ -654,41 +654,62 @@
     </script>
 
     <script type="x/yajet-template" class="bootstrapper-settings-dialog">
-      <div data-role="window" data-title="Settings" data-modal="true">
+      <div data-role="window" data-title="Settings" data-modal="true" data-resizable="false">
         <div class="dlg-content">
-          <h2>Editor configuration</h2>
-          <p>
-            <label>
-              Editor (executable):<br />
-              <input class="k-textbox" style="width: 20em" data-bind="value: editor.path" />
-              <button class="k-button" title="Browse" data-bind="click: onBrowse">...</button>
-            </label>
-          </p>
-          <p style="max-width: 25em">
-            There are 3 editor commands.  One that takes only the filename
-            (<tt><b>{file}</b></tt>), the second takes a line number
-            (<tt><b>{line}</b></tt>), and the third also receives a column
-            number (<tt><b>{col}</b></tt>).  Customize the arguments in the
-            fields below.
-          </p>
-          <p>
-            <label>
-              Editor command 1:
-              <input class="k-textbox" data-bind="value: editor.args.cmd1" />
-            </label>
-          </p>
-          <p>
-            <label>
-              Editor command 2:
-              <input class="k-textbox" data-bind="value: editor.args.cmd2" />
-            </label>
-          </p>
-          <p>
-            <label>
-              Editor command 3:
-              <input class="k-textbox" data-bind="value: editor.args.cmd3" />
-            </label>
-          </p>
+          <div data-role="tabstrip" data-animation="false">
+            <ul>
+              <li class="k-state-active">Editor setup</li>
+              <li>Kendo UI source</li>
+            </ul>
+
+            <div style="width: 600px; height: 400px;">
+              <h2>Editor configuration</h2>
+              <p>
+                <label>
+                  Editor (executable):<br />
+                  <input class="k-textbox" style="width: 25em" data-bind="value: editor.path" />
+                  <button class="k-button" title="Browse" data-bind="click: onBrowseEditor">...</button>
+                </label>
+              </p>
+              <p style="max-width: 25em">
+                There are 3 editor commands.  One that takes only the filename
+                (<tt><b>{file}</b></tt>), the second takes a line number
+                (<tt><b>{line}</b></tt>), and the third also receives a column
+                number (<tt><b>{col}</b></tt>).  Customize the arguments in the
+                fields below.
+              </p>
+              <p>
+                <label>
+                  Editor command 1:
+                  <input class="k-textbox" data-bind="value: editor.args.cmd1" style="width: 15em" />
+                </label>
+              </p>
+              <p>
+                <label>
+                  Editor command 2:
+                  <input class="k-textbox" data-bind="value: editor.args.cmd2" style="width: 15em" />
+                </label>
+              </p>
+              <p>
+                <label>
+                  Editor command 3:
+                  <input class="k-textbox" data-bind="value: editor.args.cmd3" style="width: 15em" />
+                </label>
+              </p>
+            </div>
+
+            <div style="width: 600px; height: 400px;">
+              <h2>Kendo UI source</h2>
+
+              <p>
+                <label>
+                  Enter below the path to your Kendo UI source directory.<br />
+                  <input class="k-textbox" data-bind="value: kendo_src_dir" style="width: 25em" />
+                  <button class="k-button" title="Browse" data-bind="click: onBrowseKendoSrc">...</button>
+                </label>
+              </p>
+            </div>
+          </div>
         </div>
         $(PROCESS ok_cancel_buttons())
       </div>
