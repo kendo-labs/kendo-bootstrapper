@@ -1459,6 +1459,7 @@ function filePicker(path, options, callback) {
             var data = ret.list;
             data.sort(select_file.compare_name);
             grid.setDataSource(new kendo.data.DataSource({ data: data }));
+            dlg.trigger("resize");
         });
     };
 
