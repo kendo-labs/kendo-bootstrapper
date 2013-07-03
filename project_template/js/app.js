@@ -13,7 +13,7 @@ require([ "jquery", "kendo" ], function(){
             title: "Hello World!",
             width: "400px",
             close: function() {
-                alert("It's closing!")
+                window.alert("It's closing!");
             }
         }).data("kendoWindow");
         dlg.open();
@@ -26,7 +26,7 @@ $(document).ready(function(){
         title: "Hello World!",
         width: "400px",
         close: function() {
-            alert("It's closing!")
+            window.alert("It's closing!");
         }
     }).data("kendoWindow");
     dlg.open();
