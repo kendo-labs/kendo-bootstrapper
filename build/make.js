@@ -14,7 +14,6 @@ TMP.dir({ unsafeCleanup: true }, function(err, TMPDIR){
     var FILES = [
         "bin",
         "docroot",
-        "kendo-lint",
         "lib",
         "node_modules",
         "os",
