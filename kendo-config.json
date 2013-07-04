@@ -353,6 +353,39 @@
             "widgets": []
         },
         {
+            "id": "dataviz.barcode",
+            "name": "Barcode",
+            "category": "dataviz",
+            "description": "Barcode widget",
+            "depends": [
+                "dataviz.core",
+                "dataviz.svg"
+            ],
+            "source": "kendo.dataviz.barcode.min.js",
+            "widgets": [
+                {
+                    "name": "Barcode",
+                    "options": [
+                        "name",
+                        "value",
+                        "type",
+                        "checksum",
+                        "width",
+                        "height",
+                        "color",
+                        "background",
+                        "text",
+                        "border",
+                        "padding"
+                    ],
+                    "inherits": "Widget",
+                    "file": "kendo.dataviz.barcode.js",
+                    "line": 1503,
+                    "col": 18
+                }
+            ]
+        },
+        {
             "id": "dataviz.chart",
             "name": "Chart",
             "category": "dataviz",
@@ -410,11 +443,13 @@
                         "zoomEnd",
                         "selectStart",
                         "select",
-                        "selectEnd"
+                        "selectEnd",
+                        "window.kendo.dataviz.NOTE_CLICK",
+                        "window.kendo.dataviz.NOTE_HOVER"
                     ],
                     "inherits": "Widget",
                     "file": "kendo.dataviz.chart.js",
-                    "line": 197,
+                    "line": 205,
                     "col": 16
                 }
             ]
@@ -476,6 +511,35 @@
                     "file": "kendo.dataviz.gauge.js",
                     "line": 1324,
                     "col": 22
+                }
+            ]
+        },
+        {
+            "id": "dataviz.qrcode",
+            "name": "QRCode",
+            "category": "dataviz",
+            "description": "QRCode widget.",
+            "depends": [
+                "dataviz.core",
+                "dataviz.svg"
+            ],
+            "source": "kendo.dataviz.qrcode.min.js",
+            "widgets": [
+                {
+                    "name": "QRCode",
+                    "options": [
+                        "name",
+                        "value",
+                        "errorCorrection",
+                        "background",
+                        "color",
+                        "size",
+                        "border"
+                    ],
+                    "inherits": "Widget",
+                    "file": "kendo.dataviz.qrcode.js",
+                    "line": 818,
+                    "col": 21
                 }
             ]
         },
@@ -788,7 +852,7 @@
                     ],
                     "inherits": "Widget",
                     "file": "kendo.editable.js",
-                    "line": 147,
+                    "line": 154,
                     "col": 19
                 }
             ]
@@ -841,7 +905,7 @@
                     ],
                     "inherits": "Widget",
                     "file": "kendo.editor.js",
-                    "line": 534,
+                    "line": 162,
                     "col": 17
                 },
                 {
@@ -851,7 +915,7 @@
                     ],
                     "inherits": "DropDownList",
                     "file": "kendo.editor.js",
-                    "line": 6039,
+                    "line": 5543,
                     "col": 16
                 }
             ]
@@ -1067,7 +1131,7 @@
                     ],
                     "inherits": "Widget",
                     "file": "kendo.groupable.js",
-                    "line": 43,
+                    "line": 44,
                     "col": 20
                 }
             ]
@@ -1425,7 +1489,7 @@
                     ],
                     "inherits": "Widget",
                     "file": "kendo.mobile.listview.js",
-                    "line": 767,
+                    "line": 778,
                     "col": 19
                 }
             ]
@@ -1642,37 +1706,22 @@
                         "velocityThreshold",
                         "contentHeight",
                         "pageSize",
-                        "bounceVelocityThreshold"
-                    ],
-                    "events": [
-                        "changing",
-                        "change"
-                    ],
-                    "inherits": "Widget",
-                    "file": "kendo.mobile.scrollview.js",
-                    "line": 32,
-                    "col": 21
-                },
-                {
-                    "name": "VirtualScrollView",
-                    "options": [
-                        "name",
-                        "autoBind",
-                        "duration",
-                        "velocityThreshold",
-                        "contentHeight",
+                        "itemsPerPage",
                         "bounceVelocityThreshold",
-                        "batchSize",
+                        "enablePager",
+                        "autoBind",
                         "template",
                         "emptyTemplate"
                     ],
                     "events": [
-                        "changed"
+                        "changing",
+                        "change",
+                        "refresh"
                     ],
                     "inherits": "Widget",
                     "file": "kendo.mobile.scrollview.js",
-                    "line": 237,
-                    "col": 28
+                    "line": 610,
+                    "col": 21
                 }
             ]
         },
@@ -1832,7 +1881,7 @@
                     ],
                     "inherits": "Widget",
                     "file": "kendo.mobile.view.js",
-                    "line": 348,
+                    "line": 380,
                     "col": 17
                 }
             ]
@@ -2155,7 +2204,7 @@
                     ],
                     "inherits": "SchedulerView",
                     "file": "kendo.scheduler.dayview.js",
-                    "line": 86,
+                    "line": 140,
                     "col": 23
                 }
             ]
@@ -2226,8 +2275,23 @@
                     ],
                     "inherits": "Widget",
                     "file": "kendo.scheduler.js",
-                    "line": 310,
+                    "line": 369,
                     "col": 20
+                },
+                {
+                    "name": "TimezoneEditor",
+                    "options": [
+                        "name",
+                        "value",
+                        "optionLabel"
+                    ],
+                    "events": [
+                        "change"
+                    ],
+                    "inherits": "Widget",
+                    "file": "kendo.scheduler.js",
+                    "line": 1629,
+                    "col": 25
                 }
             ]
         },
@@ -2260,7 +2324,7 @@
                     ],
                     "inherits": "SchedulerView",
                     "file": "kendo.scheduler.monthview.js",
-                    "line": 46,
+                    "line": 58,
                     "col": 19
                 }
             ]
@@ -2283,6 +2347,7 @@
                         "name",
                         "frequencies",
                         "firstWeekDay",
+                        "timezone",
                         "start",
                         "value",
                         "messages"
@@ -2292,7 +2357,7 @@
                     ],
                     "inherits": "Widget",
                     "file": "kendo.scheduler.recurrence.js",
-                    "line": 1021,
+                    "line": 1176,
                     "col": 27
                 }
             ]
@@ -2653,6 +2718,7 @@
                         "enabled",
                         "multiple",
                         "showFileList",
+                        "template",
                         "async",
                         "localization"
                     ],
