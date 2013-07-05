@@ -751,5 +751,11 @@
       </p>
     </script>
 
+    <script type="x/yajet-template" class="notification">$-
+      <div class="notification $this.class">
+        $(IF (this.htmlMessage) $this.htmlMessage $(ELSE) $this.message|html $)
+      </div>
+    </script>
+
   </body>
 </html>

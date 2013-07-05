@@ -422,3 +422,34 @@ div.k-window-content {
   background: transparent;
   color: inherit;
 }
+
+.notification {
+  position: absolute;
+  z-index: 32000;
+  background: white;
+  border: 2px solid #444;
+  border-radius: 5px;
+  padding: 1em;
+  font-size: 130%;
+  top: 20%;
+  width: 30em;
+  left: 50%;
+  margin-left: -15em;
+  box-shadow: 1px 4px 10px #888;
+  background-color: darken(@checkboxHoverColor, 10%);
+  opacity: 0;
+  margin-top: 20px;
+  &.error {
+    background-color: #faa;
+  }
+  &.active {
+    opacity: 1;
+    transition: opacity 0.4s, margin-top 0.1s;
+    margin-top: 0;
+  }
+  &.hiding {
+    opacity: 0;
+    margin-top: -30px;
+    transition: opacity 0.5s, margin-top 1s;
+  }
+}

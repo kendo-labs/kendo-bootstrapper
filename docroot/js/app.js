@@ -20,7 +20,10 @@ $(document).ready(function(){
                         if (accepted) {
                             fp.dlg.close();
                         } else {
-                            alert("Seems it's not in " + fp.path + "\nPlease try again.");
+                            showMessage({
+                                class: "error",
+                                message: "Seems it's not in " + fp.path + "\nPlease try again."
+                            });
                         }
                     });
                 }
@@ -130,7 +133,7 @@ function getSelectedProject() {
 
 function withSelectedProject(f) {
     try { f(getSelectedProject()) }
-    catch(ex) { alert(ex) }
+    catch(ex) { showMessage({ class: "error", message: ex }) }
 }
 
 function setupLayout() {
@@ -247,7 +250,7 @@ function setupLayout() {
             withSelectedProject(function(proj){
                 var sel = getSelectedFiles();
                 if (sel.length == 0) {
-                    alert("No files selected");
+                    showMessage("No files selected");
                     return;
                 }
                 if (confirmation) {
@@ -310,7 +313,7 @@ function setupLayout() {
                         }, function(ret, err){
                             if (err) {
                                 console.log(err);
-                                alert(err.msg);
+                                showMessage({ class: "error", message: err.msg });
                                 return;
                             }
                             fp.dlg.close();
@@ -320,7 +323,7 @@ function setupLayout() {
                     RPC.call("project/import-bootstrapper-project", fp.path, function(ret, err){
                         if (err) {
                             console.log(err);
-                            alert(err.msg);
+                            showMessage({ class: "error", message: err.msg });
                             return;
                         }
                         // nothing to do here, the project should be
@@ -673,7 +676,7 @@ function projectLintJavaScript(proj) {
         if (results.length > 0) {
             showBuildErrors(proj.id, "JSHint warnings", results);
         } else {
-            alert("No warnings. :-)");
+            showMessage("No warnings. :-)");
         }
     });
 }
@@ -683,7 +686,7 @@ function projectLintKendo(proj) {
         if (results.length > 0) {
             showBuildErrors(proj.id, "Kendo Lint warnings", results);
         } else {
-            alert("No warnings. :-)");
+            showMessage("No warnings. :-)");
         }
     });
 }
@@ -726,7 +729,7 @@ function projectAddRemoteFile(proj) {
                     RPC.call("project/add-file", proj.id, opts, function(file, err){
                         if (err) {
                             console.log(err);
-                            alert(err);
+                            showMessage({ class: "error", message: err });
                             return;
                         }
                         projectRefreshContent(proj.id);
@@ -734,7 +737,7 @@ function projectAddRemoteFile(proj) {
                         dlg.close();
                     });
                 } else {
-                    alert("File " + opts.filename + " already exists in the project directory.\nPlease chose another local name for this library.");
+                    showMessage("File " + opts.filename + " already exists in the project directory.\nPlease chose another local name for this library.");
                 }
             });
         }
@@ -770,7 +773,7 @@ function projectAddFile(proj) {
                     }, function(file, err){
                         if (err) {
                             console.log(err);
-                            alert(err);
+                            showMessage({ class: "error", message: err });
                             return;
                         }
                         projectRefreshContent(proj.id);
@@ -785,7 +788,7 @@ function projectAddFile(proj) {
                         addFile();
                     } else {
                         console.log(stat.error);
-                        alert("An error has occurred\n\n" + JSON.stringify(stat.error, null, 2));
+                        showMessage({ class: "error", message: "An error has occurred\n\n" + JSON.stringify(stat.error, null, 2) });
                     }
                 } else {
                     // existing file
@@ -861,7 +864,7 @@ function projectNew() {
                     return;
                 }
                 console.log(err);
-                alert(err.msg);
+                showMessage({ class: "error", message: err.msg });
                 return;
             }
             dlg.close();
@@ -922,7 +925,7 @@ function projectBuildKendo(proj) {
         }
         data.components.forEach(require);
         if (err) {
-            alert(err.msg);
+            showMessage({ class: "error", message: err.msg });
             return;
         }
         var sel = detected;
@@ -1204,14 +1207,14 @@ function bootstrapperSettingsDialog() {
                 var stat = stats[0];
                 if (stat.error) {
                     if (stat.error.code == "ENOENT") {
-                        alert("File " + filename + " doesn't exist.");
+                        showMessage({ class: "error", message: "File " + filename + " doesn't exist." });
                         return;
                     }
-                    alert("There was an error accessing " + filename + ", code: " + stat.error.code);
+                    showMessage({ class: "error", message: "There was an error accessing " + filename + ", code: " + stat.error.code });
                     return;
                 }
                 if (stat.isDirectory) {
-                    alert("You selected a directory");
+                    showMessage({ class: "error", message: "You selected a directory" });
                     return;
                 }
                 var args = {
@@ -1230,7 +1233,7 @@ function bootstrapperSettingsDialog() {
                             dlg.close();
                         });
                     } else {
-                        alert("Cannot find Kendo UI sources in " + model.kendo_src_dir + "\nPlease try again.");
+                        showMessage({ class: "error", message: "Cannot find Kendo UI sources in " + model.kendo_src_dir + "\nPlease try again." });
                     }
                 });
             });
@@ -1300,7 +1303,21 @@ function clearConsole() {
     $("#console").html("");
 }
 
-
+function showMessage(args) {
+    if (typeof args == "string") {
+        args = { message: args };
+    }
+    var popup = $(getTemplate("notification")(args)).appendTo(document.body);
+    (function() {
+        popup.addClass("active");
+        (function() {
+            popup.addClass("hiding");
+            (function(){
+                popup.remove();
+            }.delayed(2000)());
+        }.delayed(args.timeout || 3000)());
+    }.delayed(1)());
+}
 
 
 
@@ -1375,7 +1392,7 @@ function filePicker(path, options, callback) {
                 if (err) {
                     // XXX: do nicely
                     console.log(err);
-                    alert(err);
+                    showMessage(err);
                     return;
                 }
                 setPath(ret);
