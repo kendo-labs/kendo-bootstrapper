@@ -304,30 +304,7 @@
     <script type="x/yajet-template" class="build-errors-dialog">
       <div data-role="layoutmanager" data-orientation="vertical" class="layout">
         <div kendo-layout="1" class="fancy-scrollbars">
-          <table class="build-errors" style="width: 100%">
-            <thead>
-              <tr>
-                <td>File</td>
-                <td>Error</td>
-                <td>Location</td>
-              </tr>
-            </thead>
-            <tbody>
-              $(FOREACH (err => this.errors)
-              <tr>
-                <td><b>${ err.filename => html }</b></td>
-                <td>${ err.message => html }</td>
-                <td style="white-space: nowrap">
-                  <a href="#" command="edit-file"
-                     project-id="$this.proj_id"
-                     filename="$err.filename|html"
-                     line="$err.line"
-                     $(AIF (err.col) col="$it"$)>line $err.line$(AIF (err.col), col $it$)</a>
-                </td>
-              </tr>
-              $)
-            </tbody>
-          </table>
+          $(PROCESS build_errors_list())
         </div>
         <div class="dlg-buttons">
           <button class="k-button btn-close">Close</button>
@@ -471,6 +448,32 @@
         ${ show_section("methods", "methods", "Methods") }
         ${ show_section("events", "events", "Events") }
       $)
+
+      $(EXPORT build_errors_list()$-
+        <table class="build-errors" style="width: 100%">
+          <thead>
+            <tr>
+              <td>File</td>
+              <td>Error</td>
+              <td>Location</td>
+            </tr>
+          </thead>
+          <tbody>
+            $(FOREACH (err => this.errors)
+            <tr>
+              <td><b>${ err.filename => html }</b></td>
+              <td>${ err.message => html }</td>
+              <td style="white-space: nowrap">
+                <a href="#" command="edit-file"
+                   project-id="$this.proj_id"
+                   filename="$err.filename|html"
+                   line="$err.line"
+                   $(AIF (err.col) col="$it"$)>line $err.line$(AIF (err.col), col $it$)</a>
+              </td>
+            </tr>
+            $)
+          </tbody>
+        </table>$)
 
     </script>
 

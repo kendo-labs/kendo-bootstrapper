@@ -634,7 +634,7 @@ function drawContent(proj, data) {
     $(window).resize();
 }
 
-function showBuildErrors(proj_id, title, errors) {
+function showBuildErrors(proj_id, title, errors, refreshcmd) {
     var dlg_el = $("<div></div>").html(getTemplate("build-errors-dialog")({
         proj_id : proj_id,
         errors  : errors
@@ -656,6 +656,31 @@ function showBuildErrors(proj_id, title, errors) {
     dlg.open();
     dlg.center();
     dlg.trigger("resize");
+
+    if (refreshcmd) {
+        var onFileChangeListener = function(f) {
+            if (f.proj_id == proj_id) {
+                if (errors.find(function(r){ return r.filename == f.filename })) {
+                    RPC(refreshcmd, proj_id, function(results, err){
+                        if (results.length > 0) {
+                            errors = results;
+                            $(".build-errors", dlg_el).replaceWith(TMPL.process("build_errors_list", {
+                                proj_id : proj_id,
+                                errors  : errors
+                            }));
+                        } else {
+                            dlg.close();
+                            showMessage("No warnings. :-)");
+                        }
+                    });
+                }
+            }
+        };
+        RPC.listen("fswatch", onFileChangeListener);
+        dlg.bind("close", function(){
+            RPC.unlisten("fswatch", onFileChangeListener);
+        });
+    }
 }
 
 function rebuildProject(proj, callback) {
@@ -674,7 +699,7 @@ function rebuildProject(proj, callback) {
 function projectLintJavaScript(proj) {
     RPC.call("project/lint-javascript", proj.id, function(results, err){
         if (results.length > 0) {
-            showBuildErrors(proj.id, "JSHint warnings", results);
+            showBuildErrors(proj.id, "JSHint warnings", results, "project/lint-javascript");
         } else {
             showMessage("No warnings. :-)");
         }
@@ -684,7 +709,7 @@ function projectLintJavaScript(proj) {
 function projectLintKendo(proj) {
     RPC.call("project/lint-kendo", proj.id, function(results, err){
         if (results.length > 0) {
-            showBuildErrors(proj.id, "Kendo Lint warnings", results);
+            showBuildErrors(proj.id, "Kendo Lint warnings", results, "project/lint-kendo");
         } else {
             showMessage("No warnings. :-)");
         }
