@@ -8,6 +8,8 @@
     <script src="kendo/js/jquery.min.js"></script>
     <script src="kendo/js/kendo.web.min.js"></script>
 
+    <script src="js/scrollintoview.js"></script>
+
     <link rel="stylesheet/less" href="css/app.less" />
 
     <script src="js/utils.js"></script>
@@ -335,7 +337,14 @@
       <div class="project-deps-dialog" data-role="layoutmanager" data-orientation="vertical">
         <div class="title">Select below direct dependencies of $this.name|html:</div>
         <div kendo-layout="1" class="deps-select fancy-scrollbars"></div>
-        $(PROCESS ok_cancel_buttons())
+
+      <div class="dlg-buttons">
+        <div style="float: left; white-space: nowrap; display: none" class="move-buttons">
+          <button title="Move selected item up" class="k-button BIL icon-move-up btn-move-up k-secondary">Up</button>
+          <button title="Move selected item down" class="k-button BIL icon-move-down btn-move-down k-secondary">Down</button>
+        </div>
+        <button class="k-button btn-ok">OK</button>
+        <button class="k-button btn-cancel k-secondary">Cancel</button>
       </div>
     </script>
 

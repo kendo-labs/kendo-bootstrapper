@@ -1081,6 +1081,10 @@ function projectEditFileDependencies(proj_id, file_id) {
         });
     }).on("click", ".btn-cancel", function(){
         dlg.close();
+    }).on("click", ".btn-move-up", function(){
+        deps_select.moveUp();
+    }).on("click", ".btn-move-down", function(){
+        deps_select.moveDown();
     });
     var the_deps = projectGetDepsHash(proj);
     var deps_select = $(".deps-select", dlg_el).kendoMultiPicker({
@@ -1091,8 +1095,14 @@ function projectEditFileDependencies(proj_id, file_id) {
         value      : the_deps[file_id],
         change     : function(ev) {
             the_deps[file_id] = ev.value;
+            var btns = $(".move-buttons", dlg_el);
+            if (ev.selection.length > 0) {
+                btns.show();
+            } else {
+                btns.hide();
+            }
         }
-    });
+    }).data("kendoMultiPicker");
     var lm = $(".project-deps-dialog", dlg_el);
     kendo.bind(lm);
     var lm = lm.data("kendoLayoutManager");
@@ -1141,8 +1151,7 @@ function projectEditDependencies(proj) {
             var deps = [].slice.call(the_deps[selected_file.id] || []);
             deps_select.reset(proj.files.filter(function(f){
                 return f !== selected_file && !f.drop;
-            }));
-            deps_select.value(deps);
+            }), deps);
             dlg.trigger("resize");
         }
     });

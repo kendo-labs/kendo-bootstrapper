@@ -331,11 +331,15 @@ label.hovering {
 }
 
 .kendo-multipicker {
-  label {
+  .item {
+    cursor: default;
     display: block;
     padding: 1px 5px;
     &:hover {
       background-color: @checkboxHoverColor;
+    }
+    &.selected {
+      background-color: @selBg1;
     }
   }
 }
