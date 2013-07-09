@@ -118,7 +118,7 @@ the following dependencies are defined:
 
 - `index.html` → `kendo.default.min.css`, `app.js`
 - `app.js` → `kendo.web.min.js`, `app.less`
-- `kendo.web.min.js` → `jquery.min.js`, `kendo.default.min.css`
+- `kendo.web.min.js` → `jquery.min.js`
 - `kendo.default.min.css` → `kendo.common.min.css`
 
 The above dependency list is telling the server to auto-load
