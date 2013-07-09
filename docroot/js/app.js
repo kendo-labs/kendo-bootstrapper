@@ -405,7 +405,7 @@ function setupLayout() {
             okLabel     : "Yes",
             cancelLabel : "No",
         }, function(ok){
-            if (ok) RPC.call("project/delete-file", proj.id, file);
+            if (ok) RPC.call("project/delete-file", proj, file);
         });
         ev.preventDefault();
     });
