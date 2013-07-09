@@ -36,6 +36,15 @@ in this case you can use your favorite browser instance and point it
 to `http://localhost:7569/`.  (If you're wondering why 7569, 75 and 69
 are the respective ASCII codes of `K` and `E`.)
 
+### Select Kendo UI directory
+
+On first startup the bootstrapper will ask you for the path to your
+Kendo UI sources.  If you don't already have it you can get Kendo UI
+from here:
+[www.kendoui.com/download](http://www.kendoui.com/download.aspx),
+unpack it somewhere then navigate to that folder in the dialog that
+the bootstrapper showed up.
+
 
 ## Overview
 
