@@ -4,13 +4,12 @@
 
     <title>{{PROJECT_NAME}}</title>
 
-    <!-- Inside the following comment marked with KENDO_BOOTSTRAPPER:FILES,
-         the bootstrapper will auto-load any files that this page depends
-         on.  Do not manually place anything there as it will be overwritten
-         when your project is built.  You may, however, remove this
-         note. -->
-
-    <!--KENDO_BOOTSTRAPPER:FILES--><!--/KENDO_BOOTSTRAPPER:FILES-->
+    <!--KENDO_BOOTSTRAPPER:FILES-->
+      <!-- Do not remove this section.  Here the bootstrapper will add code
+        that loads the page assets.  The following <script> is only present
+        in development. -->
+      <script src="http://localhost:7569/@load-assets/{{PROJECT_ID}}/index.html"></script>
+    <!--/KENDO_BOOTSTRAPPER:FILES-->
 
   </head>
 

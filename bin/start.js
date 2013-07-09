@@ -49,15 +49,15 @@ HANDLERS = [
         var url = URL.parse(request.url, true);
         var proj = PROJECT.get_project(proj_id);
         if (!path) path = "index.html";
-        var f = PROJECT.get_file_by_name(proj, path);
-        if (f && f.page) {
-            SS.serve_content(PROJECT.build_page(proj, f, { devel: true, autoreload: true }), path, response);
-        } else {
-            path = "/" + path;
-            if (url.search) path += url.search;
-            request.url = path;
-            SS.handle_request(proj.path, request, response);
-        }
+        path = "/" + path;
+        if (url.search) path += url.search;
+        request.url = path;
+        SS.handle_request(proj.path, request, response);
+    }],
+
+    [/^\/@load-assets\/([^\/]+)\/*(.*)$/, function(request, response, proj_id, path) {
+        if (!path) path = "index.html";
+        SS.serve_content(PROJECT.load_assets(proj_id, path), "assets.js", response);
     }],
 
     // handler that adds a file to a project.  should be the only
