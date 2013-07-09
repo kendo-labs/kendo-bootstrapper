@@ -29,8 +29,7 @@
             "type" : "js",
             "lib"  : true,
             "deps" : [
-                "jquery",
-                "kendo.default.css"
+                "jquery"
             ]
         },{
             "id"   : "less",
@@ -76,7 +75,7 @@
             "name" : "index.html",
             "type" : "html",
             "page" : true,
-            "deps" : [ "app.js" ]
+            "deps" : [ "kendo.default.css", "app.js" ]
         }
     ]
 }
