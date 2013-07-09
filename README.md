@@ -5,7 +5,7 @@ TODO: CLEAN UP README BEFORE 7/17 (bsatrom)
 
 ## Running it:
 
-    git clone git@github.com:telerik/kendo-bootstrapper.git
+    git clone git@github.com:kendo-labs/kendo-bootstrapper.git
     cd kendo-bootstrapper
     npm install
     node bin/start.js
@@ -17,9 +17,9 @@ are the respective ASCII codes of `K` and `E`.)
 
 ## Quick info
 
-The layout is split into a list of projects, a tree of project files
-(created when some project is selected) and a content div which lists more
-info about the files.
+The layout is split into a list of projects, a pane for quick access
+to Kendo UI documentation and a content area which displays the
+project files and allows various operations on them.
 
 Clicking on New in the Projects section will bring up a dialog to bootstrap
 a new project.  You have to specify a project name, the target directory
