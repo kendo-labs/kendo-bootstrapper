@@ -124,6 +124,11 @@ function setupListeners() {
             $(window).resize();
         }, 50);
     });
+
+    RPC.listen("set_active_project", function(proj){
+        $("#project-list").data("kendoListView").select("#project-list [value=" + proj + "]"); // ;-(
+    });
+
 }
 
 function getSelectedProject() {
@@ -283,6 +288,7 @@ function setupLayout() {
             var proj = this.select().attr("value");
             if (proj) {
                 setActiveProject(proj);
+                RPC("config/set-active-project", proj);
             }
         }
     });
@@ -581,9 +587,9 @@ function projectFileLink(proj, path) {
 
 var ACTIVE_PROJECT = null;
 function setActiveProject(proj) {
-    $("#file-filter").val("");
     if (typeof proj != "object")
         proj = PROJECTS.get(proj);
+    $("#file-filter").val("");
     ACTIVE_PROJECT = proj.id;
     $(".project-title").html(proj.name);
     projectRefreshContent(proj.id);
@@ -893,6 +899,7 @@ function projectNew() {
                 return;
             }
             dlg.close();
+            $("#project-list").data("kendoListView").select("#project-list [value=" + args.id + "]"); // ;-(
         });
     }).on("click", ".btn-cancel", function(){
         dlg.close();

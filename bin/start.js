@@ -148,9 +148,6 @@ function start_server() {
     var wss = new WS.Server({ server: server });
     wss.on("connection", function(ws){
         CLIENTS.push(ws);
-        PROJECT.forEach(function(proj){
-            RPC.notify(ws, "register_project", proj);
-        });
         ws.on("message", function(message){
             RPC.handle_request(ws, message);
         });
