@@ -18,6 +18,6 @@
     "requirejs": "",
     "chokidar": "",
     "tmp": "",
-    "kendo-lint": "~0.0.7"
+    "kendo-lint": "~0.1.0"
   }
 }
