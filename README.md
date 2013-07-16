@@ -1,5 +1,4 @@
 # Kendo UI Bootstrapper
-==================
 
 ## About the Kendo UI Bootstrapper
 
@@ -198,7 +197,7 @@ that have appeared since last time).  One example for this case is the
 it's never mentioned directly.  So if you want animation effects in
 the build, you'd just select that manually and it shall be remembered.
 
-## Image optimization
+### Image optimization
 
 On Windows and Mac platforms, the Kendo Bootstrapper includes binaries
 for [optipng](http://optipng.sourceforge.net/) and
