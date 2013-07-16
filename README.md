@@ -1,19 +1,28 @@
-kendo-bootstrapper
+# Kendo UI Bootstrapper
 ==================
 
-TODO: CLEAN UP README BEFORE 7/17 (bsatrom)
+## About the Kendo UI Bootstrapper
 
-## Install notes
+Use this section to provide a brief overview of the project. In particular, be sure to clearly state the problem this project exists to solve, why it is a problem, and how this project solves that problem.
 
-The Kendo Bootstrapper is a local application that depends on
-[NodeJS](http://nodejs.org/) and [Google
-Chrome](http://google.com/chrome).  You need to install these first.
-Please use a recent version of NodeJS (at least v0.10).
+## Compatibility and Requirements
 
-Additionally if you are running Linux you might need to install the
+The Kendo UI Bootstrapper is a client-based NodeJS application, with the following dependencies:
+
+- [NodeJS](http://www.nodejs.org) v0.10+
+- [NPM](http://www.npmjs.org) v1+
+- [Google Chrome](http://www.chrome.com)
+
+> Note: If you are running Linux you might need to install the
 image optimization tools (see below in section "Image optimization").
 
-### Install from ZIP
+Running `npm install` once you clone the repository should install the required project dependencies. If you run into any problems installing or running the bootstrapper, be sure to check your node and npm versions by running `node -v` and `npm -v` and ensuring your current version is equal to or greater than the versions listed above.
+
+The Kendo UI Bootstrapper has not been tested against any other versions of these libraries. You may find that versions other than these are compatible with The Kendo UI Bootstrapper, but we make no claims to support those version, nor can we troubleshoot issues that arise when using those versions.
+
+## Getting Started
+
+### 1. Install from ZIP
 
 To download the latest code you can use this URL:
 https://github.com/kendo-labs/kendo-bootstrapper/archive/master.zip
@@ -24,49 +33,52 @@ run:
     npm install
     node bin/start.js
 
-### Install from Git
+### 1a. Install from Git
+
+Additionally, you can install the bootstrapper by cloning the git repo:
 
     git clone git@github.com:kendo-labs/kendo-bootstrapper.git
     cd kendo-bootstrapper
     npm install
     node bin/start.js
 
-Pass `-n` flag to `start.js` to prevent it from starting the browser;
-in this case you can use your favorite browser instance and point it
-to `http://localhost:7569/`.  (If you're wondering why 7569, 75 and 69
-are the respective ASCII codes of `K` and `E`.)
+Pass `-n` flag to `start.js` to prevent it from starting the browser:
 
-### Select Kendo UI directory
+    node bin/start.js -n
 
-On first startup the bootstrapper will ask you for the path to your
-Kendo UI sources.  If you don't already have it you can get Kendo UI
-from here:
-[www.kendoui.com/download](http://www.kendoui.com/download.aspx),
-unpack it somewhere then navigate to that folder in the dialog that
-the bootstrapper showed up.
+In this case you can use an existing Chrome instance and point it
+to `http://localhost:7569/`.  
 
+### 2. Select Kendo UI directory
 
-## Overview
+On first startup, the bootstrapper will ask you for the path to your
+commerical or trial Kendo UI sources. If you don't already have Kendo UI you can download it from here:
+[www.kendoui.com/download](http://www.kendoui.com/download.aspx). Once downloaded, 
+unpack it somewhere and navigate to the appropriate folder in the bootstrapper dialog.
 
-The layout is split into a list of projects, a pane for quick access
-to Kendo UI documentation and a content area which displays the
-project files and allows various operations on them.
+### 3. Get to Bootstrappin'
+
+That's it! Once you've pointed the bootstrapper to your Kendo UI bits, you're ready to go. Click the 'New Project' button to get started, or read on for more information.
+
+## Bootstrapper Overview
+
+The bootstrapper layout is split into a list of projects (top left), a pane for quick access
+to Kendo UI documentation (bottom left) and a content area which allows you to work with, add and manage all of the assets and resources in your Kendo UI apps.
 
 Clicking on New in the Projects section will bring up a dialog to bootstrap
 a new project.  You have to specify a project name, the target directory
 (default base dir is wherever kendo-bootstrapper is installed + "PROJECTS/",
-but you can put projects wherever you want, assuming `write` permission).
+but you can put projects you have write permissions to on your OS).
 The project ID is only used internally.
 
 When you select a project from the left side, the main area is filled
-with information about the project files, and you can use the buttons
+with information about that project's files, and you can use the buttons
 in the toolbar to preview, lint, build, create a bundle of that
-project etc.
+project, etc.
 
 ### Files
 
-You can add new files using the "add file" button (upper-right in the
-content div).  There are two types of files in a project:
+You can add new files using the "add file" button (top-right of the main content area).  There are two types of files in a project:
 
 - project files are those files that you are working on;
 - library files are any third-party libraries you might need to use.
@@ -86,8 +98,8 @@ Supported types are:
 
 ### Preview
 
-Click the "preview" icon on the left to open your project in a new
-window.  A special handler on the server part will know to serve files
+Click the "preview" icon on the top left of the project pane to open your project in a new
+window.  A special handler inside the bootstrapper will serve files
 from the directory of the specific project that is selected.  This is
 useful for static projects.
 
@@ -95,7 +107,7 @@ In case your application uses some server-side code as well (such as
 Rails, ASP.NET etc.), just paste the URL to your project in the
 preview window.  As long as the bootstrapper is running, any assets
 needed by the page are seamlessly included and the page will
-automatically refresh as you update the files.
+automatically refresh as you update the files. Additional server-side support will be coming in the bootstrapper before RTM.
 
 ### "Transpilers" (LESS and CoffeeScript)
 
@@ -125,8 +137,7 @@ The above dependency list is telling the server to auto-load
 `kendo.default.min.css` and `app.js` when serving `index.html`.
 However, `app.js` depends on `kendo.web.min.js` and `app.less`.
 `kendo.web.min.js` in turn depends on jquery, and
-`kendo.default.min.css` depends on `kendo.common.min.css`.  The server
-is recursively diving into them and loads all dependencies.
+`kendo.default.min.css` depends on `kendo.common.min.css`.  The server will manage and load all of these dependencies.
 
 During development, Web pages (i.e. index.html) contain a single
 `<script>` tag, included in a special section, that will take care of
@@ -159,24 +170,24 @@ There are two ways to configure dependencies.
 - click the "file dependencies" icon next to any file to edit the
   dependencies of that file alone.
 
+## Build and Deploy Tools
 
-## JSHint, Kendo Lint
+The bottom section of the main bootstrapper content window contains a series of build and deploy options that you can use for your projects.
+
+### JSHint, Kendo Lint
 
 Use these buttons to find potential errors in your code.  If there are
 any warnings, a dialog box will popup and you can click the links to
 quickly open files at the location of the warnings.  As you save the
 files, the list of warnings will be automatically updated.
 
-
-## Build Kendo
+### Build Kendo
 
 When you click "Build Kendo" in the toolbar, the server will analyze
 the JS and HTML project files trying to auto-detect what Kendo widgets
 are in use.  For example on the default project template it will
 detect that the Window widget is in use, and therefore auto-select
 that one in the dialog that pops up.
-
-    NOTE: we can't (yet?) analyze CoffeeScript files.
 
 For the case when the server fails to detect some components, you can
 manually select them in the "Build Kendo" dialog.  The manual
@@ -186,7 +197,6 @@ that have appeared since last time).  One example for this case is the
 "Effects framework"—the server cannot detect that it's used, because
 it's never mentioned directly.  So if you want animation effects in
 the build, you'd just select that manually and it shall be remembered.
-
 
 ## Image optimization
 
@@ -207,3 +217,17 @@ place (both jpegtran and optipng do lossless optimization, hence there
 is no point in storing the original images).  Normally you only need
 to do this once, but just in case you added new images this step is
 automatically done when you request a project bundle.
+
+## Getting Help
+
+The Kendo UI Bootstrapper is currently in BETA and, is not an official part of any Kendo UI SKU (Web, DataViz, Mobile or Complete). As such, this project is not a supported part of Kendo UI, and is not covered under the support agreements for Kendo UI license holders. Please do not create support requests for this project, as these will be immediately closed and you'll be directed to post your question on a community forum. 
+
+The Kendo UI Bootstrapper will enter into the standard Kendo UI Licenses upon it's RTM release in the fall of 2013. Until that time, please enter feedback and requests as Issues in the Kendo UI Bootstrapper repo.
+
+## Release Notes
+
+For change logs and release notes, see the [changelog](CHANGELONG.MD) file.
+
+## License
+
+The Kendo UI Bootstrapper is available under a [GPLv3 License](LICENSE.md)
