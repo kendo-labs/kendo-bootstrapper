@@ -420,6 +420,8 @@ function setupLayout() {
             if (ok) RPC.call("project/delete-file", proj, file);
         });
         ev.preventDefault();
+    }).on("click", ".input-with-clear-button .clear-button", function(){
+        $(this).parent().find("input").val("").trigger("change");
     });
     $(window).focus(function(){
         if (ACTIVE_PROJECT) {

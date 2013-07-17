@@ -287,6 +287,30 @@ label.hovering {
   padding: 5px;
 }
 
+.input-with-clear-button {
+  position: relative;
+  .clear-button {
+    display: block;
+    position: absolute;
+    right: 2px;
+    top: 50%;
+    margin-top: -10px;
+    width: 1em;
+    height: 1em;
+    font-size: 18px;
+    line-height: 18px;
+    padding: 2px;
+    color: @linkColor;
+    opacity: 0.5;
+    border-radius: 15px;
+    &:hover {
+      opacity: 1;
+      background: @checkboxHoverColor;
+    }
+  }
+}
+
+
 
 
 /// custom widgets
@@ -459,5 +483,5 @@ div.k-window-content {
 }
 
 .k-tooltip {
-  margin-top: 10px;
+  margin-top: 15px;
 }

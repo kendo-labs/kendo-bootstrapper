@@ -54,11 +54,14 @@
         </div>
 
         <div class="left-side-bg2" style="padding: 5px">
-          <input id="apidoc-search" style="width: 100%; box-sizing: border-box;"
-                 placeholder="Filter API pages" class="k-textbox"
-                 data-bind="value: search_api,
-                            events: { keydown: onAPISearchKeydown,
-                                      change: onAPISearchChange }" />
+          <span class="input-with-clear-button">
+            <input id="apidoc-search" style="width: 100%; box-sizing: border-box;"
+                   placeholder="Filter API pages" class="k-textbox"
+                   data-bind="value: search_api,
+                              events: { keydown: onAPISearchKeydown,
+                                        change: onAPISearchChange }" />
+            <span title="Reset filter" class="clear-button icon-clear-filter"></span>
+          </span>
         </div>
 
         <div class="left-side-bg2 fancy-scrollbars"
@@ -92,11 +95,14 @@
               </ul>
             </td>
             <td>
-              <input class="k-textbox" id="file-filter"
-                     placeholder="Filter project files"
-                     data-bind="value: filter_files,
-                                events: { keydown: onFileSearchKeydown,
-                                          change: onFileSearchChange }" />
+              <span class="input-with-clear-button">
+                <input class="k-textbox" id="file-filter"
+                       placeholder="Filter project files"
+                       data-bind="value: filter_files,
+                                  events: { keydown: onFileSearchKeydown,
+                                            change: onFileSearchChange }" />
+                <span class="clear-button icon-clear-filter" title="Reset filter"></span>
+              </span>
             </td>
             <td style="white-space: nowrap">
               <button data-bind="click: onAddFile" class="k-button BIL icon-add-file"> Add file</button>
