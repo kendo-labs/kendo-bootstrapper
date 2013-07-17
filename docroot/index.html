@@ -164,7 +164,9 @@
                   <div class="file-line">
                     <div class="file-name">
                       <label>
-                        <input class="file-checkbox" name="file" value="$f.name|html" type="checkbox" />
+                        <input class="file-checkbox" name="file" value="$f.name|html" type="checkbox"
+                               $(WHEN (p.is_selected(f)) checked="checked" $)
+                               data-bind="click: onFileCheckboxClick" />
                         ${ plink(f.name) }
                       </label>
                     </div>

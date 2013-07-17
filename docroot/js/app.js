@@ -204,12 +204,18 @@ function setupLayout() {
         // menu
         onMenuSelectAllFiles: function() {
             withSelectedProject(function(proj){
-                $("#content .file-checkbox").prop("checked", true);
+                $("#content .file-checkbox").each(function(){
+                    $(this).prop("checked", true);
+                    FILE_SELECTION["$" + $(this).val()] = true;
+                });
             });
         },
         onMenuUnselectAllFiles: function() {
             withSelectedProject(function(proj){
-                $("#content .file-checkbox").prop("checked", false);
+                $("#content .file-checkbox").each(function(){
+                    $(this).prop("checked", false);
+                    delete FILE_SELECTION["$" + $(this).val()];
+                });
             });
         },
         onMenuMakeProjectFiles : operateOnSelectedFiles("make_project_files"),
@@ -586,9 +592,12 @@ function projectFileLink(proj, path) {
 }
 
 var ACTIVE_PROJECT = null;
+var FILE_SELECTION = {};
 function setActiveProject(proj) {
     if (typeof proj != "object")
         proj = PROJECTS.get(proj);
+    if (proj.id != ACTIVE_PROJECT)
+        FILE_SELECTION = {};
     $("#file-filter").val("");
     ACTIVE_PROJECT = proj.id;
     $(".project-title").html(proj.name);
@@ -634,9 +643,21 @@ function drawContent(proj, data) {
         file_info    : file_info,
         make_link    : function(path) {
             return projectFileLink(proj, path);
+        },
+        is_selected  : function(file) {
+            return FILE_SELECTION["$" + file.name];
         }
     })).children();
-    kendo.bind(el);
+    kendo.bind(el, {
+        onFileCheckboxClick: function(ev) {
+            var input = ev.target;
+            if (input.checked) {
+                FILE_SELECTION["$" + input.value] = true;
+            } else {
+                delete FILE_SELECTION["$" + input.value];
+            }
+        }
+    });
     $(window).resize();
 }
 
