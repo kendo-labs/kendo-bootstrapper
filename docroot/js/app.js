@@ -432,7 +432,7 @@ function setupLayout() {
     $(window).resize();
     $(window).resize();         // funny?
 
-    $("#top-layout").kendoTooltip({ filter: "[title]" });
+    $(document.body).kendoTooltip({ filter: "[title]" });
 }
 
 var docBrowserDialog = (function(){
@@ -997,11 +997,7 @@ function projectBuildKendo(proj) {
             detected   : detected,
             manual     : data.manual_kendo_components,
             okLabel    : "Build!"
-        })).kendoTooltip({
-            filter: "label",
-            position: "right",
-            width: "15em"
-        }).kendoWindow({
+        })).kendoWindow({
             title: "Build custom Kendo UI",
             modal: true,
             width: "500px",
@@ -1016,8 +1012,9 @@ function projectBuildKendo(proj) {
                 user_selection.push(this.value);
             });
             RPC.call("project/build-kendo", proj.id, {
-                detected: detected,
-                selected: user_selection
+                detected    : detected,
+                selected    : user_selection,
+                update_deps : $("input[name=\"update-deps\"]", dlg_el).prop("checked"),
             }, function(ret, err){
                 dlg.close();
                 projectRefreshContent(proj.id);
