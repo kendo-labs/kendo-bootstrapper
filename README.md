@@ -36,7 +36,7 @@ run:
 
 Additionally, you can install the bootstrapper by cloning the git repo:
 
-    git clone git@github.com:kendo-labs/kendo-bootstrapper.git
+    git clone https://github.com/kendo-labs/kendo-bootstrapper.git
     cd kendo-bootstrapper
     npm install
     node bin/start.js
