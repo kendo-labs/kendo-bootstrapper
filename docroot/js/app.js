@@ -206,7 +206,7 @@ function setupLayout() {
             withSelectedProject(function(proj){
                 $("#content .file-checkbox").each(function(){
                     $(this).prop("checked", true);
-                    FILE_SELECTION["$" + $(this).val()] = true;
+                    FILE_SELECTION()["$" + $(this).val()] = true;
                 });
             });
         },
@@ -214,7 +214,7 @@ function setupLayout() {
             withSelectedProject(function(proj){
                 $("#content .file-checkbox").each(function(){
                     $(this).prop("checked", false);
-                    delete FILE_SELECTION["$" + $(this).val()];
+                    delete FILE_SELECTION()["$" + $(this).val()];
                 });
             });
         },
@@ -592,12 +592,15 @@ function projectFileLink(proj, path) {
 }
 
 var ACTIVE_PROJECT = null;
-var FILE_SELECTION = {};
+
+function FILE_SELECTION() {
+    var proj = PROJECTS.get(ACTIVE_PROJECT);
+    return proj.FILE_SELECTION || (proj.FILE_SELECTION = {});
+}
+
 function setActiveProject(proj) {
     if (typeof proj != "object")
         proj = PROJECTS.get(proj);
-    if (proj.id != ACTIVE_PROJECT)
-        FILE_SELECTION = {};
     $("#file-filter").val("");
     ACTIVE_PROJECT = proj.id;
     $(".project-title").html(proj.name);
@@ -645,16 +648,16 @@ function drawContent(proj, data) {
             return projectFileLink(proj, path);
         },
         is_selected  : function(file) {
-            return FILE_SELECTION["$" + file.name];
+            return FILE_SELECTION()["$" + file.name];
         }
     })).children();
     kendo.bind(el, {
         onFileCheckboxClick: function(ev) {
             var input = ev.target;
             if (input.checked) {
-                FILE_SELECTION["$" + input.value] = true;
+                FILE_SELECTION()["$" + input.value] = true;
             } else {
-                delete FILE_SELECTION["$" + input.value];
+                delete FILE_SELECTION()["$" + input.value];
             }
         }
     });
