@@ -432,7 +432,7 @@ function setupLayout() {
     $(window).resize();
     $(window).resize();         // funny?
 
-    $(document.body).kendoTooltip({ filter: "[title]" });
+    $("#top-layout").kendoTooltip({ filter: "[title]" });
 }
 
 var docBrowserDialog = (function(){
