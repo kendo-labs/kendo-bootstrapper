@@ -32,7 +32,7 @@ run:
     npm install
     node bin/start.js
 
-### 1a. Install from Git
+### 1. Install from Git
 
 Additionally, you can install the bootstrapper by cloning the git repo:
 
