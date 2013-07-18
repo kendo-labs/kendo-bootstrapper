@@ -367,6 +367,7 @@
                     "name": "Barcode",
                     "options": [
                         "name",
+                        "renderAs",
                         "value",
                         "type",
                         "checksum",
@@ -380,10 +381,21 @@
                     ],
                     "inherits": "Widget",
                     "file": "kendo.dataviz.barcode.js",
-                    "line": 1503,
+                    "line": 1514,
                     "col": 18
                 }
             ]
+        },
+        {
+            "id": "dataviz.canvas",
+            "name": "Output: Canvas",
+            "description": "Support for Canvas rendering and image export",
+            "category": "dataviz",
+            "depends": [
+                "dataviz.core"
+            ],
+            "source": "kendo.dataviz.canvas.min.js",
+            "widgets": []
         },
         {
             "id": "dataviz.chart",
@@ -449,7 +461,7 @@
                     ],
                     "inherits": "Widget",
                     "file": "kendo.dataviz.chart.js",
-                    "line": 205,
+                    "line": 206,
                     "col": 16
                 }
             ]
@@ -496,7 +508,7 @@
                     ],
                     "inherits": "Gauge",
                     "file": "kendo.dataviz.gauge.js",
-                    "line": 1292,
+                    "line": 1295,
                     "col": 22
                 },
                 {
@@ -509,7 +521,7 @@
                     ],
                     "inherits": "Gauge",
                     "file": "kendo.dataviz.gauge.js",
-                    "line": 1324,
+                    "line": 1327,
                     "col": 22
                 }
             ]
@@ -529,6 +541,8 @@
                     "name": "QRCode",
                     "options": [
                         "name",
+                        "renderAs",
+                        "encoding",
                         "value",
                         "errorCorrection",
                         "background",
@@ -538,7 +552,7 @@
                     ],
                     "inherits": "Widget",
                     "file": "kendo.dataviz.qrcode.js",
-                    "line": 818,
+                    "line": 908,
                     "col": 21
                 }
             ]
@@ -915,7 +929,7 @@
                     ],
                     "inherits": "DropDownList",
                     "file": "kendo.editor.js",
-                    "line": 5543,
+                    "line": 5568,
                     "col": 16
                 }
             ]
@@ -1144,6 +1158,7 @@
             "hidden": true,
             "depends": [
                 "listview",
+                "dropdownlist",
                 "upload"
             ],
             "source": "kendo.imagebrowser.min.js",
@@ -1164,7 +1179,7 @@
                     ],
                     "inherits": "Widget",
                     "file": "kendo.imagebrowser.js",
-                    "line": 177,
+                    "line": 179,
                     "col": 23
                 },
                 {
@@ -1179,7 +1194,7 @@
                     ],
                     "inherits": "Widget",
                     "file": "kendo.imagebrowser.js",
-                    "line": 852,
+                    "line": 844,
                     "col": 20
                 },
                 {
@@ -1193,7 +1208,7 @@
                     ],
                     "inherits": "Widget",
                     "file": "kendo.imagebrowser.js",
-                    "line": 967,
+                    "line": 959,
                     "col": 22
                 }
             ]
@@ -1295,7 +1310,7 @@
                     ],
                     "inherits": "Widget",
                     "file": "kendo.menu.js",
-                    "line": 249,
+                    "line": 250,
                     "col": 15
                 }
             ]
@@ -1489,7 +1504,7 @@
                     ],
                     "inherits": "Widget",
                     "file": "kendo.mobile.listview.js",
-                    "line": 778,
+                    "line": 780,
                     "col": 19
                 }
             ]
@@ -1671,6 +1686,7 @@
                         "pullOffset",
                         "elastic",
                         "useNative",
+                        "avoidScrolling",
                         "pullTemplate",
                         "releaseTemplate",
                         "refreshTemplate"
@@ -1720,7 +1736,7 @@
                     ],
                     "inherits": "Widget",
                     "file": "kendo.mobile.scrollview.js",
-                    "line": 610,
+                    "line": 609,
                     "col": 21
                 }
             ]
@@ -2132,7 +2148,7 @@
         },
         {
             "id": "router",
-            "name": "History",
+            "name": "Router",
             "category": "framework",
             "description": "The Router class is responsible for tracking the application state and navigating between the application states.",
             "depends": [
@@ -2150,6 +2166,7 @@
             "depends": [
                 "scheduler.view"
             ],
+            "hidden": true,
             "source": "kendo.scheduler.agendaview.min.js",
             "widgets": [
                 {
@@ -2160,11 +2177,13 @@
                         "selectedDateFormat",
                         "eventTemplate",
                         "eventTimeTemplate",
-                        "eventDateTemplate"
+                        "eventDateTemplate",
+                        "eventGroupTemplate",
+                        "messages"
                     ],
                     "inherits": "ui.SchedulerView",
                     "file": "kendo.scheduler.agendaview.js",
-                    "line": 15,
+                    "line": 16,
                     "col": 20
                 }
             ]
@@ -2177,6 +2196,7 @@
             "depends": [
                 "scheduler.view"
             ],
+            "hidden": true,
             "source": "kendo.scheduler.dayview.min.js",
             "widgets": [
                 {
@@ -2195,7 +2215,8 @@
                         "eventTemplate",
                         "allDayEventTemplate",
                         "dateHeaderTemplate",
-                        "editable"
+                        "editable",
+                        "messages"
                     ],
                     "events": [
                         "remove",
@@ -2204,7 +2225,7 @@
                     ],
                     "inherits": "SchedulerView",
                     "file": "kendo.scheduler.dayview.js",
-                    "line": 140,
+                    "line": 135,
                     "col": 23
                 }
             ]
@@ -2263,7 +2284,9 @@
                         "height",
                         "width",
                         "resources",
-                        "views"
+                        "group",
+                        "views",
+                        "selectable"
                     ],
                     "events": [
                         "remove",
@@ -2275,7 +2298,7 @@
                     ],
                     "inherits": "Widget",
                     "file": "kendo.scheduler.js",
-                    "line": 369,
+                    "line": 428,
                     "col": 20
                 },
                 {
@@ -2290,7 +2313,7 @@
                     ],
                     "inherits": "Widget",
                     "file": "kendo.scheduler.js",
-                    "line": 1629,
+                    "line": 2089,
                     "col": 25
                 }
             ]
@@ -2303,6 +2326,7 @@
             "depends": [
                 "scheduler.view"
             ],
+            "hidden": true,
             "source": "kendo.scheduler.monthview.min.js",
             "widgets": [
                 {
@@ -2324,7 +2348,7 @@
                     ],
                     "inherits": "SchedulerView",
                     "file": "kendo.scheduler.monthview.js",
-                    "line": 58,
+                    "line": 62,
                     "col": 19
                 }
             ]
@@ -2357,7 +2381,7 @@
                     ],
                     "inherits": "Widget",
                     "file": "kendo.scheduler.recurrence.js",
-                    "line": 1176,
+                    "line": 1211,
                     "col": 27
                 }
             ]
@@ -2370,6 +2394,7 @@
             "depends": [
                 "core"
             ],
+            "hidden": true,
             "source": "kendo.scheduler.view.min.js",
             "widgets": []
         },
@@ -2424,7 +2449,7 @@
                     ],
                     "inherits": "SliderBase",
                     "file": "kendo.slider.js",
-                    "line": 581,
+                    "line": 583,
                     "col": 17
                 },
                 {
@@ -2439,7 +2464,7 @@
                     ],
                     "inherits": "SliderBase",
                     "file": "kendo.slider.js",
-                    "line": 1228,
+                    "line": 1231,
                     "col": 22
                 }
             ]
@@ -2719,6 +2744,7 @@
                         "multiple",
                         "showFileList",
                         "template",
+                        "files",
                         "async",
                         "localization"
                     ],
@@ -2771,7 +2797,7 @@
                     ],
                     "inherits": "Widget",
                     "file": "kendo.validator.js",
-                    "line": 85,
+                    "line": 84,
                     "col": 20
                 }
             ]
