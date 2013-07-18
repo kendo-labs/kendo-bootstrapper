@@ -1,5 +1,13 @@
 #! /usr/bin/env node
 
+(function(a, b, c){
+    if (!(b >= 10)) {
+        console.log("Kendo Bootstrapper requires NodeJS v0.10 or later.  You have " + process.version);
+        console.log("Please install a newer version - http://nodejs.org/")
+        process.exit(1);
+    }
+}.apply(null, process.version.replace(/^v/, "").split(".").map(parseFloat)));
+
 var PATH     = require("path");
 var HTTP     = require("http");
 var FS       = require("fs");
