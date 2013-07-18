@@ -1238,11 +1238,11 @@ function bootstrapperSettingsDialog() {
     })).children().first();
     var model = kendo.observable({
         editor: {
-            path: SERVER_CONFIG.editor.path,
+            path: SERVER_CONFIG.editor ? SERVER_CONFIG.editor.path : "",
             args: {
-                cmd1: SERVER_CONFIG.editor.args.cmd1.join(" "),
-                cmd2: SERVER_CONFIG.editor.args.cmd2.join(" "),
-                cmd3: SERVER_CONFIG.editor.args.cmd3.join(" "),
+                cmd1: SERVER_CONFIG.editor ? SERVER_CONFIG.editor.args.cmd1.join(" ") : "",
+                cmd2: SERVER_CONFIG.editor ? SERVER_CONFIG.editor.args.cmd2.join(" ") : "",
+                cmd3: SERVER_CONFIG.editor ? SERVER_CONFIG.editor.args.cmd3.join(" ") : "",
             }
         },
         kendo_src_dir: SERVER_CONFIG.kendo_src_dir,
