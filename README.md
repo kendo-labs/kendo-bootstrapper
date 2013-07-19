@@ -21,6 +21,8 @@ The Kendo UI Bootstrapper has not been tested against any other versions of thes
 
 ## Getting Started
 
+Note: a complete getting started guide can be found in the [Kendo UI Docs](http://docs.kendoui.com/getting-started/bootstrapper)
+
 ### 1. Install from ZIP
 
 To download the latest code you can use this URL:
