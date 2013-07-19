@@ -1099,8 +1099,8 @@ function projectEditFileDependencies(proj_id, file_id) {
     })).kendoWindow({
         title  : "File dependencies",
         modal  : true,
-        width  : 400,
-        height : 300,
+        width  : 900,
+        height : 500,
         resize : function() {
             var sz = this.getInnerSize();
             lm.setOuterSize(sz.x, sz.y);
@@ -1131,6 +1131,7 @@ function projectEditFileDependencies(proj_id, file_id) {
             } else {
                 btns.hide();
             }
+            updateDepsPreview();
         }
     }).data("kendoMultiPicker");
     var lm = $(".project-deps-dialog", dlg_el);
@@ -1140,6 +1141,19 @@ function projectEditFileDependencies(proj_id, file_id) {
     dlg.open();
     dlg.center();
     dlg.trigger("resize");
+
+    function updateDepsPreview() {
+        var el = $(".deps-graph", dlg_el);
+        var deps = the_deps[file_id];
+        var args = {
+            proj : proj,
+            file : file,
+            deps : the_deps
+        };
+        el.html(TMPL.process("draw_file_deps", args));
+    }
+
+    updateDepsPreview();
 }
 
 function projectEditDependencies(proj) {

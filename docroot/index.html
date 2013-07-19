@@ -345,7 +345,10 @@
     <script type="x/yajet-template" class="project-file-deps-dialog">
       <div class="project-deps-dialog" data-role="layoutmanager" data-orientation="vertical">
         <div class="title">Select below direct dependencies of $this.name|html:</div>
-        <div kendo-layout="1" class="deps-select fancy-scrollbars"></div>
+        <div kendo-layout="1" data-role="layoutmanager" data-orientation="horizontal">
+          <div kendo-layout="0.5,min:100,resizable" class="deps-select fancy-scrollbars"></div>
+          <div class="deps-graph" kendo-layout="1"></div>
+        </div>
 
         <div class="dlg-buttons">
           <div style="float: left; white-space: nowrap; display: none" class="move-buttons">
@@ -499,6 +502,40 @@
             $)
           </tbody>
         </table>$)
+
+      $(EXPORT draw_file_deps()
+        $( var proj = this.proj, file = this.file, deps = this.deps,
+               fdep = deps[file.id], listed = [] )
+        <p>
+          Add or remove dependencies by clicking the checkboxes on the left.
+          To change their order click on a filename to select it and
+          "Up"/"Down" buttons or keys (when a file is selected).
+        </p>
+        <h3>Complete dependency list for $file.name|html</h3>
+        $(IF (fdep.length > 0)
+          $(BLOCK showfile(id, cls)
+            $(UNLESS (listed.contains(id))
+              $(
+                 listed.push(id);
+                 var file = getProjectFileById(proj, id);
+              )
+              $(AWHEN (file.deps)
+                $(FOREACH (id ∈ it) ${showfile(id, fdep.contains(id) ? "direct" : "indirect")} $)
+              $)
+              <li class="$cls"><span class="filename">$file.name|html</span>
+              $(/*
+                $(AWHEN (file.deps)
+                  (requires: ${ it.map(function(id){ return getProjectFileById(proj, id).name }).join(", ") ∈ html })
+                $)
+              */)
+              </li>
+            $)
+          $)
+          <ul>$(FOREACH (id ∈ fdep) ${showfile(id, "direct")} $)</ul>
+        $(ELSE)
+          <p><b>No dependencies selected</b></p>
+        $)
+      $)
 
     </script>
 
