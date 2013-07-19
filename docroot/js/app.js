@@ -1545,6 +1545,13 @@ function filePicker(path, options, callback) {
             filter   : options.filter,
             parent   : parent
         }, function(ret, err){
+            if (err) {
+                console.log(err);
+                showMessage({
+                    class: "error",
+                    message: "Error reading the directory. Check the JS console.",
+                });
+            }
             current_path = ret.path;
             if (history[history.length - 1] != current_path)
                 history.push(current_path);
