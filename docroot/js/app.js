@@ -1560,6 +1560,9 @@ function filePicker(path, options, callback) {
             parent   : parent
         }, function(ret, err){
             if (err) {
+                if (path != "~") {
+                    return setPath("~");
+                }
                 console.log(err);
                 showMessage({
                     class: "error",
