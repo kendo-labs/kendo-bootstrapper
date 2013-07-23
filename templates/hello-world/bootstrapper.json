@@ -1,23 +1,8 @@
 {
-    "id"   : "{{PROJECT_ID}}",
-    "name" : "{{PROJECT_NAME}}",
-    "requirejs" : {{#if USE_REQUIREJS}}true{{else}}false{{/if}},
+    "template_id": "hello-world",
+    "template_name": "Hello World!",
 
     "files": [
-        {{#if USE_REQUIREJS}}
-        {
-            "id"   : "build.js",
-            "name" : "build.js",
-            "type" : "js",
-            "drop" : true
-        },
-        {
-            "id"   : "require.js",
-            "name" : "js/require.js",
-            "type" : "js",
-            "lib"  : true
-        },
-        {{/if}}
         {
             "id"   : "jquery",
             "name" : "kendo/js/jquery.min.js",
@@ -46,19 +31,7 @@
             "name" : "kendo/css/kendo.common.min.css",
             "type" : "css",
             "lib"  : true
-        },
-
-        {{#each KENDO_THEMES}}
-        {
-            "id"   : "kendo.{{{this}}}.css",
-            "name" : "kendo/css/kendo.{{{this}}}.min.css",
-            "type" : "css",
-            "lib"  : true,
-            "deps" : [ "kendo.common.css" ]
-        },
-        {{/each}}
-
-        {
+        },{
             "id"   : "app.js",
             "name" : "js/app.js",
             "type" : "js",

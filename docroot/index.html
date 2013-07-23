@@ -265,6 +265,14 @@
       <div class="dlg-content">
         <p>
           <label>
+            Project template:<br />
+            <select name="template" data-role="dropdownlist"
+                    data-text-field="template_name" data-value-field="template_id"
+                    data-bind="source: templates, value: template_id"></select>
+          </label>
+        </p>
+        <p>
+          <label>
             Project name:<br />
             <input autocomplete="off" name="name" style="width: 25em" class="k-textbox" type="text" />
           </label>

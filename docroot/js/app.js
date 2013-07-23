@@ -899,64 +899,70 @@ function projectFilePropsDialog(proj_id, file_id) {
 };
 
 function projectNew() {
-    var timeout = null;
-    var dest = SERVER_CONFIG.projects_dir.replace(/\/+$/, "");
-    var dlg_el = $("<div></div>").html(getTemplate("new-project-dialog")({
-        destination: dest
-    })).kendoWindow({
-        title: "Create new project",
-        modal: true
-    }).on("click", ".btn-ok", function(){
-        var args = {
-            id        : $("input[name=id]"        , dlg_el).val(),
-            name      : $("input[name=name]"      , dlg_el).val(),
-            path      : $("input[name=path]"      , dlg_el).val(),
-            confirm   : $("input[name=confirm]"   , dlg_el).prop("checked"),
-            requirejs : $("input[name=requirejs]" , dlg_el).prop("checked"),
-        };
-        RPC.call("project/bootstrap", args, function(data, err){
-            if (err) {
-                if (err == "NOTEMPTY") {
-                    $(".confirm", dlg_el).fadeIn();
+    RPC.call("project-templates/get-list", function(templates) {
+        var timeout = null;
+        var dest = SERVER_CONFIG.projects_dir.replace(/\/+$/, "");
+        var dlg_el = $("<div></div>").html(getTemplate("new-project-dialog")({
+            destination: dest
+        })).kendoWindow({
+            title: "Create new project",
+            modal: true
+        }).on("click", ".btn-ok", function(){
+            var args = {
+                id           : $("input[name=id]"        , dlg_el).val(),
+                name         : $("input[name=name]"      , dlg_el).val(),
+                path         : $("input[name=path]"      , dlg_el).val(),
+                confirm      : $("input[name=confirm]"   , dlg_el).prop("checked"),
+                requirejs    : $("input[name=requirejs]" , dlg_el).prop("checked"),
+                template_id  : model.template_id,
+            };
+            RPC.call("project/bootstrap", args, function(data, err){
+                if (err) {
+                    if (err == "NOTEMPTY") {
+                        $(".confirm", dlg_el).fadeIn();
+                        return;
+                    }
+                    console.log(err);
+                    showMessage({ class: "error", message: err.msg });
                     return;
                 }
-                console.log(err);
-                showMessage({ class: "error", message: err.msg });
-                return;
-            }
-            dlg.close();
-            $("#project-list").data("kendoListView").select("#project-list [value=" + args.id + "]"); // ;-(
-        });
-    }).on("click", ".btn-cancel", function(){
-        dlg.close();
-    }).on("keydown", "input[name=name]", function(){
-        clearTimeout(timeout);
-        var self = this;
-        setTimeout(function(){
-            var val = $(self).val();
-            var name = val.replace(/[^a-z0-9_.-]/ig, "_");
-            if (!manually_changed_path)
-                $("input[name=path]", dlg_el).val(dest + "/" + name);
-            $("input[name=id]", dlg_el).val(val.replace(/[^a-z0-9_]/ig, "_"));
-        }, 100);
-    });
-    var manually_changed_path = false;
-    kendo.bind(dlg_el, {
-        onBrowse: function() {
-            var input = $("input[name=path]", dlg_el);
-            filePicker(input.val(), { dirsonly: true, newFolder: true }, function(ret){
-                if (ret) {
-                    // XXX: need to check if empty folder.  Otherwise suggest "import project".
-                    input.val(path_join(ret.path, ret.name));
-                    manually_changed_path = true;
-                    ret.dlg.close();
-                }
+                dlg.close();
+                $("#project-list").data("kendoListView").select("#project-list [value=" + args.id + "]"); // ;-(
             });
-        }
+        }).on("click", ".btn-cancel", function(){
+            dlg.close();
+        }).on("keydown", "input[name=name]", function(){
+            clearTimeout(timeout);
+            var self = this;
+            setTimeout(function(){
+                var val = $(self).val();
+                var name = val.replace(/[^a-z0-9_.-]/ig, "_");
+                if (!manually_changed_path)
+                    $("input[name=path]", dlg_el).val(dest + "/" + name);
+                $("input[name=id]", dlg_el).val(val.replace(/[^a-z0-9_]/ig, "_"));
+            }, 100);
+        });
+        var manually_changed_path = false;
+        var model = kendo.observable({
+            template_id: "hello-world",
+            templates: templates,
+            onBrowse: function() {
+                var input = $("input[name=path]", dlg_el);
+                filePicker(input.val(), { dirsonly: true, newFolder: true }, function(ret){
+                    if (ret) {
+                        // XXX: need to check if empty folder.  Otherwise suggest "import project".
+                        input.val(path_join(ret.path, ret.name));
+                        manually_changed_path = true;
+                        ret.dlg.close();
+                    }
+                });
+            }
+        });
+        kendo.bind(dlg_el, model);
+        var dlg = dlg_el.data("kendoWindow");
+        dlg.open();
+        dlg.center();
     });
-    var dlg = dlg_el.data("kendoWindow");
-    dlg.open();
-    dlg.center();
 }
 
 function projectBuildKendo(proj) {
