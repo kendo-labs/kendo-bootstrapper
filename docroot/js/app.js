@@ -173,6 +173,9 @@ function setupLayout() {
         onAddFile: function() {
             withSelectedProject(projectAddFile);
         },
+        onProjectConfig: function() {
+            withSelectedProject(projectConfig);
+        },
         onJSHint: function() {
             withSelectedProject(projectLintJavaScript);
         },
@@ -854,6 +857,47 @@ function projectAddFile(proj) {
             });
         }
     });
+};
+
+function projectConfig(proj) {
+    var tmpl = getTemplate("project-config-dlg");
+    var tmp = $("<div></div>").html(tmpl({ mvvm: true }));
+    var dlg_el = tmp.children()[0];
+    if (!proj.config) {
+        proj.config = {};
+    }
+    var model = kendo.observable({
+        f_onsave_jshint  : proj.config.onsave_jshint,
+        f_onsave_klint   : proj.config.onsave_klint,
+        f_onsave_compile : proj.config.onsave_compile,
+
+        dlgResize: function(ev) {
+            var sz = dlg.getInnerSize();
+            top_layout.setOuterSize(sz.x, sz.y);
+        },
+        onCancel: function() {
+            dlg.close()
+        },
+        onOK: function() {
+            var config = {
+                onsave_jshint  : model.f_onsave_jshint,
+                onsave_klint   : model.f_onsave_klint,
+                onsave_compile : model.f_onsave_compile
+            };
+            RPC("project/save-config", proj.id, config, function(ret, err){
+                if (!err) {
+                    proj.config = config;
+                    dlg.close();
+                }
+            });
+        }
+    });
+    kendo.bind(dlg_el, model);
+    var dlg = $(dlg_el).data("kendoWindow");
+    var top_layout = $(".layout", dlg_el).data("kendoLayoutManager");
+    dlg.open();
+    dlg.center();
+    dlg.trigger("resize");
 };
 
 function projectFilePropsDialog(proj_id, file_id) {
