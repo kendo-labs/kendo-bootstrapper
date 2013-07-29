@@ -9,6 +9,9 @@ $(document).ready(function(){
     setupLayout();
     RPC.call("settings/get", function(settings){
         SERVER_CONFIG = settings;
+        if (/^win/i.test(settings.platform)) {
+            SERVER_CONFIG.windows = true;
+        }
         if (!SERVER_CONFIG.kendo_src_dir) {
             filePicker(".", {
                 infoText: getTemplate("info-configure-kendo-src-dir")(),
@@ -71,12 +74,6 @@ var TMPL = function(cache){
 var getTemplate = TMPL.getTemplate;
 
 function setupListeners() {
-    RPC.listen("setup", function(config){
-        SERVER_CONFIG = config;
-        if (/^win/i.test(config.platform)) {
-            SERVER_CONFIG.windows = true;
-        }
-    });
     RPC.listen("register_project", function(proj){
         PROJECTS.insert(proj);
     });
@@ -992,7 +989,11 @@ function projectNew() {
             templates: templates,
             onBrowse: function() {
                 var input = $("input[name=path]", dlg_el);
-                filePicker(input.val(), { dirsonly: true, newFolder: true }, function(ret){
+                filePicker(input.val(), {
+                    dirsonly: true,
+                    newFolder: true,
+                    infoText: "Enter the directory where you want to bootstrap the new project.  Create it if it doesn't exist.",
+                }, function(ret){
                     if (ret) {
                         // XXX: need to check if empty folder.  Otherwise suggest "import project".
                         input.val(path_join(ret.path, ret.name));
@@ -1596,6 +1597,7 @@ function filePicker(path, options, callback) {
         });
         if (SERVER_CONFIG.windows) {
             x[0] = one(parts[0] + "\\", parts[0]);
+            x.unshift(one("//", "Drive"));
         } else {
             x[0] = one("/", "ROOT");
         }
