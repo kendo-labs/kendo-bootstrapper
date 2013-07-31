@@ -16,7 +16,6 @@ var QRS      = require("querystring");
 var URL      = require("url");
 var FORMS    = require("formidable");
 var OPTIMIST = require("optimist");
-var CHOKIDAR = require("chokidar");
 
 global.TOPLEVEL_DIR = PATH.join(PATH.dirname(__filename), "..");
 var DOCROOT = PATH.join(TOPLEVEL_DIR, "docroot");
@@ -195,7 +194,7 @@ function start_server() {
                 }, 50);
             }
         };
-        CHOKIDAR.watch(DOCROOT, { persistent: true })
+        require("chokidar").watch(DOCROOT, { persistent: true })
             .on("change", queue("change"));
     })();
 
