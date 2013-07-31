@@ -16,7 +16,6 @@
     "coffee-script": "~1.4.0",
     "cheerio": "~0.10.8",
     "requirejs": "",
-    "chokidar": "",
     "tmp": "",
     "kendo-lint": "~0.1.0",
     "shelljs": "~0.1.3"
