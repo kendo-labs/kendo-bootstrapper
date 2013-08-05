@@ -4,8 +4,9 @@
     var QUEUE = [];
     var NOTIFICATIONS = {};
     var REQUEST_ID = 0;
+    var HOST = window.location.host;
 
-    var WS = new WebSocket("ws://localhost:7569/");
+    var WS = new WebSocket("ws://" + HOST + "/");
     var CONN_UP = false;
     WS.onopen = function() {
         console.log("Socket open");

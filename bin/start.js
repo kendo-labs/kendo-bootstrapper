@@ -64,7 +64,7 @@ HANDLERS = [
 
     [/^\/@load-assets\/([^\/]+)\/*(.*)$/, function(request, response, proj_id, path) {
         if (!path) path = "index.html";
-        SS.serve_content(PROJECT.load_assets(proj_id, path), "assets.js", response);
+        SS.serve_content(PROJECT.load_assets(proj_id, path, request.headers.host), "assets.js", response);
     }],
 
     // handler that adds a file to a project.  should be the only

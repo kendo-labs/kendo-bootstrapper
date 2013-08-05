@@ -1,6 +1,7 @@
 {
     "template_id": "hello-world",
     "template_name": "Hello World!",
+    "use_kendo": "web",
 
     "files": [
         {
