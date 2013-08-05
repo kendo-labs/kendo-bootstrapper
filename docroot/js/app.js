@@ -1301,14 +1301,20 @@ function bootstrapperSettingsDialog() {
     var dlg_el = $("<div></div>").html(getTemplate("bootstrapper-settings-dialog")({
         mvvm: true,
     })).children().first();
+    var editor = SERVER_CONFIG.editor, editor_cmd1 = "{file}", editor_cmd2 = "{file}", editor_cmd3 = "{file}";
+    if (editor && editor.args) {
+        if (editor.args.cmd1) editor_cmd1 = editor.args.cmd1.join(" ");
+        if (editor.args.cmd2) editor_cmd2 = editor.args.cmd2.join(" ");
+        if (editor.args.cmd3) editor_cmd3 = editor.args.cmd3.join(" ");
+    }
     var model = kendo.observable({
         editor: {
-            path: SERVER_CONFIG.editor ? SERVER_CONFIG.editor.path : "",
+            path: editor ? editor.path : "",
             args: {
-                cmd1: SERVER_CONFIG.editor ? SERVER_CONFIG.editor.args.cmd1.join(" ") : "",
-                cmd2: SERVER_CONFIG.editor ? SERVER_CONFIG.editor.args.cmd2.join(" ") : "",
-                cmd3: SERVER_CONFIG.editor ? SERVER_CONFIG.editor.args.cmd3.join(" ") : "",
-            }
+                cmd1: editor_cmd1,
+                cmd2: editor_cmd2,
+                cmd3: editor_cmd3,
+            },
         },
         kendo_src_dir: SERVER_CONFIG.kendo_src_dir,
         onBrowseEditor: function() {
