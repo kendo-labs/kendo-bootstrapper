@@ -636,34 +636,44 @@ function filesByType(files, query) {
 }
 
 function drawContent(proj, data) {
-    // fill the #content div with project details
-    var file_info = {};
-    data.forEach(function(f){
-        file_info[f.rel] = f;
-    });
-    var el = $("#content").html(getTemplate("project-view")({
-        id           : proj.id,
-        project_name : proj.name,
-        files        : filesByType(proj.files, $("#file-filter").val()),
-        file_info    : file_info,
-        make_link    : function(path) {
-            return projectFileLink(proj, path);
-        },
-        is_selected  : function(file) {
-            return FILE_SELECTION()["$" + file.name];
-        }
-    })).children();
-    kendo.bind(el, {
-        onFileCheckboxClick: function(ev) {
-            var input = ev.target;
-            if (input.checked) {
-                FILE_SELECTION()["$" + input.value] = true;
-            } else {
-                delete FILE_SELECTION()["$" + input.value];
+    RPC.call("project/get-preview-url", proj.id, function(preview_url, err){
+        // fill the #content div with project details
+        var file_info = {};
+        data.forEach(function(f){
+            file_info[f.rel] = f;
+        });
+        var el = $("#content").html(getTemplate("project-view")({
+            id           : proj.id,
+            project_name : proj.name,
+            files        : filesByType(proj.files, $("#file-filter").val()),
+            file_info    : file_info,
+            make_link    : function(path) {
+                return projectFileLink(proj, path);
+            },
+            is_selected  : function(file) {
+                return FILE_SELECTION()["$" + file.name];
+            },
+            preview_url  : preview_url
+        })).children();
+        kendo.bind(el, {
+            onFileCheckboxClick: function(ev) {
+                var input = ev.target;
+                if (input.checked) {
+                    FILE_SELECTION()["$" + input.value] = true;
+                } else {
+                    delete FILE_SELECTION()["$" + input.value];
+                }
             }
-        }
+        });
+        new QRCode("qrcode", {
+            text: preview_url,
+            width: 160,
+            height: 160,
+            colorDark : "#000000",
+            colorLight : "#ffffff",
+        })
+        $(window).resize();
     });
-    $(window).resize();
 }
 
 function showBuildErrors(proj_id, title, errors, refreshcmd) {

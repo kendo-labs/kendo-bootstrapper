@@ -16,6 +16,7 @@
     <script src="js/rpc.js"></script>
     <script src="js/less-1.3.3.min.js"></script>
     <script src="js/yajet.min.js"></script>
+    <script src="js/qrcode.min.js"></script>
 
     <script src="js/kendo.multipicker.js"></script>
     <script src="js/kendo.layoutmanager.js"></script>
@@ -221,6 +222,18 @@
       $)
 
       ${ display_files(p.files) }
+
+      <div class="preview-url">
+        <table cellspacing="0" cellpadding="0" width="100%">
+          <tr valign="top"><td>
+            Preview URL: <a href="$p.preview_url|html">$p.preview_url|html</a><br />
+            If we detected the IP address correctly, you can preview the app on mobile devices by scanning the QR code on the right.<br />
+            Note that for this to work your mobile must be in the same network as the machine that runs the Kendo Bootstrapper.
+          </td><td width="1em">
+            <div id="qrcode"></div>
+          </td></tr>
+        </table>
+      </div>
     </script>
 
     <script type="x/yajet-template" class="add-file-dialog">
@@ -437,7 +450,7 @@
     </script>
 
     <script type="x/yajet-template" class="template-library">
-    
+
       $(EXPORT p_checkbox(props)
         <p>
           <label class="hovering">
