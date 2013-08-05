@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <title>{{PROJECT_NAME}}</title>
+
+    <!--KENDO_BOOTSTRAPPER:FILES-->
+      <!-- Do not remove this section.  Here the bootstrapper will add code
+        that loads the page assets.  The following <script> is only present
+        in development. -->
+      <script>document.write("<script src='http://" + location.host + "/@load-assets/{{PROJECT_ID}}/index.html'></scr" + "ipt>");</script>
+    <!--/KENDO_BOOTSTRAPPER:FILES-->
+
+  </head>
+
+  <body>
+
+    <div id="home" data-role="view" data-layout="default">
+      {{PROJECT_NAME}}
+    </div>
+
+    <div id="about" data-role="view" data-layout="default">
+      About {{PROJECT_NAME}}
+    </div>
+
+    <section data-role="layout" data-id="default">
+      <header data-role="header">
+        <div data-role="navbar">{{PROJECT_NAME}}</div>
+      </header>
+      <!-- View content will render here -->
+      <footer data-role="footer">
+        <div data-role="tabstrip">
+          <a href="#home">Home</a>
+          <a href="#about">About</a>
+        </div>
+      </footer>
+    </section>
+
+  </body>
+</html>
