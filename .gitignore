@@ -1,4 +1,5 @@
 node_modules
 PROJECTS
 TEMP
-bootstrapper.json
+/bootstrapper.json
+

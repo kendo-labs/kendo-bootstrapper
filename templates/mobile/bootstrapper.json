@@ -1,0 +1,55 @@
+{
+    "template_id": "mobile",
+    "template_name": "Mobile app",
+    "use_kendo": "mobile",
+
+    "files": [
+        {
+            "id"   : "jquery",
+            "name" : "kendo/js/jquery.min.js",
+            "type" : "js",
+            "lib"  : true
+        },{
+            "id"   : "kendo",
+            "name" : "kendo/js/kendo.all.min.js",
+            "type" : "js",
+            "lib"  : true,
+            "deps" : [
+                "jquery"
+            ]
+        },{
+            "id"   : "less",
+            "name" : "js/less-1.3.3.min.js",
+            "type" : "js",
+            "lib"  : true
+        },{
+            "id"   : "coffeescript",
+            "name" : "js/coffee-script.js",
+            "type" : "js",
+            "lib"  : true
+        },{
+            "id"   : "kendo.mobile.all.css",
+            "name" : "kendo/css/kendo.mobile.all.min.css",
+            "type" : "css",
+            "lib"  : true
+        },{
+            "id"   : "app.js",
+            "name" : "js/app.js",
+            "type" : "js",
+            "deps" : [
+                "kendo",
+                "app.less"
+            ]
+        },{
+            "id"   : "app.less",
+            "name" : "css/app.less",
+            "type" : "less"
+        },{
+            "id"   : "main",
+            "name" : "index.html",
+            "type" : "html",
+            "page" : true,
+            "deps" : [ "kendo.mobile.all.css", "app.js" ]
+        }
+    ]
+}
