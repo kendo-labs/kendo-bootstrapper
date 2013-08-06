@@ -1057,7 +1057,8 @@ function projectBuildKendo(proj) {
             selection  : sel,
             detected   : detected,
             manual     : data.manual_kendo_components,
-            okLabel    : "Build!"
+            okLabel    : "Build!",
+            kvariant   : proj.use_kendo,
         })).kendoWindow({
             title: "Build custom Kendo UI",
             modal: true,

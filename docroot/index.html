@@ -400,7 +400,9 @@
 
           <div class="two-columns">
             $(FOREACH (comp => this.kcomp)
-            $(WHEN (comp.category == "web" || comp.category == "framework")
+            $(WHEN (comp.category == "framework" ||
+                    (this.kvariant == "web" && comp.category == "web") ||
+                    (this.kvariant == "mobile" && comp.category == "mobile"))
             <div>
               $( var checked = this.selection.contains(comp.id) ? 'checked="checked"' : '';
                  var disabled = this.detected.contains(comp.id) ? 'disabled="disabled"' : ''; )
