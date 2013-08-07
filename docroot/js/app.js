@@ -995,7 +995,7 @@ function projectNew() {
         });
         var manually_changed_path = false;
         var model = kendo.observable({
-            template_id: "hello-world",
+            template_id: "default-web",
             templates: templates,
             onBrowse: function() {
                 var input = $("input[name=path]", dlg_el);

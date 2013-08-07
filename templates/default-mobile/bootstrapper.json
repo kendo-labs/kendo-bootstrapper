@@ -1,6 +1,6 @@
 {
-    "template_id": "mobile",
-    "template_name": "Mobile app",
+    "template_id": "default-mobile",
+    "template_name": "Kendo UI Mobile App",
     "use_kendo": "mobile",
 
     "files": [

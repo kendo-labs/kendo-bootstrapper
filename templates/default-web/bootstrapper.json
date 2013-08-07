@@ -1,6 +1,6 @@
 {
-    "template_id": "hello-world",
-    "template_name": "Hello World!",
+    "template_id": "default-web",
+    "template_name": "Default (Kendo UI Web App)",
     "use_kendo": "web",
 
     "files": [
