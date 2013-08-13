@@ -160,6 +160,9 @@ function start_server() {
         });
         ws.on("close", function(){
             CLIENTS.remove(ws);
+	    if (CLIENTS.length == 0 && CHROME) {
+		CHROME.kill();
+	    }
         });
     });
 
@@ -205,6 +208,8 @@ function start_server() {
     // }, 500);
 }
 
+var CHROME = null;
+
 if (!ARGS.n) CONFIG.get_chrome_exe(function(err, chrome_exe){
     if (err) {
 	console.log(err);
@@ -224,7 +229,7 @@ if (!ARGS.n) CONFIG.get_chrome_exe(function(err, chrome_exe){
         process.on("SIGINT", function(){
             process.exit(0);
         });
-        var chrome = cp.spawn(chrome_exe, [
+        CHROME = cp.spawn(chrome_exe, [
             "--no-first-run",
 	    "--no-default-browser-check",
 	    "--no-proxy-server",
@@ -241,7 +246,7 @@ if (!ARGS.n) CONFIG.get_chrome_exe(function(err, chrome_exe){
         ], {
             cwd: TOPLEVEL_DIR
         });
-        chrome.on("exit", function(){
+        CHROME.on("exit", function(){
             process.exit(0);
         });
     });
