@@ -4,7 +4,7 @@
     var QUEUE = [];
     var NOTIFICATIONS = {};
     var REQUEST_ID = 0;
-    var HOST = window.location.host;
+    var HOST = window.location.host.replace(/(:[0-9]+)?$/, ":7569");
 
     var WS = new WebSocket("ws://" + HOST + "/");
     var CONN_UP = false;
