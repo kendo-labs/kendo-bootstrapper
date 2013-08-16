@@ -22,7 +22,7 @@
         if (message.length == 2)
             return notify(message[0], message[1]);
         var id = message[0], result = message[2];
-        cmd = PENDING[id];
+        var cmd = PENDING[id];
         if (cmd && cmd.callback) {
             var error = null;
             if (result != null && result.error) error = result.error;
