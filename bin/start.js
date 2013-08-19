@@ -16,6 +16,7 @@ var QRS      = require("querystring");
 var URL      = require("url");
 var FORMS    = require("formidable");
 var OPTIMIST = require("optimist");
+var TEMP     = require("temp");
 
 global.TOPLEVEL_DIR = PATH.join(PATH.dirname(__filename), "..");
 var DOCROOT = PATH.join(TOPLEVEL_DIR, "docroot");
@@ -216,16 +217,12 @@ if (!ARGS.n) CONFIG.get_chrome_exe(function(err, chrome_exe){
 	process.exit(1);
     }
     var cp = require("child_process");
-    var tmp = PATH.join(TOPLEVEL_DIR, "TEMP", UTILS.uuid());
-    UTILS.fs_ensure_directory(tmp, function(err){
-        if (err) {
+    TEMP.mkdir("kendo-bootstrapper", function(err, tmp) {
+	if (err) {
             console.error("Cannot create temporary directory:", tmp);
             console.log(err);
             process.exit(1);
         }
-        process.on("exit", function(){
-            UTILS.fs_rmpathSync(tmp);
-        });
         process.on("SIGINT", function(){
             process.exit(0);
         });
@@ -244,7 +241,7 @@ if (!ARGS.n) CONFIG.get_chrome_exe(function(err, chrome_exe){
             "--app=http://localhost:7569/",
 	    //"http://localhost:7569/",
         ], {
-            cwd: TOPLEVEL_DIR
+            cwd: tmp
         });
         CHROME.on("exit", function(){
             process.exit(0);
