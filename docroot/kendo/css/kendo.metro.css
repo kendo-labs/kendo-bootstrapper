@@ -50,7 +50,7 @@
 .k-tiles,
 .k-toolbar,
 .k-tooltip,
-.k-editor-button .k-tool-icon,
+.k-button-group .k-tool-icon,
 .k-upload-files {
   border-color: #dadada;
 }
@@ -129,6 +129,9 @@ textarea.k-textbox:hover,
 .k-popup,
 .k-content,
 .k-dropdown .k-input {
+  color: #787878;
+}
+.k-block {
   color: #787878;
 }
 .k-link:link,
@@ -271,6 +274,9 @@ textarea.k-textbox:hover,
   background: #7ea700 0 -257px none repeat-x;
   color: #ffffff;
 }
+.k-event.k-state-selected {
+  background-position: 0 0;
+}
 .k-ie7 .k-event .k-resize-handle,
 .k-event .k-resize-handle:after {
   background-color: #787878;
@@ -330,7 +336,8 @@ textarea.k-textbox:hover,
   text-decoration: none;
   background-color: #ffffff;
 }
-.k-calendar .k-footer .k-nav-today:hover {
+.k-calendar .k-footer .k-nav-today:hover,
+.k-calendar .k-footer .k-nav-today.k-state-hover {
   background-color: #ffffff;
   text-decoration: underline;
 }
@@ -346,7 +353,7 @@ textarea.k-textbox:hover,
   color: #ffffff;
 }
 .k-calendar .k-link.k-state-hover,
-.k-window .k-link {
+.k-window-titlebar .k-link {
   border-radius: 0;
 }
 .k-calendar .k-footer .k-link {
@@ -455,7 +462,11 @@ td.k-state-focused.k-state-selected,
 .k-other-month.k-state-hover .k-link,
 div.k-imagebrowser-dropzone em,
 .k-draghandle:hover {
-  background-image: none;
+  background-image: url('textures/highlight.png');
+  background-image: none, -webkit-linear-gradient(top, #8ebc00 0%, #8ebc00 100%);
+  background-image: none, -moz-linear-gradient(top, #8ebc00 0%, #8ebc00 100%);
+  background-image: none, -o-linear-gradient(top, #8ebc00 0%, #8ebc00 100%);
+  background-image: none, linear-gradient(to bottom, #8ebc00 0%, #8ebc00 100%);
 }
 .k-pager-wrap {
   background-color: #ffffff;
@@ -476,6 +487,14 @@ div.k-imagebrowser-dropzone em,
   background-image: url('Metro/sprite.png');
 }
 .k-tool-icon.k-state-hover {
+  background-image: url('Metro/sprite.png');
+  background-image: url('Metro/sprite.png'), -webkit-linear-gradient(top, #8ebc00 0%, #8ebc00 100%);
+  background-image: url('Metro/sprite.png'), -moz-linear-gradient(top, #8ebc00 0%, #8ebc00 100%);
+  background-image: url('Metro/sprite.png'), -o-linear-gradient(top, #8ebc00 0%, #8ebc00 100%);
+  background-image: url('Metro/sprite.png'), linear-gradient(to bottom, #8ebc00 0%, #8ebc00 100%);
+}
+.k-ie8 .k-tool-icon.k-state-hover,
+.k-ie7 .k-tool-icon.k-state-hover {
   background-image: url('Metro/sprite.png');
 }
 .k-tool-icon.k-state-active,
@@ -498,7 +517,11 @@ div.k-imagebrowser-dropzone em {
 .k-dropdown-wrap.k-state-hover,
 .k-dropdown-wrap.k-state-focused {
   background-color: #8ebc00;
-  background-image: none;
+  background-image: url('textures/highlight.png');
+  background-image: none, -webkit-linear-gradient(top, #8ebc00 0%, #8ebc00 100%);
+  background-image: none, -moz-linear-gradient(top, #8ebc00 0%, #8ebc00 100%);
+  background-image: none, -o-linear-gradient(top, #8ebc00 0%, #8ebc00 100%);
+  background-image: none, linear-gradient(to bottom, #8ebc00 0%, #8ebc00 100%);
   background-position: 50% 50%;
   border-color: #dadada;
 }
@@ -753,17 +776,17 @@ div.k-imagebrowser-dropzone em {
   -webkit-border-radius: 0;
   border-radius: 0;
 }
-.k-group-start .k-tool-icon {
+.k-tool-icon.k-group-start {
   -moz-border-radius: 0 0 0 0;
   -webkit-border-radius: 0 0 0 0;
   border-radius: 0 0 0 0;
 }
-.k-group-end .k-tool-icon {
+.k-tool-icon.k-group-end {
   -moz-border-radius: 0 0 0 0;
   -webkit-border-radius: 0 0 0 0;
   border-radius: 0 0 0 0;
 }
-.k-group-start.k-group-end .k-tool-icon {
+.k-group-start.k-group-end.k-tool-icon {
   -moz-border-radius: 0;
   -webkit-border-radius: 0;
   border-radius: 0;
@@ -952,7 +975,11 @@ div.k-imagebrowser-dropzone em {
 .k-numeric-wrap.k-state-hover,
 .k-dropdown-wrap.k-state-hover {
   background-color: #8ebc00;
-  background-image: none;
+  background-image: url('textures/highlight.png');
+  background-image: none, -webkit-linear-gradient(top, #8ebc00 0%, #8ebc00 100%);
+  background-image: none, -moz-linear-gradient(top, #8ebc00 0%, #8ebc00 100%);
+  background-image: none, -o-linear-gradient(top, #8ebc00 0%, #8ebc00 100%);
+  background-image: none, linear-gradient(to bottom, #8ebc00 0%, #8ebc00 100%);
   background-position: 50% 50%;
   border-color: #dadada;
 }
@@ -961,7 +988,11 @@ div.k-imagebrowser-dropzone em {
 .k-numeric-wrap.k-state-focused,
 .k-dropdown-wrap.k-state-focused {
   background-color: #8ebc00;
-  background-image: none;
+  background-image: url('textures/highlight.png');
+  background-image: none, -webkit-linear-gradient(top, #8ebc00 0%, #8ebc00 100%);
+  background-image: none, -moz-linear-gradient(top, #8ebc00 0%, #8ebc00 100%);
+  background-image: none, -o-linear-gradient(top, #8ebc00 0%, #8ebc00 100%);
+  background-image: none, linear-gradient(to bottom, #8ebc00 0%, #8ebc00 100%);
   background-position: 50% 50%;
   border-color: #dadada;
 }
@@ -1016,7 +1047,7 @@ div.k-imagebrowser-dropzone em {
 }
 .k-menu.k-header,
 .k-menu .k-item {
-  border-color: #4c5356;
+  border-color: #dadada;
 }
 .k-column-menu,
 .k-column-menu .k-item {
@@ -1036,7 +1067,7 @@ div.k-imagebrowser-dropzone em {
   background-color: #ffffff;
   border-color: #dadada;
 }
-.k-secondary .k-editor-button .k-tool-icon {
+.k-secondary .k-button-group .k-tool-icon {
   border-color: #dadada;
 }
 .k-secondary.k-splitbar {
@@ -1056,7 +1087,11 @@ div.k-imagebrowser-dropzone em {
 .k-secondary .k-numeric-wrap.k-state-hover,
 .k-secondary .k-dropdown-wrap.k-state-hover {
   background-color: #8ebc00;
-  background-image: none;
+  background-image: url('textures/highlight.png');
+  background-image: none, -webkit-linear-gradient(top, #8ebc00 0%, #8ebc00 100%);
+  background-image: none, -moz-linear-gradient(top, #8ebc00 0%, #8ebc00 100%);
+  background-image: none, -o-linear-gradient(top, #8ebc00 0%, #8ebc00 100%);
+  background-image: none, linear-gradient(to bottom, #8ebc00 0%, #8ebc00 100%);
   background-position: 50% 50%;
   border-color: #dadada;
 }
@@ -1065,7 +1100,11 @@ div.k-imagebrowser-dropzone em {
 .k-secondary .k-numeric-wrap.k-state-focused,
 .k-secondary .k-dropdown-wrap.k-state-focused {
   background-color: #dadada;
-  background-image: none;
+  background-image: url('textures/highlight.png');
+  background-image: none, -webkit-linear-gradient(top, #8ebc00 0%, #8ebc00 100%);
+  background-image: none, -moz-linear-gradient(top, #8ebc00 0%, #8ebc00 100%);
+  background-image: none, -o-linear-gradient(top, #8ebc00 0%, #8ebc00 100%);
+  background-image: none, linear-gradient(to bottom, #8ebc00 0%, #8ebc00 100%);
   background-position: 50% 50%;
   border-color: #dadada;
 }

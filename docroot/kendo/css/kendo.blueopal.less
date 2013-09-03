@@ -48,18 +48,18 @@
 @hover-border-color: #7ec6e3;
 @hover-shadow: none;
 
-/*Focused State*/
-@focused-border-color: @hover-border-color;
-@focused-shadow: 0 0 3px 0 @shadow-color;
-@focused-item-shadow: inset 0 0 3px 1px @hover-border-color;
-@focused-active-item-shadow: inset 0 0 3px 1px darken(@selected-border-color, 15%);
-
 /* Selected State */
 @selected-text-color: #fff;
 @selected-gradient: "#12739d 0%, #58a5c6 100%";
 @selected-background-color: #58a5c6;
 @selected-border-color: #58a5c6;
 @selected-shadow: inset 0 0 8px rgba(0,92,131,.5);
+
+/*Focused State*/
+@focused-border-color: @hover-border-color;
+@focused-shadow: 0 0 3px 0 @shadow-color;
+@focused-item-shadow: inset 0 0 3px 1px @hover-border-color;
+@focused-active-item-shadow: inset 0 0 3px 1px darken(@selected-border-color, 15%);
 
 /* Active State */
 @active-text-color: @widget-text-color;
@@ -152,7 +152,7 @@
 @drop-down-hover-border-color: @hover-border-color;
 @drop-down-focused-border-color: @focused-border-color;
 @calendar-group-background-color: @group-background-color; 
-@drop-down-background: #e9e9e9;
+@drop-down-background: #daecf4;
 @drop-down-text-color: @widget-text-color;
 @secondary-border-color: @widget-border-color;
 @secondary-text-color: @widget-text-color;

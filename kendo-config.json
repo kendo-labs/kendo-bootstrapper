@@ -37,6 +37,46 @@
             "widgets": []
         },
         {
+            "id": "mobile.actionsheet",
+            "name": "ActionSheet",
+            "category": "mobile",
+            "description": "The mobile ActionSheet widget displays a set of choices related to a task the user initiates.",
+            "depends": [
+                "mobile.popover",
+                "mobile.shim"
+            ],
+            "source": "kendo.mobile.actionsheet.min.js",
+            "widgets": [
+                {
+                    "name": "ActionSheet",
+                    "options": [
+                        "name",
+                        "cancel",
+                        "popup"
+                    ],
+                    "events": [
+                        "open"
+                    ],
+                    "inherits": "Widget",
+                    "file": "kendo.mobile.actionsheet.js",
+                    "line": 22,
+                    "col": 22
+                }
+            ]
+        },
+        {
+            "id": "mobile.application",
+            "name": "Application",
+            "category": "mobile",
+            "description": "The Mobile application provides a framework to build native looking web applications on mobile devices.",
+            "depends": [
+                "mobile.pane",
+                "router"
+            ],
+            "source": "kendo.mobile.application.min.js",
+            "widgets": []
+        },
+        {
             "id": "autocomplete",
             "name": "AutoComplete",
             "category": "web",
@@ -80,16 +120,116 @@
             ]
         },
         {
-            "id": "binder",
-            "name": "MVVM",
-            "category": "framework",
-            "description": "Model View ViewModel (MVVM) is a design pattern which helps developers separate the Model (the data) from the View (the UI).",
+            "id": "dataviz.barcode",
+            "name": "Barcode",
+            "category": "dataviz",
+            "description": "Barcode widget",
             "depends": [
-                "core",
-                "data"
+                "dataviz.core",
+                "dataviz.svg"
             ],
-            "source": "kendo.binder.min.js",
-            "widgets": []
+            "source": "kendo.dataviz.barcode.min.js",
+            "widgets": [
+                {
+                    "name": "Barcode",
+                    "options": [
+                        "name",
+                        "renderAs",
+                        "value",
+                        "type",
+                        "checksum",
+                        "width",
+                        "height",
+                        "color",
+                        "background",
+                        "text",
+                        "border",
+                        "padding"
+                    ],
+                    "inherits": "Widget",
+                    "file": "kendo.dataviz.barcode.js",
+                    "line": 1517,
+                    "col": 18
+                }
+            ]
+        },
+        {
+            "id": "mobile.button",
+            "name": "Button",
+            "category": "mobile",
+            "description": "The Button widget navigates between mobile Application views when pressed.",
+            "depends": [
+                "mobile.application",
+                "userevents"
+            ],
+            "source": "kendo.mobile.button.min.js",
+            "widgets": [
+                {
+                    "name": "Button",
+                    "options": [
+                        "name",
+                        "icon",
+                        "style",
+                        "badge"
+                    ],
+                    "events": [
+                        "click"
+                    ],
+                    "inherits": "Widget",
+                    "file": "kendo.mobile.button.js",
+                    "line": 32,
+                    "col": 17
+                },
+                {
+                    "name": "BackButton",
+                    "options": [
+                        "name",
+                        "style"
+                    ],
+                    "inherits": "Button",
+                    "file": "kendo.mobile.button.js",
+                    "line": 153,
+                    "col": 21
+                },
+                {
+                    "name": "DetailButton",
+                    "options": [
+                        "name",
+                        "style"
+                    ],
+                    "inherits": "Button",
+                    "file": "kendo.mobile.button.js",
+                    "line": 169,
+                    "col": 23
+                }
+            ]
+        },
+        {
+            "id": "mobile.buttongroup",
+            "name": "ButtonGroup",
+            "category": "mobile",
+            "description": "The Kendo mobile ButtonGroup widget is a linear set of grouped buttons.",
+            "depends": [
+                "mobile.application"
+            ],
+            "source": "kendo.mobile.buttongroup.min.js",
+            "widgets": [
+                {
+                    "name": "ButtonGroup",
+                    "options": [
+                        "name",
+                        "selectOn",
+                        "index"
+                    ],
+                    "events": [
+                        "select"
+                    ],
+                    "inherits": "Widget",
+                    "file": "kendo.mobile.buttongroup.js",
+                    "line": 21,
+                    "col": 22
+                }
+            ]
         },
         {
             "id": "calendar",
@@ -126,6 +266,79 @@
                     "file": "kendo.calendar.js",
                     "line": 67,
                     "col": 19
+                }
+            ]
+        },
+        {
+            "id": "dataviz.chart",
+            "name": "Chart",
+            "category": "dataviz",
+            "description": "The Chart widget uses modern browser technologies to render high-quality data visualizations in the browser.",
+            "depends": [
+                "data",
+                "userevents",
+                "dataviz.core",
+                "dataviz.svg",
+                "dataviz.themes"
+            ],
+            "features": [
+                {
+                    "id": "dataviz.chart-polar",
+                    "name": "Polar & Radar",
+                    "description": "Support for Polar and Radar charts.",
+                    "depends": [
+                        "dataviz.chart.polar"
+                    ],
+                    "requireJS": false
+                }
+            ],
+            "source": "kendo.dataviz.chart.min.js",
+            "widgets": [
+                {
+                    "name": "Chart",
+                    "options": [
+                        "name",
+                        "renderAs",
+                        "theme",
+                        "chartArea",
+                        "legend",
+                        "categoryAxis",
+                        "autoBind",
+                        "seriesDefaults",
+                        "series",
+                        "seriesColors",
+                        "tooltip",
+                        "transitions",
+                        "valueAxis",
+                        "plotArea",
+                        "title",
+                        "xAxis",
+                        "yAxis"
+                    ],
+                    "events": [
+                        "dataBound",
+                        "seriesClick",
+                        "seriesHover",
+                        "window.kendo.dataviz.AXIS_LABEL_CLICK",
+                        "legendItemClick",
+                        "legendItemHover",
+                        "plotAreaClick",
+                        "dragStart",
+                        "drag",
+                        "dragEnd",
+                        "zoomStart",
+                        "zoom",
+                        "zoomEnd",
+                        "selectStart",
+                        "select",
+                        "selectEnd",
+                        "window.kendo.dataviz.NOTE_CLICK",
+                        "window.kendo.dataviz.NOTE_HOVER"
+                    ],
+                    "inherits": "Widget",
+                    "file": "kendo.dataviz.chart.js",
+                    "line": 217,
+                    "col": 16
                 }
             ]
         },
@@ -240,7 +453,7 @@
                     ],
                     "inherits": "Widget",
                     "file": "kendo.columnmenu.js",
-                    "line": 33,
+                    "line": 32,
                     "col": 21
                 }
             ]
@@ -294,6 +507,18 @@
             ]
         },
         {
+            "id": "dataviz.core",
+            "name": "Core",
+            "description": "The DataViz core functions",
+            "category": "dataviz",
+            "depends": [
+                "core"
+            ],
+            "hidden": true,
+            "source": "kendo.dataviz.core.min.js",
+            "widgets": []
+        },
+        {
             "id": "core",
             "name": "Core",
             "category": "framework",
@@ -328,323 +553,6 @@
                 }
             ],
             "source": "kendo.data.min.js",
-            "widgets": []
-        },
-        {
-            "id": "data.odata",
-            "name": "OData",
-            "category": "framework",
-            "depends": [
-                "core"
-            ],
-            "hidden": true,
-            "source": "kendo.data.odata.min.js",
-            "widgets": []
-        },
-        {
-            "id": "data.xml",
-            "name": "XML",
-            "category": "framework",
-            "depends": [
-                "core"
-            ],
-            "hidden": true,
-            "source": "kendo.data.xml.min.js",
-            "widgets": []
-        },
-        {
-            "id": "dataviz.barcode",
-            "name": "Barcode",
-            "category": "dataviz",
-            "description": "Barcode widget",
-            "depends": [
-                "dataviz.core",
-                "dataviz.svg"
-            ],
-            "source": "kendo.dataviz.barcode.min.js",
-            "widgets": [
-                {
-                    "name": "Barcode",
-                    "options": [
-                        "name",
-                        "renderAs",
-                        "value",
-                        "type",
-                        "checksum",
-                        "width",
-                        "height",
-                        "color",
-                        "background",
-                        "text",
-                        "border",
-                        "padding"
-                    ],
-                    "inherits": "Widget",
-                    "file": "kendo.dataviz.barcode.js",
-                    "line": 1514,
-                    "col": 18
-                }
-            ]
-        },
-        {
-            "id": "dataviz.canvas",
-            "name": "Output: Canvas",
-            "description": "Support for Canvas rendering and image export",
-            "category": "dataviz",
-            "depends": [
-                "dataviz.core"
-            ],
-            "source": "kendo.dataviz.canvas.min.js",
-            "widgets": []
-        },
-        {
-            "id": "dataviz.chart",
-            "name": "Chart",
-            "category": "dataviz",
-            "description": "The Chart widget uses modern browser technologies to render high-quality data visualizations in the browser.",
-            "depends": [
-                "data",
-                "userevents",
-                "dataviz.core",
-                "dataviz.svg"
-            ],
-            "features": [
-                {
-                    "id": "dataviz.chart-polar",
-                    "name": "Polar & Radar",
-                    "description": "Support for Polar and Radar charts.",
-                    "depends": [
-                        "dataviz.chart.polar"
-                    ]
-                }
-            ],
-            "source": "kendo.dataviz.chart.min.js",
-            "widgets": [
-                {
-                    "name": "Chart",
-                    "options": [
-                        "name",
-                        "theme",
-                        "chartArea",
-                        "legend",
-                        "categoryAxis",
-                        "autoBind",
-                        "seriesDefaults",
-                        "series",
-                        "tooltip",
-                        "transitions",
-                        "valueAxis",
-                        "plotArea",
-                        "title",
-                        "xAxis",
-                        "yAxis"
-                    ],
-                    "events": [
-                        "dataBound",
-                        "seriesClick",
-                        "seriesHover",
-                        "window.kendo.dataviz.AXIS_LABEL_CLICK",
-                        "legendItemClick",
-                        "legendItemHover",
-                        "plotAreaClick",
-                        "dragStart",
-                        "drag",
-                        "dragEnd",
-                        "zoomStart",
-                        "zoom",
-                        "zoomEnd",
-                        "selectStart",
-                        "select",
-                        "selectEnd",
-                        "window.kendo.dataviz.NOTE_CLICK",
-                        "window.kendo.dataviz.NOTE_HOVER"
-                    ],
-                    "inherits": "Widget",
-                    "file": "kendo.dataviz.chart.js",
-                    "line": 206,
-                    "col": 16
-                }
-            ]
-        },
-        {
-            "id": "dataviz.chart.polar",
-            "name": "Polar Charts",
-            "category": "dataviz",
-            "depends": [
-                "dataviz.chart"
-            ],
-            "hidden": true,
-            "source": "kendo.dataviz.chart.polar.min.js",
-            "widgets": []
-        },
-        {
-            "id": "dataviz.core",
-            "name": "Core",
-            "description": "The DataViz core functions",
-            "category": "dataviz",
-            "depends": [
-                "core"
-            ],
-            "source": "kendo.dataviz.core.min.js",
-            "widgets": []
-        },
-        {
-            "id": "dataviz.gauge",
-            "name": "Gauge",
-            "category": "dataviz",
-            "description": "Radial gauge.",
-            "depends": [
-                "dataviz.core",
-                "dataviz.svg"
-            ],
-            "source": "kendo.dataviz.gauge.min.js",
-            "widgets": [
-                {
-                    "name": "RadialGauge",
-                    "options": [
-                        "name",
-                        "transitions",
-                        "gaugeArea"
-                    ],
-                    "inherits": "Gauge",
-                    "file": "kendo.dataviz.gauge.js",
-                    "line": 1295,
-                    "col": 22
-                },
-                {
-                    "name": "LinearGauge",
-                    "options": [
-                        "name",
-                        "transitions",
-                        "gaugeArea",
-                        "scale"
-                    ],
-                    "inherits": "Gauge",
-                    "file": "kendo.dataviz.gauge.js",
-                    "line": 1327,
-                    "col": 22
-                }
-            ]
-        },
-        {
-            "id": "dataviz.qrcode",
-            "name": "QRCode",
-            "category": "dataviz",
-            "description": "QRCode widget.",
-            "depends": [
-                "dataviz.core",
-                "dataviz.svg"
-            ],
-            "source": "kendo.dataviz.qrcode.min.js",
-            "widgets": [
-                {
-                    "name": "QRCode",
-                    "options": [
-                        "name",
-                        "renderAs",
-                        "encoding",
-                        "value",
-                        "errorCorrection",
-                        "background",
-                        "color",
-                        "size",
-                        "border"
-                    ],
-                    "inherits": "Widget",
-                    "file": "kendo.dataviz.qrcode.js",
-                    "line": 908,
-                    "col": 21
-                }
-            ]
-        },
-        {
-            "id": "dataviz.sparkline",
-            "name": "Sparkline",
-            "category": "dataviz",
-            "description": "Sparkline widgets.",
-            "depends": [
-                "dataviz.chart"
-            ],
-            "source": "kendo.dataviz.sparkline.min.js",
-            "widgets": [
-                {
-                    "name": "Sparkline",
-                    "options": [
-                        "name",
-                        "chartArea",
-                        "axisDefaults",
-                        "seriesDefaults",
-                        "tooltip",
-                        "categoryAxis",
-                        "legend",
-                        "transitions",
-                        "pointWidth"
-                    ],
-                    "inherits": "Chart",
-                    "file": "kendo.dataviz.sparkline.js",
-                    "line": 33,
-                    "col": 20
-                }
-            ]
-        },
-        {
-            "id": "dataviz.stockchart",
-            "name": "StockChart",
-            "category": "dataviz",
-            "description": "StockChart widget and associated financial series.",
-            "depends": [
-                "dataviz.chart"
-            ],
-            "source": "kendo.dataviz.stock.min.js",
-            "widgets": [
-                {
-                    "name": "StockChart",
-                    "options": [
-                        "name",
-                        "dateField",
-                        "axisDefaults",
-                        "navigator",
-                        "tooltip",
-                        "legend"
-                    ],
-                    "inherits": "Chart",
-                    "file": "kendo.dataviz.stock.js",
-                    "line": 44,
-                    "col": 21
-                }
-            ]
-        },
-        {
-            "id": "dataviz.svg",
-            "name": "Output: SVG",
-            "description": "Support for SVG rendering",
-            "category": "dataviz",
-            "depends": [
-                "dataviz.core"
-            ],
-            "source": "kendo.dataviz.svg.min.js",
-            "widgets": []
-        },
-        {
-            "id": "dataviz.themes",
-            "name": "Themes",
-            "description": "Built-in themes for the DataViz widgets",
-            "category": "dataviz",
-            "depends": [
-                "dataviz.core"
-            ],
-            "source": "kendo.dataviz.themes.min.js",
-            "widgets": []
-        },
-        {
-            "id": "dataviz.vml",
-            "name": "Output: VML",
-            "description": "Support for VML rendering",
-            "category": "dataviz",
-            "depends": [
-                "dataviz.core"
-            ],
-            "source": "kendo.dataviz.vml.min.js",
             "widgets": []
         },
         {
@@ -796,6 +704,37 @@
             ]
         },
         {
+            "id": "mobile.drawer",
+            "name": "Drawer",
+            "category": "mobile",
+            "description": "The Kendo Mobile Drawer widget provides slide to reveal global application toolbox",
+            "depends": [
+                "mobile.application"
+            ],
+            "source": "kendo.mobile.drawer.min.js",
+            "widgets": [
+                {
+                    "name": "Drawer",
+                    "options": [
+                        "name",
+                        "position",
+                        "views",
+                        "title"
+                    ],
+                    "events": [
+                        "beforeShow",
+                        "hide",
+                        "init",
+                        "show"
+                    ],
+                    "inherits": "ui.View",
+                    "file": "kendo.mobile.drawer.js",
+                    "line": 22,
+                    "col": 17
+                }
+            ]
+        },
+        {
             "id": "dropdownlist",
             "name": "DropDownList",
             "category": "web",
@@ -919,7 +858,7 @@
                     ],
                     "inherits": "Widget",
                     "file": "kendo.editor.js",
-                    "line": 162,
+                    "line": 161,
                     "col": 17
                 },
                 {
@@ -929,10 +868,21 @@
                     ],
                     "inherits": "DropDownList",
                     "file": "kendo.editor.js",
-                    "line": 5568,
+                    "line": 5662,
                     "col": 16
                 }
             ]
+        },
+        {
+            "id": "fx",
+            "name": "Effects",
+            "category": "framework",
+            "description": "Required for animation effects in all Kendo UI widgets.",
+            "depends": [
+                "core"
+            ],
+            "source": "kendo.fx.min.js",
+            "widgets": []
         },
         {
             "id": "filtermenu",
@@ -967,15 +917,43 @@
             ]
         },
         {
-            "id": "fx",
-            "name": "Effects",
-            "category": "framework",
-            "description": "Required for animation effects in all Kendo UI widgets.",
+            "id": "dataviz.gauge",
+            "name": "Gauge",
+            "category": "dataviz",
+            "description": "Radial gauge.",
             "depends": [
-                "core"
+                "dataviz.core",
+                "dataviz.svg",
+                "dataviz.themes"
             ],
-            "source": "kendo.fx.min.js",
-            "widgets": []
+            "source": "kendo.dataviz.gauge.min.js",
+            "widgets": [
+                {
+                    "name": "RadialGauge",
+                    "options": [
+                        "name",
+                        "transitions",
+                        "gaugeArea"
+                    ],
+                    "inherits": "Gauge",
+                    "file": "kendo.dataviz.gauge.js",
+                    "line": 1296,
+                    "col": 22
+                },
+                {
+                    "name": "LinearGauge",
+                    "options": [
+                        "name",
+                        "transitions",
+                        "gaugeArea",
+                        "scale"
+                    ],
+                    "inherits": "Gauge",
+                    "file": "kendo.dataviz.gauge.js",
+                    "line": 1328,
+                    "col": 22
+                }
+            ]
         },
         {
             "id": "grid",
@@ -1179,7 +1157,7 @@
                     ],
                     "inherits": "Widget",
                     "file": "kendo.imagebrowser.js",
-                    "line": 179,
+                    "line": 188,
                     "col": 23
                 },
                 {
@@ -1194,7 +1172,7 @@
                     ],
                     "inherits": "Widget",
                     "file": "kendo.imagebrowser.js",
-                    "line": 844,
+                    "line": 857,
                     "col": 20
                 },
                 {
@@ -1208,7 +1186,7 @@
                     ],
                     "inherits": "Widget",
                     "file": "kendo.imagebrowser.js",
-                    "line": 959,
+                    "line": 972,
                     "col": 22
                 }
             ]
@@ -1224,6 +1202,51 @@
             "hidden": true,
             "source": "kendo.list.min.js",
             "widgets": []
+        },
+        {
+            "id": "mobile.listview",
+            "name": "ListView",
+            "category": "mobile",
+            "description": "The Kendo Mobile ListView widget is used to display flat or grouped list of items.",
+            "depends": [
+                "data",
+                "mobile.application",
+                "userevents"
+            ],
+            "source": "kendo.mobile.listview.min.js",
+            "widgets": [
+                {
+                    "name": "ListView",
+                    "options": [
+                        "name",
+                        "style",
+                        "type",
+                        "autoBind",
+                        "fixedHeaders",
+                        "template",
+                        "headerTemplate",
+                        "appendOnRefresh",
+                        "loadMore",
+                        "loadMoreText",
+                        "endlessScroll",
+                        "scrollThreshold",
+                        "pullToRefresh",
+                        "pullTemplate",
+                        "releaseTemplate",
+                        "refreshTemplate",
+                        "pullOffset",
+                        "filterable"
+                    ],
+                    "events": [
+                        "click",
+                        "dataBound"
+                    ],
+                    "inherits": "Widget",
+                    "file": "kendo.mobile.listview.js",
+                    "line": 806,
+                    "col": 19
+                }
+            ]
         },
         {
             "id": "listview",
@@ -1281,6 +1304,43 @@
             ]
         },
         {
+            "id": "mobile.loader",
+            "name": "Loader",
+            "category": "mobile",
+            "description": "Mobile Loader",
+            "depends": [
+                "core"
+            ],
+            "hidden": true,
+            "source": "kendo.mobile.loader.min.js",
+            "widgets": [
+                {
+                    "name": "Loader",
+                    "options": [
+                        "name",
+                        "loading",
+                        "timeout"
+                    ],
+                    "inherits": "Widget",
+                    "file": "kendo.mobile.loader.js",
+                    "line": 16,
+                    "col": 17
+                }
+            ]
+        },
+        {
+            "id": "binder",
+            "name": "MVVM",
+            "category": "framework",
+            "description": "Model View ViewModel (MVVM) is a design pattern which helps developers separate the Model (the data) from the View (the UI).",
+            "depends": [
+                "core",
+                "data"
+            ],
+            "source": "kendo.binder.min.js",
+            "widgets": []
+        },
+        {
             "id": "menu",
             "name": "Menu",
             "category": "web",
@@ -1316,225 +1376,6 @@
             ]
         },
         {
-            "id": "mobile.actionsheet",
-            "name": "ActionSheet",
-            "category": "mobile",
-            "description": "The mobile ActionSheet widget displays a set of choices related to a task the user initiates.",
-            "depends": [
-                "mobile.popover",
-                "mobile.shim"
-            ],
-            "source": "kendo.mobile.actionsheet.min.js",
-            "widgets": [
-                {
-                    "name": "ActionSheet",
-                    "options": [
-                        "name",
-                        "cancel",
-                        "popup"
-                    ],
-                    "events": [
-                        "open"
-                    ],
-                    "inherits": "Widget",
-                    "file": "kendo.mobile.actionsheet.js",
-                    "line": 22,
-                    "col": 22
-                }
-            ]
-        },
-        {
-            "id": "mobile.application",
-            "name": "Application",
-            "category": "mobile",
-            "description": "The Mobile application provides a framework to build native looking web applications on mobile devices.",
-            "depends": [
-                "mobile.pane",
-                "router"
-            ],
-            "source": "kendo.mobile.application.min.js",
-            "widgets": []
-        },
-        {
-            "id": "mobile.button",
-            "name": "Button",
-            "category": "mobile",
-            "description": "The Button widget navigates between mobile Application views when pressed.",
-            "depends": [
-                "mobile.application",
-                "userevents"
-            ],
-            "source": "kendo.mobile.button.min.js",
-            "widgets": [
-                {
-                    "name": "Button",
-                    "options": [
-                        "name",
-                        "icon",
-                        "style",
-                        "badge"
-                    ],
-                    "events": [
-                        "click"
-                    ],
-                    "inherits": "Widget",
-                    "file": "kendo.mobile.button.js",
-                    "line": 32,
-                    "col": 17
-                },
-                {
-                    "name": "BackButton",
-                    "options": [
-                        "name",
-                        "style"
-                    ],
-                    "inherits": "Button",
-                    "file": "kendo.mobile.button.js",
-                    "line": 153,
-                    "col": 21
-                },
-                {
-                    "name": "DetailButton",
-                    "options": [
-                        "name",
-                        "style"
-                    ],
-                    "inherits": "Button",
-                    "file": "kendo.mobile.button.js",
-                    "line": 169,
-                    "col": 23
-                }
-            ]
-        },
-        {
-            "id": "mobile.buttongroup",
-            "name": "ButtonGroup",
-            "category": "mobile",
-            "description": "The Kendo mobile ButtonGroup widget is a linear set of grouped buttons.",
-            "depends": [
-                "mobile.application"
-            ],
-            "source": "kendo.mobile.buttongroup.min.js",
-            "widgets": [
-                {
-                    "name": "ButtonGroup",
-                    "options": [
-                        "name",
-                        "selectOn",
-                        "index"
-                    ],
-                    "events": [
-                        "select"
-                    ],
-                    "inherits": "Widget",
-                    "file": "kendo.mobile.buttongroup.js",
-                    "line": 21,
-                    "col": 22
-                }
-            ]
-        },
-        {
-            "id": "mobile.drawer",
-            "name": "Drawer",
-            "category": "mobile",
-            "description": "The Kendo Mobile Drawer widget provides slide to reveal global application toolbox",
-            "depends": [
-                "mobile.application"
-            ],
-            "source": "kendo.mobile.drawer.min.js",
-            "widgets": [
-                {
-                    "name": "Drawer",
-                    "options": [
-                        "name",
-                        "position",
-                        "views",
-                        "title"
-                    ],
-                    "events": [
-                        "beforeShow",
-                        "hide",
-                        "init",
-                        "show"
-                    ],
-                    "inherits": "ui.View",
-                    "file": "kendo.mobile.drawer.js",
-                    "line": 22,
-                    "col": 17
-                }
-            ]
-        },
-        {
-            "id": "mobile.listview",
-            "name": "ListView",
-            "category": "mobile",
-            "description": "The Kendo Mobile ListView widget is used to display flat or grouped list of items.",
-            "depends": [
-                "data",
-                "mobile.application",
-                "userevents"
-            ],
-            "source": "kendo.mobile.listview.min.js",
-            "widgets": [
-                {
-                    "name": "ListView",
-                    "options": [
-                        "name",
-                        "style",
-                        "type",
-                        "autoBind",
-                        "fixedHeaders",
-                        "template",
-                        "headerTemplate",
-                        "appendOnRefresh",
-                        "loadMore",
-                        "loadMoreText",
-                        "endlessScroll",
-                        "scrollThreshold",
-                        "pullToRefresh",
-                        "pullTemplate",
-                        "releaseTemplate",
-                        "refreshTemplate",
-                        "pullOffset",
-                        "filterable"
-                    ],
-                    "events": [
-                        "click",
-                        "dataBound"
-                    ],
-                    "inherits": "Widget",
-                    "file": "kendo.mobile.listview.js",
-                    "line": 780,
-                    "col": 19
-                }
-            ]
-        },
-        {
-            "id": "mobile.loader",
-            "name": "Loader",
-            "category": "mobile",
-            "description": "Mobile Loader",
-            "depends": [
-                "core"
-            ],
-            "hidden": true,
-            "source": "kendo.mobile.loader.min.js",
-            "widgets": [
-                {
-                    "name": "Loader",
-                    "options": [
-                        "name",
-                        "loading",
-                        "timeout"
-                    ],
-                    "inherits": "Widget",
-                    "file": "kendo.mobile.loader.js",
-                    "line": 16,
-                    "col": 17
-                }
-            ]
-        },
-        {
             "id": "mobile.modalview",
             "name": "ModalView",
             "category": "mobile",
@@ -1562,343 +1403,6 @@
                     "file": "kendo.mobile.modalview.js",
                     "line": 19,
                     "col": 20
-                }
-            ]
-        },
-        {
-            "id": "mobile.navbar",
-            "name": "NavBar",
-            "category": "mobile",
-            "description": "The Kendo mobile NavBar widget is used inside a mobile View or Layout Header element to display an application navigation bar.",
-            "depends": [
-                "mobile.application"
-            ],
-            "source": "kendo.mobile.navbar.min.js",
-            "widgets": [
-                {
-                    "name": "NavBar",
-                    "options": [
-                        "name"
-                    ],
-                    "inherits": "Widget",
-                    "file": "kendo.mobile.navbar.js",
-                    "line": 36,
-                    "col": 17
-                }
-            ]
-        },
-        {
-            "id": "mobile.pane",
-            "name": "Pane",
-            "category": "mobile",
-            "description": "Mobile Pane",
-            "depends": [
-                "mobile.view",
-                "mobile.loader"
-            ],
-            "hidden": true,
-            "source": "kendo.mobile.pane.min.js",
-            "widgets": [
-                {
-                    "name": "Pane",
-                    "options": [
-                        "name",
-                        "transition",
-                        "layout",
-                        "initial",
-                        "loading"
-                    ],
-                    "events": [
-                        "navigate",
-                        "viewShow",
-                        "sameViewRequested"
-                    ],
-                    "inherits": "Widget",
-                    "file": "kendo.mobile.pane.js",
-                    "line": 41,
-                    "col": 15
-                }
-            ]
-        },
-        {
-            "id": "mobile.popover",
-            "name": "PopOver",
-            "category": "mobile",
-            "description": "The mobile PopOver widget represents a transient view which is displayed when the user taps on a navigational widget or area on the screen. ",
-            "depends": [
-                "popup",
-                "mobile.application"
-            ],
-            "source": "kendo.mobile.popover.min.js",
-            "widgets": [
-                {
-                    "name": "Popup",
-                    "options": [
-                        "name",
-                        "width",
-                        "height",
-                        "direction"
-                    ],
-                    "events": [
-                        "show",
-                        "hide"
-                    ],
-                    "inherits": "Widget",
-                    "file": "kendo.mobile.popover.js",
-                    "line": 67,
-                    "col": 16
-                },
-                {
-                    "name": "PopOver",
-                    "options": [
-                        "name",
-                        "popup",
-                        "pane"
-                    ],
-                    "events": [
-                        "open",
-                        "close"
-                    ],
-                    "inherits": "Widget",
-                    "file": "kendo.mobile.popover.js",
-                    "line": 163,
-                    "col": 18
-                }
-            ]
-        },
-        {
-            "id": "mobile.scroller",
-            "name": "Scroller",
-            "category": "mobile",
-            "description": "The Kendo Mobile Scroller widget enables touch friendly kinetic scrolling for the contents of a given DOM element.",
-            "depends": [
-                "core",
-                "fx",
-                "draganddrop"
-            ],
-            "source": "kendo.mobile.scroller.min.js",
-            "widgets": [
-                {
-                    "name": "Scroller",
-                    "options": [
-                        "name",
-                        "zoom",
-                        "pullOffset",
-                        "elastic",
-                        "useNative",
-                        "avoidScrolling",
-                        "pullTemplate",
-                        "releaseTemplate",
-                        "refreshTemplate"
-                    ],
-                    "events": [
-                        "pull",
-                        "scroll",
-                        "resize"
-                    ],
-                    "inherits": "Widget",
-                    "file": "kendo.mobile.scroller.js",
-                    "line": 211,
-                    "col": 19
-                }
-            ]
-        },
-        {
-            "id": "mobile.scrollview",
-            "name": "ScrollView",
-            "category": "mobile",
-            "description": "The Kendo Mobile ScrollView widget is used to scroll content wider than the device screen.",
-            "depends": [
-                "mobile.application"
-            ],
-            "source": "kendo.mobile.scrollview.min.js",
-            "widgets": [
-                {
-                    "name": "ScrollView",
-                    "options": [
-                        "name",
-                        "page",
-                        "duration",
-                        "velocityThreshold",
-                        "contentHeight",
-                        "pageSize",
-                        "itemsPerPage",
-                        "bounceVelocityThreshold",
-                        "enablePager",
-                        "autoBind",
-                        "template",
-                        "emptyTemplate"
-                    ],
-                    "events": [
-                        "changing",
-                        "change",
-                        "refresh"
-                    ],
-                    "inherits": "Widget",
-                    "file": "kendo.mobile.scrollview.js",
-                    "line": 609,
-                    "col": 21
-                }
-            ]
-        },
-        {
-            "id": "mobile.shim",
-            "name": "Shim",
-            "category": "mobile",
-            "description": "Mobile Shim",
-            "depends": [
-                "popup"
-            ],
-            "hidden": true,
-            "source": "kendo.mobile.shim.min.js",
-            "widgets": [
-                {
-                    "name": "Shim",
-                    "options": [
-                        "name",
-                        "modal",
-                        "align",
-                        "position",
-                        "effect",
-                        "duration"
-                    ],
-                    "inherits": "Widget",
-                    "file": "kendo.mobile.shim.js",
-                    "line": 17,
-                    "col": 15
-                }
-            ]
-        },
-        {
-            "id": "mobile.splitview",
-            "name": "SplitView",
-            "category": "mobile",
-            "description": "The mobile SplitView is a tablet-specific view that consists of two or more mobile Pane widgets.",
-            "depends": [
-                "mobile.application"
-            ],
-            "source": "kendo.mobile.splitview.min.js",
-            "widgets": [
-                {
-                    "name": "SplitView",
-                    "options": [
-                        "name",
-                        "style"
-                    ],
-                    "inherits": "View",
-                    "file": "kendo.mobile.splitview.js",
-                    "line": 15,
-                    "col": 20
-                }
-            ]
-        },
-        {
-            "id": "mobile.switch",
-            "name": "Switch",
-            "category": "mobile",
-            "description": "The mobile Switch widget is used to display two exclusive choices.",
-            "depends": [
-                "mobile.application"
-            ],
-            "source": "kendo.mobile.switch.min.js",
-            "widgets": [
-                {
-                    "name": "Switch",
-                    "options": [
-                        "name",
-                        "onLabel",
-                        "offLabel",
-                        "checked"
-                    ],
-                    "events": [
-                        "change"
-                    ],
-                    "inherits": "Widget",
-                    "file": "kendo.mobile.switch.js",
-                    "line": 26,
-                    "col": 17
-                }
-            ]
-        },
-        {
-            "id": "mobile.tabstrip",
-            "name": "TabStrip",
-            "category": "mobile",
-            "description": "The mobile TabStrip widget is used inside a mobile view or layout footer element to display an application-wide group of navigation buttons.",
-            "depends": [
-                "core",
-                "mobile.application"
-            ],
-            "source": "kendo.mobile.tabstrip.min.js",
-            "widgets": [
-                {
-                    "name": "TabStrip",
-                    "options": [
-                        "name",
-                        "selectedIndex",
-                        "enable"
-                    ],
-                    "events": [
-                        "select"
-                    ],
-                    "inherits": "Widget",
-                    "file": "kendo.mobile.tabstrip.js",
-                    "line": 20,
-                    "col": 19
-                }
-            ]
-        },
-        {
-            "id": "mobile.view",
-            "name": "View",
-            "category": "mobile",
-            "description": "Mobile View",
-            "depends": [
-                "core",
-                "fx",
-                "mobile.scroller"
-            ],
-            "hidden": true,
-            "source": "kendo.mobile.view.min.js",
-            "widgets": [
-                {
-                    "name": "View",
-                    "options": [
-                        "name",
-                        "title",
-                        "reload",
-                        "defaultTransition",
-                        "useNativeScrolling",
-                        "stretch",
-                        "zoom",
-                        "model"
-                    ],
-                    "events": [
-                        "init",
-                        "beforeShow",
-                        "show",
-                        "afterShow",
-                        "hide"
-                    ],
-                    "inherits": "Widget",
-                    "file": "kendo.mobile.view.js",
-                    "line": 43,
-                    "col": 15
-                },
-                {
-                    "name": "Layout",
-                    "options": [
-                        "name"
-                    ],
-                    "events": [
-                        "init",
-                        "show",
-                        "hide"
-                    ],
-                    "inherits": "Widget",
-                    "file": "kendo.mobile.view.js",
-                    "line": 380,
-                    "col": 17
                 }
             ]
         },
@@ -1949,6 +1453,28 @@
             ]
         },
         {
+            "id": "mobile.navbar",
+            "name": "NavBar",
+            "category": "mobile",
+            "description": "The Kendo mobile NavBar widget is used inside a mobile View or Layout Header element to display an application navigation bar.",
+            "depends": [
+                "mobile.application"
+            ],
+            "source": "kendo.mobile.navbar.min.js",
+            "widgets": [
+                {
+                    "name": "NavBar",
+                    "options": [
+                        "name"
+                    ],
+                    "inherits": "Widget",
+                    "file": "kendo.mobile.navbar.js",
+                    "line": 36,
+                    "col": 17
+                }
+            ]
+        },
+        {
             "id": "numerictextbox",
             "name": "NumericTextBox",
             "category": "web",
@@ -1987,6 +1513,50 @@
             ]
         },
         {
+            "id": "data.odata",
+            "name": "OData",
+            "category": "framework",
+            "depends": [
+                "core"
+            ],
+            "hidden": true,
+            "source": "kendo.data.odata.min.js",
+            "widgets": []
+        },
+        {
+            "id": "dataviz.canvas",
+            "name": "Output: Canvas",
+            "description": "Support for Canvas rendering and image export",
+            "category": "dataviz",
+            "depends": [
+                "dataviz.core"
+            ],
+            "source": "kendo.dataviz.canvas.min.js",
+            "widgets": []
+        },
+        {
+            "id": "dataviz.svg",
+            "name": "Output: SVG",
+            "description": "Support for SVG rendering",
+            "category": "dataviz",
+            "depends": [
+                "dataviz.core"
+            ],
+            "source": "kendo.dataviz.svg.min.js",
+            "widgets": []
+        },
+        {
+            "id": "dataviz.vml",
+            "name": "Output: VML",
+            "description": "Support for VML rendering",
+            "category": "dataviz",
+            "depends": [
+                "dataviz.core"
+            ],
+            "source": "kendo.dataviz.vml.min.js",
+            "widgets": []
+        },
+        {
             "id": "pager",
             "name": "Pager",
             "category": "framework",
@@ -2023,6 +1593,41 @@
             ]
         },
         {
+            "id": "mobile.pane",
+            "name": "Pane",
+            "category": "mobile",
+            "description": "Mobile Pane",
+            "depends": [
+                "mobile.view",
+                "mobile.loader"
+            ],
+            "hidden": true,
+            "source": "kendo.mobile.pane.min.js",
+            "widgets": [
+                {
+                    "name": "Pane",
+                    "options": [
+                        "name",
+                        "portraitWidth",
+                        "transition",
+                        "layout",
+                        "collapsible",
+                        "initial",
+                        "loading"
+                    ],
+                    "events": [
+                        "navigate",
+                        "viewShow",
+                        "sameViewRequested"
+                    ],
+                    "inherits": "Widget",
+                    "file": "kendo.mobile.pane.js",
+                    "line": 41,
+                    "col": 15
+                }
+            ]
+        },
+        {
             "id": "panelbar",
             "name": "PanelBar",
             "category": "web",
@@ -2053,6 +1658,17 @@
                     "col": 19
                 }
             ]
+        },
+        {
+            "id": "dataviz.chart.polar",
+            "name": "Polar Charts",
+            "category": "dataviz",
+            "depends": [
+                "dataviz.chart"
+            ],
+            "hidden": true,
+            "source": "kendo.dataviz.chart.polar.min.js",
+            "widgets": []
         },
         {
             "id": "popup",
@@ -2087,6 +1703,116 @@
                     "file": "kendo.popup.js",
                     "line": 55,
                     "col": 16
+                }
+            ]
+        },
+        {
+            "id": "mobile.popover",
+            "name": "PopOver",
+            "category": "mobile",
+            "description": "The mobile PopOver widget represents a transient view which is displayed when the user taps on a navigational widget or area on the screen. ",
+            "depends": [
+                "popup",
+                "mobile.application"
+            ],
+            "source": "kendo.mobile.popover.min.js",
+            "widgets": [
+                {
+                    "name": "Popup",
+                    "options": [
+                        "name",
+                        "width",
+                        "height",
+                        "direction"
+                    ],
+                    "events": [
+                        "show",
+                        "hide"
+                    ],
+                    "inherits": "Widget",
+                    "file": "kendo.mobile.popover.js",
+                    "line": 67,
+                    "col": 16
+                },
+                {
+                    "name": "PopOver",
+                    "options": [
+                        "name",
+                        "popup",
+                        "pane"
+                    ],
+                    "events": [
+                        "open",
+                        "close"
+                    ],
+                    "inherits": "Widget",
+                    "file": "kendo.mobile.popover.js",
+                    "line": 163,
+                    "col": 18
+                }
+            ]
+        },
+        {
+            "id": "dataviz.qrcode",
+            "name": "QRCode",
+            "category": "dataviz",
+            "description": "QRCode widget.",
+            "depends": [
+                "dataviz.core",
+                "dataviz.svg"
+            ],
+            "source": "kendo.dataviz.qrcode.min.js",
+            "widgets": [
+                {
+                    "name": "QRCode",
+                    "options": [
+                        "name",
+                        "renderAs",
+                        "encoding",
+                        "value",
+                        "errorCorrection",
+                        "background",
+                        "color",
+                        "size",
+                        "border"
+                    ],
+                    "inherits": "Widget",
+                    "file": "kendo.dataviz.qrcode.js",
+                    "line": 908,
+                    "col": 21
+                }
+            ]
+        },
+        {
+            "id": "scheduler.recurrence",
+            "name": "Recurrence",
+            "category": "web",
+            "depends": [
+                "dropdownlist",
+                "datepicker",
+                "numerictextbox"
+            ],
+            "hidden": true,
+            "source": "kendo.scheduler.recurrence.min.js",
+            "widgets": [
+                {
+                    "name": "RecurrenceEditor",
+                    "options": [
+                        "name",
+                        "frequencies",
+                        "firstWeekDay",
+                        "timezone",
+                        "start",
+                        "value",
+                        "messages"
+                    ],
+                    "events": [
+                        "change"
+                    ],
+                    "inherits": "Widget",
+                    "file": "kendo.scheduler.recurrence.js",
+                    "line": 1164,
+                    "col": 27
                 }
             ]
         },
@@ -2159,78 +1885,6 @@
             "widgets": []
         },
         {
-            "id": "scheduler.agendaview",
-            "name": "Scheduler Agenda View",
-            "category": "web",
-            "description": "The Scheduler Agenda View",
-            "depends": [
-                "scheduler.view"
-            ],
-            "hidden": true,
-            "source": "kendo.scheduler.agendaview.min.js",
-            "widgets": [
-                {
-                    "name": "agenda",
-                    "options": [
-                        "title",
-                        "name",
-                        "selectedDateFormat",
-                        "eventTemplate",
-                        "eventTimeTemplate",
-                        "eventDateTemplate",
-                        "eventGroupTemplate",
-                        "messages"
-                    ],
-                    "inherits": "ui.SchedulerView",
-                    "file": "kendo.scheduler.agendaview.js",
-                    "line": 16,
-                    "col": 20
-                }
-            ]
-        },
-        {
-            "id": "scheduler.dayview",
-            "name": "Scheduler Day View",
-            "category": "web",
-            "description": "The Scheduler Day View",
-            "depends": [
-                "scheduler.view"
-            ],
-            "hidden": true,
-            "source": "kendo.scheduler.dayview.min.js",
-            "widgets": [
-                {
-                    "name": "MultiDayView",
-                    "options": [
-                        "name",
-                        "selectedDateFormat",
-                        "allDaySlot",
-                        "title",
-                        "startTime",
-                        "endTime",
-                        "minorTickCount",
-                        "majorTick",
-                        "majorTimeHeaderTemplate",
-                        "minorTimeHeaderTemplate",
-                        "eventTemplate",
-                        "allDayEventTemplate",
-                        "dateHeaderTemplate",
-                        "editable",
-                        "messages"
-                    ],
-                    "events": [
-                        "remove",
-                        "add",
-                        "edit"
-                    ],
-                    "inherits": "SchedulerView",
-                    "file": "kendo.scheduler.dayview.js",
-                    "line": 135,
-                    "col": 23
-                }
-            ]
-        },
-        {
             "id": "scheduler",
             "name": "Scheduler",
             "category": "web",
@@ -2293,12 +1947,20 @@
                         "edit",
                         "cancel",
                         "save",
+                        "add",
                         "dataBinding",
-                        "dataBound"
+                        "dataBound",
+                        "moveStart",
+                        "move",
+                        "moveEnd",
+                        "resizeStart",
+                        "resize",
+                        "resizeEnd",
+                        "navigate"
                     ],
                     "inherits": "Widget",
                     "file": "kendo.scheduler.js",
-                    "line": 428,
+                    "line": 649,
                     "col": 20
                 },
                 {
@@ -2313,8 +1975,86 @@
                     ],
                     "inherits": "Widget",
                     "file": "kendo.scheduler.js",
-                    "line": 2089,
+                    "line": 2304,
                     "col": 25
+                }
+            ]
+        },
+        {
+            "id": "scheduler.agendaview",
+            "name": "Scheduler Agenda View",
+            "category": "web",
+            "description": "The Scheduler Agenda View",
+            "depends": [
+                "scheduler.view"
+            ],
+            "hidden": true,
+            "source": "kendo.scheduler.agendaview.min.js",
+            "widgets": [
+                {
+                    "name": "agenda",
+                    "options": [
+                        "title",
+                        "name",
+                        "editable",
+                        "selectedDateFormat",
+                        "eventTemplate",
+                        "eventTimeTemplate",
+                        "eventDateTemplate",
+                        "eventGroupTemplate",
+                        "messages"
+                    ],
+                    "inherits": "ui.SchedulerView",
+                    "file": "kendo.scheduler.agendaview.js",
+                    "line": 15,
+                    "col": 20
+                }
+            ]
+        },
+        {
+            "id": "scheduler.dayview",
+            "name": "Scheduler Day View",
+            "category": "web",
+            "description": "The Scheduler Day View",
+            "depends": [
+                "scheduler.view"
+            ],
+            "hidden": true,
+            "source": "kendo.scheduler.dayview.min.js",
+            "widgets": [
+                {
+                    "name": "MultiDayView",
+                    "options": [
+                        "name",
+                        "selectedDateFormat",
+                        "allDaySlot",
+                        "workDay",
+                        "title",
+                        "startTime",
+                        "endTime",
+                        "minorTickCount",
+                        "majorTick",
+                        "majorTimeHeaderTemplate",
+                        "minorTimeHeaderTemplate",
+                        "eventTemplate",
+                        "allDayEventTemplate",
+                        "dateHeaderTemplate",
+                        "editable",
+                        "workDayStart",
+                        "workDayEnd",
+                        "workDayCommand",
+                        "footer",
+                        "messages"
+                    ],
+                    "events": [
+                        "remove",
+                        "add",
+                        "edit"
+                    ],
+                    "inherits": "SchedulerView",
+                    "file": "kendo.scheduler.dayview.js",
+                    "line": 157,
+                    "col": 23
                 }
             ]
         },
@@ -2348,41 +2088,8 @@
                     ],
                     "inherits": "SchedulerView",
                     "file": "kendo.scheduler.monthview.js",
-                    "line": 62,
+                    "line": 61,
                     "col": 19
-                }
-            ]
-        },
-        {
-            "id": "scheduler.recurrence",
-            "name": "Recurrence",
-            "category": "web",
-            "depends": [
-                "dropdownlist",
-                "datepicker",
-                "numerictextbox"
-            ],
-            "hidden": true,
-            "source": "kendo.scheduler.recurrence.min.js",
-            "widgets": [
-                {
-                    "name": "RecurrenceEditor",
-                    "options": [
-                        "name",
-                        "frequencies",
-                        "firstWeekDay",
-                        "timezone",
-                        "start",
-                        "value",
-                        "messages"
-                    ],
-                    "events": [
-                        "change"
-                    ],
-                    "inherits": "Widget",
-                    "file": "kendo.scheduler.recurrence.js",
-                    "line": 1211,
-                    "col": 27
                 }
             ]
         },
@@ -2397,6 +2104,82 @@
             "hidden": true,
             "source": "kendo.scheduler.view.min.js",
             "widgets": []
+        },
+        {
+            "id": "mobile.scrollview",
+            "name": "ScrollView",
+            "category": "mobile",
+            "description": "The Kendo Mobile ScrollView widget is used to scroll content wider than the device screen.",
+            "depends": [
+                "mobile.application"
+            ],
+            "source": "kendo.mobile.scrollview.min.js",
+            "widgets": [
+                {
+                    "name": "ScrollView",
+                    "options": [
+                        "name",
+                        "page",
+                        "duration",
+                        "velocityThreshold",
+                        "contentHeight",
+                        "pageSize",
+                        "itemsPerPage",
+                        "bounceVelocityThreshold",
+                        "enablePager",
+                        "autoBind",
+                        "template",
+                        "emptyTemplate"
+                    ],
+                    "events": [
+                        "changing",
+                        "change",
+                        "refresh"
+                    ],
+                    "inherits": "Widget",
+                    "file": "kendo.mobile.scrollview.js",
+                    "line": 609,
+                    "col": 21
+                }
+            ]
+        },
+        {
+            "id": "mobile.scroller",
+            "name": "Scroller",
+            "category": "mobile",
+            "description": "The Kendo Mobile Scroller widget enables touch friendly kinetic scrolling for the contents of a given DOM element.",
+            "depends": [
+                "core",
+                "fx",
+                "draganddrop"
+            ],
+            "source": "kendo.mobile.scroller.min.js",
+            "widgets": [
+                {
+                    "name": "Scroller",
+                    "options": [
+                        "name",
+                        "zoom",
+                        "pullOffset",
+                        "elastic",
+                        "useNative",
+                        "avoidScrolling",
+                        "pullToRefresh",
+                        "pullTemplate",
+                        "releaseTemplate",
+                        "refreshTemplate"
+                    ],
+                    "events": [
+                        "pull",
+                        "scroll",
+                        "resize"
+                    ],
+                    "inherits": "Widget",
+                    "file": "kendo.mobile.scroller.js",
+                    "line": 211,
+                    "col": 19
+                }
+            ]
         },
         {
             "id": "selectable",
@@ -2423,6 +2206,34 @@
                     "file": "kendo.selectable.js",
                     "line": 36,
                     "col": 21
+                }
+            ]
+        },
+        {
+            "id": "mobile.shim",
+            "name": "Shim",
+            "category": "mobile",
+            "description": "Mobile Shim",
+            "depends": [
+                "popup"
+            ],
+            "hidden": true,
+            "source": "kendo.mobile.shim.min.js",
+            "widgets": [
+                {
+                    "name": "Shim",
+                    "options": [
+                        "name",
+                        "modal",
+                        "align",
+                        "position",
+                        "effect",
+                        "duration"
+                    ],
+                    "inherits": "Widget",
+                    "file": "kendo.mobile.shim.js",
+                    "line": 17,
+                    "col": 15
                 }
             ]
         },
@@ -2495,6 +2306,59 @@
             ]
         },
         {
+            "id": "dataviz.sparkline",
+            "name": "Sparkline",
+            "category": "dataviz",
+            "description": "Sparkline widgets.",
+            "depends": [
+                "dataviz.chart"
+            ],
+            "source": "kendo.dataviz.sparkline.min.js",
+            "widgets": [
+                {
+                    "name": "Sparkline",
+                    "options": [
+                        "name",
+                        "chartArea",
+                        "axisDefaults",
+                        "seriesDefaults",
+                        "tooltip",
+                        "categoryAxis",
+                        "legend",
+                        "transitions",
+                        "pointWidth"
+                    ],
+                    "inherits": "Chart",
+                    "file": "kendo.dataviz.sparkline.js",
+                    "line": 33,
+                    "col": 20
+                }
+            ]
+        },
+        {
+            "id": "mobile.splitview",
+            "name": "SplitView",
+            "category": "mobile",
+            "description": "The mobile SplitView is a tablet-specific view that consists of two or more mobile Pane widgets.",
+            "depends": [
+                "mobile.application"
+            ],
+            "source": "kendo.mobile.splitview.min.js",
+            "widgets": [
+                {
+                    "name": "SplitView",
+                    "options": [
+                        "name",
+                        "style"
+                    ],
+                    "inherits": "View",
+                    "file": "kendo.mobile.splitview.js",
+                    "line": 16,
+                    "col": 20
+                }
+            ]
+        },
+        {
             "id": "splitter",
             "name": "Splitter",
             "category": "web",
@@ -2515,12 +2379,96 @@
                         "expand",
                         "collapse",
                         "contentLoad",
+                        "error",
                         "resize",
                         "layoutChange"
                     ],
                     "inherits": "Widget",
                     "file": "kendo.splitter.js",
-                    "line": 63,
+                    "line": 64,
+                    "col": 19
+                }
+            ]
+        },
+        {
+            "id": "dataviz.stockchart",
+            "name": "StockChart",
+            "category": "dataviz",
+            "description": "StockChart widget and associated financial series.",
+            "depends": [
+                "dataviz.chart"
+            ],
+            "source": "kendo.dataviz.stock.min.js",
+            "widgets": [
+                {
+                    "name": "StockChart",
+                    "options": [
+                        "name",
+                        "dateField",
+                        "axisDefaults",
+                        "navigator",
+                        "tooltip",
+                        "legend"
+                    ],
+                    "inherits": "Chart",
+                    "file": "kendo.dataviz.stock.js",
+                    "line": 46,
+                    "col": 21
+                }
+            ]
+        },
+        {
+            "id": "mobile.switch",
+            "name": "Switch",
+            "category": "mobile",
+            "description": "The mobile Switch widget is used to display two exclusive choices.",
+            "depends": [
+                "mobile.application"
+            ],
+            "source": "kendo.mobile.switch.min.js",
+            "widgets": [
+                {
+                    "name": "Switch",
+                    "options": [
+                        "name",
+                        "onLabel",
+                        "offLabel",
+                        "checked"
+                    ],
+                    "events": [
+                        "change"
+                    ],
+                    "inherits": "Widget",
+                    "file": "kendo.mobile.switch.js",
+                    "line": 26,
+                    "col": 17
+                }
+            ]
+        },
+        {
+            "id": "mobile.tabstrip",
+            "name": "TabStrip",
+            "category": "mobile",
+            "description": "The mobile TabStrip widget is used inside a mobile view or layout footer element to display an application-wide group of navigation buttons.",
+            "depends": [
+                "core",
+                "mobile.application"
+            ],
+            "source": "kendo.mobile.tabstrip.min.js",
+            "widgets": [
+                {
+                    "name": "TabStrip",
+                    "options": [
+                        "name",
+                        "selectedIndex",
+                        "enable"
+                    ],
+                    "events": [
+                        "select"
+                    ],
+                    "inherits": "Widget",
+                    "file": "kendo.mobile.tabstrip.js",
+                    "line": 20,
                     "col": 19
                 }
             ]
@@ -2563,6 +2511,18 @@
                     "col": 19
                 }
             ]
+        },
+        {
+            "id": "dataviz.themes",
+            "name": "Themes",
+            "description": "Built-in themes for the DataViz widgets",
+            "category": "dataviz",
+            "depends": [
+                "dataviz.core"
+            ],
+            "hidden": true,
+            "source": "kendo.dataviz.themes.min.js",
+            "widgets": []
         },
         {
             "id": "timepicker",
@@ -2797,7 +2757,7 @@
                     ],
                     "inherits": "Widget",
                     "file": "kendo.validator.js",
-                    "line": 84,
+                    "line": 85,
                     "col": 20
                 }
             ]
@@ -2814,6 +2774,61 @@
             "hidden": false,
             "source": "kendo.view.min.js",
             "widgets": []
+        },
+        {
+            "id": "mobile.view",
+            "name": "View",
+            "category": "mobile",
+            "description": "Mobile View",
+            "depends": [
+                "core",
+                "fx",
+                "mobile.scroller"
+            ],
+            "hidden": true,
+            "source": "kendo.mobile.view.min.js",
+            "widgets": [
+                {
+                    "name": "View",
+                    "options": [
+                        "name",
+                        "title",
+                        "reload",
+                        "defaultTransition",
+                        "useNativeScrolling",
+                        "stretch",
+                        "zoom",
+                        "model"
+                    ],
+                    "events": [
+                        "init",
+                        "beforeShow",
+                        "show",
+                        "afterShow",
+                        "beforeHide",
+                        "hide"
+                    ],
+                    "inherits": "Widget",
+                    "file": "kendo.mobile.view.js",
+                    "line": 44,
+                    "col": 15
+                },
+                {
+                    "name": "Layout",
+                    "options": [
+                        "name"
+                    ],
+                    "events": [
+                        "init",
+                        "show",
+                        "hide"
+                    ],
+                    "inherits": "Widget",
+                    "file": "kendo.mobile.view.js",
+                    "line": 388,
+                    "col": 17
+                }
+            ]
         },
         {
             "id": "window",
@@ -2864,6 +2879,17 @@
                     "col": 17
                 }
             ]
+        },
+        {
+            "id": "data.xml",
+            "name": "XML",
+            "category": "framework",
+            "depends": [
+                "core"
+            ],
+            "hidden": true,
+            "source": "kendo.data.xml.min.js",
+            "widgets": []
         }
     ]
 }

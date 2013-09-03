@@ -133,6 +133,11 @@
     background-image: @sprite-image,    -moz-linear-gradient(top, ~"@{gradient}");
     background-image: @sprite-image,      -o-linear-gradient(top, ~"@{gradient}");
     background-image: @sprite-image,       ~"linear-gradient(to bottom, @{gradient})";
+
+    .k-ie8 &,
+    .k-ie7 & {
+        background-image: @sprite-image;
+    }
 }
 
 .selection(@color) {
@@ -204,7 +209,7 @@
 .k-tiles,
 .k-toolbar,
 .k-tooltip,
-.k-editor-button .k-tool-icon,
+.k-button-group .k-tool-icon,
 .k-upload-files
 {
     border-color: @widget-border-color;
@@ -308,6 +313,10 @@ textarea.k-textbox:hover,
 .k-dropdown .k-input
 {
     color: @widget-text-color;
+}
+
+.k-block{
+	color: @header-text-color;
 }
 
 .k-link:link,
@@ -487,6 +496,11 @@ textarea.k-textbox:hover,
     color: @event-text-color;
 }
 
+.k-event.k-state-selected
+{
+    background-position: 0 0;
+}
+
 .k-ie7 .k-event .k-resize-handle,
 .k-event .k-resize-handle:after
 {
@@ -572,7 +586,8 @@ textarea.k-textbox:hover,
     background-color: @calendar-footer-background;
 }
 
-.k-calendar .k-footer .k-nav-today:hover
+.k-calendar .k-footer .k-nav-today:hover,
+.k-calendar .k-footer .k-nav-today.k-state-hover
 {
     background-color: @calendar-footer-hover-background;
     text-decoration: @calendar-footer-hover-text-decoration;
@@ -596,7 +611,7 @@ textarea.k-textbox:hover,
 }
 
 .k-calendar .k-link.k-state-hover,
-.k-window .k-link
+.k-window-titlebar .k-link
 {
     border-radius: @calendar-border-radius;
 }
@@ -1117,17 +1132,17 @@ div.k-imagebrowser-dropzone em
     .border-radius(@main-border-radius);
 }
 
-.k-group-start .k-tool-icon
+.k-tool-icon.k-group-start
 {
     .border-radius(@main-border-radius 0 0 @main-border-radius);
 }
 
-.k-group-end .k-tool-icon
+.k-tool-icon.k-group-end
 {
     .border-radius(0 @main-border-radius @main-border-radius 0);
 }
 
-.k-group-start.k-group-end .k-tool-icon
+.k-group-start.k-group-end.k-tool-icon
 {
     .border-radius(@main-border-radius);
 }
@@ -1459,7 +1474,7 @@ div.k-imagebrowser-dropzone em
 
 .k-secondary
 {
-    .k-editor-button .k-tool-icon
+    .k-button-group .k-tool-icon
     {
         border-color: @secondary-border-color;
     }

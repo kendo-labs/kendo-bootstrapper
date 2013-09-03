@@ -81,18 +81,22 @@
   color: inherit;
 }
 /* widget */
-.k-block,
-.k-widget,
-.k-inline-block,
 .k-textbox > input,
 .k-input[type="text"],
 .k-input[type="number"],
 .k-textbox,
 .k-picker-wrap .k-input,
-.k-button,
-.k-draghandle {
+.k-button {
   font-size: 100%;
   font-family: inherit;
+  border-style: solid;
+  border-width: 1px;
+  -webkit-appearance: none;
+}
+.k-widget,
+.k-block,
+.k-inline-block,
+.k-draghandle {
   border-style: solid;
   border-width: 1px;
   -webkit-appearance: none;
@@ -237,7 +241,7 @@ html body .k-button-bare.k-upload-button:hover {
 /* icons */
 .k-icon,
 .k-sprite,
-.k-editor-button .k-tool-icon {
+.k-button-group .k-tool-icon {
   display: inline-block;
   width: 16px;
   height: 16px;
@@ -251,12 +255,12 @@ html body .k-button-bare.k-upload-button:hover {
 /* In IE7 vertical align: middle can't be overridden */
 .k-ie8 .k-icon,
 .k-ie8 .k-sprite,
-.k-ie8 .k-editor-button .k-tool-icon {
+.k-ie8 .k-button-group .k-tool-icon {
   vertical-align: middle;
 }
 :root * > .k-icon,
 :root * > .k-sprite,
-:root * > .k-editor-button .k-tool-icon {
+:root * > .k-button-group .k-tool-icon {
   vertical-align: middle;
 }
 .k-icon,
@@ -1234,7 +1238,7 @@ div.k-window {
 }
 .k-block > .k-header {
   position: relative;
-  margin: -2px 0 0 -2px;
+  margin: -2px 0 10px -2px;
   padding: .3em 2px;
 }
 .k-window-title {
@@ -1438,8 +1442,8 @@ div.k-window-content {
   margin-top: -1px;
   vertical-align: top;
 }
-.k-tabstrip .k-content,
-.k-panelbar .k-tabstrip .k-content {
+.k-tabstrip > .k-content,
+.k-panelbar .k-tabstrip > .k-content {
   position: static;
   border-style: solid;
   border-width: 1px;
@@ -1450,10 +1454,10 @@ div.k-window-content {
 .k-tabstrip > .k-content {
   display: none;
 }
-.k-tabstrip .k-content.km-scroll-wrapper {
+.k-tabstrip > .k-content.km-scroll-wrapper {
   padding: 0;
 }
-.k-tabstrip .k-content > .km-scroll-container {
+.k-tabstrip > .k-content > .km-scroll-container {
   padding: .3em .92em;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -1811,6 +1815,9 @@ div.k-grid-header .k-header {
   border-style: solid;
   border-width: 1px 0;
 }
+.k-group-footer .k-group-cell + td {
+  border-left-width: 1px;
+}
 .k-grid-footer {
   border-style: solid;
   border-width: 1px 0 0;
@@ -1986,13 +1993,13 @@ form.k-filter-menu .k-textbox {
   margin-left: -0.6em;
   padding: 0 .6em;
 }
-.k-grouping-row td,
 .k-grouping-row + tr td {
   border-top-width: 1px;
 }
 .k-grouping-row .k-group-cell,
 .k-grouping-row + tr .k-group-cell {
   border-top-width: 0;
+  text-overflow: none;
 }
 .k-grid .k-hierarchy-cell + td {
   border-left-width: 0;
@@ -3134,7 +3141,6 @@ table.k-editor {
   list-style-type: none;
   line-height: 1.3em;
   cursor: default;
-  white-space: nowrap;
 }
 .k-editor-toolbar li {
   display: inline;
@@ -3149,16 +3155,13 @@ table.k-editor {
 }
 .k-webkit .k-editor-toolbar li,
 .k-ff .k-editor-toolbar li,
-.k-ie9 .k-editor-toolbar li {
+.k-ie9 .k-editor-toolbar li,
+.k-ie10 .k-editor-toolbar li {
   display: inline-block;
   padding: .1em 0;
 }
-.k-group-end,
-.k-editor-toolbar .k-editor-dropdown,
-.k-editor-toolbar .k-editor-template,
-.k-editor-toolbar .k-editor-combobox,
-.k-editor-toolbar .k-editor-selectbox,
-.k-editor-toolbar .k-editor-colorpicker {
+.k-editor-toolbar .k-editor-widget,
+.k-editor-toolbar > li {
   margin-right: 6px;
 }
 .k-editor-toolbar .k-editor-selectbox {
@@ -3196,7 +3199,10 @@ table.k-editor {
 .k-editor-toolbar .k-colorpicker {
   vertical-align: middle;
 }
-.k-editor-button .k-tool-icon {
+.k-button-group {
+  white-space: nowrap;
+}
+.k-button-group .k-tool-icon {
   width: 24px;
   height: 24px;
   margin: 1px 0;
@@ -3414,27 +3420,30 @@ table.k-editor {
   float: left;
   margin: 1px 0 0;
 }
-.k-editor-toolbar .k-editor-button {
+.k-editor-toolbar .k-button-group {
   padding: 1px;
 }
-.k-editor-button .k-tool-icon {
-  border-style: solid;
-  border-width: 1px 0 1px 1px;
-}
-.k-group-end .k-tool-icon {
-  border-right-width: 1px;
-}
-.k-editor-toolbar li.k-group-break {
+.k-editor .k-editor-toolbar .k-row-break {
   display: block;
   height: 0;
   font-size: 0;
   line-height: 0;
 }
-.k-editor-button .k-state-hover,
-.k-editor-button .k-state-active {
+.k-button-group .k-tool-icon {
+  border-style: solid;
+  border-width: 1px 0 1px 1px;
+}
+.k-button-group .k-tool-icon.k-group-end {
+  border-right-width: 1px;
+}
+.k-button-group .k-state-disabled {
+  display: none;
+}
+.k-button-group .k-state-hover,
+.k-button-group .k-state-active {
   vertical-align: middle;
 }
-.k-editor-button .k-state-disabled {
+.k-button-group .k-state-disabled {
   filter: alpha(opacity=30);
   opacity: .3;
 }
@@ -3484,6 +3493,9 @@ table.k-editor {
 }
 .k-editor-dialog .k-edit-field .k-checkbox {
   margin: 0 .4em 0 0;
+}
+.k-viewhtml-dialog {
+  width: auto;
 }
 .k-imagebrowser-dialog {
   width: 740px;
@@ -3547,7 +3559,7 @@ table.k-editor {
   text-decoration: underline;
 }
 .k-ct-popup {
-  width: 176px;
+  width: 180.39999999999998px;
   padding: .65em .5em .5em;
 }
 .k-ct-popup .k-status {
@@ -3976,6 +3988,8 @@ div.k-slider {
 .k-scheduler-table {
   border-spacing: 0;
   width: 100%;
+  margin: 0;
+  border-collapse: separate;
 }
 .k-ie7 .k-scheduler-content .k-scheduler-table {
   width: auto;
@@ -3990,7 +4004,6 @@ div.k-slider {
 }
 .k-scheduler-table {
   table-layout: fixed;
-  margin: 0;
 }
 .k-scheduler-times .k-scheduler-table {
   table-layout: auto;
@@ -4002,6 +4015,7 @@ div.k-slider {
 .k-scheduler-table th {
   height: 1.5em;
   padding: .334em .5em;
+  font-size: 100%;
 }
 .k-scheduler-monthview .k-hidden,
 .k-scheduler-monthview .k-hidden > div {
@@ -4300,15 +4314,15 @@ div.k-scheduler-marquee:after {
 .k-scheduler-agenda .k-scheduler-table td {
   text-align: left;
 }
-.k-slot-cell,
+.k-scheduler-times .k-slot-cell,
 .k-scheduler-groupcolumn {
-  width: 70px;
+  width: 6em;
 }
 .k-scheduler-datecolumn {
-  width: 144px;
+  width: 12em;
 }
 .k-scheduler-timecolumn {
-  width: 130px;
+  width: 11em;
 }
 .k-scheduler-timecolumn > div {
   position: relative;
@@ -4655,7 +4669,7 @@ html .k-upload-empty {
 }
 .k-upload-button {
   position: relative;
-  width: 86px;
+  min-width: 86px;
   overflow: hidden !important;
   /* important required by IE7 */
 
@@ -4878,6 +4892,7 @@ html .k-upload-empty {
   margin-top: 0;
   text-decoration: none;
   vertical-align: middle;
+  position: static;
 }
 .k-breadcrumbs .k-link:hover {
   text-decoration: underline;
@@ -5135,4 +5150,22 @@ html .k-upload-empty {
   width: 100%;
   left: 2px;
   bottom: 2px;
+}
+.k-widget,
+.k-header,
+.k-content,
+.k-autocomplete .k-input,
+.k-picker-wrap .k-input,
+.k-dropdown-wrap .k-input,
+.k-picker-wrap .k-input,
+.k-numeric-wrap .k-input,
+.k-window-titlebar,
+.k-window-content,
+.k-link,
+.k-icon,
+.k-tool-icon,
+.k-splitbar {
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
 }
