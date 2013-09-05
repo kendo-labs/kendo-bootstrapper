@@ -862,6 +862,8 @@
             $(PROCESS p_checkbox({ text: "Run JSHint", bind: "checked: f_onsave_jshint" }))
             $(PROCESS p_checkbox({ text: "Run Kendo Linter", bind: "checked: f_onsave_klint" }))
             $(PROCESS p_checkbox({ text: "Compile", bind: "checked: f_onsave_compile" }))
+            <h2>Preview project</h2>
+            $(PROCESS p_checkbox({ text: "Enable Theme Builder", bind: "checked: f_preview_themebuilder" }))
           </div>
           $(PROCESS ok_cancel_buttons())
         </div>

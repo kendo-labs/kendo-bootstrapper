@@ -51,5 +51,7 @@
             "page" : true,
             "deps" : [ "kendo.mobile.all.css", "app.js" ]
         }
-    ]
+    ],
+
+    "config": {}
 }

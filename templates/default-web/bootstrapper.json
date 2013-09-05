@@ -154,5 +154,7 @@
             "page" : true,
             "deps" : [ "kendo.default.css", "app.js" ]
         }
-    ]
+    ],
+
+    "config": {}
 }

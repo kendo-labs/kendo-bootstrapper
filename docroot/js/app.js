@@ -874,9 +874,10 @@ function projectConfig(proj) {
         proj.config = {};
     }
     var model = kendo.observable({
-        f_onsave_jshint  : proj.config.onsave_jshint,
-        f_onsave_klint   : proj.config.onsave_klint,
-        f_onsave_compile : proj.config.onsave_compile,
+        f_onsave_jshint         : proj.config.onsave_jshint,
+        f_onsave_klint          : proj.config.onsave_klint,
+        f_onsave_compile        : proj.config.onsave_compile,
+        f_preview_themebuilder  : proj.config.preview_themebuilder,
 
         dlgResize: function(ev) {
             var sz = dlg.getInnerSize();
@@ -887,9 +888,10 @@ function projectConfig(proj) {
         },
         onOK: function() {
             var config = {
-                onsave_jshint  : model.f_onsave_jshint,
-                onsave_klint   : model.f_onsave_klint,
-                onsave_compile : model.f_onsave_compile
+                onsave_jshint         : model.f_onsave_jshint,
+                onsave_klint          : model.f_onsave_klint,
+                onsave_compile        : model.f_onsave_compile,
+                preview_themebuilder  : model.f_preview_themebuilder,
             };
             RPC("project/save-config", proj.id, config, function(ret, err){
                 if (!err) {

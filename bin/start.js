@@ -12,7 +12,6 @@ var PATH     = require("path");
 var HTTP     = require("http");
 var FS       = require("fs");
 var WS       = require("ws");
-var QRS      = require("querystring");
 var URL      = require("url");
 var FORMS    = require("formidable");
 var OPTIMIST = require("optimist");
@@ -65,7 +64,13 @@ HANDLERS = [
 
     [/^\/@load-assets\/([^\/]+)\/*(.*)$/, function(request, response, proj_id, path) {
         if (!path) path = "index.html";
-        SS.serve_content(PROJECT.load_assets(proj_id, path, request.headers.host), "assets.js", response);
+        var form = new FORMS.IncomingForm();
+        PROJECT.load_assets({
+            proj         : proj_id,
+            page         : path,
+        }, function(err, code){
+            SS.serve_content(code.replace(/_BSHOST_/g, request.headers.host || "localhost:7569"), "assets.js", response);
+        });
     }],
 
     // handler that adds a file to a project.  should be the only

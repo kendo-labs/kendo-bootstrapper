@@ -18,6 +18,7 @@ STEP(
         UTILS.fs_rmpath(dest, function(){
             var js_dest = PATH.join(dest, "js");
             var css_dest = PATH.join(dest, "css");
+            var themebuilder_dest = PATH.join(dest, "themebuilder");
             var n = 2;
             UTILS.fs_ensure_directory(js_dest, function(){
                 UTILS.fs_copy([
@@ -46,6 +47,20 @@ STEP(
         FS.readFile(kendo_config, "utf8", function(err, data){
             FS.writeFile(PATH.join(TOPLEVEL_DIR, "kendo-config.json"), data, "utf8", next);
         });
+    },
+
+    function themebuilder() {
+        UTILS.fs_copytree(
+            PATH.join(KENDO_DIR, "dist", "themebuilder", "production"),
+            PATH.join(TOPLEVEL_DIR, "docroot", "kendo", "themebuilder"), {
+                callback : this,
+                filter   : function(f) {
+                    if (f.name == "web.config")
+                        return false;
+                    return true;
+                },
+            }
+        );
     }
 
 );
