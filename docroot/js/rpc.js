@@ -119,5 +119,6 @@
     RPC.listen = listen;
     RPC.unlisten = unlisten;
     RPC.listen_once = listen_once;
+    RPC.HOST = HOST;
 
 })();

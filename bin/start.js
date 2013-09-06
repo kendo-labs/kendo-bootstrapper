@@ -66,10 +66,11 @@ HANDLERS = [
         if (!path) path = "index.html";
         var form = new FORMS.IncomingForm();
         PROJECT.load_assets({
-            proj         : proj_id,
-            page         : path,
+            proj : proj_id,
+            page : path,
+            host : request.headers.host,
         }, function(err, code){
-            SS.serve_content(code.replace(/_BSHOST_/g, request.headers.host || "localhost:7569"), "assets.js", response);
+            SS.serve_content(code, "assets.js", response);
         });
     }],
 
