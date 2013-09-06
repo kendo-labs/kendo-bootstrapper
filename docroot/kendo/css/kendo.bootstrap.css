@@ -1204,7 +1204,8 @@ div.k-imagebrowser-dropzone em {
   border-color: #dcdcdc #dcdcdc #b3b3b3;
 }
 .k-treeview .k-icon,
-.k-scheduler-table .k-icon {
+.k-scheduler-table .k-icon,
+.k-grid .k-hierarchy-cell .k-icon {
   background-color: transparent;
   border-radius: 4px;
 }

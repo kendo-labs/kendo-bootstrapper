@@ -1166,7 +1166,8 @@ div.k-imagebrowser-dropzone em {
   border-color: #dadada;
 }
 .k-treeview .k-icon,
-.k-scheduler-table .k-icon {
+.k-scheduler-table .k-icon,
+.k-grid .k-hierarchy-cell .k-icon {
   background-color: transparent;
   border-radius: 0;
 }

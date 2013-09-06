@@ -382,7 +382,7 @@
                     ],
                     "inherits": "ColorSelector",
                     "file": "kendo.colorpicker.js",
-                    "line": 142,
+                    "line": 147,
                     "col": 23
                 },
                 {
@@ -397,7 +397,7 @@
                     ],
                     "inherits": "ColorSelector",
                     "file": "kendo.colorpicker.js",
-                    "line": 279,
+                    "line": 284,
                     "col": 26
                 },
                 {
@@ -422,7 +422,7 @@
                     ],
                     "inherits": "Widget",
                     "file": "kendo.colorpicker.js",
-                    "line": 777,
+                    "line": 782,
                     "col": 22
                 }
             ]
@@ -1975,7 +1975,7 @@
                     ],
                     "inherits": "Widget",
                     "file": "kendo.scheduler.js",
-                    "line": 2304,
+                    "line": 2347,
                     "col": 25
                 }
             ]
@@ -2042,7 +2042,7 @@
                         "editable",
                         "workDayStart",
                         "workDayEnd",
-                        "workDayCommand",
+                        "workWeekDays",
                         "footer",
                         "messages"
                     ],
@@ -2053,7 +2053,7 @@
                     ],
                     "inherits": "SchedulerView",
                     "file": "kendo.scheduler.dayview.js",
-                    "line": 157,
+                    "line": 164,
                     "col": 23
                 }
             ]
@@ -2754,6 +2754,9 @@
                         "messages",
                         "rules",
                         "validateOnBlur"
+                    ],
+                    "events": [
+                        "validate"
                     ],
                     "inherits": "Widget",
                     "file": "kendo.validator.js",
