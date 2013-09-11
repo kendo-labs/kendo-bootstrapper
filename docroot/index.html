@@ -748,6 +748,26 @@
       </div>
     </script>
 
+    <script type="x/yajet-template" class="darwin-select-editor-dlg">
+      <div data-role="window" data-title="Select editor"
+           data-modal="true" data-resizable="true" data-width="400" data-height="300"
+           data-bind="events: { resize: dlgResize }">
+        <div class="layout" data-role="layoutmanager" data-orientation="vertical">
+          <div class="dlg-content" kendo-layout="1">
+            <div data-role="grid" data-sortable="true" data-navigatable="true"
+                 data-selectable="true"
+                 data-bind="source: editors"
+                 style="height: 100%"
+                 data-columns="[
+                   { field: 'name', title: 'Name', width: '20%' },
+                 ]">
+            </div>
+          </div>
+          $(PROCESS ok_cancel_buttons())
+        </div>
+      </div>
+    </script>
+
     <script type="x/yajet-template" class="bootstrapper-settings-dialog">
       <div data-role="window" data-title="Settings" data-modal="true" data-resizable="false">
         <div class="dlg-content">
@@ -759,38 +779,48 @@
 
             <div style="width: 600px; height: 400px;">
               <h2>Editor configuration</h2>
-              <p>
-                <label>
-                  Editor (executable):<br />
-                  <input class="k-textbox" style="width: 25em" data-bind="value: editor.path" />
-                  <button class="k-button" title="Browse" data-bind="click: onBrowseEditor">...</button>
-                </label>
-              </p>
-              <p style="max-width: 25em">
-                There are 3 editor commands.  One that takes only the filename
-                (<tt><b>{file}</b></tt>), the second takes a line number
-                (<tt><b>{line}</b></tt>), and the third also receives a column
-                number (<tt><b>{col}</b></tt>).  Customize the arguments in the
-                fields below.
-              </p>
-              <p>
-                <label>
-                  Editor command 1:
-                  <input class="k-textbox" data-bind="value: editor.args.cmd1" style="width: 15em" />
-                </label>
-              </p>
-              <p>
-                <label>
-                  Editor command 2:
-                  <input class="k-textbox" data-bind="value: editor.args.cmd2" style="width: 15em" />
-                </label>
-              </p>
-              <p>
-                <label>
-                  Editor command 3:
-                  <input class="k-textbox" data-bind="value: editor.args.cmd3" style="width: 15em" />
-                </label>
-              </p>
+              $(IF (SERVER_CONFIG.platform == "darwin")
+                <p>
+                  <label>
+                    Editor app:<br />
+                    <input class="k-textbox" style="width: 25em" data-bind="value: editor.name" />
+                    <button class="k-button" title="Select" data-bind="click: onBrowseEditorDarwin">Select</button>
+                  </label>
+                </p>
+              $(ELSE)
+                <p>
+                  <label>
+                    Editor (executable):<br />
+                    <input class="k-textbox" style="width: 25em" data-bind="value: editor.path" />
+                    <button class="k-button" title="Browse" data-bind="click: onBrowseEditor">...</button>
+                  </label>
+                </p>
+                <p style="max-width: 25em">
+                  There are 3 editor commands.  One that takes only the filename
+                  (<tt><b>{file}</b></tt>), the second takes a line number
+                  (<tt><b>{line}</b></tt>), and the third also receives a column
+                  number (<tt><b>{col}</b></tt>).  Customize the arguments in the
+                  fields below.
+                </p>
+                <p>
+                  <label>
+                    Editor command 1:
+                    <input class="k-textbox" data-bind="value: editor.args.cmd1" style="width: 15em" />
+                  </label>
+                </p>
+                <p>
+                  <label>
+                    Editor command 2:
+                    <input class="k-textbox" data-bind="value: editor.args.cmd2" style="width: 15em" />
+                  </label>
+                </p>
+                <p>
+                  <label>
+                    Editor command 3:
+                    <input class="k-textbox" data-bind="value: editor.args.cmd3" style="width: 15em" />
+                  </label>
+                </p>
+              $)
             </div>
 
             <div style="width: 600px; height: 400px;">

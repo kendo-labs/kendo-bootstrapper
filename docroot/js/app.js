@@ -1310,18 +1310,63 @@ function optimizeImages(proj) {
     RPC.call("project/optimize-images", proj.id);
 }
 
+function darwin_selectEditorApp(cont) {
+    RPC("platform/darwin-list-code-editors", function(editors){
+        var dlg_el = $("<div></div>").html(getTemplate("darwin-select-editor-dlg")({
+            mvvm: true
+        })).children().first();
+        var model = kendo.observable({
+            editors: editors,
+
+            onOK: function() {
+                select();
+            },
+            onCancel: function() {
+                dlg.close();
+                cont(null);
+            },
+            dlgResize: function() {
+                var sz = dlg.getInnerSize();
+                top_layout.setOuterSize(sz.x, sz.y);
+                grid._setContentHeight();
+            }
+        });
+        kendo.bind(dlg_el, model);
+        var dlg = dlg_el.data("kendoWindow");
+        var top_layout = $(".layout", dlg_el).data("kendoLayoutManager");
+        var grid = $("[data-role=\"grid\"]", dlg_el)
+            .on("dblclick", "tr.k-state-selected", select)
+            .data("kendoGrid");
+        dlg.open();
+        dlg.center();
+        dlg.trigger("resize");
+
+        function select() {
+            var attr = grid.select().attr(kendo.attr("uid"));
+            if (attr) {
+                var item = grid.dataSource.getByUid(attr);
+                cont(item);
+                dlg.close();
+            } else {
+                showMessage({ class: "error", message: "Nothing selected" });
+            }
+        }
+    });
+}
+
 function bootstrapperSettingsDialog() {
+    var is_darwin = SERVER_CONFIG.platform == "darwin";
     var dlg_el = $("<div></div>").html(getTemplate("bootstrapper-settings-dialog")({
         mvvm: true,
     })).children().first();
     var editor = SERVER_CONFIG.editor, editor_cmd1 = "{file}", editor_cmd2 = "{file}", editor_cmd3 = "{file}";
-    if (editor && editor.args) {
+    if (!is_darwin && editor && editor.args) {
         if (editor.args.cmd1) editor_cmd1 = editor.args.cmd1.join(" ");
         if (editor.args.cmd2) editor_cmd2 = editor.args.cmd2.join(" ");
         if (editor.args.cmd3) editor_cmd3 = editor.args.cmd3.join(" ");
     }
     var model = kendo.observable({
-        editor: {
+        editor: is_darwin ? editor : {
             path: editor ? editor.path : "",
             args: {
                 cmd1: editor_cmd1,
@@ -1338,6 +1383,11 @@ function bootstrapperSettingsDialog() {
                 }
             });
         },
+        onBrowseEditorDarwin: function() {
+            darwin_selectEditorApp(function(editor){
+                model.set("editor.name", editor.name);
+            });
+        },
         onBrowseKendoSrc: function() {
             filePicker(model.kendo_src_dir, {
                 dirsonly: true,
@@ -1349,47 +1399,57 @@ function bootstrapperSettingsDialog() {
                 }
             });
         },
-        onOK: function() {
-            var filename = model.editor.path;
-            RPC.call("fs/stat", [ filename ], function(stats){
-                var stat = stats[0];
-                if (stat.error) {
-                    if (stat.error.code == "ENOENT") {
-                        showMessage({ class: "error", message: "File " + filename + " doesn't exist." });
-                        return;
-                    }
-                    showMessage({ class: "error", message: "There was an error accessing " + filename + ", code: " + stat.error.code });
-                    return;
-                }
-                if (stat.isDirectory) {
-                    showMessage({ class: "error", message: "You selected a directory" });
-                    return;
-                }
-                var args = {
-                    editor: {
-                        path: filename,
-                        args: {
-                            cmd1: model.editor.args.cmd1.trim().split(/\s+/),
-                            cmd2: model.editor.args.cmd2.trim().split(/\s+/),
-                            cmd3: model.editor.args.cmd3.trim().split(/\s+/),
-                        }
-                    }
-                };
-                RPC.call("config/set-kendo-dir", model.kendo_src_dir, function(accepted, err){
-                    if (accepted) {
-                        RPC.call("settings/save", args, function(){
-                            dlg.close();
-                        });
-                    } else {
-                        showMessage({ class: "error", message: "Cannot find Kendo UI sources in " + model.kendo_src_dir + "\nPlease try again." });
-                    }
-                });
-            });
-        },
+        onOK: SERVER_CONFIG.platform == "darwin" ? saveDarwin : savePC,
         onCancel: function() {
             dlg.close();
         }
     });
+    function saveDarwin() {
+        saveSettings({
+            editor: {
+                name: model.editor.name
+            }
+        });
+    }
+    function savePC() {
+        var filename = model.editor.path;
+        RPC.call("fs/stat", [ filename ], function(stats){
+            var stat = stats[0];
+            if (stat.error) {
+                if (stat.error.code == "ENOENT") {
+                    showMessage({ class: "error", message: "File " + filename + " doesn't exist." });
+                    return;
+                }
+                showMessage({ class: "error", message: "There was an error accessing " + filename + ", code: " + stat.error.code });
+                return;
+            }
+            if (stat.isDirectory) {
+                showMessage({ class: "error", message: "You selected a directory" });
+                return;
+            }
+            saveSettings({
+                editor: {
+                    path: filename,
+                    args: {
+                        cmd1: model.editor.args.cmd1.trim().split(/\s+/),
+                        cmd2: model.editor.args.cmd2.trim().split(/\s+/),
+                        cmd3: model.editor.args.cmd3.trim().split(/\s+/),
+                    }
+                }
+            });
+        });
+    }
+    function saveSettings(args) {
+        RPC.call("config/set-kendo-dir", model.kendo_src_dir, function(accepted, err){
+            if (accepted) {
+                RPC.call("settings/save", args, function(){
+                    dlg.close();
+                });
+            } else {
+                showMessage({ class: "error", message: "Cannot find Kendo UI sources in " + model.kendo_src_dir + "\nPlease try again." });
+            }
+        });
+    }
     kendo.bind(dlg_el, model);
     var dlg = dlg_el.data("kendoWindow");
     dlg.open();
