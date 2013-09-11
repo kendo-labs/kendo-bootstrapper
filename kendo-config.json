@@ -188,7 +188,7 @@
                     ],
                     "inherits": "Button",
                     "file": "kendo.mobile.button.js",
-                    "line": 153,
+                    "line": 160,
                     "col": 21
                 },
                 {
@@ -199,7 +199,7 @@
                     ],
                     "inherits": "Button",
                     "file": "kendo.mobile.button.js",
-                    "line": 169,
+                    "line": 176,
                     "col": 23
                 }
             ]
@@ -393,6 +393,7 @@
                         "buttons",
                         "input",
                         "preview",
+                        "autoupdate",
                         "messages"
                     ],
                     "inherits": "ColorSelector",
@@ -422,7 +423,7 @@
                     ],
                     "inherits": "Widget",
                     "file": "kendo.colorpicker.js",
-                    "line": 782,
+                    "line": 791,
                     "col": 22
                 }
             ]
@@ -729,7 +730,7 @@
                     ],
                     "inherits": "ui.View",
                     "file": "kendo.mobile.drawer.js",
-                    "line": 22,
+                    "line": 23,
                     "col": 17
                 }
             ]
@@ -1243,7 +1244,7 @@
                     ],
                     "inherits": "Widget",
                     "file": "kendo.mobile.listview.js",
-                    "line": 806,
+                    "line": 808,
                     "col": 19
                 }
             ]
@@ -1622,7 +1623,7 @@
                     ],
                     "inherits": "Widget",
                     "file": "kendo.mobile.pane.js",
-                    "line": 41,
+                    "line": 35,
                     "col": 15
                 }
             ]
@@ -1933,6 +1934,7 @@
                         "date",
                         "editable",
                         "autoBind",
+                        "snap",
                         "timezone",
                         "messages",
                         "height",
@@ -1975,7 +1977,7 @@
                     ],
                     "inherits": "Widget",
                     "file": "kendo.scheduler.js",
-                    "line": 2347,
+                    "line": 2378,
                     "col": 25
                 }
             ]
@@ -2828,7 +2830,7 @@
                     ],
                     "inherits": "Widget",
                     "file": "kendo.mobile.view.js",
-                    "line": 388,
+                    "line": 404,
                     "col": 17
                 }
             ]
@@ -2878,7 +2880,7 @@
                     ],
                     "inherits": "Widget",
                     "file": "kendo.window.js",
-                    "line": 113,
+                    "line": 97,
                     "col": 17
                 }
             ]
