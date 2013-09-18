@@ -7,11 +7,15 @@ setupListeners();
 $(document).ready(function(){
     getTemplate("template-library");
     setupLayout();
-    RPC.call("settings/get", function(settings){
+    function getConfig(settings) {
         SERVER_CONFIG = settings;
         if (/^win/i.test(settings.platform)) {
             SERVER_CONFIG.windows = true;
         }
+    }
+    RPC.listen("setup", getConfig);
+    RPC.call("settings/get", function(settings){
+        getConfig(settings);
         if (!SERVER_CONFIG.kendo_src_dir) {
             filePicker(".", {
                 infoText: getTemplate("info-configure-kendo-src-dir")(),
