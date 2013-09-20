@@ -11,7 +11,7 @@
             "lib"  : true
         },{
             "id"   : "kendo",
-            "name" : "kendo/js/kendo.all.min.js",
+            "name" : "kendo/js/kendo.mobile.min.js",
             "type" : "js",
             "lib"  : true,
             "deps" : [

@@ -1,0 +1,160 @@
+{
+    "template_id": "default-all",
+    "template_name": "Kendo Complete",
+    "use_kendo": "all",
+
+    "files": [
+        {
+            "id"   : "jquery",
+            "name" : "kendo/js/jquery.min.js",
+            "type" : "js",
+            "lib"  : true
+        },{
+            "id"   : "kendo",
+            "name" : "kendo/js/kendo.all.min.js",
+            "type" : "js",
+            "lib"  : true,
+            "deps" : [
+                "jquery"
+            ]
+        },{
+            "id"   : "less",
+            "name" : "js/less-1.3.3.min.js",
+            "type" : "js",
+            "lib"  : true
+        },{
+            "id"   : "coffeescript",
+            "name" : "js/coffee-script.js",
+            "type" : "js",
+            "lib"  : true
+        },
+
+        {
+            "id"   : "kendo.common.css",
+            "name" : "kendo/css/kendo.common.min.css",
+            "type" : "css",
+            "lib"  : true
+        },
+        {
+            "id": "kendo.default.css",
+            "name": "kendo/css/kendo.default.min.css",
+            "type": "css",
+            "lib": true,
+            "deps": [
+                "kendo.common.css"
+            ]
+        },
+        {
+            "id": "kendo.flat.css",
+            "name": "kendo/css/kendo.flat.min.css",
+            "type": "css",
+            "lib": true,
+            "deps": [
+                "kendo.common.css"
+            ]
+        },
+        {
+            "id": "kendo.black.css",
+            "name": "kendo/css/kendo.black.min.css",
+            "type": "css",
+            "lib": true,
+            "deps": [
+                "kendo.common.css"
+            ]
+        },
+        {
+            "id": "kendo.blueopal.css",
+            "name": "kendo/css/kendo.blueopal.min.css",
+            "type": "css",
+            "lib": true,
+            "deps": [
+                "kendo.common.css"
+            ]
+        },
+        {
+            "id": "kendo.bootstrap.css",
+            "name": "kendo/css/kendo.bootstrap.min.css",
+            "type": "css",
+            "lib": true,
+            "deps": [
+                "kendo.common.css"
+            ]
+        },
+        {
+            "id": "kendo.highcontrast.css",
+            "name": "kendo/css/kendo.highcontrast.min.css",
+            "type": "css",
+            "lib": true,
+            "deps": [
+                "kendo.common.css"
+            ]
+        },
+        {
+            "id": "kendo.metroblack.css",
+            "name": "kendo/css/kendo.metroblack.min.css",
+            "type": "css",
+            "lib": true,
+            "deps": [
+                "kendo.common.css"
+            ]
+        },
+        {
+            "id": "kendo.metro.css",
+            "name": "kendo/css/kendo.metro.min.css",
+            "type": "css",
+            "lib": true,
+            "deps": [
+                "kendo.common.css"
+            ]
+        },
+        {
+            "id": "kendo.moonlight.css",
+            "name": "kendo/css/kendo.moonlight.min.css",
+            "type": "css",
+            "lib": true,
+            "deps": [
+                "kendo.common.css"
+            ]
+        },
+        {
+            "id": "kendo.silver.css",
+            "name": "kendo/css/kendo.silver.min.css",
+            "type": "css",
+            "lib": true,
+            "deps": [
+                "kendo.common.css"
+            ]
+        },
+        {
+            "id": "kendo.uniform.css",
+            "name": "kendo/css/kendo.uniform.min.css",
+            "type": "css",
+            "lib": true,
+            "deps": [
+                "kendo.common.css"
+            ]
+        },
+
+        {
+            "id"   : "app.js",
+            "name" : "js/app.js",
+            "type" : "js",
+            "deps" : [
+                "kendo",
+                "app.less"
+            ]
+        },{
+            "id"   : "app.less",
+            "name" : "css/app.less",
+            "type" : "less"
+        },{
+            "id"   : "main",
+            "name" : "index.html",
+            "type" : "html",
+            "page" : true,
+            "deps" : [ "kendo.default.css", "app.js" ]
+        }
+    ],
+
+    "config": {}
+}

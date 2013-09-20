@@ -1000,8 +1000,12 @@ function projectNew() {
             }, 100);
         });
         var manually_changed_path = false;
+        var default_template = (SERVER_CONFIG.kendo_all ? "default-all"
+                                : SERVER_CONFIG.kendo_web ? "default-web"
+                                : SERVER_CONFIG.kendo_mobile ? "default-mobile"
+                                : null);
         var model = kendo.observable({
-            template_id: "default-web",
+            template_id: default_template,
             templates: templates,
             onBrowse: function() {
                 var input = $("input[name=path]", dlg_el);
