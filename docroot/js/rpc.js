@@ -13,8 +13,9 @@
         CONN_UP = true;
     };
     WS.onclose = function() {
-        console.log("Socket close");
+        console.log("Socket closed");
         CONN_UP = false;
+        showEndAppDialog();
     };
     WS.onmessage = function(ev) {
         //console.log("Got message: ", ev.data);

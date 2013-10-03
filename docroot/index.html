@@ -900,5 +900,25 @@
       </div>
     </script>
 
+    <script type="x/yajet-template" class="server-down-dialog">
+      <div class="confirm-dialog with-icon" data-role="window" data-title="Error"
+           data-width="400" data-modal="true" data-actions="[]">
+        <div class="dlg-content">
+          <div class="confirm-dialog-icon icon-warning"></div>
+          <p class="shortdesc">
+            Oops, the server has died!
+          </p>
+          <p>
+            The Bootstrapper server has vanished.  This is a bug, most
+            likely, but this window won't be usable anymore.  You should
+            close it and restart the Bootstrapper.
+          </p>
+        </div>
+        <p style="text-align: center">
+          <button class="k-button btn-ok" onclick="self.close()" style="padding: 5px 1em">Close</button>
+        </p>
+      </div>
+    </script>
+
   </body>
 </html>

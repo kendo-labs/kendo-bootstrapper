@@ -1535,6 +1535,13 @@ function showMessage(args) {
     }.delayed(1)());
 }
 
+function showEndAppDialog() {
+    var dlg_el = $("<div></div>").html(getTemplate("server-down-dialog")()).children().first();
+    kendo.bind(dlg_el);
+    var dlg = dlg_el.data("kendoWindow");
+    dlg.open();
+    dlg.center();
+}
 
 
 
@@ -1787,3 +1794,5 @@ select_file.compare_stat_size = function(a, b, rev) {
 };
 
 // </File-Picker>
+
+window.open('', '_self', '');   // window.close() magically works after this O_O
