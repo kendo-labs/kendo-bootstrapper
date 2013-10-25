@@ -55,6 +55,10 @@ HANDLERS = [
     [/^\/@proj\/([^\/]+)\/*(.*)$/, function(request, response, proj_id, path){
         var url = URL.parse(request.url, true);
         var proj = PROJECT.get_project(proj_id);
+        if (!proj) {
+            SS.send_404(response, request.url);
+            return;
+        }
         if (!path) path = "index.html";
         path = "/" + path;
         if (url.search) path += url.search;
