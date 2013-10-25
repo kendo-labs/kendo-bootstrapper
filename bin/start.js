@@ -148,8 +148,9 @@ function start_server() {
                 var url = URL.parse(request.url, true);
                 var m = h[0].exec(url.pathname);
                 if (m) {
-                    var a = [ request, response ].concat([].slice.call(m, 1));
-                    ret = h[1].apply(null, a);
+                    var args = [].slice.call(m, 1).map(decodeURIComponent);
+                    args.unshift(request, response);
+                    ret = h[1].apply(null, args);
                 }
             }
         }
