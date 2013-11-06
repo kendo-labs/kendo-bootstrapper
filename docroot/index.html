@@ -593,7 +593,7 @@
     </script>
 
     <script type="x/yajet-template" class="filepicker-dialog">
-      <div data-role="window" class="filepicker-dialog"
+      <div data-role="onetimewindow" class="filepicker-dialog"
            $(IF (this.noCancel)
              data-actions="[ 'Maximize' ]"
            $(ELSE)
@@ -657,7 +657,7 @@
     </script>
 
     <script type="x/yajet-template" class="fileprops-dialog">
-      <div data-role="window" data-title="File properties" data-modal="true" data-resizable="false">
+      <div data-role="onetimewindow" data-title="File properties" data-modal="true" data-resizable="false">
         <div class="dlg-content">
           <p>
             <label>
@@ -714,7 +714,7 @@
     </script>
 
     <script type="x/yajet-template" class="add-remote-file-dialog">
-      <div data-role="window" data-title="Add remote file" data-modal="true" data-resizable="false">
+      <div data-role="onetimewindow" data-title="Add remote file" data-modal="true" data-resizable="false">
         <div class="dlg-content">
           <p>
             <label>
@@ -749,7 +749,7 @@
     </script>
 
     <script type="x/yajet-template" class="darwin-select-editor-dlg">
-      <div data-role="window" data-title="Select editor"
+      <div data-role="onetimewindow" data-title="Select editor"
            data-modal="true" data-resizable="true" data-width="400" data-height="300"
            data-bind="events: { resize: dlgResize }">
         <div class="layout" data-role="layoutmanager" data-orientation="vertical">
@@ -769,7 +769,7 @@
     </script>
 
     <script type="x/yajet-template" class="bootstrapper-settings-dialog">
-      <div data-role="window" data-title="Settings" data-modal="true" data-resizable="false">
+      <div data-role="onetimewindow" data-title="Settings" data-modal="true" data-resizable="false">
         <div class="dlg-content">
           <div data-role="tabstrip" data-animation="false">
             <ul>
@@ -841,7 +841,7 @@
     </script>
 
     <script type="x/yajet-template" class="import-project-exclusions-dlg">
-      <div data-role="window"
+      <div data-role="onetimewindow"
            data-title="Include / exclude files" data-modal="true"
            data-width="800" data-height="500"
            data-bind="events: { resize: dlgResize }">
@@ -884,7 +884,7 @@
     </script>
 
     <script type="x/yajet-template" class="project-config-dlg">
-      <div data-role="window" data-title="Project setup" data-width="600" data-height="400" data-modal="true"
+      <div data-role="onetimewindow" data-title="Project setup" data-width="600" data-height="400" data-modal="true"
            data-bind="events: { resize: dlgResize }">
         <div class="layout" data-role="layoutmanager" data-orientation="vertical" data-spacing="5">
           <div kendo-layout="1" class="dlg-content" style="overflow: auto">
@@ -901,7 +901,7 @@
     </script>
 
     <script type="x/yajet-template" class="server-down-dialog">
-      <div class="confirm-dialog with-icon" data-role="window" data-title="Error"
+      <div class="confirm-dialog with-icon" data-role="onetimewindow" data-title="Error"
            data-width="400" data-modal="true" data-actions="[]">
         <div class="dlg-content">
           <div class="confirm-dialog-icon icon-warning"></div>

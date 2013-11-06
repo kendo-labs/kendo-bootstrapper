@@ -684,7 +684,7 @@ function showBuildErrors(proj_id, title, errors, refreshcmd) {
     var dlg_el = $("<div></div>").html(getTemplate("build-errors-dialog")({
         proj_id : proj_id,
         errors  : errors
-    })).kendoWindow({
+    })).kendoOneTimeWindow({
         title : title,
         modal : true,
         width : 500,
@@ -698,7 +698,7 @@ function showBuildErrors(proj_id, title, errors, refreshcmd) {
     });
     kendo.bind(dlg_el);
     var lm = $(".layout", dlg_el).data("kendoLayoutManager");
-    var dlg = dlg_el.data("kendoWindow");
+    var dlg = dlg_el.data("kendoOneTimeWindow");
     dlg.open();
     dlg.center();
     dlg.trigger("resize");
@@ -814,7 +814,7 @@ function projectAddRemoteFile(proj) {
         }
     });
     kendo.bind(dlg_el, model);
-    var dlg = $(dlg_el).data("kendoWindow");
+    var dlg = $(dlg_el).data("kendoOneTimeWindow");
     dlg.open();
     dlg.center();
 }
@@ -906,7 +906,7 @@ function projectConfig(proj) {
         }
     });
     kendo.bind(dlg_el, model);
-    var dlg = $(dlg_el).data("kendoWindow");
+    var dlg = $(dlg_el).data("kendoOneTimeWindow");
     var top_layout = $(".layout", dlg_el).data("kendoLayoutManager");
     dlg.open();
     dlg.center();
@@ -950,7 +950,7 @@ function projectFilePropsDialog(proj_id, file_id) {
         }
     });
     kendo.bind(dlg_el, model);
-    var dlg = $(dlg_el).data("kendoWindow");
+    var dlg = $(dlg_el).data("kendoOneTimeWindow");
     dlg.open();
     dlg.center();
 };
@@ -961,7 +961,7 @@ function projectNew() {
         var dest = SERVER_CONFIG.projects_dir.replace(/\/+$/, "");
         var dlg_el = $("<div></div>").html(getTemplate("new-project-dialog")({
             destination: dest
-        })).kendoWindow({
+        })).kendoOneTimeWindow({
             title: "Create new project",
             modal: true
         }).on("click", ".btn-ok", function(){
@@ -1024,7 +1024,7 @@ function projectNew() {
             }
         });
         kendo.bind(dlg_el, model);
-        var dlg = dlg_el.data("kendoWindow");
+        var dlg = dlg_el.data("kendoOneTimeWindow");
         dlg.open();
         dlg.center();
     });
@@ -1069,7 +1069,7 @@ function projectBuildKendo(proj) {
             manual     : data.manual_kendo_components,
             okLabel    : "Build!",
             kvariant   : proj.use_kendo,
-        })).kendoWindow({
+        })).kendoOneTimeWindow({
             title: "Build custom Kendo UI",
             modal: true,
             width: "500px",
@@ -1097,7 +1097,7 @@ function projectBuildKendo(proj) {
         var lm = $(".layout", dlg_el);
         kendo.bind(lm);
         lm = lm.data("kendoLayoutManager");
-        var dlg = dlg_el.data("kendoWindow");
+        var dlg = dlg_el.data("kendoOneTimeWindow");
         dlg.open();
         dlg.center();
         dlg.trigger("resize");
@@ -1109,7 +1109,7 @@ function projectBuildDistro(proj) {
         if (!err) {
             var dlg_el = $("<div></div>").html(getTemplate("build-distro-dialog")({
 
-            })).kendoWindow({
+            })).kendoOneTimeWindow({
                 title: "Build distro",
                 modal: true,
             }).on("click", ".btn-ok", function(){
@@ -1120,7 +1120,7 @@ function projectBuildDistro(proj) {
             }).on("click", ".btn-cancel", function(){
                 dlg.close();
             });
-            var dlg = dlg_el.data("kendoWindow");
+            var dlg = dlg_el.data("kendoOneTimeWindow");
             dlg.open();
             dlg.center();
         }
@@ -1168,7 +1168,7 @@ function projectEditFileDependencies(proj_id, file_id) {
     var file = getProjectFileById(proj, file_id);
     var dlg_el = $("<div></div>").html(getTemplate("project-file-deps-dialog")({
         name: file.name
-    })).kendoWindow({
+    })).kendoOneTimeWindow({
         title  : "File dependencies",
         modal  : true,
         width  : 900,
@@ -1209,7 +1209,7 @@ function projectEditFileDependencies(proj_id, file_id) {
     var lm = $(".project-deps-dialog", dlg_el);
     kendo.bind(lm);
     var lm = lm.data("kendoLayoutManager");
-    var dlg = dlg_el.data("kendoWindow");
+    var dlg = dlg_el.data("kendoOneTimeWindow");
     dlg.open();
     dlg.center();
     dlg.trigger("resize");
@@ -1232,7 +1232,7 @@ function projectEditDependencies(proj) {
     var the_deps = projectGetDepsHash(proj);
     var dlg_el = $("<div></div>").html(getTemplate("project-deps-dialog")({
         files: proj.files,
-    })).kendoWindow({
+    })).kendoOneTimeWindow({
         title: "File dependencies",
         modal: true,
         width: 600,
@@ -1282,7 +1282,7 @@ function projectEditDependencies(proj) {
     var top_layout = $(".project-deps-dialog", dlg_el);
     kendo.bind(top_layout);
     top_layout = top_layout.data("kendoLayoutManager");
-    var dlg = dlg_el.data("kendoWindow");
+    var dlg = dlg_el.data("kendoOneTimeWindow");
     dlg.open();
     dlg.center();
     dlg.trigger("resize");
@@ -1299,7 +1299,7 @@ function consoleAddMessage(msg) {
 
 function areYouSure(options, callback) {
     if (options.okSecondary === undefined) options.okSecondary = true;
-    var dlg_el = $("<div></div>").html(getTemplate("confirm-dialog")(options)).kendoWindow({
+    var dlg_el = $("<div></div>").html(getTemplate("confirm-dialog")(options)).kendoOneTimeWindow({
         title: options.title || "Confirm",
         modal: true
     }).on("click", ".btn-ok", function(){
@@ -1309,7 +1309,7 @@ function areYouSure(options, callback) {
         dlg.close();
         callback(false);
     });
-    var dlg = dlg_el.data("kendoWindow");
+    var dlg = dlg_el.data("kendoOneTimeWindow");
     dlg.open();
     dlg.center();
 }
@@ -1340,7 +1340,7 @@ function darwin_selectEditorApp(cont) {
             }
         });
         kendo.bind(dlg_el, model);
-        var dlg = dlg_el.data("kendoWindow");
+        var dlg = dlg_el.data("kendoOneTimeWindow");
         var top_layout = $(".layout", dlg_el).data("kendoLayoutManager");
         var grid = $("[data-role=\"grid\"]", dlg_el)
             .on("dblclick", "tr.k-state-selected", select)
@@ -1459,7 +1459,7 @@ function bootstrapperSettingsDialog() {
         });
     }
     kendo.bind(dlg_el, model);
-    var dlg = dlg_el.data("kendoWindow");
+    var dlg = dlg_el.data("kendoOneTimeWindow");
     dlg.open();
     dlg.center();
 }
@@ -1507,7 +1507,7 @@ function editIncludedFiles(args, callback) {
         }
     });
     kendo.bind(dlg_el, model);
-    var dlg = dlg_el.data("kendoWindow");
+    var dlg = dlg_el.data("kendoOneTimeWindow");
     var top_layout = $(".layout", dlg_el).data("kendoLayoutManager");
     dlg.open();
     dlg.center();
@@ -1538,7 +1538,7 @@ function showMessage(args) {
 function showEndAppDialog() {
     var dlg_el = $("<div></div>").html(getTemplate("server-down-dialog")()).children().first();
     kendo.bind(dlg_el);
-    var dlg = dlg_el.data("kendoWindow");
+    var dlg = dlg_el.data("kendoOneTimeWindow");
     dlg.open();
     dlg.center();
 }
@@ -1647,7 +1647,7 @@ function filePicker(path, options, callback) {
             setPath(path);
             ev.preventDefault();
         })
-        .data("kendoWindow");
+        .data("kendoOneTimeWindow");
     var layout = $(".layout", dlg_el).data("kendoLayoutManager");
     var search = $("input.search", dlg_el).keydown(function(ev){
         updateSearch.cancel()(ev.keyCode);

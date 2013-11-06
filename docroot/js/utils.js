@@ -206,3 +206,24 @@ function path_dirname(path) {
     x.pop()
     return path_join(x);
 };
+
+
+
+/// wrapper around kendo Window that will call `destroy` when the dialog is closed.
+(function(ui){
+
+    var OneTimeWindow = ui.Window.extend({
+        options: {
+            name: "OneTimeWindow"
+        },
+        init: function() {
+            ui.Window.fn.init.apply(this, arguments);
+            this.bind("deactivate", function(){
+                this.destroy();
+            });
+        }
+    });
+
+    ui.plugin(OneTimeWindow);
+
+})(kendo.ui);
