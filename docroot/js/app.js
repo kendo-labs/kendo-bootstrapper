@@ -127,7 +127,7 @@ function setupListeners() {
     });
 
     RPC.listen("set_active_project", function(proj){
-        $("#project-list").data("kendoListView").select("#project-list [value=" + proj + "]"); // ;-(
+        $("#project-list").data("kendoListView").select("#project-list [value=\"" + proj + "\"]"); // ;-(
     });
 
 }
