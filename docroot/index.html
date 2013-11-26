@@ -396,18 +396,19 @@
 
           <div class="two-columns">
             $(FOREACH (comp => this.kcomp)
-            $(WHEN (comp.category == "framework" ||
-                    (this.kvariant == "web" && comp.category == "web") ||
-                    (this.kvariant == "mobile" && comp.category == "mobile"))
-            <div>
-              $( var checked = this.selection.contains(comp.id) ? 'checked="checked"' : '';
-                 var disabled = this.detected.contains(comp.id) ? 'disabled="disabled"' : ''; )
-              <label class="hovering"
-                     title="${ comp.description || 'No description provided' => html }">
-                <input id="kcomp-$comp.id|html" type="checkbox" value="$comp.id|html" $checked $disabled />
-                $comp.name|html ($comp.category|html)
-              </label>
-              </div>$)$)
+              $(WHEN (comp.category == "framework" ||
+                      (/dataviz|all/.test(this.kvariant) && comp.category == "dataviz") ||
+                      (/web|all/.test(this.kvariant) && comp.category == "web") ||
+                      (/mobile|all/.test(this.kvariant) && comp.category == "mobile"))
+                <div>
+                  $( var checked = this.selection.contains(comp.id) ? 'checked="checked"' : '';
+                     var disabled = this.detected.contains(comp.id) ? 'disabled="disabled"' : ''; )
+                  <label class="hovering"
+                         title="${ comp.description || 'No description provided' => html }">
+                    <input id="kcomp-$comp.id|html" type="checkbox" value="$comp.id|html" $checked $disabled />
+                    $comp.name|html ($comp.category|html)
+                  </label>
+                  </div>$)$)
           </div>
         </div>
         <div style="padding: 5px; border-top: 1px solid #888">
