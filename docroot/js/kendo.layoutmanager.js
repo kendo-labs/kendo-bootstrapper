@@ -271,12 +271,21 @@
 
     //// XXX: to be moved in kendo.window.js?
 
-    ui.Window.fn.getInnerSize = function() {
-        var content = this.wrapper.find(".k-window-content");
-        return {
-            x: content.width(),
-            y: content.height()
+    if (ui.Window) {
+        ui.Window.fn.getInnerSize = function() {
+            var content = this.wrapper.find(".k-window-content");
+            return {
+                x: content.width(),
+                y: content.height()
+            };
         };
-    };
+    }
+
+    if (ui.Grid) {
+        ui.Grid.fn.setOuterSize = function(width, height) {
+            resizeElement(this.wrapper, width, height);
+            this._setContentHeight();
+        };
+    }
 
 })(jQuery, window.kendo);
