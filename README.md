@@ -1,5 +1,8 @@
 # Kendo UI Bootstrapper
 
+# Note
+Kendo UI Labs projects are experimental and largely built and supported by the community.  As such Telerik does not provide official support for any of the Kendo UI Labs projects via Telerik support agreements.  We do encourage you to open an issue or visit [Stack Overflow](http://www.stackoverflow.com).
+
 ## About the Kendo UI Bootstrapper
 
 The Kendo UI Bootstrapper is a free and open source tool designed to enhance your development workflow with Kendo UI by taking care of code linting, static analysis, minification, bundling and easy access to documentation. It is not an IDE. It is not intended for you to use to edit code. It exists to augment your current IDE by taking care of many of the more advanced and manual tasks of application development that your IDE may not handle out of the box.
